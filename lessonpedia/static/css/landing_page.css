@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Saira&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
+
 body{
     margin:0px;
     background-image: none !important;
@@ -11,20 +14,19 @@ body{
 
 .nav_elements{
     display:flex;
-   justify-content: space-around;
-}
-
-.upper_section{
-    height: 936px;
-    background-color: blue;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Hedvig Letters Sans', sans-serif;
+    font-weight: bold;
 }
 
 .nav_center{
-    width:440px;
+    width:480px;
 }
 
 .nav_center ol{
     list-style-type: none;
+    margin: 0px;
 }
 
 .nav_center ol li{
@@ -33,4 +35,121 @@ body{
 
 .spaceMe{
     padding-left: 5%;
+}
+
+.nav_right{
+    word-spacing: 20px;
+}
+
+.signup_button{
+    word-spacing: 20px;
+}
+
+.signup_button span{
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #083F9B, #7F56D9);
+    color: white;
+}
+
+/* The below section covers the design with the blue background */
+
+.upper_section{
+    height: 936px;
+    background: linear-gradient(to right, #04016C, #4A16BD);
+    display:flex;
+}
+
+.pics_background{
+    background-image: url("/lessonpedia/static/images/backgrounds/pics_background.png");
+    background-repeat: no-repeat;
+    background-position: top right;
+    width: 100%; 
+}
+
+.left_label{
+    margin-top: 100px;
+    margin-left: 5%;
+    color:white;
+    font-family: 'Rowdies', sans-serif;
+    font-size: 18px;
+}
+
+.left_label .top{
+    color:rgb(233, 219, 219);
+    font-family: 'Saira', sans-serif;
+}
+
+.left_label .mid span, .left_label .mid h3{
+    font-family: 'Rowdies', sans-serif;
+    font-weight: 500;
+    font-size: 60px;
+}
+
+.left_label .mid span{
+    color: #4BE5CA;
+}
+
+.second_level_mid button, .second_level_mid p{
+    display: inline;
+    font-family: 'Saira', sans-serif;
+}
+
+.second_level_mid button{
+    padding: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-family: 'Saira', sans-serif;
+    font-size: 25px;
+    border-radius: 20px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.second_level_mid p{
+    padding: 40px;
+}
+
+.last{
+    width: 500px;
+    height: 56px;
+    background-color: white;
+    margin-top: 5%;
+    border-radius: 10px;
+}
+
+.last input{
+    font-size: 14px;
+    height: 31px;
+    width: 68%;
+    margin-top: 1.8%;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    margin-left: 3%;
+}
+
+.last input:focus{
+    outline: none;
+}
+
+.last input, .last .search{
+    display: inline;
+}
+
+.search{
+    margin-left: 2%;
+}
+
+.search span{
+    padding-left: 10px;
+    font-weight: 100;
+    font-family: 'Saira', sans-serif;
+}
+
+.search{
+    background: linear-gradient(to right, #083F9B, #7F56D9);
+    padding: 10px;
+    border-radius: 10px;
 }
