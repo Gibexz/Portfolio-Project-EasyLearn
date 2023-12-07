@@ -11,7 +11,12 @@ body{
 
 .nav_elements{
     display:flex;
-   justify-content: space-around;
+    justify-content: space-evenly;
+    padding-left: 2%;
+}
+
+.nav_left{
+    flex: 1;
 }
 
 .upper_section{
@@ -19,18 +24,30 @@ body{
     background-color: blue;
 }
 
+.nav_left{
+    padding-top: 30px;
+    width: 15%; 
+}
+
 .nav_center{
-    width:440px;
+    /* width: 40%; */
+    flex: 2.5
+}
+
+.nav_right{
+    flex: 1
+}
+
+.signup_button{
+    flex:1
 }
 
 .nav_center ol{
     list-style-type: none;
+    padding-left: 20%;
 }
 
 .nav_center ol li{
     display: inline-block;
-}
-
-.spaceMe{
-    padding-left: 5%;
+    padding-left: 2%;
 }
