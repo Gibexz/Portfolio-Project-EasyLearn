@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&display=swap');
 
 body{
-    background-image: url("/static/images/backgrounds/background.png");
+    background-image: url("/lessonpedia/static/images/backgrounds/background.png");
     background-repeat: no-repeat;
     margin:0px;
 }

@@ -48,15 +48,17 @@ body{
 .signup_button span{
     padding: 10px 15px 10px 15px;
     border-radius: 10px;
-    background: linear-gradient(to right, #083F9B, #7F56D9);
+    background: linear-gradient(0deg, #013669, #5AABFF);
     color: white;
 }
 
 /* The below section covers the design with the blue background */
 
 .upper_section{
-    height: 936px;
-    background: linear-gradient(to right, #04016C, #4A16BD);
+    height: 909px;
+    background-image: url("/lessonpedia/static/images/backgrounds/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     display:flex;
 }
 
@@ -64,7 +66,7 @@ body{
     background-image: url("/lessonpedia/static/images/backgrounds/pics_background.png");
     background-repeat: no-repeat;
     background-position: top right;
-    width: 100%; 
+    width: 100%;
 }
 
 .left_label{
@@ -96,7 +98,7 @@ body{
 }
 
 .second_level_mid button{
-    padding: 20px;
+    padding: 70px;
     padding-bottom: 10px;
     padding-top: 10px;
     font-family: 'Saira', sans-serif;
@@ -149,7 +151,169 @@ body{
 }
 
 .search{
-    background: linear-gradient(to right, #083F9B, #7F56D9);
+    background: linear-gradient(0deg, #013669, #5AABFF);
     padding: 10px;
     border-radius: 10px;
+}
+
+/* mid division */
+.mid_div{
+    width: 100%;
+    height: 50px;
+    margin-top: none;
+    background: linear-gradient(0deg, #013669, #5AABFF);
+    display: flex;
+    justify-content: center;
+}
+
+.moving_text{
+    width: 50%;
+    align-items: center;
+    font-size: large;
+    color: #88f7e3;
+    font-family: 'Rowdies', sans-serif;
+    padding-top: 15px;
+}
+
+
+/* Tutors section CSS */
+
+.tutor_header{
+    margin-bottom: 5%;
+}
+
+.tutor_section{
+    background: linear-gradient(0deg, #bdd6ef, #F0F3FF, #D9ECFF);
+    margin-top: 0px;
+}
+
+.tutor_header h2{
+    font-family: 'Rowdies', sans-serif;
+    letter-spacing: 2px;
+    padding-top: 2%;
+    margin:0px;
+}
+
+.all_tutors{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.tutors_display{
+    height: 450px;
+    width: 300px;
+    border-radius: 20px;
+    background: radial-gradient(circle, #5aaaff7c, #010d1871);
+    border: 2px solid rgba(194, 177, 223, 0.229);
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+
+.tutor_image img{
+    width: 300px;
+    height: 300px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom: 2px solid #013669;
+    display: block;
+    margin: auto auto;
+}
+
+.tutor_details{
+    padding-left: 5%;
+}
+
+.tutor_details h3{
+    margin-bottom: 0px;
+}
+
+.tutor_details p{
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+
+.tutor_details button{
+    padding:10px;
+    padding-left: 30%;
+    padding-right: 30%;
+    margin: auto;
+    display: block;
+    background: linear-gradient(0deg, #013769c0, #5aaaff85);
+    border-radius: 10px;
+    color: white;
+    border: none;
+    font-weight: bold;
+    margin-top: 3%;
+}
+
+.rank{
+    color:gold;
+}
+
+.empty{
+    background: linear-gradient(0deg, #013769ce, #5aaaff8a);
+    height: 40px;
+    width: 100%;
+}
+
+
+/* Frequent questions */
+
+.questions{
+    height: 680px;
+    background-color: #fdf4e6;
+    margin-bottom: 5%;
+}
+
+.questionContent{
+    overflow-y: scroll;
+    height: 650px;
+    background-color: rgba(135, 207, 235, 0.467);
+}
+
+.questionsh3{
+    font-size: 56px !important;
+    padding-top: 0%;
+    text-align: center;
+}
+
+.freq_questions{
+    height: 441px;
+    width: 932px;
+    margin: auto auto;
+    margin-top: 10px;
+}
+
+.freq_questions .content{
+    padding-top: 10px;
+}
+
+.freq_questions .content h3{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+  
+    padding: 2%;
+}
+
+.rightArrow{
+    float: right;
+    height: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.freq_questions .content p{
+    font-size: 24px;
+    padding: 20px;
+    display: none;
+}
+
+.footer{
+    height: 420px;
+}
+
+.freq_questions .content{
+    border-bottom: 2px solid #FFB661;
 }
