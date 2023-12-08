@@ -183,7 +183,7 @@ body{
 }
 
 .tutor_section{
-    background: linear-gradient(0deg, #bdd6ef, #F0F3FF, #D9ECFF);
+    background: linear-gradient(0deg, #dce1e6, #F0F3FF, #c9ddf1);
     margin-top: 0px;
 }
 
@@ -264,13 +264,15 @@ body{
 .questions{
     height: 650px;
     /* background-color: #fdf4e6; */
-    /* margin-bottom: 2%; */
+    padding-bottom: 2%;
+    padding-top: 2%;
+    background: linear-gradient(-8deg, rgba(136, 148, 152, 0.467) 40%, rgb(166, 173, 181) 0%);
 }
 
 .questionContent{
     overflow-y: scroll;
     height: 650px;
-    background-color: rgba(135, 207, 235, 0.467);
+    
 }
 
 .questionsh3{
@@ -309,64 +311,50 @@ body{
     display: none;
 }
 
-
 .freq_questions .content{
     border-bottom: 2px solid #FFB661;
 }
 
 /* footer section */
-
 .footer{
     padding-top: 2%;
-    margin-top: 0px;
     background-color: white;
 }
 
-.top_footer {
+.top_footer{
     display: flex;
-    /* justify-content: space-evenly; */
-    padding: 0px;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 5%;
+    padding-top: 2%;
 }
 
-.top_footer .brief_aboutUs{
+.top_footer .about_Us{
     width: 350px;
-    padding: 5px 40px 40px 40px;
     font-family: 'Saira', sans-serif;
-    border: 1px solid black;
     font-size: 15px;
     word-spacing: 3px;
     text-align: justify;
 }
 
-.top_footer .links{
-    /* width: 20%; */
-    border: 1px solid black;
-    padding: 5px 40px 40px 40px;
-}
-
-.top_footer .contactUs{
-    /* width: 20%; */
-    padding: 5px 40px 40px 40px;
-}
-
-.top_footer .chatBot{
-    /* width: 15%; */
-    padding: 5px 40px 40px 40px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    border: 1px solid black;
-}
-
-.brief_aboutUs img{
+.about_Us img{
     width: 80px;
     height: 70px;
     display: block;
     margin: auto auto;
 }
 
+.top_footer .links{
+    padding: 5px 40px 5px 40px;
+}
+
 .links li {
     list-style-type: none;
-    line-height: 25px;
+    line-height: 30px;
+}
+
+.links ul{
+    padding-inline-start: 0px;
 }
 
 .links li a {
@@ -375,13 +363,14 @@ body{
     font-family: 'Saira', sans-serif;
 }
 
-.linkHeaders {
-    font-family: Rowdies, sans-serif;
-    font-weight: 400;
+.top_footer .contactUs{
+    padding: 5px 40px 40px 40px;
 }
 
-.linkWriteUp {
-    font-family: 'Saira', sans-serif;
+.top_footer .chatBot{
+    padding: 5px 40px 40px 40px;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .chatBot img {
@@ -391,6 +380,39 @@ body{
     margin-top: 25%;
 }
 
+.linkHeaders{
+    font-family: Rowdies, sans-serif;
+    font-weight: 400;
+}
+
+.linkWriteUp {
+    font-family: 'Saira', sans-serif;
+}
+
 .contactUs p {
     font-family: 'Saira', sans-serif;
+}
+
+.buttom_footer{
+    background:linear-gradient(90deg, rgba(8, 5, 5, 0.757) 40%, rgba(12, 12, 12, 0.789) 60%);
+    display: flex;
+    padding-left: 10%;
+    color:white;
+    height: 80px;
+    align-items: center;
+}
+
+.buttom_footer p{
+    margin-top: 12px;
+    width: 380px;
+    font-family: 'Saira', sans-serif;
+}
+
+.buttom_footer .social_medias{
+    padding-left: 40%;
+    width: 200px;
+}
+
+.buttom_footer .social_medias img{
+    padding-right: 10%;
 }
