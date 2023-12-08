@@ -4,6 +4,7 @@ body{
     background-image: url("/lessonpedia/static/images/backgrounds/background.png");
     background-repeat: no-repeat;
     margin:0px;
+    background-size: cover;
 }
 
 .login_container{
