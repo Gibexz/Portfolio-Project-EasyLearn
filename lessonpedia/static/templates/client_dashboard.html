@@ -18,6 +18,7 @@
                     <p>andybillions@x.com</p>
                 </div>
             </div>
+            <div class="hrtop"><hr></div>
             <div class="side_items">
                 <div class="settings side">
                     <a href="#">Dashboard</a> 
@@ -32,8 +33,6 @@
                     <a href="#">Logout</a> 
                 </div>            
             </div>
- 
-           
         </div>
 
         <div class="content">
@@ -42,6 +41,11 @@
                     <h2>Dashboard</h2>
                 </div>
                 <div class="activities">
+                    <div class="courses">
+                        <div class="not_started item"><p>1/2 </p><p>In Progress</p></div>
+                        <div class="in_progress item"><p>1/2 </p><p>Pending</p></div>
+                        <div class="completed item"><p>0/2 </p><p>Settled</p></div>
+                    </div>
                     <div class="my_tutors">
                         <div class="search">
                             <input type="text" name="" id="" placeholder="Search">
@@ -51,28 +55,40 @@
                     <div class="subjects">
                         <section class="subject_details">
                             <section class="tutor_info">
-                                <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
-                                <span>Python</span>
-                                <p class="tutor_name">Name</p>
-                                <p class="sub"></p>
-                                <button class="remove_tutor">Remove</button>
-                            
-                                <button class="report_abuse">Report Abuse</button>
-                                <button class="review">Review</button>
-                                <button class="rank">Rank</button>
-                                <section class="status_icon"></section>
-                            </section>
+                                <div class="clearfix">
+                                    <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
+                                    <section class="float_left">
+                                        <div class="subject_table table">
+                                            <span class="tutor_subject tr">Software Development</span>
+                                            <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="time"> 4:00pm - 6:30pm (3hrs)</span>
+                                        </div>
+                                        <span class="tutor_name"><b>Esogibe Chidubem</b></span>
+                                        <span class="tutor_name"> Contract Valid Until: July, 3rd, 2023</span>
 
+                                    
+                                    </section>
+                                    <section class="status"></section>
+                                </div>
+                                <div class="tutor_toggles">
+                                    <button class="remove_tutor even-width">Remove</button>
+                                
+                                    <button class="report_abuse even-width">Report Abuse</button>
+                                    <button class="review even-width">Review</button>
+                                    <button class="rank even-width">Rank</button>
+                                    <section class="status_icon"></section>
+                                </div>
+                            </section>
                         </section>
+                        <div class="hr"><hr></div>
                     </div>
                 </div>
             </div>
             
             <div class="right_pane">
-                <div class="rooms"></div>
-                <div class="add_tutor"></div>
-                <div class="suggestion"></div>
-                
+                <div class="rooms">Rooms</div>
+                <div class="add_tutor">Connect with a Tutor</div>
+                <div class="suggestion">Have a suggestion?</div>               
+                <div class="spomsor">Become a sponsor</div>
             </div>
         </div>
     </div>
