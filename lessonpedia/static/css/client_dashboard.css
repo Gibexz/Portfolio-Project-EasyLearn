@@ -74,7 +74,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
-    display: none;
+    display: nne;
 }
 .courses {
     display: flex;
