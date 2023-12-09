@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Saira&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
+
 body {
     margin: 0px;
     background-image: url('/lessonpedia/static/images/backgrounds/darkbgr.png');
@@ -76,13 +80,21 @@ body {
     justify-content: space-evenly;
     margin: 10px;
     padding: 10px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(58, 38, 38, 0.316);
 }
 .courses .item {
     border: 1px solid black;
-    width: 150px;
+    width: 140px;
     height: 50px;
     line-height: 50%;
-    padding: 5px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-top: 0px;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    border: 1px solid white;
+    box-shadow: 1px 1px 10px 1px rgba(128, 128, 128, 0.539);
 }
 .left_pane {
     flex: 4;
@@ -95,18 +107,81 @@ body {
     margin: 20px;
 }
 .left_pane .profile_info {
-    flex: 1;
-    padding: 20px;
+    padding: 20px 0px 15px 40px;
+    margin-bottom: 0px;
     align-items: center;
+    border-bottom: 1.5px solid rgba(128, 128, 128, 0.351);
+    font-family: 'Hedvig Letters Sans', sans-serif;
+    margin: 20px;
+    background-color: rgba(104, 104, 120, 0.295);
+    border-radius: 50px;
+    color: rgb(0, 5, 93);
+    border-bottom: 3px solid rgba(2, 7, 80, 0.705);
+    font-size: large;
 }
+
+.left_pane .profile_info h2{
+    margin-top: 0px;
+    margin-bottom: 2px;
+}
+
+.progress{
+    font-weight: bold;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.progress_text{
+    font-family: 'Inika', serif;
+    font-size: 11px;
+    color: grey;
+}
+
 .left_pane .activities {
     flex: 5;
     display: flex;
     flex-direction: column;
 }
-.left_pane .activities .my_tutors{
-    flex: 1;
+
+.my_tutors{
+    display: flex;
+    justify-content: end;
+    margin-right: 38px;
+   
 }
+
+.my_tutors .search{
+    height: 30px;
+    border: 1px solid red;
+    box-shadow: 1px 1px 5px 1px rgba(128, 128, 128, 0.83);
+    border-radius: 20px;
+    border: 1px solid grey;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
+.my_tutors .search input[type="text"]{
+    height: 20px;
+    margin-top: 3px;
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 2px;
+    padding-left: 5px;
+    border: none
+}
+
+.my_tutors .search input[type="text"]:focus{
+    outline: none;
+}
+
+.my_tutors .search .search_button{
+    height: 30px;
+    border-radius: 0px 20px 20px 0px;
+    background-color: rgba(2, 7, 80, 0.811);
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
 .left_pane .activities .subjects {
     flex: 5;
     display: flex;
@@ -114,7 +189,9 @@ body {
 }
 .subjects {
     flex: 4;
-    overflow: scroll;
+    margin-top: 10px;
+    max-height: 310px;
+    overflow-y: auto;
 }
 .subjects .subject_details .tutor_picture{
     flex: 1;
@@ -125,8 +202,8 @@ body {
 }
 .subjects .subject_details .tutor_info img {
     float: left;
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin: 3px 10px 3px 3px;
 }
@@ -161,12 +238,17 @@ body {
     width: 100px;
     margin: 5px;
 }
+
 .float_left{
     float: left;
 }
+
 .tutor_subject{
     padding-right: 0 10px;
-    /* margin: 0 10px; */
+    font-family: 'Hedvig Letters Sans', sans-serif;
+    font-weight: bold;
+    color: rgb(0, 0, 100);
+    font-size: 0.9em;
 }
 .class_schedule, .time {
     font-size: small;
@@ -178,6 +260,7 @@ body {
     border-radius: 50%;
     float: right;
     margin: 10px;
+    margin-right: 30px;
     background-color: rgb(20, 236, 20);
 }
 .clearfix::after {
