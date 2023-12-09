@@ -74,6 +74,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
+    display: none;
 }
 .courses {
     display: flex;
@@ -256,7 +257,6 @@ body {
     font-size: 0.75em;
 }
 
-
 .tutor_subject{
     padding-right: 0 10px;
     font-family: 'Hedvig Letters Sans', sans-serif;
@@ -297,11 +297,11 @@ body {
     flex: 2;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgb(201, 199, 199);
-    box-shadow: 2px 2px 10px 2px rgba(201, 199, 199, 0.891);
+    /* border: 1px solid rgba(201, 199, 199, 0.11); */
+    box-shadow: 1px 1px 5px 1px rgba(201, 199, 199, 0.369);
     border-radius: 10px;
     /* background: radial-gradient(white 20%, rgb(185, 200, 211)); */
-    background-color: rgba(9, 8, 8, 0.1);
+    background-color: rgba(71, 63, 63, 0.086);
     margin: 20px 10px 20px 0px;
 }
 .right_content{
@@ -311,4 +311,10 @@ body {
     line-height: 50px;
     font-weight: bold;
     color: rgba(2, 7, 80, 0.811);
+}
+
+.resize img{
+    border-radius: 2%;
+    width: 100%;
+    height: 70px;
 }
