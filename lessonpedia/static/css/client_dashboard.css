@@ -329,10 +329,16 @@ body {
 }
 
 /* hidding logic */
-.set{
+.set {
     display: none;
 }
+.history_set{
+    display: non;
+}
 
+.db{
+    display: none;
+}
 .change_password_control_display{
     display: none;
 }
@@ -537,4 +543,13 @@ body {
 
 .selections .mistake, .selections .cancel_logout{
     background-color: blue;
+}
+/* History Rules */
+
+#coming_soon {
+    display: block;
+    position: absolute;
+    margin-top: 160px;
+    font-size: 0.6em;
+    color: grey;
 }

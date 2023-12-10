@@ -75,8 +75,11 @@ $(document).ready(function(){
         $(".logout_btn").css("display", "none")
     })
 
-    $(".history").click(function(){
-        $(".comming_soon").css("display", "block")
+    $("#history a").click(function(){
+        $("#coming_soon").css("display", "none")
     })
 
+    $("#history a").mouseout(function(){
+        $("#coming_soon").css("display", "block")
+    })
 })
