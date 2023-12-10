@@ -14,7 +14,7 @@
     <!-- deavtivate account -->
     <div class="deactivate_account_control_display">
         <div class="deactivateAccount">
-            <div class="del_account">
+            <div class="warning">
                 <img src="/lessonpedia/static/images/icons/warning.png" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
@@ -23,6 +23,23 @@
                 <div class="selections">
                     <button class="confirm_remove">Confirm</button>
                     <button class="mistake">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- logout -->
+    <div class="logout_btn">
+        <div class="logout_btn_account">
+            <div class="warning">
+                <img src="/lessonpedia/static/images/icons/warning.png" alt="">
+                <div class="warning_box">
+                    <p class="confirm_dialog">Warning!</p>
+                    <p class="action">Are you sure to Logout?</p>
+                </div>
+                <div class="selections">
+                    <button class="confirm_logout">Yes</button>
+                    <button class="cancel_logout">No</button>
                 </div>
             </div>
         </div>
@@ -51,7 +68,7 @@
                     <div class="history side">
                         <a href="#">History</a> 
                     </div>
-                    <div class="logout side">
+                    <div class="logout side logout_activation">
                         <a href="#">Logout</a> 
                     </div>            
                 </div>
@@ -150,9 +167,10 @@
                     <a href="#">Settings</a> 
                     </div>            
                     <div class="history side">
-                        <a href="#">History</a> 
+                        <a href="#">History</a>
+                        <h6 class="comming_soon" style="display: none;">COMMING SOON</h6>
                     </div>
-                    <div class="logout side">
+                    <div class="logout side logout_activation">
                         <a href="#">Logout</a> 
                     </div>            
                 </div>

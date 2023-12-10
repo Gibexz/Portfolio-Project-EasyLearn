@@ -65,6 +65,18 @@ $(document).ready(function(){
         });
     })
     
-    
+    // logout_activation
+
+    $('.logout_activation').click(function(){
+        $(".logout_btn").css("display", "block")
+    })
+
+    $(".cancel_logout").click(function() {
+        $(".logout_btn").css("display", "none")
+    })
+
+    $(".history").click(function(){
+        $(".comming_soon").css("display", "block")
+    })
 
 })
