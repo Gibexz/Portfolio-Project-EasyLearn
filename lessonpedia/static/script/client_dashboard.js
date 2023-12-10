@@ -53,10 +53,15 @@ $(document).ready(function(){
         $(".deactivate_account_control_display").css("display", "none")
         $(".profile_control_display").css("display", "block")
         $(".change_password_control_display").css("display", "none")
-        $(".profileUpdate").css({
+        $("#deactivate_account").css({
             "border": "none",
             "border-bottom": "1px solid black",
             "color": "black"
+        });
+        $("#update_profile").css({
+            "border": "1px solid black",
+            "border-bottom": "1px solid transparent",
+            "color": "rgb(3, 120, 3)"
         });
     })
     
