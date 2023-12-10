@@ -66,8 +66,9 @@ body {
     margin: auto;
     border-radius: 50%;
 }
+
 /* contents to display sidebar link data */
-.content {
+.content{
     flex: 3;
     display: flex;
     background-color: white;
@@ -76,6 +77,7 @@ body {
     margin: 10px;
     display: nne;
 }
+
 .courses {
     display: flex;
     justify-content: space-evenly;
@@ -84,6 +86,7 @@ body {
     padding-bottom: 25px;
     border-bottom: 1px solid rgba(58, 38, 38, 0.316);
 }
+
 .courses .item {
     border: 1px solid black;
     width: 140px;
@@ -97,6 +100,7 @@ body {
     border: 1px solid white;
     box-shadow: 1px 1px 10px 1px rgba(128, 128, 128, 0.539);
 }
+
 .left_pane {
     flex: 4;
     display: flex;
@@ -107,6 +111,7 @@ body {
     background: radial-gradient(white 50%, rgb(225, 238, 249));
     margin: 20px;
 }
+
 .left_pane .profile_info {
     padding: 20px 0px 15px 40px;
     margin-bottom: 0px;
@@ -124,6 +129,10 @@ body {
 .left_pane .profile_info h2{
     margin-top: 0px;
     margin-bottom: 2px;
+}
+
+.left_pane .profile_info span{
+    font-family: 'DM Sans', sans-serif;
 }
 
 .progress{
@@ -317,4 +326,211 @@ body {
     border-radius: 2%;
     width: 100%;
     height: 70px;
+}
+
+/* hidding logic */
+.set{
+    display: none;
+}
+
+.change_password_control_display{
+    display: none;
+}
+
+.deactivate_account_control_display{
+    display: none;
+}
+
+
+/* settings Nav-bar */
+.update_elements{
+    display: flex;
+    justify-content: end;
+    padding-right: 10px;
+}
+
+.update_elements table{
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+}
+
+.update_elements td{
+    padding: 5px 20px 5px 20px;
+    font-family: 'Inika', serif;
+    cursor: pointer;
+}
+
+.update_elements #update_profile{
+    border: 1px solid black;
+    border-bottom: 1px solid transparent;
+    color:rgb(3, 120, 3)
+}
+
+.update_elements #deactivate_account{
+    color: red;
+}
+
+/* profile update */
+.profile_control_display{
+    display: non;
+}
+
+.profileUpdate{
+    display: flex;
+}
+
+.profile_update_content{
+    width: 80%;
+    height: 410px;
+    margin: auto auto;
+    margin-top: 20px;
+    border: 1px solid rgba(140, 139, 132, 0.421);
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.266);
+    padding: 0px 20px 0px 20px;
+    background-color: rgba(245, 222, 179, 0.141);
+}
+
+.profile_update_content h3{
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 40px;
+    margin-left: 40px;
+    color:rgb(0, 5, 93)
+}
+
+.profile_update_content span{
+    color: black;
+}
+
+.profile_update_content input{
+    width: 70%;
+    line-height: 30px;
+    padding-left: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-color: rgba(128, 128, 128, 0.385);
+}
+
+.profile_update_content .extend{
+    width: 95%;
+}
+
+.profile_update_content input:focus{
+    outline-color: rgba(0, 17, 128, 0.323);
+}
+
+.profile_update_content .save_button{
+    margin: auto auto;
+    display: block;
+    width: 80%;
+    height: 40px;
+    border-radius: 40px;
+    background-color: rgba(0, 3, 65, 0.886);
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    border-bottom: 2px solid rgba(245, 222, 179, 0.475);
+}
+
+.dp{
+    display: flex;
+    justify-content: center;
+    float: right;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.dp img{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    display: block;
+    margin: auto auto;
+    margin-bottom: 2px;
+}
+
+.dp p{
+    font-size: small;
+    color: rgba(128, 128, 128, 0.769);
+    margin-top: 2px;
+    cursor: pointer;
+    border-bottom: 2px solid gray;
+}
+
+.deactivate_account_control_display{
+    position: absolute;
+    backdrop-filter: brightness(0.1);
+    width: 100vw;
+    height: 100vh;
+}
+
+.deactivateAccount{
+    width: 50%;
+    height: 410px;
+    margin: auto auto;
+    margin-top: 20px;
+    border: 1px solid rgba(140, 139, 132, 0.421);
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px rgba(243, 240, 240, 0.705);
+    padding: 0px 20px 0px 20px;
+    background-color: rgb(251, 251, 251);
+    margin-top: 10%;
+    border-bottom: 2px solid red;
+}
+
+.del_account{
+    margin-top: 20px;
+}
+
+.del_account img{
+    width: 80px;
+    height: 70px;
+    display: block;
+    margin: auto;
+}
+
+.warning_box{
+    margin: auto auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.del_account .confirm_dialog{
+    margin-top: 0px;
+    font-size: x-large;
+    font-weight: 800;
+    color: red;
+    font-family: 'Marko One', serif;
+}
+
+.del_account .action{
+    font-family: 'Saira', sans-serif;
+    font-weight: 600;
+    border-bottom: 2px solid rgb(203, 194, 194);
+}
+
+.selections{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+
+.selections button{
+    padding: 20px 80px 20px 80px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+}
+
+.selections .confirm_remove{
+    background-color: red;
+}
+
+.selections .mistake{
+    background-color: blue;
 }

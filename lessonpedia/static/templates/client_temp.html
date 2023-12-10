@@ -7,29 +7,11 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="/lessonpedia/static/script/client_dashboard.js"></script>
     <link rel="stylesheet" href="/lessonpedia/static/css/client_dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <!-- deavtivate account -->
-    <div class="deactivate_account_control_display">
-        <div class="deactivateAccount">
-            <div class="del_account">
-                <img src="/lessonpedia/static/images/icons/warning.png" alt="">
-                <div class="warning_box">
-                    <p class="confirm_dialog">Warning!</p>
-                    <p class="action">This actions cannot be undo, do you wish to process?</p>
-                </div>
-                <div class="selections">
-                    <button class="confirm_remove">Confirm</button>
-                    <button class="mistake">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="container">
     
-    <div class="db">
-        <div class="container">
+    
+        
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
@@ -57,10 +39,11 @@
                 </div>
             </div>
 
+        <div class="db">
             <div class="content">
                 <div class="left_pane">
                     <div class="profile_info">
-                        <h2 class="fa-solid fa-gauge"><span>&nbsp; Dashboard</span></h2>
+                        <h2>Dashboard</h2>
                     </div>
                     <div class="activities">
                         <div class="courses">
@@ -70,7 +53,7 @@
                         </div> 
                         <div class="my_tutors">
                             <div class="search">
-                                <input type="text" name="" id="" class="extend" placeholder="" placeholder="Search">
+                                <input type="text" name="" id="" placeholder="Search">
                                 <button class="search_button">Search</button>
                             </div>
 
@@ -107,6 +90,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <div class="right_pane">
                     <div class="right_content">
@@ -125,10 +109,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+       
 
-    <!-- settings in dashboard -->
+
+    <!-- settings in dashboard 
     <div class="set">
         <div class="container">
             <div class="sidebar">
@@ -161,63 +145,7 @@
             <div class="content">
                 <div class="left_pane">
                     <div class="profile_info">
-                        <h2 class="fa-solid fa-gear">&nbsp; <span>Settings</span></h2>
-                    </div>
-
-                    <div class="update_navbar">
-                        <nav class="update_elements">
-                            <table>
-                                <thead id="elements_control">
-                                    <td style="width: 30px; cursor: default;"></td>
-                                    <td id="update_profile" class="test">Update Profile</td>
-                                    <td id="change_password" class="test">Change Password</td>
-                                    <td id="deactivate_account" class="test">Deactivate Account</td>
-                                </thead>
-                            </table>
-                        </nav>
-                    </div>
-
-                    <!-- profile update -->
-                    <div class="profile_control_display">
-                        <div class="profileUpdate">
-                            <div class="profile_update_content">
-                                <div class="dp">
-                                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
-                                    <p>change profile picture</p>
-                                </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
-                                
-                                <form action="">
-                                    <input type="text" name="" id="" placeholder="firstName">
-                                    <input type="text" name="" id="" class="extend" placeholder="lastName">
-                                    <input type="tel" name="" id="" class="extend" placeholder="phone Number">
-                                    <input type="text" name="" id="" class="extend" placeholder="residential Address">
-                                    <input type="text" name="" id="" class="extend" placeholder="state of resident">
-                                    <input type="text" name="" id="" class="extend" placeholder="Nationality"> <br>
-                                    <button class="save_button">Save</button>                               
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- change password -->
-                    <div class="change_password_control_display">
-                        <div class="profileUpdate">
-                            <div class="profile_update_content">
-                                <div class="dp">
-                                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
-                                </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
-                                
-                                <form action="">
-                                    <br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
-                                    <button class="save_button">Save</button>                               
-                                </form>
-                            </div>
-                        </div>
+                        <h2>Settings</h2>
                     </div>
                     
                 </div>
@@ -241,8 +169,6 @@
             </div>
         </div>
     </div>
-
-    
-
+-->
 </body>
 </html>
