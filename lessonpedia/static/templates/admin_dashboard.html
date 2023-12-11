@@ -4,17 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/lessonpedia/static/css/admin_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/lessonpedia/static/script/admin_dashboard.js"></script>
     <title>Admin - Dashboard</title>
 </head>
 <body>
     <div class="admin_dash">
         <div class="leftpane">
             <div class="leftpane_content">
-                <h2 class="dashboard_header">Dashboard</h2>
-                <p class="dashboard_list"></p>
-                <p class="dashboard_list"></p>
-                <p class="dashboard_list"></p>
+                <h2 class="dashboard_header"><img src="/lessonpedia/static/images/icons/dashboard.png" width="20px" alt=""> &nbsp;Dashboard</h2><br>
+                <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list"> &nbsp; Tutor</span></p><br><br>
+                <p class="fa-brands fa-leanpub"></i><span class="dashboard_list">&nbsp; &nbsp; Learners</span></p><br><br>
+                <p class="fa-solid fa-file-import"></i><span class="dashboard_list">&nbsp; &nbsp; Reports</span></p><br><br>
+                <p class="fa-solid fa-money-bill-transfer"></i><span class="dashboard_list">&nbsp; &nbsp; Transactions</span></p><br><br>
+                <p class="fa-solid fa-wrench fa-rotate-0"><span class="dashboard_list">&nbsp; Settings</span></p>
             </div>
+            <div class="admin_basic_profile">
+                <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                <p>Active Admin</p>
+            </div>
+        </div>
+        
+        <div class="admin_right">
+            <h4 class="hello_admin">  
+                Hello, <span>AdminUser</span>
+                <p class="logout">Logout</p>
+            </h4>
+            <div class="admin_right_top">
+                <section class="content">
+                    <img src="/lessonpedia/static/images/icons/allTutors.png" alt="">
+                    <section class="inner_content">
+                        <p class="top">Total Tutors</p>
+                        <p class="total_registered">5,200</p>
+                    </section>
+                </section>
+
+                <section class="content">
+                    <img src="/lessonpedia/static/images/icons/active.png" alt="">
+                    <section class="inner_content">
+                        <p class="top">Active</p>
+                        <p class="total_registered">400</p>
+                    </section>
+                </section>
+
+                <section class="content">
+                    <img src="/lessonpedia/static/images/icons/inactive.png" alt="">
+                    <section class="inner_content">
+                        <p class="top">Inactive</p>
+                        <p class="total_registered">230</p>
+                    </section>
+                </section>
+            </div>
+            <br>
+
+            <div class="tutors_list">
+                <div class="tutors_list_content">
+                    <section class="top">
+                        <div class="search">
+                            <input type="text" name="" id="" class="extend" placeholder="Search tutor">
+                            <button class="search_button">Search</button>
+                        </div>
+                        <h3 class="allTutors">All Tutors <span class="sort">Sort by:
+                            <select name="" id="">
+                                <option value="">Newest</option>
+                                <option value="">Oldest</option>
+                                <option value="">Active</option>
+                                <option value="">Inactive</option>
+                                <option value="">Ascending</option>
+                                <option value="">Descending</option>
+                            </select>
+                        </span></h3> 
+                                  
+                    </section>
+                </div>
+
+                <div class="all_data">
+                    <table>
+                        <thead class="table_header">
+                            <td>UserName</td>
+                            <td>email</td>
+                            <td>Assessment</td>
+                            <td>No of engagement</td>
+                            <td>Qualification</td>
+                            <td>Status</td>
+                            <td>Admin Action</td>
+                        </thead>
+                        <tr>
+                            <td>Engr. Chidubem</td>
+                            <td>engen.inyang@gmail.com</td>
+                            <td>82%</td>
+                            <td>5</td>
+                            <td>Bsc</td>
+                            <td><button class="check_status">Active</button></td>
+                            <td><button class="action">take action</button></td>
+                        </tr>
+                        <tr>
+                            <td>Mr. Gentle Inyang</td>
+                            <td>angel@special.com</td>
+                            <td>97%</td>
+                            <td>8</td>
+                            <td>Msc</td>
+                            <td><button class="check_status">Inactive</button></td>
+                            <td><button class="action">take action</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>           
         </div>
     </div>
 </body>
