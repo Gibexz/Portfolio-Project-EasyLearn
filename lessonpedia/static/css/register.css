@@ -160,12 +160,13 @@ label{
 
 .qualification, #specialization {
     display: inline-block;
-
 }
+
 .qualification {
     margin: 0 auto;
     margin-right: 0em;
 }
+
 .qualification select{
     height: 37px;
     border: none;
@@ -174,6 +175,11 @@ label{
     color: rgb(4, 4, 64);
     font-weight: bold;
 }
+
+.qualification select:focus{
+    outline: none;
+}
+
 .qualification select {
     padding: 10px;
 }

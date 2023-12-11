@@ -1,14 +1,21 @@
 $(document).ready(function(){
-    $("#set_active").click(function(){
+    $(".set_active").click(function(){
         $(".set").css("display", "block")
         $(".db").css("display", "none")
+        $(".history_set").css("display", "none")
     })
 
-    $("#db_active").click(function(){
+    $(".db_active").click(function(){
         $(".set").css("display", "none")
         $(".db").css("display", "block")
+        $(".history_set").css("display", "none")
     })
 
+    $(".history_active").click(function(){
+        $(".set").css("display", "none")
+        $(".db").css("display", "none")
+        $(".history_set").css("display", "block")
+    })
     // settings nav bar manipulation
 
     $(document).ready(function() {
@@ -56,7 +63,7 @@ $(document).ready(function(){
         $("#deactivate_account").css({
             "border": "none",
             "border-bottom": "1px solid black",
-            "color": "black"
+            "color": "red",
         });
         $("#update_profile").css({
             "border": "1px solid black",
@@ -75,12 +82,4 @@ $(document).ready(function(){
         $(".logout_btn").css("display", "none")
     })
 
-    $(".history").mouseenter(function(){
-        $(".coming_soon").show()
-        $(".coming_soon").css("display", "block"); // Show the element when .history is clicked
-    });
-    
-    $(".history").mouseleave(function(){
-        $(".coming_soon").hide(); // Hide the element when mouse leaves .history
-    });
 })

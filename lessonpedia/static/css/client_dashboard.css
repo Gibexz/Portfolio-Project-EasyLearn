@@ -544,12 +544,12 @@ body {
 .selections .mistake, .selections .cancel_logout{
     background-color: blue;
 }
-/* History Rules */
 
+/* History Rules */
 #coming_soon {
     display: none;
     position: absolute;
-    margin-top: 160px;
+    margin-top: -50px;
     font-size: 0.6em;
     color: grey;
 }
