@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/lessonpedia/static/script/tutor_dasboard.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="/lessonpedia/static/css/tutor_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body class="background">
+    <div class="bg">
+        <div class="tutor_dasboard">
+            <div class="left_section">
+                <h4><span class="fa-solid fa-gauge"></span>&nbsp; DashBoard</h4>
+                <center>
+                    <section class="user_details">
+                        <img src="/lessonpedia/static/images/clients/pass.jpg" alt="my image">
+                        <p>username</p>
+                        <p>useremail@email.com</p>
+                    </section>
+                    <div>
+                        <hr style="margin-bottom: 30px;">
+                    </div>
+                </center>
+                <nav class="nav_box">
+                    <ol class="nav_li">
+                        <li class="nav_links"><a href="">DashBoard</a></li>
+                        <li class="nav_links"><a href="">Clients</a></li>
+                        <li class="nav_links"><a href="">Programs</a></li>
+                        <li class="nav_links"><a href="">Income</a></li>
+                        <li class="nav_links"><a href="">Settings</a></li>
+                        
+                    </ol>
+                </nav>
+                <p class="logout"><a href="">Logout</a></p>
+            </div>
+
+            <div class="mid_section"> 
+                <div>
+                    <section class="greeting">
+                        <h3>hello <span class="username_size"><i>username    </span></i><img style="width: 20px; height: 20px;" src="/lessonpedia/static/images/icons/goodbye.png" alt=""></h3>
+                    </section>
+                    <div class="dashboard" style="display: non;">
+                        <section class="stats">
+                            <div class="stats_details"><p>Active Contracts</p><h3>2</h3></div>
+                            <div class="stats_details"><p>Pending Contracts</p><h3>1</h3></div>
+                            <div class="stats_details"><p>Total Contracts</p><h3>12</h3></div>
+                            <div class="stats_details"><p>Total Earnings</p><h3>₦&nbsp;413,000</h3></div>
+                        </section>
+                        <section class="myclient">
+                            <div>
+                                <div class="client_list_n_search">
+                                    <h3>Active Client List</h3>
+                                    <div class="search">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <input class="search-box" type="search" name="" id="" placeholder="Search name or subject">
+                                        <input class="search_button" type="submit" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="client_table-container">
+                                <table class="client_list_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Client Name</th>
+                                            <th>Subject</th>
+                                            <th>Start date</th>
+                                            <th>Termnation date</th>
+                                            <th>Tutoring days</th>
+                                            <th class="report_btn" style="color: transparent;">report</th>
+                                            <th class="cancel_btn" style="color: transparent;">cancel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>client.name Chidubem</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right_section">
+                <div><h4 class="quicK_links">Quicklinks</h4></div>
+                <div >
+                    <ol class="qlinks">
+                        <li><a href="">My reviews</a></li>
+                        <li><a href="">Rooms</a></li>
+                        <li><a href="">Take assement</a></li>
+                        <li><a href="">Meet the team</a></li>
+                        <li><a href="">Report an issue</a></li>
+                        <li><a href="">Print profile</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>5
