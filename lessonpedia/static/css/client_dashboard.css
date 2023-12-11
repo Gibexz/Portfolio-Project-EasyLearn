@@ -337,7 +337,7 @@ body {
 }
 
 .db{
-    display: nne;
+    display: block;
 }
 .change_password_control_display{
     display: none;
@@ -547,7 +547,7 @@ body {
 
 /* History Rules */
 #coming_soon {
-    display: block;
+    display: none;
     position: absolute;
     margin-top: -50px;
     font-size: 0.6em;
