@@ -63,10 +63,10 @@
                         <a href="#">Dashboard</a> 
                         </div>   
                     <div class="settings side">
-                    <a href="#" id="set_active">Settings</a> 
+                    <a href="#" class="set_active">Settings</a> 
                     </div>            
                     <div class="history side">
-                        <a href="#">History</a> 
+                        <a href="#" class="history_active">History</a> 
                     </div>
                     <div class="logout side logout_activation">
                         <a href="#">Logout</a> 
@@ -161,13 +161,13 @@
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="#" id="db_active">Dashboard</a> 
+                        <a href="#" class="db_active">Dashboard</a> 
                         </div>   
                     <div class="settings side">
                     <a href="#">Settings</a> 
                     </div>            
                     <div class="history side" id="history">
-                        <a href="#">History</a>
+                        <a href="#" class="history_active">History</a>
                     </div>
                     <div class="logout side logout_activation">
                         <a href="#">Logout</a> 
@@ -258,121 +258,123 @@
             </div>
         </div>
     </div>
-<!-- History Dashboard -->
-<div class="history_set">
-    <div class="container">
-        <div class="sidebar">
-            <div class="personal side">
-                <div class="profile_pics">
-                    <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
+
+    <!-- History Dashboard -->
+    <div class="history_set">
+        <div class="container">
+            <div class="sidebar">
+                <div class="personal side">
+                    <div class="profile_pics">
+                        <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
+                    </div>
+                    <div class="other_info">
+                        <p>andrewetedu@gmail.com</p>
+                        <p>andybillions@x.com</p>
+                    </div>
                 </div>
-                <div class="other_info">
-                    <p>andrewetedu@gmail.com</p>
-                    <p>andybillions@x.com</p>
+                <div class="hrtop"><hr></div>
+                <div class="side_items">
+                    <div class="settings side">
+                        <a href="#" class="db_active">Dashboard</a> 
+                        </div>   
+                    <div class="settings side">
+                    <a href="#" class="set_active">Settings</a> 
+                    </div>            
+                    <div class="history side historica" id="history">
+                        <a href="#">History</a>
+                        <h6 id="coming_soon" class="coming_soon">Coming soon</h6>
+                    </div>                    
+                    <div class="logout side logout_activation">
+                        <a href="#">Logout</a> 
+                    </div>            
                 </div>
             </div>
-            <div class="hrtop"><hr></div>
-            <div class="side_items">
-                <div class="settings side">
-                    <a href="#" id="db_active">Dashboard</a> 
-                    </div>   
-                <div class="settings side">
-                <a href="#">Settings</a> 
-                </div>            
-                <div class="history side historica"id="history">
-                    <a href="#" >History</a>
-                </div>
-                <h6 id="coming_soon" class="coming_soon">Coming soon</h6>
-                <div class="logout side logout_activation">
-                    <a href="#">Logout</a> 
-                </div>            
-            </div>
-        </div>
 
-        <div class="content">
-            <div class="left_pane">
-                <div class="profile_info">
-                    <h2 class="fa-solid fa-gear">&nbsp; <span>Settings</span></h2>
-                </div>
+            <div class="content">
+                <div class="left_pane">
+                    <div class="profile_info">
+                        <h2 class="fa-solid fa-timeline">&nbsp; <span>History</span></h2>
+                    </div>
 
-                <div class="update_navbar">
-                    <nav class="update_elements">
-                        <table>
-                            <thead id="elements_control">
-                                <td style="width: 30px; cursor: default;"></td>
-                                <td id="update_profile" class="test">Update Profile</td>
-                                <td id="change_password" class="test">Change Password</td>
-                                <td id="deactivate_account" class="test">Deactivate Account</td>
-                            </thead>
-                        </table>
-                    </nav>
-                </div>
+                    <!-- <div class="update_navbar">
+                        <nav class="update_elements">
+                            <table>
+                                <thead id="elements_control">
+                                    <td style="width: 30px; cursor: default;"></td>
+                                    <td id="update_profile" class="test">Update Profile</td>
+                                    <td id="change_password" class="test">Change Password</td>
+                                    <td id="deactivate_account" class="test">Deactivate Account</td>
+                                </thead>
+                            </table>
+                        </nav>
+                    </div> -->
 
-                <!-- profile update -->
-                <div class="profile_control_display">
-                    <div class="profileUpdate">
-                        <div class="profile_update_content">
-                            <div class="dp">
-                                <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
-                                <p>change profile picture</p>
-                            </div>                               
-                            <h3><span>Hi,</span> UserName</h3>
-                            
-                            <form action="">
-                                <input type="text" name="" id="" placeholder="firstName">
-                                <input type="text" name="" id="" class="extend" placeholder="lastName">
-                                <input type="tel" name="" id="" class="extend" placeholder="phone Number">
-                                <input type="text" name="" id="" class="extend" placeholder="residential Address">
-                                <input type="text" name="" id="" class="extend" placeholder="state of resident">
-                                <input type="text" name="" id="" class="extend" placeholder="Nationality"> <br>
-                                <button class="save_button">Save</button>                               
-                            </form>
+                    <!-- profile update -->
+                    <!-- <div class="profile_control_display">
+                        <div class="profileUpdate">
+                            <div class="profile_update_content">
+                                <div class="dp">
+                                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                                    <p>change profile picture</p>
+                                </div>                               
+                                <h3><span>Hi,</span> UserName</h3>
+                                
+                                <form action="">
+                                    <input type="text" name="" id="" placeholder="firstName">
+                                    <input type="text" name="" id="" class="extend" placeholder="lastName">
+                                    <input type="tel" name="" id="" class="extend" placeholder="phone Number">
+                                    <input type="text" name="" id="" class="extend" placeholder="residential Address">
+                                    <input type="text" name="" id="" class="extend" placeholder="state of resident">
+                                    <input type="text" name="" id="" class="extend" placeholder="Nationality"> <br>
+                                    <button class="save_button">Save</button>                               
+                                </form>
+                            </div>
+                        </div>
+                    </div> -->
+                    <h1><center>Coming soon!</center></h1>
+
+                    <!-- change password -->
+                    <div class="change_password_control_display">
+                        <div class="profileUpdate">
+                            <div class="profile_update_content">
+                                <div class="dp">
+                                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                                </div>                               
+                                <h3><span>Hi,</span> UserName</h3>
+                                
+                                <form action="">
+                                    <br><br>
+                                    <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
+                                    <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
+                                    <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
+                                    <button class="save_button">Save</button>                               
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
 
-                <!-- change password -->
-                <div class="change_password_control_display">
-                    <div class="profileUpdate">
-                        <div class="profile_update_content">
-                            <div class="dp">
-                                <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
-                            </div>                               
-                            <h3><span>Hi,</span> UserName</h3>
-                            
-                            <form action="">
-                                <br><br>
-                                <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
-                                <button class="save_button">Save</button>                               
-                            </form>
+                <div class="right_pane">
+                    <div class="right_content">
+                        <div class="rooms resize">Rooms
+                            <img src="/lessonpedia/static/images/socialLinks/chatroom.png" alt="">
                         </div>
-                    </div>
-                </div>
-                
-            </div>
-
-            <div class="right_pane">
-                <div class="right_content">
-                    <div class="rooms resize">Rooms
-                        <img src="/lessonpedia/static/images/socialLinks/chatroom.png" alt="">
-                    </div>
-                    <div class="add_tutor resize">Connect with a Tutor
-                        <img src="/lessonpedia/static/images/socialLinks/tutor.jpg" alt="">
-                    </div>
-                    <div class="suggestion resize">Have a suggestion?
-                        <img src="/lessonpedia/static/images/socialLinks/suggestion.png" alt="">
-                    </div>               
-                    <div class="spomsor resize">Become a sponsor
-                        <img src="/lessonpedia/static/images/socialLinks/sponsor.jpeg" alt="">
+                        <div class="add_tutor resize">Connect with a Tutor
+                            <img src="/lessonpedia/static/images/socialLinks/tutor.jpg" alt="">
+                        </div>
+                        <div class="suggestion resize">Have a suggestion?
+                            <img src="/lessonpedia/static/images/socialLinks/suggestion.png" alt="">
+                        </div>               
+                        <div class="spomsor resize">Become a sponsor
+                            <img src="/lessonpedia/static/images/socialLinks/sponsor.jpeg" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    
+        
 
 </body>
 </html>

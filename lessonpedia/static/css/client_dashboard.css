@@ -333,11 +333,11 @@ body {
     display: none;
 }
 .history_set{
-    display: non;
+    display: none;
 }
 
 .db{
-    display: none;
+    display: nne;
 }
 .change_password_control_display{
     display: none;
@@ -544,12 +544,12 @@ body {
 .selections .mistake, .selections .cancel_logout{
     background-color: blue;
 }
-/* History Rules */
 
+/* History Rules */
 #coming_soon {
     display: block;
     position: absolute;
-    margin-top: 160px;
+    margin-top: -50px;
     font-size: 0.6em;
     color: grey;
 }
