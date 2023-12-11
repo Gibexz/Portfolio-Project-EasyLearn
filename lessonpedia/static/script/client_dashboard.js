@@ -75,11 +75,12 @@ $(document).ready(function(){
         $(".logout_btn").css("display", "none")
     })
 
-    $("#history a").click(function(){
-        $("#coming_soon").css("display", "none")
-    })
-
-    $("#history a").mouseout(function(){
-        $("#coming_soon").css("display", "block")
-    })
+    $(".history").mouseenter(function(){
+        $(".coming_soon").show()
+        $(".coming_soon").css("display", "block"); // Show the element when .history is clicked
+    });
+    
+    $(".history").mouseleave(function(){
+        $(".coming_soon").hide(); // Hide the element when mouse leaves .history
+    });
 })
