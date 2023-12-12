@@ -1,16 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/lessonpedia/static/script/tutor_dasboard.js"></script>
+    <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="/lessonpedia/static/css/tutor_dashboard.css">
+    <script src="/lessonpedia/static/script/tutor_dashboard.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+
     <title>Document</title>
 </head>
 <body class="background">
+     <!-- deavtivate account -->
+     <div class="deactivate_account_control_display">
+        <div class="deactivateAccount">
+            <div class="warning">
+                <img src="/lessonpedia/static/images/icons/warning.png" alt="">
+                <div class="warning_box">
+                    <p class="confirm_dialog">Warning!</p>
+                    <p class="action">This actions cannot be undo, do you wish to process?</p>
+                </div>
+                <div class="selections">
+                    <button class="confirm_remove">Confirm</button>
+                    <button class="mistake">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- logout -->
+    <div class="logout_btn">
+        <div class="logout_btn_account">
+            <div class="warning">
+                <img src="/lessonpedia/static/images/icons/warning.png" alt="">
+                <div class="warning_box">
+                    <p class="confirm_dialog">Warning!</p>
+                    <p class="action">Are you sure to Logout?</p>
+                </div>
+                <div class="selections">
+                    <button class="confirm_logout">Yes</button>
+                    <button class="cancel_logout">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="bg">
         <!-- left section Navigation links (Dashboard, clients ...) -->
         <div class="tutor_dasboard">
@@ -28,15 +65,14 @@
                 </center>
                 <nav class="nav_box">
                     <ol class="nav_li">
-                        <li class="nav_links"><a href="">DashBoard</a></li>
-                        <li class="nav_links"><a href="">Clients</a></li>
-                        <li class="nav_links"><a href="">Programs</a></li>
-                        <li class="nav_links"><a href="">Income</a></li>
-                        <li class="nav_links"><a href="">Settings</a></li>
-                        
+                        <li class="nav_links dashboard"><a href="">DashBoard</a></li>
+                        <li class="nav_links clients"><a href="">Clients</a></li>
+                        <li class="nav_links programs"><a href="">Programs</a></li>
+                        <li class="nav_links transaction"><a href="">Income</a></li>
+                        <li class="nav_links setting active"><a href="">Settings</a></li>
                     </ol>
                 </nav>
-                <p class="logout"><a href="">Logout</a></p>
+                <p class="logout logout_activation">Logout</p>
             </div>
 
             <div class="mid_section"> 
@@ -47,7 +83,7 @@
                     </section>
 
                     <!-- Dashboard -->
-                    <div class="dashboard" style="display: non;">
+                    <div class="dashboard_contents content_divs">
                         <section class="stats">
                             <div class="stats_details"><p>Active Contracts</p><h3>2</h3></div>
                             <div class="stats_details"><p>Pending Contracts</p><h3>1</h3></div>
@@ -124,6 +160,51 @@
                                             <td class="report_btn"><button>report</button></td>
                                             <td class="cancel_btn"><button>cancel</button></td>
                                         </tr>
+                                        <tr>
+                                            <td>client.name Chidubem</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>client.name</td>
+                                            <td>client.subject</td>
+                                            <td>client.start_date</td>
+                                            <td>client.term_date</td>
+                                            <td>client.days</td>
+                                            <td class="report_btn"><button>report</button></td>
+                                            <td class="cancel_btn"><button>cancel</button></td>
+                                        </tr>
                                     
                                     </tbody>
                                 </table>
@@ -132,9 +213,259 @@
                     </div>
 
                     <!-- Settings -->
-                    <div class="settings">
-                        
+                    <div class="setting_contents content_divs">
+                        <div class="content">
+                            <div class="left_pane">
+                                <div class="profile_info">
+                                    <h2 class="fa-solid fa-gear">&nbsp; <span>Settings</span></h2>
+                                </div>
+
+                                <div class="update_navbar">
+                                    <nav class="update_elements">
+                                        <table>
+                                            <thead id="elements_control">
+                                                <td style="width: 30px; cursor: default;"></td>
+                                                <td id="update_profile" class="test">Update Profile</td>
+                                                <td id="update_schedule" class="test">Update Work Schedule</td>
+                                                <td id="uploads" class="test">Uploads</td>
+                                                <td id="change_password" class="test">Change Password</td>
+                                                <td id="deactivate_account" class="test">Deactivate Account</td>
+                                            </thead>
+                                        </table>
+                                    </nav>
+                                </div>
+
+                                <!-- profile update -->
+                                <div class="profile_control_display">
+                                    <div class="profileUpdate">
+                                        <div class="profile_update_content">
+                              
+                                            <!-- <h3><span>Hi,</span> UserName</h3> -->
+                                            
+                                            <form action="" class="form-table">
+                                                <div class="table-row">
+                                                    <div class="table-cell">
+                                                        <label for="firstName">First Name:</label>
+                                                        <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                                                        <label for="phoneNumber">Phone Number:</label>
+                                                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
+                                                        <label for="residentialAddress">Residential Address:</label>
+                                                        <input type="text" id="residentialAddress" name="residentialAddress" placeholder="Residential Address">
+                                                        <label for="state">State of Origin:</label>
+                                                        <select id="state" name="stateOfOrigin">
+                                                            <option value="">-- select one --</option>
+                                                            <option value="Imo">Imo</option>
+                                                            <option value="Enugu">Enugu</option>
+                                                            <option value="Rivers">Rivers</option>
+                                                            <option value="Akwa Ibom">Akwa Ibom</option>
+                                                        </select>
+                                                        <label for="stateOfResidence">State of Residence:</label>
+                                                        <input type="text" id="stateOfResidence" name="stateOfResidence" placeholder="State of Residence">
+                                                        <label for="nationality">Nationality:</label>
+                                                        <input type="text" id="nationality" name="nationality" placeholder="Nationality">
+                                                    </div>
+                                                    <div class="table-cell">
+                                                        <label for="lastName">Last Name:</label>
+                                                        <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+                                                        <label for="qualification">Highest Qualification:</label>
+                                                        <select id="qualification" name="qualification">
+                                                            <option value="">-- select one --</option>
+                                                            <option value="Bachelors">B.SC/B.ENG/B.EDU</option>
+                                                            <option value="Master">M.Sc</option>
+                                                            <option value="phd">PHD</option>
+                                                            <option value="others">others</option>
+                                                        </select>
+                                                        <label for="gender">Gender</label>
+                                                        <select id="Gender" name="gender">
+                                                            <option value="">-- select one --</option>
+                                                            <option value="male">male</option>
+                                                            <option value="female">female</option>
+                                                        </select>
+                                                        <label for="dob">Date of Birth</label>
+                                                        <input type="date" name="" id="dob" placeholder="Date of Birth">
+                                                        <label for="employement">Employment Status</label>
+                                                        <select id="employement" name="employement">
+                                                            <option value="">-- select one --</option>
+                                                            <option value="unemployed">unemployed</option>
+                                                            <option value="part_time">part-time</option>
+                                                            <option value="fulltime">fulltime</option>
+                                                        </select>
+                                                        <label for="avalability">Availability</label>
+                                                        <select id="avalability" name="avalability">
+                                                            <option value="">-- select one --</option>
+                                                            <option value="online">Online</option>
+                                                            <option value="in_person">In-person</option>
+                                                            <option value="hybrid">Hybrid</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="table-row">
+                                                    <div class="statement" colspan="">
+                                                        <textarea name="profileStatement" placeholder="Profile Statement" id="text_area"></textarea>
+                                                        <br>
+                                                        <div class="profile_update_btn">
+                                                            <button class="save_button" id="profile_update_save_btn" >Save</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                            
+                                              
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="working_schedule">
+                                    <div class="working_schedule_contents">
+                                        <div>
+                                            <form action="">
+                                                <div class="working-days work_options">
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Sunday"> Sunday
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Monday"> Monday
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Tuesday"> Tuesday
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Wednesday"> Wednesday
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Thursday"> Thursday
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Friday"> Friday
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingDay" value="Saturday"> Saturday
+                                                    </label>
+                                                </div>
+                                                <button class="save_button" id="day_save_btn">Save</button>
+                                            </form>
+                                        
+                                        </div>
+                                        <div>
+                                            <form action="">
+                                                <div class="working-hours work_options" style="display: non;">
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="9am - 10am"> 9am - 10am
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="10am - 11am"> 10am - 11am
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="11am - 12pm"> 11am - 12pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="12pm - 1pm"> 12pm - 1pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="1pm - 2pm"> 1pm - 2pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="2pm - 3pm"> 2pm - 3pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="3pm - 4pm"> 3pm - 4pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="4pm - 5pm"> 4pm - 5pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="5pm - 6pm"> 5pm - 6pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="6pm - 7pm"> 6pm - 7pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="7pm - 8pm"> 7pm - 8pm
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="workingHour" value="8pm - 9pm"> 8pm - 9pm
+                                                    </label>
+                                                </div>
+                                                <button class="save_button" id="hour_save_btn">Save</button>
+                                            </form>
+                                        </div>
+                                        <div></div>
+                                     </div>   
+                                </div>
+
+                                <!-- Documents upload -->
+                                <div class="doc_uploads">
+                                    <div class="dp">
+                                        <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                                    </div> 
+                                    <div class="">
+                                        <h3>Profile Picture Upload</h3>
+                                        <div class="pro_pics">
+                                            <form action="" method="post" enctype="multipart/form-data">
+                                                <label for="profilePic">Choose Profile Picture:</label>
+                                                <input type="file" id="profilePic" name="profilePic" accept="image/jpeg, image/png">
+                                                <br>
+                                                <input type="submit" value="Upload Profile Picture">
+                                            </form>
+                                        </div>
+
+                                        <hr>
+
+                                        <h3>Document Upload</h3>
+                                        <div class="docs">
+                                            <form action="" method="post" enctype="multipart/form-data">
+                                                <label for="cv">Upload CV:</label>
+                                                <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx">
+                                                <br><br>
+                                                <label for="bscCert">Upload BSc Certificate:</label>
+                                                <input type="file" id="bscCert" name="bscCert" accept=".pdf,.jpg,.png">
+                                                <br><br>
+                                                <label for="mscCert">Upload MSc Certificate:</label>
+                                                <input type="file" id="mscCert" name="mscCert" accept=".pdf,.jpg,.png">
+                                                <br><br>
+                                                <label for="ssceCert">Upload SSCE Certificate:</label>
+                                                <input type="file" id="ssceCert" name="ssceCert" accept=".pdf,.jpg,.png">
+                                                <br><br>
+                                                <label for="englishCert">Upload English Certificate:</label>
+                                                <input type="file" id="englishCert" name="englishCert" accept=".pdf,.jpg,.png">
+                                                <br><br>
+                                                <label for="otherCerts">Upload Other Certificates:</label>
+                                                <input type="file" id="otherCerts" name="otherCerts" multiple accept=".pdf,.jpg,.png">
+                                                <br><br>
+                                                <input type="submit" value="Upload Documents">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- change password -->
+                                <div class="change_password_control_display">
+                                    <div class="profileUpdate">
+                                        <div class="profile_update_content">
+                                            <div class="dp">
+                                                <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                                            </div>                               
+                                            <h3><span>Hi,</span> UserName</h3>
+                                            
+                                            <form action="">
+                                                <br><br>
+                                                <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
+                                                <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
+                                                <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
+                                                <button class="save_button_password extend" id="password_update_save_btn">Save</button>                               
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                
+                                
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             
@@ -155,4 +486,4 @@
         </div>
     </div>
 </body>
-</html>5
+</html>

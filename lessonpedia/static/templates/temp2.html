@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Profile Picture & Documents</title>
+</head>
+<body>
+
+  <h1>Profile Picture Upload</h1>
+  <form action="/upload-profile-pic" method="post" enctype="multipart/form-data">
+    <label for="profilePic">Choose Profile Picture:</label>
+    <input type="file" id="profilePic" name="profilePic" accept="image/*">
+    <input type="submit" value="Upload Profile Picture">
+  </form>
+
+  <hr>
+
+  <h1>Document Upload</h1>
+  <form action="/upload-documents" method="post" enctype="multipart/form-data">
+    <label for="cv">Upload CV:</label>
+    <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx">
+    <br><br>
+    <label for="bscCert">Upload BSc Certificate:</label>
+    <input type="file" id="bscCert" name="bscCert" accept=".pdf,.jpg,.png">
+    <br><br>
+    <label for="mscCert">Upload MSc Certificate:</label>
+    <input type="file" id="mscCert" name="mscCert" accept=".pdf,.jpg,.png">
+    <br><br>
+    <label for="ssceCert">Upload SSCE Certificate:</label>
+    <input type="file" id="ssceCert" name="ssceCert" accept=".pdf,.jpg,.png">
+    <br><br>
+    <label for="englishCert">Upload English Certificate:</label>
+    <input type="file" id="englishCert" name="englishCert" accept=".pdf,.jpg,.png">
+    <br><br>
+    <label for="otherCerts">Upload Other Certificates:</label>
+    <input type="file" id="otherCerts" name="otherCerts" multiple accept=".pdf,.jpg,.png">
+    <br><br>
+    <input type="submit" value="Upload Documents">
+  </form>
+
+</body>
+</html>
