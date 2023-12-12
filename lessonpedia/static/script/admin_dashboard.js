@@ -13,4 +13,45 @@ $(document).ready(function(){
             })
         }
     });
+
+    $("#set_tutor").click(function(){
+        $(".activate_tutors").show()
+        $(".activate_learners").hide()
+    })
+    $("#set_learner").click(function(){
+        $(".activate_tutors").hide()
+        $(".activate_learners").show()
+    })
+
+    $('.action').click(function(){
+        const userName = $(this).closest("tr").find(".user_name").text();
+        const userEmail = $(this).closest("tr").find(".user_email").text();
+        const userType = $(this).closest(".activate_tutors, .activate_learners").find(".inner_content .validate").text();
+        $('.selected_user').text(userName)
+        $('.selected_email').text(userEmail)
+        $('.profile_userName').text(userName)
+
+        const adminName = $(".admin_username").text()
+        $('.active_admin').text(adminName)
+        if (userType === "Total Tutors"){
+            $(".set_tutors_details").show()
+        } else {
+            $(".set_tutors_details").hide()
+        }
+
+        $('.set_action').show()
+    })
+
+    $('.close').click(function(){
+        $('.set_action').hide()
+    })
+
+    // profile, review and report activation logic
+    $('#activate_review').click(function(){
+        $('.set_other_details').hide()
+    })
+    $('#activate_profile').click(function(){
+        $('.set_other_details').show()
+        
+    })
 });

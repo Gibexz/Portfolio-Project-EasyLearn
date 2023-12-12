@@ -4,6 +4,29 @@ body{
     margin: 0px;
 }
 
+/* Hide logics */
+.activate_learners{
+    display: none;
+}
+
+.activate_tutors{
+    display: nne;
+}
+
+.set_action{
+    display: none;
+}
+
+.set_tutors_details{
+    display: none;
+}
+
+.set_other_details{
+    display:non;
+}
+
+/* hide logic ends */
+
 .admin_dash{
     display: flex;
 }
@@ -193,12 +216,13 @@ body{
     margin-left: 10px;
     margin-right: 10px;
     max-width: 920px;
+    margin: auto auto;
 }
 
 .all_data thead td{
     font-weight: bold;
     color: gray;
-    font-size: small;
+    font-size: x-small;
     padding: 2px 10px, 2px 10px;
 }
 
@@ -206,6 +230,7 @@ body{
     border-bottom: 1px solid gray;
     padding: 20px 15px 15px 15px;
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
 .check_status, .action{
@@ -219,5 +244,312 @@ body{
 .action{
     width: 80px;
     background: linear-gradient(90deg, darkblue, rgba(57, 104, 88, 0.794));
-    color: white
+    color: white;
+    cursor: pointer;
+}
+
+
+/* Action dialog */
+.activate_action{
+    display: flex;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: brightness(0.2);
+}
+
+.action_dialog{
+    height: 600px;
+    width: 900px;
+    background-color: whitesmoke;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 1px 1px 12px 1px white;
+    padding: 10px 20px 10px 20px;
+    border-bottom: 2px solid rgba(239, 2, 2, 0.433);
+}
+
+.close{
+    margin-left: 40px;
+    color: rgba(203, 1, 1, 0.329);
+    border: 1px solid rgb(117, 0, 0);
+    border-radius: 50%;
+    border-color: rgba(255, 0, 0, 0.085);
+    padding: 4px 8px 4px 8px;
+    box-shadow: 1px 1px 10px 1px rgba(252, 2, 2, 0.294);
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.close:hover{
+    color: red;
+    box-shadow: 1px 1px 10px 1px rgba(252, 2, 2, 0.487);
+}
+
+.action_dialog .header{
+    display: flx;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header h2{
+    margin-bottom: 0px;
+    color: rgb(0, 0, 70)
+}
+
+.push_right{
+    float: right;
+    margin-right: 20px;
+}
+
+.push_right p{
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.push_right .active_user{
+    font-weight: bolder;
+    color: gray;
+    margin-top: 10px;
+}
+
+.push_right .selected_user{
+    font-weight: lighter;
+    font-size: 14px;
+    border: 1px solid rgb(228, 220, 220);
+    padding: 4px 10px 4px 10px;
+    border-radius: 10px;
+    color: rgb(131, 1, 1);
+    background-color: rgba(144, 153, 156, 0.546);
+}
+
+.push_right .selected_email{
+    font-size: 11px;
+    float: right;
+    margin-right: 80px;
+    color: rgb(105, 103, 103);
+}
+
+.active_admin_user{
+    margin-top: 0px;
+    font-family: 'Saira', sans-serif;
+    font-style: italic;
+    font-size: 12px;
+    color: rgb(53, 42, 42);
+}
+
+.top_action{
+    border-bottom: 2px solid rgb(131, 1, 1);
+}
+
+.action_leftpane, .view_container{
+    margin-top: 20px;
+    background-color: white;
+    width: 220px;
+    height: 65vh;
+    border-radius: 12px;
+    box-shadow: 1px 1px 12px 1px rgb(232, 235, 197);
+}
+
+.action_head{
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-left: 0px !important;
+    border-bottom: 1px solid gray;
+    padding-bottom: 3px;
+    color: rgb(114, 2, 2);
+}
+
+.action_list{
+    padding-left: 5px;
+    padding-bottom: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+}
+
+.action_leftpane p{
+    padding-left: 30px;
+}
+
+.action_leftpane, .pedia{
+    font-family: 'DM Sans', sans-serif;
+}
+
+.action_list:hover{
+    color: green;
+}
+
+.pedia{
+    text-align: center;
+    margin-top: 180px;
+    color: rgb(1, 1, 118);
+    padding-top: 10px;
+    border-top: 2px solid rgba(0, 0, 0, 0.287);
+}
+
+.flex_content{
+    display: flex;
+}
+
+/* View section */
+.view_container{
+    margin-left: 20px;
+    width: 650px;
+    background: linear-gradient(450deg, white, whitesmoke);
+    box-shadow: none;
+}
+
+.nav_content{
+    margin: 20px;
+    border-bottom: 1px solid rgb(109, 98, 98);
+}
+
+.nav_content p{
+    display: inline;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.nav_content p:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+/* profile view */
+.profile_view{
+    border: 1px solid rgba(128, 128, 128, 0.107);
+    border-radius: 10px;
+    margin: auto;
+    height: 53vh;
+    width: 40vw;
+    box-shadow: 1px 1px 5px 1px rgba(222, 222, 211, 0.624);
+    font-family: 'DM Sans', sans-serif;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+
+.details img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: 0px;
+    box-shadow: 1px 1px 10px 1px rgba(48, 43, 23, 0.555);
+}
+
+.details .details_dp{
+    float: right;
+    text-align: center;
+    padding-right: 10px;
+}
+
+.details_dp p{
+    margin-top: 0px;
+    font-size: small;
+    color: gray
+}
+
+.details .head{
+    border-bottom: 1px solid rgba(175, 168, 168, 0.263);
+    width: 70%;
+    padding-left: 20px;
+}
+
+.details .head h4{
+    margin-bottom: 0px;
+    margin-top: 10px;
+    padding-top: 10px;
+    color: darkblue
+}
+
+.details .head span{
+    font-size: 14px;
+    color: rgba(128, 128, 128, 0.699)
+}
+
+.details .head p{
+    margin-top: 0px;
+    font-size: small;
+    color:gray;
+    padding-bottom: 5px;
+}
+
+.bio_data{
+    margin-left: 12px;
+}
+
+.bio_data fieldset{
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.203);
+}
+
+.bio_data fieldset p{
+    margin: 4px;
+}
+
+.bio_data legend{
+    color: gray;
+    font-size: small;
+}
+
+.bio_data .tag{
+    font-size: 12px;
+    color: gray;
+    padding-left: 5px;
+}
+
+.bio_data .value, .bio_data .state_national{
+    background-color: white;
+    border: 1px solid rgba(128, 128, 128, 0.268);
+    padding: 2px 2px 2px 5px;
+    border-radius: 10px;
+    font-size: small;
+}
+
+.bio_data .state{
+    width: 60%;
+    padding: 0px 0px 1px 0px;
+    margin-top: 0px;
+}
+
+.bio_data .national{
+    border-left: 1px solid rgba(0, 0, 0, 0.22);
+    padding: 0px 0px 1px 10px;
+    margin-top: 0px;
+    height: 15px;
+}
+
+.state_national{
+    display: flex;
+    height: 16px;
+}
+
+.gpa{
+    padding-left: 30px;
+}
+
+.grade{
+    width: 50px;
+}
+
+.cv_view{
+    float: right;
+    margin-right: 10px;
+    font-size: small;
+    border-radius: 50px;
+    font-size: 10px;
+    padding: 3px 8px 2px 8px;
+    border: 1px solid gray;
+    cursor: pointer;
+    color: darkblue;
+    background-color: rgb(201, 189, 233);
+}
+
+.total{
+    width: 30% !important;
+}
+
+.accepted{
+    width: 30% !important;
 }
