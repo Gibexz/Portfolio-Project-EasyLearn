@@ -1,0 +1,72 @@
+body{
+    margin: 0px;
+    background: url('/lessonpedia/static/images/backgrounds/darkbgr.png') no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: antiquewhite;
+}
+.container {
+    display: flex;
+     min-height: 90vh;
+}
+.subject_pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px solid wheat;
+}
+.tutors_pane{
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+    border: 2px solid grey;
+}
+
+/* for rounded icon-like images */
+.tiny_images{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    margin-top: 2px;
+}
+
+
+.tutor_subject .status {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    float: right;
+    margin: 10px;
+    margin-right: 30px;
+    background-color: rgb(20, 236, 20);
+}
+
+/* Bottom Footer */
+
+.buttom_footer{
+    background:linear-gradient(90deg, rgba(8, 5, 5, 0.757) 40%, rgba(12, 12, 12, 0.789) 60%);
+    display: flex;
+    padding-left: 10%;
+    color:white;
+    height: 80px;
+    align-items: center;
+    margin-top: auto;
+}
+
+.buttom_footer p{
+    margin-top: 12px;
+    max-width: 450px;
+    font-family: 'Saira', sans-serif;
+}
+
+.buttom_footer .social_medias{
+    padding-left: 40%;
+    width: 200px;
+}
+
+.buttom_footer .social_medias img{
+    padding-right: 10%;
+}
