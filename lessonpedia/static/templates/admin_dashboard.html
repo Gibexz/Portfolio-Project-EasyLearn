@@ -11,6 +11,30 @@
     <title>Admin - Dashboard</title>
 </head>
 <body>
+    <!-- disable account -->
+    <div class="set_disable_account">
+        <div class="disable_account">
+            <div class="disable_account_content">
+                <p class="disable_close" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="/lessonpedia/static/images/icons/warning.png" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Warning!</p>
+                        <p class="disable_action">You are about suspending the active user, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <button class="confirm_remove">Suspend</button>
+                        <button class="mistake">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
     <!-- take action -->
     <div class="set_action">
         <div class="activate_action">
@@ -31,12 +55,12 @@
                     <div class="action_content">
                         <div class="action_leftpane">
                             <p class="action_head">Admin Privilege</p>
-                            <p class="fa-solid fa-street-view"><span class="action_list">Views</span></p><br>
-                            <p class="fa-solid fa-user-minus"><span class="action_list">Suspend Account</span></p>
-                            <p class="fa-solid fa-user-xmark"><span class="action_list">Block Account</span></p>
-                            <p class="fa-solid fa-xmark"><span class="action_list">Remove Account</span></p>
+                            <p class="fa-solid fa-street-view"><span class="action_list" id="activate_views">Views</span></p><br>
+                            <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend">Suspend Account</span></p>
+                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block">Block Account</span></p>
+                            <p class="fa-solid fa-xmark"><span class="action_list" id="activate_remove">Remove Account</span></p>
                             <footer class="pedia">
-                                @lessonpedia
+                                @lessonpedia 
                             </footer>
                         </div>
                     </div>
@@ -150,6 +174,20 @@
                                                 </section>
                                             </section>
                                         </div>
+                                    </section>
+                                </div>
+
+                                <!-- Review page -->
+                                <div class="set_review_details">
+                                    <section class="other_details">
+                                        <center>Review Service in Progress</center>                                          
+                                    </section>
+                                </div>
+
+                                <!-- Report page -->
+                                <div class="set_report_details">
+                                    <section class="other_details">
+                                        <center>Report Service in Progress</center>                                          
                                     </section>
                                 </div>
                             </div>

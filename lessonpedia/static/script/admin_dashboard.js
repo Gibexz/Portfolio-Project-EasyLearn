@@ -49,9 +49,28 @@ $(document).ready(function(){
     // profile, review and report activation logic
     $('#activate_review').click(function(){
         $('.set_other_details').hide()
+        $('.set_review_details').show()
+        $('.set_report_details').hide()
     })
     $('#activate_profile').click(function(){
         $('.set_other_details').show()
-        
+        $('.set_review_details').hide()
+        $('.set_report_details').hide()
+    })
+    $('#activate_report').click(function(){
+        $('.set_other_details').hide()
+        $('.set_review_details').hide()
+        $('.set_report_details').show()
+    })
+
+    // account disabling logics
+    $('#activate_suspend').click(function(){
+        $('.set_action').hide()
+        $('.set_disable_account').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action').show()
+        $('.set_disable_account').hide()
     })
 });
