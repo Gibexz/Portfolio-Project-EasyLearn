@@ -1039,3 +1039,7 @@ select{
     background-color: rgb(2, 7, 80);
     box-shadow: 1px 1px 10px rgba(243, 240, 240);
 }
+
+th {
+    cursor: pointer;
+}
