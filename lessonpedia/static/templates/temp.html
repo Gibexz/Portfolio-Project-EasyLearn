@@ -1,39 +1,123 @@
-<form>
-    <input type="text" name="firstName" placeholder="First Name">
-  
-    <input type="text" name="lastName" placeholder="Last Name">
-  
-    <input type="text" name="stateOfOrigin" placeholder="State of Origin">
-  
-    <input type="text" name="stateOfResidence" placeholder="State of Residence">
-  
-    <input type="text" name="nationality" placeholder="Nationality">
-  
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Monday"> Monday</label>
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Tuesday"> Tuesday</label>
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Wednesday"> Wednesday</label>
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Thursday"> Thursday</label>
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Friday"> Friday</label>
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Saturday"> Saturday</label>
-    <label><input type="checkbox" name="daysAvailableForWork[]" value="Sunday"> Sunday</label>
-  
-    <input type="number" name="age" placeholder="Age">
-  
-    <input type="number" name="height" placeholder="Height (cm)">
-  
-    <label><input type="checkbox" name="months[]" value="January"> January</label>
-    <label><input type="checkbox" name="months[]" value="February"> February</label>
-    <label><input type="checkbox" name="months[]" value="March"> March</label>
-    <label><input type="checkbox" name="months[]" value="April"> April</label>
-    <label><input type="checkbox" name="months[]" value="May"> May</label>
-    <label><input type="checkbox" name="months[]" value="June"> June</label>
-    <label><input type="checkbox" name="months[]" value="July"> July</label>
-    <label><input type="checkbox" name="months[]" value="August"> August</label>
-    <label><input type="checkbox" name="months[]" value="September"> September</label>
-    <label><input type="checkbox" name="months[]" value="October"> October</label>
-    <label><input type="checkbox" name="months[]" value="November"> November</label>
-    <label><input type="checkbox" name="months[]" value="December"> December</label>
-  
-    <input type="submit" value="Submit">
-  </form>
-  
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sortable Table</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    /* Your CSS styles here */
+    .client_table-container {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .client_list_table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .client_list_table th,
+    .client_list_table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .client_list_table th {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="client_table-container">
+    <table class="client_list_table">
+      <thead>
+        <tr>
+          <th class="sortClientName" data-column="0">Client Name</th>
+          <th class="sortSubject" data-column="1">Subject</th>
+          <th class="sortPayRate" data-column="2">Pay Rate (per hour)</th>
+          <th class="sortContractAmount" data-column="3">Contract Amount</th>
+          <th class="sortPaymentReceived" data-column="4">Payment Received</th>
+          <th class="sortPaymentRemaining" data-column="5">Payment Remaining</th>
+          <th class="sortContractLength" data-column="6">Contract Length</th>
+          <th class="sortStartDate" data-column="7">Start Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Mathematics</td>
+          <td>&#8358; 1500</td>
+          <td>&#8358; 80000</td>
+          <td>&#8358; 32000</td>
+          <td>&#8358; 48000</td>
+          <td>6 weeks</td>
+          <td>2022-09-15</td>
+        </tr>
+        <tr>
+          <td>Jane Smith</td>
+          <td>Science</td>
+          <td>&#8358; 1800</td>
+          <td>&#8358; 95000</td>
+          <td>&#8358; 42000</td>
+          <td>&#8358; 53000</td>
+          <td>7 weeks</td>
+          <td>2022-10-02</td>
+        </tr>
+        <tr>
+          <td>Alice Johnson</td>
+          <td>English</td>
+          <td>&#8358; 2000</td>
+          <td>&#8358; 110000</td>
+          <td>&#8358; 50000</td>
+          <td>&#8358; 60000</td>
+          <td>8 weeks</td>
+          <td>2022-11-18</td>
+        </tr>
+        <tr>
+          <td>Michael Brown</td>
+          <td>History</td>
+          <td>&#8358; 1600</td>
+          <td>&#8358; 85000</td>
+          <td>&#8358; 38000</td>
+          <td>&#8358; 47000</td>
+          <td>5 weeks</td>
+          <td>2022-08-28</td>
+        </tr>
+        <!-- Existing rows remain -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $('.client_list_table th').on('click', function() {
+        const column = $(this).data('column');
+        const $tbody = $('.client_list_table tbody');
+        const $header = $(this);
+        const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+        $('.client_list_table th').data('direction', '');
+
+        $header.data('direction', direction);
+
+        const rows = $tbody.find('tr').get();
+        rows.sort(function(rowA, rowB) {
+          const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+          const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+          if (direction === 'ascending') {
+            return cellA.localeCompare(cellB);
+          } else {
+            return cellB.localeCompare(cellA);
+          }
+        });
+
+        $.each(rows, function(index, row) {
+          $tbody.append(row);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

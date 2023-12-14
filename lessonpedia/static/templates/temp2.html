@@ -1,42 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Upload Profile Picture & Documents</title>
+  <title>Sort Form</title>
 </head>
 <body>
 
-  <h1>Profile Picture Upload</h1>
-  <form action="/upload-profile-pic" method="post" enctype="multipart/form-data">
-    <label for="profilePic">Choose Profile Picture:</label>
-    <input type="file" id="profilePic" name="profilePic" accept="image/*">
-    <input type="submit" value="Upload Profile Picture">
+  <form action="#" method="get">
+    <label for="sortOptions">Sort By:</label>
+    <select id="sortOptions" name="sortOptions">
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
+      <option value="bigAmounts">Big Amounts</option>
+      <option value="smallAmounts">Small Amounts</option>
+    </select>
+    <input type="submit" value="Sort">
   </form>
 
-  <hr>
+</body>
+</html> -->
 
-  <h1>Document Upload</h1>
-  <form action="/upload-documents" method="post" enctype="multipart/form-data">
-    <label for="cv">Upload CV:</label>
-    <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx">
-    <br><br>
-    <label for="bscCert">Upload BSc Certificate:</label>
-    <input type="file" id="bscCert" name="bscCert" accept=".pdf,.jpg,.png">
-    <br><br>
-    <label for="mscCert">Upload MSc Certificate:</label>
-    <input type="file" id="mscCert" name="mscCert" accept=".pdf,.jpg,.png">
-    <br><br>
-    <label for="ssceCert">Upload SSCE Certificate:</label>
-    <input type="file" id="ssceCert" name="ssceCert" accept=".pdf,.jpg,.png">
-    <br><br>
-    <label for="englishCert">Upload English Certificate:</label>
-    <input type="file" id="englishCert" name="englishCert" accept=".pdf,.jpg,.png">
-    <br><br>
-    <label for="otherCerts">Upload Other Certificates:</label>
-    <input type="file" id="otherCerts" name="otherCerts" multiple accept=".pdf,.jpg,.png">
-    <br><br>
-    <input type="submit" value="Upload Documents">
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sort Table</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <form id="sortForm">
+    <label for="sortOptions">Sort By:</label>
+    <select id="sortOptions" name="sortOptions">
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
+      <option value="ascending">Ascending Amount</option>
+      <option value="descending">Descending Amount</option>
+    </select>
+    <input type="submit" value="Sort">
   </form>
 
+  <table id="dataTable">
+    <!-- Your table data goes here -->
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Amount Paid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populate this section dynamically from your database -->
+      <tr>
+        <td>John Doe</td>
+        <td>2023-01-15</td>
+        <td>$100</td>
+      </tr>
+      <tr>
+        <td>Jane Smith</td>
+        <td>2023-02-20</td>
+        <td>$150</td>
+      </tr>
+      <!-- Add more rows as needed -->
+    </tbody>
+  </table>
+
+  <script src="script.js"></script>
 </body>
 </html>

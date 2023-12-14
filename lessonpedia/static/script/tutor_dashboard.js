@@ -25,7 +25,8 @@ $(document).ready(function() {
         $(".test").css({
             "border": "none",
             "border-bottom": "1px solid black",
-            "color": "black"
+            "color": "black",
+            "box-shadow": "none"
         });
 
         $("#deactivate_account").click(function(){
@@ -37,11 +38,56 @@ $(document).ready(function() {
         $(this).css({
             "border": "1px solid black",
             "border-bottom": "1px solid transparent",
-            "color": "rgb(3, 120, 3)"
+            "color": "rgb(3, 120, 3)",
+            "box-shadow": "2px 2px 10px 2px rgb(201, 199, 199)"
         });
     });
 
-    // toggling settings nav dialog display
+
+    // toggling navigation for programs
+    $("#your_subject").click(function(){
+        $(".subject_view_display").css("display", "block")
+        $(".subject_add_display").css("display", "none")
+        $(".subject_update_display").css("display", "none")
+        $(".subject_remove_display").css("display", "none")
+    })
+    $("#add_subject").click(function(){
+        $(".subject_view_display").css("display", "none")
+        $(".subject_add_display").css("display", "block")
+        $(".subject_update_display").css("display", "none")
+        $(".subject_remove_display").css("display", "none")
+    })
+    $("#update_subject").click(function(){
+        $(".subject_view_display").css("display", "none")
+        $(".subject_add_display").css("display", "none")
+        $(".subject_update_display").css("display", "block")
+        $(".subject_remove_display").css("display", "none")
+    })
+    $("#remove_subject").click(function(){
+        $(".subject_view_display").css("display", "none")
+        $(".subject_add_display").css("display", "none")
+        $(".subject_update_display").css("display", "none")
+        $(".subject_remove_display").css("display", "block")
+    })
+
+
+
+    // logic and alert for subject addtion to the database
+    $('#subjectForm').submit(function(event) {
+        event.preventDefault();
+        const subjectName = $('#subjectName').val();
+        const proficiency = $('#proficiency').val();
+        const teachingExperience = $('#teachingExperience').val();
+  
+        // For demonstration purposes, alert the submitted values
+        alert(`Subject Name: ${subjectName}\nProficiency: ${proficiency}\nTeaching Experience: ${teachingExperience}\n\n Successfully Added`);
+  
+        // You can replace the alert with code to save this information to a database or perform other operations
+      });
+
+    
+
+    // toggling nav dialog display for settings
     $("#change_password").click(function(){
         $(".profile_control_display").css("display", "none")
         $(".working_schedule").css("display", "none")
@@ -77,6 +123,8 @@ $(document).ready(function() {
         $(".deactivate_account_control_display").css("display", "none")
         $(".profile_control_display").css("display", "block")
         $(".change_password_control_display").css("display", "none")
+        $(".working_schedule").css("display", "none")
+        $(".doc_uploads").css("display", "none")
         $("#deactivate_account").css({
             "border": "none",
             "border-bottom": "1px solid black",
@@ -141,8 +189,289 @@ $(document).ready(function() {
     })
     // stop
 
+    // report button
+    $('.report_btn').click(function(){
+        $(".report_btn_activation").css("display", "block")
+    })
+
+    $(".cancel_report").click(function() {
+        $(".report_btn_activation").css("display", "none")
+    })
+    // stop
+
+    //  cancel contract button
+    $('.cancel_contract_btn').click(function(){
+        $(".cancel_contract_btn_activation").css("display", "block")
+    })
+
+    $(".cancel_report").click(function() {
+        $(".cancel_contract_btn_activation").css("display", "none")
+    })
+    // stop
+
+    //  review pop up link
+    $('.review_link').click(function(){
+        $(".review_link_popup_activation").css("display", "block")
+    })
+
+    $(".close_review").click(function() {
+        $(".review_link_popup_activation").css("display", "none")
+    })
+    // stop
+
+    //  review pop up link
+    $('.view_reports').click(function(){
+        $(".reports_view_popup_activation").css("display", "block")
+    })
+
+    $(".close_review").click(function() {
+        $(".reports_view_popup_activation").css("display", "none")
+    })
+    // stop
+
 });
 
+
+
+// sort algorithm for tutors review pop up
 $(document).ready(function() {
-    
-})
+    $('.sortReview').on('click', function() {
+      const column = $(this).data('column');
+      const $tbody = $('#reviewTable tbody');
+      const $header = $(this);
+      const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+      // Remove arrow indicator from all headers
+      $('.sortReview').data('direction', '');
+
+      $header.data('direction', direction);
+
+      const rows = $tbody.find('tr').get();
+      rows.sort(function(rowA, rowB) {
+        const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+        const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+        if (direction === 'ascending') {
+          return cellA.localeCompare(cellB);
+        } else {
+          return cellB.localeCompare(cellA);
+        }
+      });
+
+      $.each(rows, function(index, row) {
+        $tbody.append(row);
+      });
+    });
+  });
+
+  // sort algorithm for tutors report pop up
+$(document).ready(function() {
+    $('.sortReport').on('click', function() {
+      const column = $(this).data('column');
+      const $tbody = $('#reportTable tbody');
+      const $header = $(this);
+      const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+      // Remove arrow indicator from all headers
+      $('.sortReport').data('direction', '');
+
+      $header.data('direction', direction);
+
+      const rows = $tbody.find('tr').get();
+      rows.sort(function(rowA, rowB) {
+        const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+        const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+        if (direction === 'ascending') {
+          return cellA.localeCompare(cellB);
+        } else {
+          return cellB.localeCompare(cellA);
+        }
+      });
+
+      $.each(rows, function(index, row) {
+        $tbody.append(row);
+      });
+    });
+});
+//client_list_table_active
+
+// sort js algorithm for Active Clients table
+$(document).ready(function() {
+    $('.client_list_table_active th').on('click', function() {
+      const column = $(this).data('column');
+      const $tbody = $('.client_list_table_active tbody');
+      const $header = $(this);
+      const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+      $('.client_list_table_active th').data('direction', '');
+
+      $header.data('direction', direction);
+
+      const rows = $tbody.find('tr').get();
+      rows.sort(function(rowA, rowB) {
+        const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+        const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+        if (direction === 'ascending') {
+          return cellA.localeCompare(cellB);
+        } else {
+          return cellB.localeCompare(cellA);
+        }
+      });
+
+      $.each(rows, function(index, row) {
+        $tbody.append(row);
+      });
+    });
+});
+
+
+
+// sort js algorithm for client history table
+$(document).ready(function() {
+    $('.client_list_table_history th').on('click', function() {
+      const column = $(this).data('column');
+      const $tbody = $('.client_list_table_history tbody');
+      const $header = $(this);
+      const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+      $('.client_list_table_history th').data('direction', '');
+
+      $header.data('direction', direction);
+
+      const rows = $tbody.find('tr').get();
+      rows.sort(function(rowA, rowB) {
+        const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+        const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+        if (direction === 'ascending') {
+          return cellA.localeCompare(cellB);
+        } else {
+          return cellB.localeCompare(cellA);
+        }
+      });
+
+      $.each(rows, function(index, row) {
+        $tbody.append(row);
+      });
+    });
+});
+
+
+
+// sort js algorithm for income table
+$(document).ready(function() {
+    $('.client_list_table_income th').on('click', function() {
+      const column = $(this).data('column');
+      const $tbody = $('.client_list_table_income tbody');
+      const $header = $(this);
+      const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+      $('.client_list_table_income th').data('direction', '');
+
+      $header.data('direction', direction);
+
+      const rows = $tbody.find('tr').get();
+      rows.sort(function(rowA, rowB) {
+        const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+        const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+        if (direction === 'ascending') {
+          return cellA.localeCompare(cellB);
+        } else {
+          return cellB.localeCompare(cellA);
+        }
+      });
+
+      $.each(rows, function(index, row) {
+        $tbody.append(row);
+      });
+    });
+});
+
+
+
+// Dynamic saving of work days and hours selected to the html form. CHAT GPT I HAIL
+// update schedule js
+$(document).ready(function() {
+    function populateSavedData() {
+      const savedDays = localStorage.getItem('savedDays');
+      const savedHours = localStorage.getItem('savedHours');
+
+      if (savedDays) {
+        $('#subjectDays tbody').html(savedDays);
+      }
+
+      if (savedHours) {
+        $('#subjectHours tbody').html(savedHours);
+      }
+    }
+
+    populateSavedData(); // Load saved data on page load
+
+    $('#save_btn').on('click', function() {
+      const daysChecked = $('#workDays input[type="checkbox"]:checked');
+      const hoursChecked = $('#workHours input[type="checkbox"]:checked');
+
+      $('#subjectDays tbody').empty();
+      $('#subjectHours tbody').empty();
+
+      daysChecked.each(function() {
+        $('#subjectDays tbody').append('<tr><td>' + $(this).val() + '</td></tr>');
+      });
+
+      hoursChecked.each(function() {
+        $('#subjectHours tbody').append('<tr><td>' + $(this).val() + '</td></tr>');
+      });
+
+      // Store data to Local Storage
+      localStorage.setItem('savedDays', $('#subjectDays tbody').html());
+      localStorage.setItem('savedHours', $('#subjectHours tbody').html());
+
+      //ajax code implementation
+              // Simulate sending data to the database
+        // $.ajax({
+        // type: 'POST',
+        // url: '/your-backend-endpoint', // Replace with your backend API endpoint
+        // data: {
+        //     days: $('#subjectDays tbody').html(),
+        //     hours: $('#subjectHours tbody').html()
+        // },
+        // success: function(response) {
+        //     console.log('Data saved to database:', response);
+        // },
+        // error: function(error) {
+        //     console.error('Error saving data:', error);
+        // }
+        // });
+
+      $(this).addClass('inactive');
+      $('#workDays')[0].reset();
+      $('#workHours')[0].reset();
+    });
+
+    $('#reset_btn').on('click', function() {
+      $('#workDays')[0].reset();
+      $('#workHours')[0].reset();
+      $('#subjectDays tbody').empty();
+      $('#subjectHours tbody').empty();
+      $('#save_btn').addClass('inactive');
+
+      // Clear Local Storage data
+      localStorage.removeItem('savedDays');
+      localStorage.removeItem('savedHours');
+    });
+
+    $('.work_options input[type="checkbox"]').on('change', function() {
+      const daysChecked = $('#workDays input[type="checkbox"]:checked');
+      const hoursChecked = $('#workHours input[type="checkbox"]:checked');
+
+      if (daysChecked.length > 0 && hoursChecked.length > 0) {
+        $('#save_btn').removeClass('inactive');
+      } else {
+        $('#save_btn').addClass('inactive');
+      }
+    });
+});
+
