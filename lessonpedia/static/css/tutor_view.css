@@ -7,7 +7,7 @@ body{
     display: flex;
     flex-direction: column;
     color: black;
-    min-width: 605px;
+    min-width: none;
 }
 /* container for subjects and tutor overview */
 
@@ -292,7 +292,7 @@ MEDIA QUERIES
 }
 
 /* Media Query for screens less than 805px */
-@media only screen and (max-width: 805px) {
+@media only screen and (max-width: 895px) {
     .tutor_overview {
         width: 40%; /* Adjust width for smaller screens */
     }
@@ -396,6 +396,16 @@ MEDIA QUERIES
         margin-bottom: calc((100% - 150px) / 2); 
     }
 }
+@media only screen and (max-width: 768px) {
+    .subject_pane {
+        width: 100%; 
+        position: static;
+    }
+
+    .tutors_pane {
+        margin-left: 0; 
+    }
+}
 
 @media only screen and (max-width: 758px) {
     .body{
@@ -404,96 +414,47 @@ MEDIA QUERIES
         flex-direction: column;
     }
     .subject_pane {
-        /* position: static; */
-        width: 250px;
+        width: 100%;
         display: static !important;
+        flex: 1;
+        padding: 2%;
     
     }
     .tutors_pane{
-        flex: 2;
-    }
-    .tutor_row{
+        margin: auto auto;
+        margin-left: 10px !important;
+        flex-wrap: wrap;
         width: 100%;
     }
+.header{
+    width: 100%;
+    margin-right: 10px;
+}
 .tutor_overview{
-    height: 100px;
-    width: 100px;
+    height: 300px !important;
+    width: 33% !important;
     font-size: 12px;
+    margin-bottom: 15px !important;
+
+}
+.ul {
+    padding-left:50px;
+}
+.list_item a {
+    padding-left: 20px;
+}
+.subject_pane h3 {
+    padding-left: 20px;
+}
+.tutor_image{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+.other_info {
+    padding: 0;
+    margin: 0;
 }
 }
 
-@media only screen and (max-width: 600px) {
-    .body{
-        font-size: 12px;
-    }
-    .subject_pane {
-        width: 140px;
-    }
-    .tutors_pane{
-        margin-right: 200px !important;
-    }
-.tutor_overview{
-    height: 100px;
-    width: 100px;
-    font-size: 12px;
-}
-}
 
-
-@media only screen and (max-width: 500px) {
-    .subject_pane {
-        width: 120px;
-    }
-
-    .tutors_pane {
-        margin-left: 120px;
-    }
-    .tutor_row{
-    display: none;
-    }
-}
-
-
-@media only screen and (max-width: 400px) {
-    .subject_pane {
-        width: 100%;
-    }
-
-    .tutors_pane {
-        margin-left: 0;
-    }
-
-    .tutor_overview {
-        width: 100%;
-    }
-
-    .tutor_overview .tutor_image {
-        height: 120px;
-    }
-
-    .tutor_overview:not(:first-child):nth-child(2n+1) .tutor_image {
-        margin-bottom: calc((100% - 120px) / 2);
-    }
-}
-@media only screen and (max-width: 200px) {
-    .subject_pane {
-        position: static !important;
-        width: 100%;
-    }
-
-    .tutors_pane {
-        margin-left: 0;
-    }
-
-    .tutor_overview {
-        width: 100%;
-    }
-
-    .tutor_overview .tutor_image {
-        height: 120px;
-    }
-
-    .tutor_overview:not(:first-child):nth-child(2n+1) .tutor_image {
-        margin-bottom: calc((100% - 120px) / 2);
-    }
-}
