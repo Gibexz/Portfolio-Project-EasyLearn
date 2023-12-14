@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Roboto&family=Rowdies&family=Saira&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/lessonpedia/static/images/backgrounds/profile_background.jpg') repeat; 
+    background-repeat: no-repeat;
+    background-size: 150%;
+    animation: animateBackground 20s linear infinite; /* Adjust the animation duration as needed (doubled for back and forth) */
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+}
+
+@keyframes animateBackground {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+/* main Logic */
+.content_left{
+    background-color: rgba(0, 0, 255, 0.143);
+    width: 350px;
+    align-items: center;
+    height: 100vh;
+    padding: 20px 10px 0px  30px;
+    border-right: 2px solid rgba(255, 0, 0, 0.167);
+    position: fixed;
+    font-family: 'Inika', serif;
+}
+
+.lesson_pedia{
+    font-size: 50px;
+    background: linear-gradient(rgb(105, 98, 98), blue);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 4px -4px 2px white;
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.welcome{
+    margin-left: 30px;
+    padding-bottom: 20px;
+    font-size: 22px;
+}
+
+.profile_regPage{
+    margin-left: 420px;
+}
+
+.content_left h3{
+    line-height: 30px;
+}
+
+.active_user, .confirm{
+    margin-top: 40%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    
+}
+
+.active_user .usr{
+    font-size: 20px;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.239);
+    padding: 5px 200px 5px 10px;
+    line-height: 40px;
+    border-radius: 2px 5px 5px 2px;
+    background-color: rgba(245, 245, 245, 0.329);
+    color: darkblue;
+}
+
+.confirm{
+    background-color: rgba(245, 245, 245, 0.651);
+    width: 300px;
+    padding: 15px;
+    line-height: 22px;
+    text-align: justify;
+    border-radius: 20px;
+    margin-bottom: 90px;
+    color: rgba(0, 0, 139, 0.571);
+}
+
+.assurance{
+    text-align: center;
+    padding-right: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.303);
+    padding-top: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: aqua;
+}
+
+/* Profile registration page */
+.profile_regPage{
+    display: flex;
+}
+.profile_regPage_content{
+    width: 850px;
+    padding: 20px;
+    background-color: rgba(245, 245, 245, 0.803);
+    margin-top: 30px;
+    margin-left: 5%;
+    border-radius: 15px;
+}
