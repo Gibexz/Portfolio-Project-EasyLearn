@@ -111,10 +111,11 @@ $(document).ready(function () {
     // Check if the page is reloaded (not on the first access)
     if (performance.navigation.type === 1) {
         // Page reloaded - Calculate and display the score on reload
-        var scoreOnReload = calculateScore();
-        displayScorePopup(scoreOnReload);
-        setTimeout(function () {
-            window.location.href = "https://dashboard.com"; // Redirect to dashboard after 5 seconds
-        }, 5000);
+        // var scoreOnReload = calculateScore();
+        // displayScorePopup(scoreOnReload);
+        $("#finishBtn").trigger("click");
+        // setTimeout(function () {
+        //     window.location.href = "https://dashboard.com"; // Redirect to dashboard after 5 seconds
+        // }, 10000);
     }
 });
