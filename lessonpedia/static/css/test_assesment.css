@@ -110,3 +110,105 @@ body {
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.46);
   color: #070a5c;
 }
+
+/* For Tablet Screens */
+@media (max-width: 1024px) {
+  body {
+    margin: 10px; /* Adjust margin for smaller screens */
+  }
+
+  .instruction,
+  #quiz {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+  }
+
+  table {
+    font-size: 14px; /* Decrease font size for smaller screens */
+  }
+
+  input[type="button"] {
+    padding: 8px 16px; /* Adjust button padding for smaller screens */
+  }
+
+  #timer {
+    top: 10px; /* Adjust timer position for smaller screens */
+    left: 10px; /* Adjust timer position for smaller screens */
+    width: 50px; /* Adjust timer width for smaller screens */
+    height: 30px; /* Adjust timer height for smaller screens */
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  /* Additional specific styles for tablets as needed */
+}
+
+/* For Mobile Phones */
+@media (max-width: 767px) {
+  body {
+    margin: 5px; /* Adjust margin for smaller screens */
+  }
+
+  .instruction,
+  #quiz {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  h1 {
+    font-size: 20px; /* Decrease heading font size for smaller screens */
+  }
+
+  table {
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  input[type="button"] {
+    padding: 6px 12px; /* Adjust button padding for smaller screens */
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  #timer {
+    top: 5px; /* Adjust timer position for smaller screens */
+    left: 5px; /* Adjust timer position for smaller screens */
+    width: 40px; /* Adjust timer width for smaller screens */
+    height: 25px; /* Adjust timer height for smaller screens */
+    font-size: 10px; /* Decrease font size for smaller screens */
+  }
+
+  /* Additional specific styles for mobile phones as needed */
+}
+
+/* For iPhone XR */
+@media only screen and (max-width: 414px) {
+  body {
+    margin: 5px; /* Adjust margin for smaller screens */
+  }
+
+  .instruction,
+  #quiz {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  h1 {
+    font-size: 20px; /* Decrease heading font size for smaller screens */
+  }
+
+  table {
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  input[type="button"] {
+    padding: 6px 12px; /* Adjust button padding for smaller screens */
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  #timer {
+    top: 5px; /* Adjust timer position for smaller screens */
+    left: 5px; /* Adjust timer position for smaller screens */
+    width: 40px; /* Adjust timer width for smaller screens */
+    height: 25px; /* Adjust timer height for smaller screens */
+    font-size: 10px; /* Decrease font size for smaller screens */
+  }
+
+  /* Additional specific styles for iPhone XR as needed */
+}
