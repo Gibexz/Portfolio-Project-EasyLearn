@@ -10,6 +10,29 @@
     <title>Tutor's - Profile</title>
 </head>
 <body>
+    <!-- display cert -->
+    <div class="set_cert_display">
+        <div class="cert_display">
+            <div class="cert_content">
+                <div class="cert_inn">
+                    <p class="close_cert" title="Close">x</p>
+                    <img src="" alt="" width="100%" height="100%" id="preview_cert">
+                </div>            
+            </div>
+        </div>
+    </div>
+
+    <!-- display cv -->
+    <div class="set_cv_display">
+        <div class="cv_display">
+            <div class="cert_content">
+                <div class="cv_inn">
+                    <p class="close_cv" title="Close">x</p>
+                    <embed id="pdfViewer" width="1000px" height="600px" />
+                </div>            
+            </div>
+        </div>
+    </div>
     <div class="background"></div>
     <div class="content">
         <div class="content_left">
@@ -30,32 +53,32 @@
         </div>
         <div class="profile_regPage">
             <div class="profile_regPage_content">
-                <img src="/lessonpedia/static/images/icons/profilePics.jpeg" class="image_preview" alt="">
+                <img src="/lessonpedia/static/images/icons/profilePics.jpeg" class="image_preview" alt="" id="profile_picture_review">
                 <h2 class="profile_header"><center>Profile Registration</center></h2>
                 <form action="">
                     <fieldset class="profile_form"><legend> Bio - Data </legend>
                         
                             <label for="firstName">First Name</label><br>
-                            <input type="text" name="" id="firstName" placeholder="First Name">
+                            <input required type="text" name="" id="firstName" placeholder="First Name">
                             <label for="lastName">Last Name <span for="others" id="others_label">Others</span></label><br>
-                            <input type="text" name="" id="lastName" placeholder="Last Name">
-                            <input type="text" name="" id="others" placeholder="Others">
+                            <input required type="text" name="" id="lastName" placeholder="Last Name">
+                            <input required type="text" name="" id="others" placeholder="Others">
                             <label for="address">Residential Address</label><br>
-                            <input type="text" name="" id="address" placeholder="Address">
+                            <input required type="text" name="" id="address" placeholder="Address">
                             <label for="state">State of Resident <span for="nationality" id="nationality_label">Nationality</span></label><br>
-                            <input type="text" name="" id="state" placeholder="State of Resident">
-                            <input type="text" name="" id="nationality" placeholder="Nationlaity">
+                            <input required type="text" name="" id="state" placeholder="State of Resident">
+                            <input required type="text" name="" id="nationality" placeholder="Nationlaity">
                         
                     </fieldset><br>
 
                     <fieldset class="profile_form"><legend> Academic/Employment Details </legend>
                         
                         <label for="institution">Institution Name</label><br>
-                        <input type="text" name="" id="firstName" placeholder="top-most institution attended">
+                        <input required type="text" name="" id="firstName" placeholder="top-most institution attended">
                         <label for="discipline">Discipline <span id="position_qual">Qualification</span><span id="position_cgpa">CGPA</span></label>
                         <section class="disqua">
-                            <input type="text" name="" id="dis" placeholder="discipline">
-                            <select name="qualification" id="qual">
+                            <input required type="text" name="" id="dis" placeholder="discipline">
+                            <select required name="qualification" id="qual">
                                 <option value="" hidden selected>-- select one --</option>
                                 <option value="">Msc</option>
                                 <option value="">Bsc</option>
@@ -65,10 +88,10 @@
                                 <option value="">NCE</option>
                                 <option value="">WAEC</option>
                             </select>
-                            <input type="text" name="" id="cgpa" placeholder="cgpa">
+                            <input required type="text" name="" id="cgpa" placeholder="cgpa">
                         </section>  
                         <label for="specialization">Specialization (if any)</label><br>
-                        <input type="text" name="" id="specialization" placeholder="Specialization">
+                        <input required type="text" name="" id="specialization" placeholder="Specialization">
                         <label for="employment-status">Employment Status <span id="position_stat">if employed, select option below</span></label>
                         <section class="disqua">
                             <select name="qualification" id="empStat">
@@ -85,17 +108,18 @@
                         </section>                                                 
                 </fieldset><br>
                 <fieldset class="profile_form"><legend> Uploads </legend>
-                    <label for="dp">Upload profile picture</label>
-                    <input type="file" name="profile_picture" id="dp" class="file_button" placeholder=""><br><br> 
+                    <label for="dp">Upload profile picture [only .jpg, .jpeg or .png]</label>
+                    <a href="#profile_picture_review" class="dp_a"><input required type="file" name="profile_picture" id="dp" class="file_button" placeholder=""></a><br><br> 
                               
-                    <label for="cv">Upload CV or Resume</label>
-                    <button class="preview">Preview</button>
-                    <input type="file" name="profile_picture" id="cv" class="file_button" placeholder=""><br><br>
+                    <label for="cv">Upload CV or Resume [only .pdf]</label>
+                    <p class="preview shiftmore" id="view_cv">Preview</p>
+                    <input required type="file" name="profile_picture" id="cv" class="file_button" placeholder=""><br><br>
                     
-                    <label for="cv">Upload Certificate (Highest cert only)</label>
-                    <button class="preview">Preview</button>
-                    <input type="file" name="profile_picture" id="cert" class="file_button" placeholder=""><br><br>
+                    <label for="cv">Upload Certificate (Highest cert only) [only .jpg, .jpeg or .png]</label>
+                    <p class="preview" id="view_cert">Preview</p>
+                    <input required type="file" name="profile_picture" id="cert" class="file_button" placeholder=""><br><br>
                 </fieldset><br>
+                <input required type="submit" id="save_me" value="Save and Proceed">
                 </form>
             </div>
         </div>
