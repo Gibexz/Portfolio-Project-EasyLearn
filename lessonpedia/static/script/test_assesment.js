@@ -22,7 +22,7 @@ $(document).ready(function () {
   
     
     // Countdown timer
-    var timeLeft = 60; // 1 minute in seconds
+    var timeLeft = 5*60; // 1 minute in seconds
     var timer = setInterval(function () {
         $("#timer").text(formatTime(timeLeft));
         timeLeft--;
@@ -47,7 +47,7 @@ $(document).ready(function () {
         displayScorePopup(score);
         setTimeout(function () {
             window.location.href = "https://dashboard.com"; // Redirect to dashboard
-        }, 2000);
+        }, 8000);
     }
 
     // Function to calculate the score based on selected answers
@@ -76,7 +76,17 @@ $(document).ready(function () {
     }
     // Function to display score in a popup
     function displayScorePopup(score) {
-        alert(`Your score: ${score}%`);
+        // Show the popup
+        $("#popup").fadeIn();
+    
+        // Display the score and redirect message
+        $("#scoreDisplay").text(`Your score: ${score}%`);
+    
+        // Hide the popup after 5 seconds and redirect
+        setTimeout(function () {
+            $("#popup").fadeOut();
+            window.location.href = "https://dashboard.com"; // Redirect to dashboard
+        }, 5000);
     }
 
     // Function to store the score in the database (This should be handled server-side)

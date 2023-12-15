@@ -39,11 +39,17 @@ body {
   }
   th, td {
     padding: 6px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #36363647;
     text-align: left;
   }
   th {
     background-color:  rgba(0, 17, 128, 0.323);
+    box-shadow: 1px 1px 10px 1px rgba(0, 17, 128, 0.196);
+  }
+
+  tr .num, th .num {
+    width: 10px;
+ 
   }
   input[type="button"] {
     padding: 10px 20px;
@@ -60,3 +66,47 @@ body {
   input[type="radio"] {
     margin-right: 5px;
   }
+.popup{
+  /* position: absolute; */
+    backdrop-filter: brightness(0.1);
+    width: 100vw;
+    height: 100vh;
+}
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 20px 3px rgba(0, 0, 0, 0.46);
+  z-index: 9999;
+  width: 600px;
+  height: 300px;
+  padding-top: 120px;
+  color: #070a5c;
+  border-radius: 20px;
+  
+}
+.inner_popup {
+  margin-top: 20px;
+  /* border: 1px solid black; */
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.46);
+}
+
+#timer {position: fixed; 
+  top: 20px; 
+  left: 70px;
+  width: 60px;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.46);
+  color: #070a5c;
+}

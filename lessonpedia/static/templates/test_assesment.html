@@ -10,17 +10,24 @@
     <link rel="stylesheet" href="/lessonpedia/static/css/test_assesment.css">
 </head>
 <body>
-    <div id="timer" style="position: fixed; top: 10px; left: 10px;"></div>
-  <h1>Assesment Quiz</h1>
+    <div id="timer"></div>
+    <div id="popup">
+      <div class="inner_popup">
+        <center><h3>Assesment Score Board</h3></center>
+        <center><p id="scoreDisplay"></p>
+        <p id="redirectMessage">You will be directed back to your dashboard in a few seconds.</p></center>
+      </div>
+    </div>
+    <h1>Assesment Quiz</h1>
     <div class="instruction">
         <h4>Instructions</h4>
         <ul class="ins">
-            <li><p>Do not reload page, else, you have a score of <span style="color: red; font-weight: bold;">0%</span> automatically, and page is redirected</p></li>
-            <li><p>Answer all questions within the <span style="color: red; font-weight: bold;">alloted time</span></p></li>
-            <li><p>At the end of the countdown, your score for answered question is dynamically store and page <br> redirected</p></li>
-            <li><p><span style="color: red; font-weight: bold;">If your see a pop up or a window alert saying "Leaing site: Changes you made may not <br> be saved" please click 
-                on <span style="color: rgb(0, 0, 0); font-weight: bold;">Leave button</span>. Scores are dynamically store</span></p></li>
-        </ul>
+          <li><p>Do not reload the page; otherwise, you will have a score of <span style="color: red; font-weight: bold;">0%</span> automatically, and the page will be redirected.</p></li>
+          <li><p>Answer all questions within the <span style="color: red; font-weight: bold;">allotted time</span>.</p></li>
+          <li><p>At the end of the countdown, your score for answered questions will be dynamically stored, and the current page will be redirected.</p></li>
+          <li><p><span style="color: red; font-weight: bold;">If you see a pop-up or a window alert saying "Leaving site: Changes you made may not be saved," please click on the <span style="color: rgb(0, 0, 0); font-weight: bold;">Leave button</span>. Scores are dynamically stored.</span></p></li>
+      </ul>
+      
     </div>
 
   <div id="quiz">
@@ -29,10 +36,12 @@
       <h2>English Questions</h2>
       <table>
         <tr>
-          <th>Question</th>
+          <th class="num">Num.</th>
+          <th>Questions</th>
           <th>Options</th>
         </tr>
         <tr>
+          <td class="num">1</td>
           <td>What is the opposite of 'brave'?</td>
           <td>
             <ul>
@@ -45,6 +54,7 @@
         </tr>
         <!-- Add more English questions here -->
         <tr>
+          <td class="num">2</td>
           <td>What is the plural of 'child'?</td>
           <td>
             <ul>
@@ -57,6 +67,7 @@
         </tr>
         <!-- Add more English questions here -->
         <tr>
+          <td class="num">3</td>
           <td>What is a synonym for 'happy'?</td>
           <td>
             <ul>
@@ -69,6 +80,7 @@
         </tr>
         <!-- Add more English questions here -->
         <tr>
+          <td class="num">4</td>
           <td>What is the past tense of 'eat'?</td>
           <td>
             <ul>
@@ -81,6 +93,7 @@
         </tr>
         <!-- Add more English questions here -->
         <tr>
+          <td class="num">5</td>
           <td>What is a synonym for 'angry'?</td>
           <td>
             <ul>
@@ -98,10 +111,12 @@
       <h2>Abstract Questions</h2>
       <table>
         <tr>
-          <th>Question</th>
+          <th class="num">Num.</th>
+          <th>Questions</th>
           <th>Options</th>
         </tr>
         <tr>
+          <td class="num">1</td>
           <td>Choose the pattern that completes the sequence: 2, 4, 6, 8, ___</td>
           <td>
             <ul>
@@ -114,6 +129,7 @@
         </tr>
         <!-- Add more Abstract questions here -->
         <tr>
+          <td class="num">2</td>
           <td>Which shape comes next in the sequence: Triangle, Circle, Square, ___</td>
           <td>
             <ul>
@@ -126,6 +142,7 @@
         </tr>
         <!-- Add more Abstract questions here -->
         <tr>
+          <td class="num">3</td>
           <td>Complete the series: 1, 4, 9, 16, ___</td>
           <td>
             <ul>
@@ -138,6 +155,7 @@
         </tr>
         <!-- Add more Abstract questions here -->
         <tr>
+          <td class="num">4</td>
           <td>What comes next in the sequence: 3, 6, 12, 24, ___</td>
           <td>
             <ul>
@@ -150,6 +168,7 @@
           </tr>
           <!-- Add more Abstract questions here -->
           <tr>
+            <td class="num">5</td>
             <td>Which symbol logically belongs in the space?</td>
             <td>
               <ul>
