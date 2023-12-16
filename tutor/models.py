@@ -32,7 +32,27 @@ class Tutors(models.Model):
     updated_at = models.DateField(default=timezone.now(), null=True)
 
 
-class Subject(models.Model):
+class Subjects(models.Model):
     "Tutors Subject Model"
-    subjectName = models.CharField()
+    subjectName = models.CharField(max_length=100)
     nunmberOfTutors = models.IntegerField(null=True)
+    relatedSubjects = models.TextField(max, null=True)
+    created_at= models.DateField(auto_now_add=True)
+    updated_at = models.DateField(default=timezone.now(), null=True)
+
+
+class TutorsReportAbuse(models.Model):
+    "Tutors report abuse models"
+    targetClientID = models.IntegerField()
+    message = models.CharField(max_length=400)
+    subject = models.CharField(max_length=100)
+    created_at = models.DateField(auto_now_add=True)
+
+
+class ProCourses(models.Model):
+    "Tutors ProCourses Model"
+    ProCourseName = models.CharField(max_length=100)
+    nunmberOfTutors = models.IntegerField(null=True)
+    relatedProCourses = models.TextField(max, null=True)
+    created_at= models.DateField(auto_now_add=True)
+    updated_at = models.DateField(default=timezone.now(), null=True)

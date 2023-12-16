@@ -17,3 +17,30 @@ class Clients(models.Model):
     residentialAddress = models.CharField(null=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(default=timezone.now, null=True)
+
+
+class Review(models.Model):
+    "Tutor reviews by clients"
+    reviewText = models.CharField(max_length=400)
+    tutorID = models.IntegerField()
+
+
+class Ranking(models.Model):
+    "Tutor Rankings by clients"
+    rankingText = models.IntegerField()
+    tutorID = models.IntegerField()
+
+
+class ClientReportAbuse(models.Model):
+    "Client report abuse models"
+    targetTutorID = models.IntegerField()
+    message = models.CharField(max_length=400)
+    subject = models.CharField(max_length=100)
+    created_at = models.DateField(auto_now_add=True)
+
+
+class Cart(models.Model):
+    "Client report abuse models"
+    targetTutorID = models.IntegerField()
+    tutorsCount = models.IntegerField(null=True)
+    tutorStatus = models.BooleanField()
