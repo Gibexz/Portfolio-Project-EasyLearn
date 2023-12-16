@@ -1,9 +1,10 @@
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Tutor(models.Model):
     """Tutors database"""
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     email = models.EmailField(unique=True)

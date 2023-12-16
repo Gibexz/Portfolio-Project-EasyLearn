@@ -4,6 +4,7 @@ from tutor.models import Tutor  # Import the Tutor model
 from django.contrib.auth.models import User
 
 class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     username = models.CharField(max_length=100, null=True)
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
