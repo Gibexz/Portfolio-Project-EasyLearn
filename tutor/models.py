@@ -39,16 +39,16 @@ class Subject(models.Model):
     related_subjects = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now, null=True)
-    tutors = models.ManyToManyField(Tutor, related_name='subjects', null=True, on_delete=models.SET_NULL)
+    tutors = models.ManyToManyField(Tutor, related_name='subjects')
 
 
 class TutorReportAbuse(models.Model):
     """Tutors report abuse models"""
     target_client_id = models.IntegerField()
-    message = models.CharField(max_length=400)
+    message = models.TextField()
     subject = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    tutor = models.ManyToManyField(Tutor, related_name='reported_client', null=True, on_delete=models.SET_NULL)
+    tutor = models.ForeignKey(Tutor, related_name='reported_client')
 
 
 class ProCourse(models.Model):
@@ -58,5 +58,5 @@ class ProCourse(models.Model):
     related_pro_courses = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now, null=True)
-    tutors = models.ManyToManyField(Tutor, related_name='pto_courses', null=True, on_delete=models.SET_NULL)
+    tutors = models.ManyToManyField(Tutor, related_name='pro_courses')
 
