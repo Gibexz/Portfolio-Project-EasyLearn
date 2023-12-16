@@ -1,6 +1,7 @@
 from django.db import models
-# from django.contrib.auth.models import User
 from django.utils import timezone
+from tutor.models import Tutor  # Import the Tutor model
+from django.contrib.auth.models import User
 
 class Client(models.Model):
     username = models.CharField(max_length=100, null=True)
@@ -11,34 +12,43 @@ class Client(models.Model):
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     state_of_residence = models.CharField(max_length=50, null=True)
     nationality = models.CharField(max_length=50, null=True)
-    profile_picture = models.CharField(max_length=150, unique=True)
-    residential_address = models.CharField(max_length=150, null=True)  # Added missing max_length
+    profile_picture = models.CharField(max_length=300, unique=True)
+    residential_address = models.CharField(max_length=150, null=True)
     created_at = models.DateTimeField(auto_now_add=True)  # Changed to DateTimeField
     updated_at = models.DateTimeField(default=timezone.now, null=True)
 
+
 class Review(models.Model):
     review_text = models.CharField(max_length=400)
-    tutor = models.ForeignKey(User, on_delete=models.CASCADE)  # Assuming Tutor is a User model
+    tutor = models.ForeignKey(Tutor,  related_name='reviews', null=True, on_delete=models.SET_NULL)
+    client = models.ForeignKey(Client, related_name='reviews', null=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Ranking(models.Model):
     ranking_text = models.IntegerField()
-    tutor = models.ForeignKey(User, on_delete=models.CASCADE)  # Assuming Tutor is a User model
+    tutor = models.ForeignKey(Tutor, null=True, on_delete=models.SET_NULL, related_name='rankings')
+    client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name='rankings')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class ClientReportAbuse(models.Model):
-    target_tutor = models.IntegerField()  # Change to ForeignKey if Tutor is a model
+    target_tutor = models.ForeignKey(Tutor, related_name="reported_tutor", null=True, on_delete=models.SET_NULL)
     message = models.CharField(max_length=400)
     subject = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)  # Changed to DateTimeField
+    client = models.ForeignKey(Client, related_name='abuse_reports', null=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Cart(models.Model):
-    target_tutor = models.IntegerField()  # Change to ForeignKey if Tutor is a model
+    target_tutor = models.ForeignKey(Tutor, related_name="selling_tutor", null=True, on_delete=models.SET_NULL)
     tutors_count = models.IntegerField(null=True)
     tutor_status = models.BooleanField()
+    client = models.ForeignKey(Client,  related_name='carts', null=True, on_delete=models.SET_NULL)
 
 class Payment(models.Model):
     tnx_id = models.CharField(null=True, max_length=200)
-    time = models.DateTimeField(default=timezone.now)  # Changed to DateTimeField
+    time = models.DateTimeField(default=timezone.now)
+    client = models.ForeignKey(Client, related_name='payments', null=True, on_delete=models.SET_NULL)
 
-class PaymentReceipt(models.Model):  # Changed model name to PaymentReceipt
+class PaymentReceipt(models.Model):
     receipt_id = models.CharField(null=True, max_length=200)
-    payment_time = models.DateTimeField(default=timezone.now)  # Changed to DateTimeField
+    payment_time = models.DateTimeField(default=timezone.now)
+    client = models.ForeignKey(Client, related_name='payment_receipts', null=True, on_delete=models.SET_NULL)

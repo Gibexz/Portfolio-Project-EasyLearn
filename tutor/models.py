@@ -21,7 +21,7 @@ class Tutor(models.Model):
     working_hours = models.CharField(max_length=500, null=True)
     status = models.BooleanField(null=True)
     cv_id = models.IntegerField(null=True, unique=True)
-    profile_picture = models.CharField(max_length=150, unique=True)
+    profile_picture = models.CharField(max_length=300, unique=True)
     residential_address = models.CharField(max_length=255, null=True)
     active_clients = models.IntegerField(default=0, null=True)
     total_clients = models.IntegerField(default=0, null=True)
@@ -38,6 +38,7 @@ class Subject(models.Model):
     related_subjects = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now, null=True)
+    tutors = models.ManyToManyField(Tutor, related_name='subjects', null=True, on_delete=models.SET_NULL)
 
 
 class TutorReportAbuse(models.Model):
@@ -46,6 +47,7 @@ class TutorReportAbuse(models.Model):
     message = models.CharField(max_length=400)
     subject = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    tutor = models.ManyToManyField(Tutor, related_name='reported_client', null=True, on_delete=models.SET_NULL)
 
 
 class ProCourse(models.Model):
@@ -55,3 +57,5 @@ class ProCourse(models.Model):
     related_pro_courses = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now, null=True)
+    tutors = models.ManyToManyField(Tutor, related_name='pto_courses', null=True, on_delete=models.SET_NULL)
+
