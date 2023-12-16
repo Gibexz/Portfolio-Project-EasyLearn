@@ -44,3 +44,15 @@ class Cart(models.Model):
     targetTutorID = models.IntegerField()
     tutorsCount = models.IntegerField(null=True)
     tutorStatus = models.BooleanField()
+
+
+class Payment(models.Model):
+    "Client Payment models"
+    tnxID = models.CharField(null=True, max_length=200)
+    time = models.DateField(timezone.now)
+
+
+class Payment(models.Model):
+    "Client Payment reciept models"
+    receiptID = models.CharField(null=True, max_length=200)
+    paymentTime = models.DateField(timezone.now)

@@ -29,7 +29,7 @@ class Tutors(models.Model):
     rejectedClients = models.IntegerField(default=0, null=True)
     reviewsID = models.IntegerField(null=True, unique=True)
     created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(default=timezone.now(), null=True)
+    updated_at = models.DateField(default=timezone.now, null=True)
 
 
 class Subjects(models.Model):
