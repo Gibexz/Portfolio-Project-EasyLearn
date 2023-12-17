@@ -35,7 +35,25 @@ class Tutor(AbstractUser):
 
 class Subject(models.Model):
     """Tutors Subject Model"""
+    CATEGORY_CHOICES = [
+        ('sciences', 'Sciences'),
+        ('programming', 'Programming'),
+        ('mathematics', 'Mathematics'),
+        ('language_arts', 'Language Arts'),
+        ('history', 'History'),
+        ('music', 'Music'),
+        ('art', 'Art'),
+        ('physical_education', 'Physical Education'),
+        ('social_studies', 'Social Studies'),
+        ('business', 'Business'),
+        ('technology', 'Technology'),
+        ('foreign_language', 'Foreign Language'),
+        ('health', 'Health'),
+        ('philosophy', 'Philosophy'),
+        ('others', 'Others'),
+    ]
     subject_name = models.CharField(max_length=100)
+    category = models.CharField(max_length=25, choices=CATEGORY_CHOICES, null=True)
     tutor_count = models.IntegerField(null=True)
     related_subjects = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)

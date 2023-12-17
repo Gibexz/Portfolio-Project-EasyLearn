@@ -15,6 +15,7 @@ class Client (AbstractUser):
     residential_address = models.CharField(max_length=150, null=True)
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
+    tutor = models.ManyToManyField(Tutor, related_name='engaged_tutor')
     # Added the below attributes to resolve permission and group conflict having same name
     # all inherits from Abstract user and hence need unique related_name
     groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
@@ -27,7 +28,14 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ranking(models.Model):
-    ranking_text = models.IntegerField(null=True)
+    RANK = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5')
+    ]
+    rank_number = models.IntegerField(choices=RANK, null=True)
     tutor = models.ForeignKey(Tutor, null=True, on_delete=models.SET_NULL, related_name='rankings')
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name='rankings')
     created_at = models.DateTimeField(auto_now_add=True)
