@@ -1,4 +1,6 @@
 from django.db import models
+
+from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.contrib.auth.models import Group, Permission
@@ -25,19 +27,19 @@ class Tutor(AbstractUser):
     rejected_clients = models.IntegerField(default=0, null=True)
     reviews_id = models.IntegerField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(default=timezone.now, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
     #mitigating errors when AppAdmin is looking for permissions and groups to reference
-    groups = models.ManyToManyField(Group, related_name="tutor_groups")
-    user_permissions = models.ManyToManyField(Permission, related_name="tutor_permissions")
+    groups = models.ManyToManyField(Group, related_name="tutor_groups", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="tutor_permissions", blank=True)
 
 
 class Subject(models.Model):
     """Tutors Subject Model"""
     subject_name = models.CharField(max_length=100)
-    number_of_tutors = models.IntegerField(null=True)
+    tutor_count = models.IntegerField(null=True)
     related_subjects = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(default=timezone.now, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
     tutors = models.ManyToManyField(Tutor, related_name='subjects')
 
 
@@ -53,7 +55,7 @@ class TutorReportAbuse(models.Model):
 class ProCourse(models.Model):
     """Tutors ProCourses Model"""
     pro_course_name = models.CharField(max_length=100)
-    number_of_tutors = models.IntegerField(null=True)
+    tutor_count = models.IntegerField(null=True)
     related_pro_courses = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now, null=True)

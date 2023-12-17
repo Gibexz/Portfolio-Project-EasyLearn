@@ -1,5 +1,5 @@
 """
-URL configuration for lessonpediaProject project.
+URL configuration for lessonpedia project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from django.conf import settings
+from django.conf.urls.static import static
+from .admin import lessonPedia_admin_site
 
 urlpatterns = [
+    path('lessonpedia/', lessonPedia_admin_site.urls),
     path('admin/', admin.site.urls),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
