@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Client</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/lessonpedia/static/script/client_dashboard.js"></script>
+    <link rel="stylesheet" href="/lessonpedia/static/css/client_dashboard.css">
+</head>
+<body class="container">
+    
+    
+        
+            <div class="sidebar">
+                <div class="personal side">
+                    <div class="profile_pics">
+                        <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
+                    </div>
+                    <div class="other_info">
+                        <p>andrewetedu@gmail.com</p>
+                        <p>andybillions@x.com</p>
+                    </div>
+                </div>
+                <div class="hrtop"><hr></div>
+                <div class="side_items">
+                    <div class="settings side">
+                        <a href="#">Dashboard</a> 
+                        </div>   
+                    <div class="settings side">
+                    <a href="#" id="set_active">Settings</a> 
+                    </div>            
+                    <div class="history side">
+                        <a href="#">History</a> 
+                    </div>
+                    <div class="logout side">
+                        <a href="#">Logout</a> 
+                    </div>            
+                </div>
+            </div>
+
+        <div class="db">
+            <div class="content">
+                <div class="left_pane">
+                    <div class="profile_info">
+                        <h2>Dashboard</h2>
+                    </div>
+                    <div class="activities">
+                        <div class="courses">
+                            <div class="not_started item"><p class="progress">1/2 </p><p class="progress_text">In Progress</p></div>
+                            <div class="in_progress item"><p class="progress">1/2 </p><p class="progress_text">Pending</p></div>
+                            <div class="completed item"><p class="progress">0/2 </p><p class="progress_text">Settled</p></div>
+                        </div> 
+                        <div class="my_tutors">
+                            <div class="search">
+                                <input type="text" name="" id="" placeholder="Search">
+                                <button class="search_button">Search</button>
+                            </div>
+
+                        </div>
+                        <div class="subjects">
+                            <section class="subject_details">
+                                <section class="tutor_info">
+                                    <div class="clearfix">
+                                        <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
+                                        <section class="float_left">
+                                            <div class="subject_table table">
+                                                <span class="tutor_subject tr">Software Development</span>
+                                                <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="time"> 4:00pm - 6:30pm (3hrs)</span>
+                                            </div>
+                                            <span class="tutor_name"><b>Esogibe Chidubem</b></span>
+                                            <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
+
+                                        
+                                        </section>
+                                        <section class="status"></section>
+                                    </div>
+                                    <div class="tutor_toggles">
+                                        <button class="remove_tutor even-width">Remove</button>
+                                    
+                                        <button class="report_abuse even-width">Report Abuse</button>
+                                        <button class="review even-width">Review</button>
+                                        <button class="rank even-width">Rank</button>
+                                        <section class="status_icon"></section>
+                                    </div>
+                                </section>
+                            </section>
+                            <div class="hr"><hr></div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="right_pane">
+                    <div class="right_content">
+                        <div class="rooms resize">Rooms
+                            <img src="/lessonpedia/static/images/socialLinks/chatroom.png" alt="">
+                        </div>
+                        <div class="add_tutor resize">Connect with a Tutor
+                            <img src="/lessonpedia/static/images/socialLinks/tutor.jpg" alt="">
+                        </div>
+                        <div class="suggestion resize">Have a suggestion?
+                            <img src="/lessonpedia/static/images/socialLinks/suggestion.png" alt="">
+                        </div>               
+                        <div class="spomsor resize">Become a sponsor
+                            <img src="/lessonpedia/static/images/socialLinks/sponsor.jpeg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+
+
+    <!-- settings in dashboard 
+    <div class="set">
+        <div class="container">
+            <div class="sidebar">
+                <div class="personal side">
+                    <div class="profile_pics">
+                        <img src="/lessonpedia/static/images/clients/pass.jpg" alt="Client Passport">
+                    </div>
+                    <div class="other_info">
+                        <p>andrewetedu@gmail.com</p>
+                        <p>andybillions@x.com</p>
+                    </div>
+                </div>
+                <div class="hrtop"><hr></div>
+                <div class="side_items">
+                    <div class="settings side">
+                        <a href="#" id="db_active">Dashboard</a> 
+                        </div>   
+                    <div class="settings side">
+                    <a href="#">Settings</a> 
+                    </div>            
+                    <div class="history side">
+                        <a href="#">History</a> 
+                    </div>
+                    <div class="logout side">
+                        <a href="#">Logout</a> 
+                    </div>            
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="left_pane">
+                    <div class="profile_info">
+                        <h2>Settings</h2>
+                    </div>
+                    
+                </div>
+
+                <div class="right_pane">
+                    <div class="right_content">
+                        <div class="rooms resize">Rooms
+                            <img src="/lessonpedia/static/images/socialLinks/chatroom.png" alt="">
+                        </div>
+                        <div class="add_tutor resize">Connect with a Tutor
+                            <img src="/lessonpedia/static/images/socialLinks/tutor.jpg" alt="">
+                        </div>
+                        <div class="suggestion resize">Have a suggestion?
+                            <img src="/lessonpedia/static/images/socialLinks/suggestion.png" alt="">
+                        </div>               
+                        <div class="spomsor resize">Become a sponsor
+                            <img src="/lessonpedia/static/images/socialLinks/sponsor.jpeg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</body>
+</html>
