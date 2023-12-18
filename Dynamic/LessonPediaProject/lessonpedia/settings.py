@@ -57,7 +57,7 @@ ROOT_URLCONF = 'lessonpedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['app_admin/templates/app_admin'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'lessonpediaschema',
-        'USER': 'kings',
-        'PASSWORD': 'root',
+        'USER': 'lessonpedia',
+        'PASSWORD': 'Lessonpedia123$',
         'HOST': 'localhost',
         'PORT': 3306
     }
