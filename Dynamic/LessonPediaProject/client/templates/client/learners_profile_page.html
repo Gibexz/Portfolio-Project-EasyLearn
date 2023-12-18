@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../script/tutors_profile_page.js"></script>
-    <link rel="stylesheet" href="../css/tutors_profile_page.css">
+    <script src="{% static 'script/tutors_profile_page.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/tutors_profile_page.css' %}">
     <title>Tutor's - Profile</title>
 </head>
 <body>
@@ -53,7 +53,7 @@
         </div>
         <div class="profile_regPage">
             <div class="profile_regPage_content">
-                <img src="../images/icons/profilePics.jpeg" class="image_preview" alt="" id="profile_picture_review">
+                <img src="{% static 'images/icons/profilePics.jpeg" class="image_preview" alt="" id="profile_picture_review' %}">
                 <h2 class="profile_header"><center>Profile Registration</center></h2>
                 <form action="">
                     <fieldset class="profile_form"><legend> Bio - Data </legend>

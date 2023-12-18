@@ -50,6 +50,12 @@ body{
     border-radius: 10px;
     background: linear-gradient(0deg, #013669, #5AABFF);
     color: white;
+    cursor: pointer;
+}
+
+.signup_button a{
+    text-decoration: none;
+    color: white;
 }
 
 /* The below section covers the design with the blue background */
