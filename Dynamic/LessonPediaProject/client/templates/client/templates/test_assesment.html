@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assesment page</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src=".. /script/test_assesment.js"></script>
+    <link rel="stylesheet" href="/lessonpedia/static/css/test_assesment.css">
+</head>
+<body>
+    <div id="timer"></div>
+    <div id="popup">
+      <div class="inner_popup">
+        <center><h3>Assesment Score Board</h3></center>
+        <center><p id="scoreDisplay"></p>
+        <p id="redirectMessage">You will be directed back to your dashboard in a few seconds.</p></center>
+      </div>
+    </div>
+    <h1>Assesment Quiz</h1>
+    <div class="instruction">
+        <h4>Instructions</h4>
+        <ul class="ins">
+          <li><p>Do not reload the page; otherwise, you will have a score of <span style="color: red; font-weight: bold;">0%</span> automatically, and the page will be redirected.</p></li>
+          <li><p>Answer all questions within the <span style="color: red; font-weight: bold;">allotted time</span>.</p></li>
+          <li><p>At the end of the countdown, your score for answered questions will be dynamically stored, and the current page will be redirected.</p></li>
+          <li><p><span style="color: red; font-weight: bold;">If you see a pop-up or a window alert saying "Leaving site: Changes you made may not be saved," please click on the <span style="color: rgb(0, 0, 0); font-weight: bold;">Leave button</span>. Scores are dynamically stored.</span></p></li>
+      </ul>
+      
+    </div>
+
+  <div id="quiz">
+    <form id="quizForm">
+      <!-- English Questions -->
+      <h2>English Questions</h2>
+      <table>
+        <tr>
+          <th class="num">Num.</th>
+          <th>Questions</th>
+          <th>Options</th>
+        </tr>
+        <tr>
+          <td class="num">1</td>
+          <td>What is the opposite of 'brave'?</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="englishQ1" value="Fearful"> Fearful</li>
+              <li><input type="radio" name="englishQ1" value="Cowardly"> Cowardly</li>
+              <li><input type="radio" name="englishQ1" value="Timid"> Timid</li>
+              <li><input type="radio" name="englishQ1" value="Bold"> Bold</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more English questions here -->
+        <tr>
+          <td class="num">2</td>
+          <td>What is the plural of 'child'?</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="englishQ2" value="Children"> Children</li>
+              <li><input type="radio" name="englishQ2" value="Childs"> Childs</li>
+              <li><input type="radio" name="englishQ2" value="Childies"> Childies</li>
+              <li><input type="radio" name="englishQ2" value="Childs"> Childs</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more English questions here -->
+        <tr>
+          <td class="num">3</td>
+          <td>What is a synonym for 'happy'?</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="englishQ3" value="Joyful"> Joyful</li>
+              <li><input type="radio" name="englishQ3" value="Sad"> Sad</li>
+              <li><input type="radio" name="englishQ3" value="Excited"> Excited</li>
+              <li><input type="radio" name="englishQ3" value="Angry"> Angry</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more English questions here -->
+        <tr>
+          <td class="num">4</td>
+          <td>What is the past tense of 'eat'?</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="englishQ4" value="Ate"> Ate</li>
+              <li><input type="radio" name="englishQ4" value="Eated"> Eated</li>
+              <li><input type="radio" name="englishQ4" value="Eaten"> Eaten</li>
+              <li><input type="radio" name="englishQ4" value="Eated"> Eated</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more English questions here -->
+        <tr>
+          <td class="num">5</td>
+          <td>What is a synonym for 'angry'?</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="englishQ5" value="Mad"> Mad</li>
+              <li><input type="radio" name="englishQ5" value="Happy"> Happy</li>
+              <li><input type="radio" name="englishQ5" value="Sad"> Sad</li>
+              <li><input type="radio" name="englishQ5" value="Excited"> Excited</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more English questions here -->
+      </table>
+
+      <!-- Abstract Questions -->
+      <h2>Abstract Questions</h2>
+      <table>
+        <tr>
+          <th class="num">Num.</th>
+          <th>Questions</th>
+          <th>Options</th>
+        </tr>
+        <tr>
+          <td class="num">1</td>
+          <td>Choose the pattern that completes the sequence: 2, 4, 6, 8, ___</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="abstractQ1" value="10"> 10</li>
+              <li><input type="radio" name="abstractQ1" value="12"> 12</li>
+              <li><input type="radio" name="abstractQ1" value="14"> 14</li>
+              <li><input type="radio" name="abstractQ1" value="16"> 16</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more Abstract questions here -->
+        <tr>
+          <td class="num">2</td>
+          <td>Which shape comes next in the sequence: Triangle, Circle, Square, ___</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="abstractQ2" value="Pentagon"> Pentagon</li>
+              <li><input type="radio" name="abstractQ2" value="Rectangle"> Rectangle</li>
+              <li><input type="radio" name="abstractQ2" value="Hexagon"> Hexagon</li>
+              <li><input type="radio" name="abstractQ2" value="Octagon"> Octagon</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more Abstract questions here -->
+        <tr>
+          <td class="num">3</td>
+          <td>Complete the series: 1, 4, 9, 16, ___</td>
+          <td>
+            <ul>
+              <li><input type="radio" name="abstractQ3" value="25"> 25</li>
+              <li><input type="radio" name="abstractQ3" value="32"> 32</li>
+              <li><input type="radio" name="abstractQ3" value="36"> 36</li>
+              <li><input type="radio" name="abstractQ3" value="64"> 64</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- Add more Abstract questions here -->
+        <tr>
+          <td class="num">4</td>
+          <td>What comes next in the sequence: 3, 6, 12, 24, ___</td>
+          <td>
+            <ul>
+                <li><input type="radio" name="abstractQ4" value="36"> 36</li>
+                <li><input type="radio" name="abstractQ4" value="48"> 48</li>
+                <li><input type="radio" name="abstractQ4" value="72"> 72</li>
+                <li><input type="radio" name="abstractQ4" value="96"> 96</li>
+              </ul>
+            </td>
+          </tr>
+          <!-- Add more Abstract questions here -->
+          <tr>
+            <td class="num">5</td>
+            <td>Which symbol logically belongs in the space?</td>
+            <td>
+              <ul>
+                <li><input type="radio" name="abstractQ5" value="♦"> ♦</li>
+                <li><input type="radio" name="abstractQ5" value="⇔"> ⇔</li>
+                <li><input type="radio" name="abstractQ5" value="□"> □</li>
+                <li><input type="radio" name="abstractQ5" value="⇒"> ⇒</li>
+              </ul>
+            </td>
+          </tr>
+          <!-- Add more Abstract questions here -->
+        </table>
+  
+        <input type="button" id="finishBtn" value="Finish">
+      </form>
+    </div>
+  </body>
+  </html>
