@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/register.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/register.js' %}"></script>
     <title>Register</title>
@@ -23,28 +24,35 @@
                 <div class="tutor tr">Tutor</div>
             </div>
          
-            <form class="learner_form" action="#">
+            <form class="learner_form" method="post" action="#">
+                {% csrf_token %}
                 <label for="useremail">
                     Email
                 </label><br>
-                <input type="text" name="useremail" placeholder="enter email" id=""><br><br>
+                <!-- <input type="text" name="useremail" placeholder="enter email" id=""><br><br> -->
+                {{ form.email }} <br><br>
                 <label for="username">
                     Username
                 </label><br>
-                <input type="text" name="username" placeholder="enter username"><br><br>
+                <!-- <input type="text" name="username" placeholder="enter username"><br><br> -->
+                {{ form.username}} <br><br>
                 <label for="password">
                     Password
                 </label><br>
-                <input type="password" name="password" placeholder="enter password" id=""><br><br>
+                <!-- <input type="password" name="password" placeholder="enter password" id=""><br><br> -->
+                {{ form.password1 }} <br><br>
+
                 <label for="confirm_password">
                     Confirm Password
                 </label><br>
-                <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""><br><br><br>
+                <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""><br><br><br> -->
+                {{ form.password2 }} <br><br>
+
                 <input type="submit" value="Sign up">
             </form>
 
             <!-- Tutor Form -->
-            <form class="tutor_form" action="#">
+            <!-- <form class="tutor_form" action="#">
                 <label for="useremail">
                     Email
                 </label><br>
@@ -81,7 +89,7 @@
                 </label><br>
                 <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""><br><br><br>
                 <br><input type="submit" value="Sign up">
-            </form><br>
+            </form><br> -->
             <center><p class="change_color hide_signup">or signup with</p></center>
             <div class="link_box_container">
                 <div class="link_box">

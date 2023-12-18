@@ -57,7 +57,8 @@ ROOT_URLCONF = 'lessonpedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['app_admin/templates/app_admin'],
+        # 'DIRS': ['app_admin/templates/app_admin'],
+        'DIRS':[],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
