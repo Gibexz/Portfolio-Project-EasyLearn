@@ -8,18 +8,18 @@ from django.contrib.auth.models import Group, Permission
 
 
 class Client (AbstractUser):
-    phone_number = models.CharField(max_length=15, null=True, unique=True)
-    state_of_residence = models.CharField(max_length=50, null=True)
-    nationality = models.CharField(max_length=50, null=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/', default='templates/lessonpedia/static/images/user/default_user_icon.png')
-    residential_address = models.CharField(max_length=150, null=True)
-    created_at = models.DateTimeField(auto_now_add=True) 
-    updated_at = models.DateTimeField(auto_now=True)
-    tutor = models.ManyToManyField(Tutor, related_name='engaged_tutor')
-    # Added the below attributes to resolve permission and group conflict having same name
-    # all inherits from Abstract user and hence need unique related_name
-    groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
+         phone_number = models.CharField(max_length=15, null=True, unique=True)
+         state_of_residence = models.CharField(max_length=50, null=True)
+         nationality = models.CharField(max_length=50, null=True)
+         profile_picture = models.ImageField(upload_to='profile_picture/', default='templates/lessonpedia/static/images/user/default_user_icon.png')
+         residential_address = models.CharField(max_length=150, null=True)
+         created_at = models.DateTimeField(auto_now_add=True) 
+         updated_at = models.DateTimeField(auto_now=True)
+         tutor = models.ManyToManyField(Tutor, related_name='engaged_tutor')
+        # Added the below attributes to resolve permission and group conflict having same name
+        # all inherits from Abstract user and hence need unique related_name
+         groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
+         user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
 
 class Review(models.Model):
     review_text = models.TextField(max_length=500)

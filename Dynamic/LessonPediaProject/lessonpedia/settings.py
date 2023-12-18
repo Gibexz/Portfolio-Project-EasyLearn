@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'lessonpediaschema',
-        'USER': 'root',
-        'PASSWORD': 'Juliet22$',
+        'USER': 'kings',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': 3306
     }
