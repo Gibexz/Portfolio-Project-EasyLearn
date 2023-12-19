@@ -10,7 +10,19 @@ class Tutor(AbstractUser):
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     gender = models.CharField(max_length=50, null=True)
     date_of_birth = models.DateField(default=timezone.now)
-    highest_qualification = models.CharField(max_length=50, null=True)
+    qualification_choice = [
+        ('--select one--', '--select one--'),
+        ('Phd', 'Phd'),
+        ('Msc', "Msc"),
+        ('Bsc', 'Bsc'),
+        ('Beng', 'Beng'),
+        ('Hnd', 'Hnd'),
+        ('ND', 'ND'),
+        ('NCE', 'NCE'),
+        ('Waec', 'Waec'),
+        ('Others', 'Others')
+    ]
+    highest_qualification = models.CharField(max_length=50, choices=qualification_choice, default='--select one--', null=True)
     employment_status = models.CharField(max_length=50, null=True)
     state_of_residence = models.CharField(max_length=50, null=True)
     nationality = models.CharField(max_length=50, null=True)

@@ -1,17 +1,17 @@
-from django.shortcuts import render
-from .models import Client
+from django.shortcuts import render, redirect
 from .forms import UserCreationForm, ClientRegistration
 from django.http import HttpResponse
 
-def register(request, whoami):
+def clientRegister(request):
     """Post request with who am I concept"""
-    if request == 'POST' and whoami == 'learner':
+    if request.method == 'POST':
         form = ClientRegistration(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, "login.html")
+            return redirect('UserLogin')
         else:
-            return HttpResponse("there's an error")
+            form = ClientRegistration()
+            return render(request, 'register.html', {'form': form})
     else:
         form = ClientRegistration()
-        return request(request, 'register.html', {'form': "hello"})
+        return render(request, 'register.html', {'form': form})

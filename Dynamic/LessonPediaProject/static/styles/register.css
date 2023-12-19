@@ -36,11 +36,12 @@ body{
     margin: 20px 20px 20px 8px;
     cursor: pointer;
 }
-.register_as .learner {
-    color: #4BE5CA;
-    font-weight: bold;
-    border-bottom: 2px solid #4BE5CA;
+
+.register_as a{
+    text-decoration: none;
+    color: white
 }
+
 .register_container_inputs{
     width: 500px;
     border: 2px solid #5882C1;
@@ -153,10 +154,14 @@ label{
 }
 
 /* Client and Tutor form toggle rules */
-.tutor_form {
+
+.tutor_form{
     display: none;
 }
 
+.learner_form{
+    display: none;
+}
 
 .qualification, #specialization {
     display: inline-block;
@@ -165,6 +170,12 @@ label{
 .qualification {
     margin: 0 auto;
     margin-right: 0em;
+}
+
+#high_qual{
+    width: 180%;
+    border: none;
+    box-shadow: none;
 }
 
 .qualification select{
@@ -183,12 +194,18 @@ label{
 .qualification select {
     padding: 10px;
 }
+
 #specialization {
     width: 308px;
     background-color: transparent;
     border: none;
     box-shadow: none;
 }
+
 #specialization:focus{
     outline: none;
+}
+
+#registerBtn{
+    cursor: pointer;
 }

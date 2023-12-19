@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'client',
     'tutor',
     'app_admin',
+    'genericLogics',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,7 +60,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'app_admin/templates/app_admin',
-            'client/templates/client'
+            'client/templates/client',
+            'tutor/templates/tutor',
+            'genericLogics/templates'
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -138,3 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    # Add other authentication backends if needed
+]

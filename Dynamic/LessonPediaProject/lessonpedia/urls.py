@@ -24,7 +24,9 @@ urlpatterns = [
     path('lessonpedia/', lessonPedia_admin_site.urls),
     path('admin/', admin.site.urls),
     path("", include("app_admin.urls")),
-    path("register/", include("client.urls"))
+    path("learner/", include("client.urls")),
+    path("tutor/", include('tutor.urls')),
+    path("users/", include("genericLogics.urls"))
 ]
 
 if settings.DEBUG:
