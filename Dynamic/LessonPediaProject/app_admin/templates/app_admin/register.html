@@ -24,11 +24,13 @@
                 <div class="tutor tr">Tutor</div>
             </div>
          
-            <form class="learner_form" action="#">
+            <form class="learner_form" action="{% url 'clientSignUp' whoami='learner' %}" method="POST">
+                {% csrf_token %}
                 <label for="useremail">
                     Email
                 </label><br>
-                <input type="text" name="useremail" placeholder="enter email" id=""><br><br>
+                <!-- <input type="text" name="useremail" placeholder="enter email" id=""><br><br> -->
+                {{ form }}
                 <label for="username">
                     Username
                 </label><br>
