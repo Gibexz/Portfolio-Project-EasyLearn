@@ -1,0 +1,65 @@
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
+
+def landing_page(request):
+    """Landing page"""
+    return render(request, "generic_apps/landingpage.html")
+
+
+
+def client_sign_up(request):
+    """sign_up for client"""
+    if request.method == 'POST':
+       form = ClientRegisterForm(request.POST) 
+       if form.is_valid():
+           form.save()
+           messages.success(request, 'Registration Successful!')
+        #    return redirect('user_login')
+           return redirect('landing_page')
+       else:
+            messages.error(request, 'Please correct the error below.')
+            return redirect('client_sign_up')
+
+    else:
+        form = ClientRegisterForm()
+        context = {'form': form}
+        return render(request, 'generic_apps/sign_up.html', context=context)
+    
+
+def tutor_sign_up(request):
+    """sign_up for tutors"""
+    if request.method == 'POST':
+       form = TutorRegisterForm(request.POST) 
+       if form.is_valid():
+           form.save()
+           messages.success(request, 'Registration Successful!')
+           return redirect('user_login')
+       else:
+            messages.error(request, 'Please correct the error below.')
+            return redirect('tutor_sign_up')
+
+    else:
+        form = TutorRegisterForm()
+        context = {'form': form}
+        return render(request, 'tutor_sign_up', context=context)
+
+
+def app_admin_sign_up(request):
+    """sign_up for admin"""
+    if request.method == 'POST':
+       form = AppAdminRegisterForm(request.POST) 
+       if form.is_valid():
+           form.save()
+           messages.success(request, 'Registration Successful!')
+           return redirect('user_login')
+       else:
+            messages.error(request, 'Please correct the error below.')
+            return redirect('app_admin_sign_up')
+
+    else:
+        form = AppAdminRegisterForm()
+        context = {'form': form}
+        return render(request, 'app_admin_sign_up', context=context)
+
+
