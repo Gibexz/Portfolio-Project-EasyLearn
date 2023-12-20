@@ -2,7 +2,7 @@
 
 body{
     background-image: url("../images/backgrounds/register_logo.png");
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     margin:0px;
     background-size: cover;
 }
@@ -27,6 +27,11 @@ body{
 .register_as{
     width: 70%;
 }
+/* tweak of anchor elements */
+.register_as div a {
+    color: #4BE5CA;
+    text-decoration: none;
+}
 .register_as .tr {
     display: inline-block;
     font-family: 'Inika', serif;
@@ -37,13 +42,11 @@ body{
     cursor: pointer;
 }
 
-.register_as a{
-    text-decoration: none;
-    color: white
+.register_as div a{
+    font-weight: bold;
 }
-
 .register_container_inputs{
-    width: 40%;
+    width: 500px;
     border: 2px solid #5882C1;
     border-radius: 40px;
     background-color: #5882c13a;
@@ -71,7 +74,6 @@ body{
     padding-top: 15px;
     border-radius: 50px;
     padding-bottom: 15px;
-    cursor: pointer;
 }
 
 .register_container_inputs input:focus{
@@ -152,28 +154,21 @@ label{
  border-radius: 10px;
  background-color: white;
  margin-bottom: 20px;
- overflow: hidden;
- width: 100%;
 }
 
 /* Client and Tutor form toggle rules */
-
-.tutor_form{
+.tutor_form {
     display: none;
 }
 
-.learner_form{
-    display: none;
-}
 
 .qualification, #specialization {
     display: inline-block;
 }
 
-#high_qual{
-    border: none;
-    box-shadow: none;
-    width: 100%;
+.qualification {
+    margin: 0 auto;
+    margin-right: 0em;
 }
 
 .qualification select{
@@ -183,36 +178,21 @@ label{
     border-left: 2px solid darkblue;
     color: rgb(4, 4, 64);
     font-weight: bold;
-    margin-left: 16%;
 }
-#id_highest_qualification{
-    background-color: white;
-}
+
 .qualification select:focus{
     outline: none;
 }
 
 .qualification select {
-    padding-left: 10px;
+    padding: 10px;
 }
-
-/* #specialization {
-    width: 3px;
+#specialization {
+    width: 308px;
     background-color: transparent;
     border: none;
     box-shadow: none;
-} */
-/* 
+}
 #specialization:focus{
     outline: none;
-} */
-
-#registerBtn{
-    cursor: pointer;
 }
-
-.qualification {
-    margin: 0 auto;
-    margin-right: 0em;
-}
-
