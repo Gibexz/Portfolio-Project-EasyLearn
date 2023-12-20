@@ -62,15 +62,15 @@ class TutorRegisterForm(UserCreationForm):
             }
         )
 
-        self.fields['area_of_specialization'].widget.attrs.update(
-            {
-                'placeholder': 'Enter specialty',
-            }
-        )
+        # self.fields['area_of_specialization'].widget.attrs.update(
+        #     {
+        #         'placeholder': 'Enter specialty',
+        #     }
+        # )
 
     class Meta:
         model = Tutor
-        fields = ['username', 'email', 'password1', 'password2', 'area_of_specialization', 'highest_qualification']
+        fields = ['username', 'email', 'password1', 'password2', 'highest_qualification']
 
 
 

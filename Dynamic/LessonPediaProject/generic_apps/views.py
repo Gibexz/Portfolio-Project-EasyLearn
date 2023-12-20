@@ -17,11 +17,16 @@ def client_sign_up(request):
            messages.success(request, 'Registration Successful!')
         #    return redirect('user_login')
            return redirect('landing_page')
+       if form.errors:
+                # Access and display first error for each field
+           for field, errors in form.errors.items():
+               messages.error(request, f"{field.title()}: {errors[0]}")
        else:
-            messages.error(request, 'Please correct the error below.')
-            form = ClientRegisterForm()
-            context = {'form': form}
-            return render(request, 'generic_apps/sign_up.html', context=context)
+                # Handle non-field errors if any
+           for error in form.non_field_errors:
+               messages.error(request, error)
+               context = {'form': form}
+               return render(request, 'generic_apps/sign_up.html', context=context)
 
     else:
         form = ClientRegisterForm()
@@ -44,9 +49,9 @@ def tutor_sign_up(request):
             return render(request, 'generic_apps/sign_up.html', context=context)
 
     else:
-        form = TutorRegisterForm()
-        context = {'form': form}
-        return render(request, 'tutor_sign_up', context=context)
+            form = ClientRegisterForm()
+            context = {'form': form}
+            return render(request, 'generic_apps/sign_up.html', context=context)
 
 
 def app_admin_sign_up(request):
