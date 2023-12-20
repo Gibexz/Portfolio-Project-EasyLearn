@@ -27,6 +27,38 @@
                 <div class="tutor tr" data-url="{% url 'tutor_sign_up' %}">Tutor</div>
             </div>
 
+            <form class="learner_form" action="{% url 'client_sign_up' %}" method="POST">
+                {% csrf_token %}
+                <label for="useremail">
+                    Email
+                </label><br>
+                <!-- <input type="text" name="useremail" placeholder="enter email" id=""><br><br> -->
+                {{ form.email }} <br><br>
+                <label for="username">
+                    Username
+                </label><br>
+                <!-- <input type="text" name="username" placeholder="enter username"><br><br> -->
+                {{ form.username }} <br><br>
+                <label for="password">
+                    Password
+                </label><br>
+                <!-- <input type="password" name="password" placeholder="enter password" id=""><br><br> -->
+                {{ form.password1 }} <br><br>
+                <label for="confirm_password">
+                    Confirm Password
+                </label><br>
+                <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""><br><br><br> -->
+                {{ form.password2 }} <br>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <br><br>
+                <input type="submit" value="Sign up">
+            </form>
+
             <!-- Tutor Form -->
             <form class="tutor_form" action="{% url 'tutor_sign_up' %}" method="POST">
                 {% csrf_token %}
