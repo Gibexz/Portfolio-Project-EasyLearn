@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
 
+
 def landing_page(request):
     """Landing page"""
     return render(request, "generic_apps/landingpage.html")
-
 
 
 def client_sign_up(request):
@@ -70,5 +70,3 @@ def app_admin_sign_up(request):
         form = AppAdminRegisterForm()
         context = {'form': form}
         return render(request, 'app_admin_sign_up', context=context)
-
-
