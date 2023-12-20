@@ -4,9 +4,9 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles/landing_page.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/landingpage.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="{% static 'script/landingpage.js' %}"></script>
+    <script src="{% static 'script/landing_page.js' %}"></script>
     <title>Home</title>
 </head>
 <body>
@@ -15,17 +15,19 @@
             <!-- for the logo on the leftside on navbar -->
 
             <section class="nav_left">
-                <img width="100px" height="80px" style="float: left" src="{% static 'images/socialLinks/github.png' %}" alt=""><p style="padding-left: 8%;">LessonPedia</p>
+                <a href="{% url 'landing_page'%}" class="lessonpedia">
+                    <img  src="{% static 'images/logo/logo_icon.png' %}" alt=""><p style="padding-left: 8%;"></a>
+                        <a href="{% url 'landing_page'%}" class="lessonpedia">LessonPedia</a></p>
             </section>
 
             <!-- handles the drop down menu items on the nav bar -->
             <section class="nav_center">
                 <ol>
-                    <li>Home</li>
-                    <li class="spaceMe">Pricing</li>
-                    <li class="spaceMe">Take a fun test</li>
-                    <li class="spaceMe">About us</li>
-                    <li class="spaceMe">Reviews</li>
+                    <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    <li class="spaceMe"><a href="{% url 'landing_page' %}">Pricing</a></li>
+                    <li class="spaceMe"><a href="{% url 'landing_page' %}">Take a fun test</a></li>
+                    <li class="spaceMe"><a href="{% url 'landing_page' %}">About us</a></li>
+                    <li class="spaceMe"><a href="{% url 'landing_page' %}">Reviews</a></li>
                 </ol>
             </section>
 
@@ -38,8 +40,17 @@
 
             <!-- signup button handle -->
             <section class="signup_button">
-                <p style="margin-top: 0px;">Login <span> <a href="{% url 'client_sign_up' %}">SignUp</a> </span></p>
+                <div class="dropdown">
+                    <a class="login_btn">Login</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'client_sign_up' %}">Learner</a>
+                        <a href="{% url 'tutor_sign_up' %}">Tutor</a>
+                        <a href="{% url 'app_admin_sign_up' %}">Admin</a>
+                    </div>
+                </div>
+                <span><a href="{% url 'client_sign_up' %}">SignUp</a></span>
             </section>
+            
 
         </div>
     </div>
