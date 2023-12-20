@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'client',
     'tutor',
     'app_admin',
+    'generic_apps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
