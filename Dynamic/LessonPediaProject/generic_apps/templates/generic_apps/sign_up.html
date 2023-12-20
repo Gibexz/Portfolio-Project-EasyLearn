@@ -29,27 +29,23 @@
                 <label for="useremail">
                     Email
                 </label><br>
-                {% comment %} <input type="text" name="useremail" placeholder="enter email" id=""> {% endcomment %}
                 {{ form.email }}
                 <br><br>
                 <label for="username">
                     Username
                 </label><br>
-                {% comment %} <input type="text" name="username" placeholder="enter username"><br><br> {% endcomment %}
                 {{ form.username }}
                 <br><br>
 
                 <label for="password">
                     Password
                 </label><br>
-                {% comment %} <input type="password" name="password" placeholder="enter password" id=""> {% endcomment %}
                 {{ form.password1 }}
 
                 <br><br>
                 <label for="confirm_password">
                     Confirm Password
                 </label><br>
-                {% comment %} <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""> {% endcomment %}
                 {{ form.password2 }}
 
                 <br><br><br>
@@ -58,6 +54,7 @@
 
             <!-- Tutor Form -->
             <form class="tutor_form" method="post" action="{% url 'tutor_sign_up' %}">
+                {% csrf_token %}
                 <label for="useremail">
                     Email
                 </label><br>
@@ -77,11 +74,10 @@
                 </label><br>
                 <div class="tutor_detail">
                     <section class="specialization_container">
-                        {% comment %} <input type="text" name="specialization" placeholder="enter specialization" id="specialization"> {% endcomment %}
+                        <input type="text" name="specialization" placeholder="enter specialization" id="specialization">
                         {{ form.area_of_specialization }}
-                        
-                        <br><br>
                     </section>
+
                     <section class="qualification">
                         <select name="highest_qualification" id="id_highest_qualification">
                             <option value="" selected hidden>Highest Qualification</option>

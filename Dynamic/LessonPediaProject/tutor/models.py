@@ -20,7 +20,7 @@ class Tutor(AbstractUser):
     working_hours = models.CharField(max_length=150, null=True)
     status = models.BooleanField(null=True)
     cv_id = models.IntegerField(null=True, unique=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png', width_field=300, height_field=300)
+    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
     residential_address = models.CharField(max_length=255, null=True)
     active_clients = models.IntegerField(default=0, null=True)
     total_clients = models.IntegerField(default=0, null=True)

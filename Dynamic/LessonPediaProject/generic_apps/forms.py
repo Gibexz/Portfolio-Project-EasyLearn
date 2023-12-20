@@ -38,8 +38,9 @@ class ClientRegisterForm(UserCreationForm):
 
 class TutorRegisterForm(UserCreationForm):
     """Register form for tutor"""
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    area_of_specialization = forms.CharField(max_length=100, required=True, help_text='Enter your area of specialization')
+    def __init__(self, *args, **kwargs):
+        super(TutorRegisterForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update(
             {
                 'placeholder': 'Enter your email',

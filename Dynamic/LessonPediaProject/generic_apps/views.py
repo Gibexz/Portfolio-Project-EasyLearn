@@ -19,7 +19,9 @@ def client_sign_up(request):
            return redirect('landing_page')
        else:
             messages.error(request, 'Please correct the error below.')
-            return redirect('client_sign_up')
+            form = ClientRegisterForm()
+            context = {'form': form}
+            return render(request, 'generic_apps/sign_up.html', context=context)
 
     else:
         form = ClientRegisterForm()
@@ -34,10 +36,12 @@ def tutor_sign_up(request):
        if form.is_valid():
            form.save()
            messages.success(request, 'Registration Successful!')
-           return redirect('user_login')
+           return redirect('landing_page')
        else:
             messages.error(request, 'Please correct the error below.')
-            return redirect('tutor_sign_up')
+            form = ClientRegisterForm()
+            context = {'form': form}
+            return render(request, 'generic_apps/sign_up.html', context=context)
 
     else:
         form = TutorRegisterForm()
@@ -55,7 +59,7 @@ def app_admin_sign_up(request):
            return redirect('user_login')
        else:
             messages.error(request, 'Please correct the error below.')
-            return redirect('app_admin_sign_up')
+            return redirect('landing_page')
 
     else:
         form = AppAdminRegisterForm()
