@@ -159,11 +159,11 @@ label{
 /* Client and Tutor form toggle rules */
 
 .tutor_form{
-    display: none;
+    display: block;
 }
 
 .learner_form{
-    display: none;
+    display: block;
 }
 
 .qualification, #specialization {
@@ -173,7 +173,7 @@ label{
 #high_qual{
     border: none;
     box-shadow: none;
-    width: 100%;
+    width: 90%;
 }
 
 .qualification select{
@@ -192,6 +192,9 @@ label{
     outline: none;
 }
 
+.specialization_container{
+    flex: 2;
+}
 .qualification select {
     padding-left: 10px;
 }
@@ -214,5 +217,6 @@ label{
 .qualification {
     margin: 0 auto;
     margin-right: 0em;
+    flex: 1;
 }
 
