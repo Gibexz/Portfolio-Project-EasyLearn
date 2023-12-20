@@ -10,7 +10,19 @@ class Tutor(AbstractUser):
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     gender = models.CharField(max_length=50, null=True)
     date_of_birth = models.DateField(default=timezone.now)
-    highest_qualification = models.CharField(max_length=50, null=True)
+    qualification_choice = [
+        ('--select one--', '--select one--'),
+        ('Phd', 'Phd'),
+        ('Msc', "Msc"),
+        ('Bsc', 'Bsc'),
+        ('Beng', 'Beng'),
+        ('Hnd', 'Hnd'),
+        ('ND', 'ND'),
+        ('NCE', 'NCE'),
+        ('Waec', 'Waec'),
+        ('Others', 'Others')
+    ]
+    highest_qualification = models.CharField(max_length=50, choices=qualification_choice, default='--select one--', null=True)
     employment_status = models.CharField(max_length=50, null=True)
     state_of_residence = models.CharField(max_length=50, null=True)
     nationality = models.CharField(max_length=50, null=True)
@@ -20,7 +32,7 @@ class Tutor(AbstractUser):
     working_hours = models.CharField(max_length=150, null=True)
     status = models.BooleanField(null=True)
     cv_id = models.IntegerField(null=True, unique=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
+    profile_picture = models.ImageField(upload_to='profile_picture/', default='templates/lessonpedia/static/images/user/default_user_icon.png')
     residential_address = models.CharField(max_length=255, null=True)
     active_clients = models.IntegerField(default=0, null=True)
     total_clients = models.IntegerField(default=0, null=True)
@@ -78,4 +90,3 @@ class ProCourse(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now, null=True)
     tutors = models.ManyToManyField(Tutor, related_name='pro_courses')
-

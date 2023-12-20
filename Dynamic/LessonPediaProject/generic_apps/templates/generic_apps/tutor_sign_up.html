@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
     {% load static %}
+   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'styles/register.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_register.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="{% static 'script/register.js' %}"></script>
+    <script src="{% static 'script/signUp.js' %}"></script>
     <title>Register</title>
 </head>
 <body>
+   
    <div class="register_container">
         <div class="register_container_inputs">
             <div class="logo">
@@ -20,91 +23,64 @@
             </h3>
             <hr class="wide_hr">
             <div class="register_as">   
-                <div class="learner tr">Learner</div>
-                <div class="tutor tr">Tutor</div>
+                <div class="learner tr" data-url="{% url 'client_sign_up' %}">Learner</div>
+                <div class="tutor tr" data-url="{% url 'tutor_sign_up' %}">Tutor</div>
             </div>
-         
-            <form class="learner_form" method='post' action="{% url 'client_sign_up' %}">
-                {% csrf_token %}
-                <label for="useremail">
-                    Email
-                </label><br>
-                {{ form.email }}
-                <br><br>
-                <label for="username">
-                    Username
-                </label><br>
-                {{ form.username }}
-                <br><br>
-
-                <label for="password">
-                    Password
-                </label><br>
-                {{ form.password1 }}
-
-                <br><br>
-                <label for="confirm_password">
-                    Confirm Password
-                </label><br>
-                {{ form.password2 }}
-
-                <br><br><br>
-                <input type="submit" value="Sign up">
-            </form>
 
             <!-- Tutor Form -->
-            <form class="tutor_form" method="post" action="{% url 'tutor_sign_up' %}">
+            <form class="tutor_form" action="{% url 'tutor_sign_up' %}" method="POST">
                 {% csrf_token %}
                 <label for="useremail">
                     Email
                 </label><br>
-                {% comment %} <input type="text" name="useremail" placeholder="enter email" id=""> {% endcomment %}
                 {{ form.email }}
-
+                <!-- <input type="text" name="useremail" placeholder="enter email" id=""> -->
                 <br><br>
                 <label for="username">
                     Username
                 </label><br>
-                {% comment %} <input type="text" name="username" placeholder="enter username"> {% endcomment %}
                 {{ form.username }}
-
+                <!-- <input type="text" name="username" placeholder="enter username"> -->
                 <br><br>
                 <label for="specialization">
                     Specialization | Qualification
                 </label><br>
                 <div class="tutor_detail">
                     <section class="specialization_container">
-                        {% comment %} <input type="text" name="specialization" placeholder="enter specialization" id="specialization">
-                        {{ form.area_of_specialization }} {% endcomment %}
+                        {{ form.area_of_specialization }}
+                        {% comment %} <input type="text" name="specialization" placeholder="enter specialization" id="specialization"> {% endcomment %}
+                        <br><br>
                     </section>
-
                     <section class="qualification">
                         <select name="highest_qualification" id="id_highest_qualification">
-                            <option value="" selected hidden>Highest Qualification</option>
+                            <option value="" selected hidden>--select one--</option>
+                            <option value="Phd" {% if form.highest_qualification.value == 'Phd' %} selected {% endif %} required>Msc</option>
                             <option value="Msc" {% if form.highest_qualification.value == 'Msc' %} selected {% endif %} required>Msc</option>
                             <option value="Bsc" {% if form.highest_qualification.value == 'Bsc' %} selected {% endif %} required>Bsc</option>
+                            <option value="Beng" {% if form.highest_qualification.value == 'Beng' %} selected {% endif %} required>Bsc</option>
                             <option value="HND" {% if form.highest_qualification.value == 'HND' %} selected {% endif %} required>HND</option>
                             <option value="OND" {% if form.highest_qualification.value == 'OND' %} selected {% endif %} required>OND</option>
+                            <option value="NCE" {% if form.highest_qualification.value == 'NCE' %} selected {% endif %} required>OND</option>
                             <option value="O-Level" {% if form.highest_qualification.value == 'O-Level' %} selected {% endif %} required>O-Level</option>
-                            <option value="Other" {% if form.highest_qualification.value == 'Other' %} selected {% endif %} required>Other</option>
+                            <option value="Others" {% if form.highest_qualification.value == 'Others' %} selected {% endif %} required>Other</option>
                         </select>               
-                    </section>
+                    </section>
                 </div>
                 <label for="password">
                     Password
                 </label><br>
-                {% comment %} <input type="password" name="password" placeholder="enter password" id=""> {% endcomment %}
                 {{ form.password1 }}
+                <!-- <input type="password" name="password" placeholder="enter password" id=""> -->
                 <br><br>
                 <label for="confirm_password">
                     Confirm Password
                 </label><br>
-                {% comment %} <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""> {% endcomment %}
                 {{ form.password2 }}
-
+                <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""> -->
                 <br><br><br>
-                <br><input type="submit" value="Sign up">
+                <br><input id="registerBtn" type="submit" value="Sign up">
             </form><br>
+            
             <center><p class="change_color hide_signup">or signup with</p></center>
             <div class="link_box_container">
                 <div class="link_box">

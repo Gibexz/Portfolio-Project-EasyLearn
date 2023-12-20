@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/register.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/client_register.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/register.js' %}"></script>
+    <script src="{% static 'script/signUp.js' %}"></script>
+    <title>Register</title>
+</head>
+<body>
+   <div class="register_container">
+        <div class="register_container_inputs">
+            <div class="logo">
+               <img src="{% static 'images/socialLinks/github.png' %}" alt="">
+            </div>
+            <h3 class="register_header">
+                Register As 
+            </h3>
+            <hr class="wide_hr">
+            <div class="register_as">   
+                <div class="learner tr" data-url="{% url 'client_sign_up' %}">Learner</div>
+                <div class="tutor tr" data-url="{% url 'tutor_sign_up' %}">Tutor</div>
+            </div>
+         
+            <form class="learner_form" action="{% url 'client_sign_up' %}" method="POST">
+                {% csrf_token %}
+                <label for="useremail">
+                    Email
+                </label><br>
+                <!-- <input type="text" name="useremail" placeholder="enter email" id=""><br><br> -->
+                {{ form.email }} <br><br>
+                <label for="username">
+                    Username
+                </label><br>
+                <!-- <input type="text" name="username" placeholder="enter username"><br><br> -->
+                {{ form.username }} <br><br>
+                <label for="password">
+                    Password
+                </label><br>
+                <!-- <input type="password" name="password" placeholder="enter password" id=""><br><br> -->
+                {{ form.password1 }} <br><br>
+                <label for="confirm_password">
+                    Confirm Password
+                </label><br>
+                <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""><br><br><br> -->
+                {{ form.password2 }} <br>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <br><br>
+                <input type="submit" value="Sign up">
+            </form>
+
+
+            <br>
+            <center><p class="change_color hide_signup">or signup with</p></center>
+            <div class="link_box_container">
+                <div class="link_box">
+                    <a href=""><img src="{% static 'images/socialLinks/google.png' %}" alt=""></a>
+                </div>
+                <div class="link_box">
+                    <a href=""><img src="{% static 'images/socialLinks/facebook.png' %}" alt=""></a>
+                </div>
+                <div class="link_box">
+                    <a href=""><img src="{% static 'images/socialLinks/github.png' %}" alt=""></a>
+                </div>  
+            </div>
+            <div class="ending">
+                <center><p class="change_color">Already have an account? <span><a href="">Login here</a></span></p></center>
+            </div>
+        </div>
+   </div>
+    
+</body>
+</html>
