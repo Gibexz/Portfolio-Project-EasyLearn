@@ -223,17 +223,17 @@ body{
 
 /* hover for login and signup */
 
-.signup_button .login_btn{
+.dropdown .login_btn{
     display: block;
-    padding: 10px 15px 10px 15px;
+    margin: 10%;
     border-radius: 10px;
-    background: linear-gradient(0deg, #013669, #5AABFF);
-    color: white;
     cursor: pointer;
+    background: #faf9f9;
+    color: black;
 }
 .signup_button .login_btn:hover{
-    background: #e0dbdb;
-    color: black;
+    background: linear-gradient(0deg, #020508af, #5AABFF);
+    color: white;
 }
 
 .signup_button span:hover{
