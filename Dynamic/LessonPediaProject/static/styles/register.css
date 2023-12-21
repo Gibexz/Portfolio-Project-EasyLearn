@@ -4,7 +4,7 @@ body{
     background-image: url("../images/backgrounds/register_logo.png");
     background-repeat: no-repeat;
     margin:0px;
-    background-size: auto;
+    background-size: 100%;
 }
 
 .register_container{
