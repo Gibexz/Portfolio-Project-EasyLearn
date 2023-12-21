@@ -1,0 +1,11 @@
+.flash_message{
+    position: absolute;
+    color: green;
+    background-color: white;
+    padding: 3px 20px 3px 20px;
+    border-radius: 15px;
+    font-size: medium;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+}
+

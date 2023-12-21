@@ -42,6 +42,7 @@ body{
     padding-top: 15px;
     border-radius: 50px;
     padding-bottom: 15px;
+    cursor: pointer;
 }
 
 .login_container_inputs input:focus{

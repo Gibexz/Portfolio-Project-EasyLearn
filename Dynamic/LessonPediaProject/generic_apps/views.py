@@ -14,18 +14,20 @@ def client_sign_up(request):
        form = ClientRegisterForm(request.POST) 
        if form.is_valid():
            form.save()
-           messages.success(request, 'Registration Successful!')
+           messages.success(request, 'Registration Successful, please Login!')
         #    return redirect('user_login')
-           return redirect('landing_page')
+           return redirect('client_signIn')
        if form.errors:
                 # Access and display first error for each field
            for field, errors in form.errors.items():
+               form = ClientRegisterForm()
                messages.error(request, f"{field.title()}: {errors[0]}")
-               return render(request, 'generic_apps/client_sign_up.html')
+               return render(request, 'generic_apps/client_sign_up.html', {'form': form})
        else:
                 # Handle non-field errors if any
            for error in form.non_field_errors:
                messages.error(request, error)
+               form = ClientRegisterForm()
                context = {'form': form}
                return render(request, 'generic_apps/client_sign_up.html', context=context)
 
