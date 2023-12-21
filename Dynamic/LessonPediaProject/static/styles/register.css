@@ -2,16 +2,16 @@
 
 body{
     background-image: url("../images/backgrounds/register_logo.png");
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     margin:0px;
-    background-size: cover;
+    background-size: auto;
 }
 
 .register_container{
-    height: 100vh;
     display:flex;
     /* justify-content: center; */
 }
+
 .register_header{
     font-family: 'Inika', serif;
     font-size: xx-large;

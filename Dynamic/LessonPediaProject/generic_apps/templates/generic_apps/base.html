@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% block head %}
+    
+    {% endblock head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/landingpage.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/landing_page.js' %}"></script>
+    <title>
+        {%block title%}
+            Home
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    <div class="nav_container">
+        <div class="nav_elements">
+            <!-- for the logo on the leftside on navbar -->
+
+            <section class="nav_left">
+                <a href="{% url 'landing_page'%}" class="lessonpedia">
+                    <img  src="{% static 'images/logo/logo_icon.png' %}" alt=""><p style="padding-left: 8%;"></a>
+                        <a href="{% url 'landing_page'%}" class="lessonpedia">LessonPedia</a></p>
+            </section>
+
+            <!-- handles the drop down menu items on the nav bar -->
+            <section class="nav_center">
+                <ol>
+                    <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    {% block pricing %}
+                        <li class="spaceMe"><a href="{% url 'landing_page' %}">Pricing</a></li>
+                    {% endblock pricing %}                    
+                    <li class="spaceMe"><a href="{% url 'landing_page' %}">Take a fun test</a></li>
+                    <li class="spaceMe"><a href="{% url 'landing_page' %}">About us</a></li>
+                    {% block review %}                    
+                        <li class="spaceMe"><a href="{% url 'landing_page' %}">Reviews</a></li>
+                    {% endblock review %}
+                </ol>
+            </section>
+
+            {% block nav_right %}
+                <section class="nav_right">
+                    <img src="{% static 'images/icons/cart.png' %}" alt="not found">
+                    <img src="{% static 'images/icons/profile_icon.png' %}" alt="">
+                    <img src="{% static 'images/icons/searchbar.png' %}" alt="">
+                <!-- handles the cart icon -->
+                </section>
+            {% endblock nav_right %}            
+            
+            {% block signup_button %}
+                <section class="signup_button">
+                    <div class="dropdown">
+                        <div class="login_btn">Login</div>
+                        <div class="dropdown-content">
+                            <a href="{% url 'client_sign_up' %}">Learner</a>
+                            <a href="{% url 'tutor_sign_up' %}">Tutor</a>
+                            <a href="{% url 'app_admin_sign_up' %}">Admin</a>
+                        </div>
+                    </div>
+                    <div class='signUp_btn'><a href="{% url 'client_sign_up' %}">SignUp</a></div>
+                </section>
+            {% endblock signup_button %}
+            <!-- signup button handle -->
+            
+            
+
+        </div>
+    </div>
+
+    {% block content %}
+
+    {% endblock content %}  
+
+    <div class="epty">
+
+    </div>
+    <!-- footer -->
+    <div class="footer">
+        <div class="top_footer">
+            <section class="about_Us">
+                <img  src="{% static 'images/logo/logo_icon.png' %}" alt="">
+                <p>
+                    User to client: 
+                    A user wants to see hmmmmmmmmmm. sign up page 
+                    the quality of teachers will determine the effectiveness of the site and recommendation
+                    
+                    In this regard, the landing page including our sign up should anticipate what a tutor is coming from
+                    consider a custom dashboard for both clients and tutors.
+                </p>
+            </section>
+
+            <section class="links">
+                <h3 class="linkHeaders">Quick Links</h3>
+                <ul>
+                    <li><a href="">Terms and Conditions</a></li>
+                    <li><a href="">Privacy Policy</a></li>
+                    <li><a href="">More FAQs</a></li>
+                    <li><a href="">Report Abuse</a></li>
+                    <li><a href="">Developers Page</a></li>
+                    <li><a href="">HR Team</a></li>
+                </ul>
+            </section>
+
+            <section class="contact_us">
+                <h3 class="linkHeaders">Contact Us</h3>
+                <p><span>Phone: </span>0814 XXX XXXXX</p>
+                <p><span>email: </span>contact@lessonpedia.com</p>
+                <P><span>address: </span>Abuja, Lagos, Uyo</P>
+            </section>
+
+            <section class="chatBot">
+                <a href=""><img src="{% static 'images/icons/chatLogo.jpg' %}" alt=""></a>
+            </section>
+        </div>
+
+        <div class="buttom_footer">
+            <p>LessonPedia CopyRight 2023 | All Right reserved <span style="color:yellow">&copy;</span> </p>
+            <section class="social_medias">
+                <a href=""><img src="{% static 'images/icons/facebook.png' %}" alt=""></a>
+                <a href=""><img src="{% static 'images/icons/instagram.png' %}" alt=""></a>
+                <a href=""><img src="{% static 'images/icons/web.png' %}" alt=""></a>
+                <a href=""><img src="{% static 'images/icons/twitter.png' %}" alt=""></a>
+            </section>
+        </div>
+    </div>
+
+       
+</body>
+</html>

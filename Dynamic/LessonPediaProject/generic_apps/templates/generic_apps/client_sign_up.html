@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-   
+{% extends "generic_apps/base.html" %}
+{% load static %}
+{% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'styles/register.css' %}">
@@ -11,8 +9,10 @@
     <script src="{% static 'script/register.js' %}"></script>
     <script src="{% static 'script/signUp.js' %}"></script>
     <title>Register</title>
-</head>
+{% endblock head %} 
 <body>
+{% block content %}
+<br>
    <div class="register_container">
         <div class="register_container_inputs">
             <div class="logo">
@@ -132,6 +132,8 @@
             </div>
         </div>
    </div>
-    
+</div>
+<br><br><br>
 </body>
-</html>
+    
+{% endblock content %}
