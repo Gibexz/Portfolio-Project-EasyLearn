@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/register.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/app_admin_register.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/app_admin_sign_up.js' %}"></script>
+    <title>Register</title>
+</head>
+<body>
+   
+   <div class="register_container">
+        <div class="register_container_inputs">
+            <div class="logo">
+               <img src="{% static 'images/socialLinks/github.png' %}" alt="">
+            </div>
+            <h3 class="register_header">
+                Welcome Admin
+            </h3>
+            <hr class="wide_hr">
+            <div class="register_as">   
+                <div class="app_admin_login tr activeForm" >Login</div>
+                <div class="app_admin_signUp tr" >SignUp</div>
+            </div>
+<!-- data-url="{% url 'tutor_sign_up' %}"data-url="{% url 'client_sign_up' %}" -->
+            <!-- Tutor Form -->
+            <div class="admin_forms">
+                <div class="adminLogin">
+                    <form class="" action="#" method="POST">
+                        {% csrf_token %}
+                        <label for="useremail">
+                            Email Login
+                        </label><br>
+                        {{ form.email }}
+                        <!-- <input type="text" name="useremail" placeholder="enter email" id=""> -->
+                        <br><br>
+
+                        <label for="password">
+                            Password
+                        </label><br>
+                        {{ form.password1 }}
+                        <!-- <input type="password" name="password" placeholder="enter password" id=""> -->
+                        <br><br>
+
+                        <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""> -->
+                        <br><br><br>
+                        <br><input id="registerBtn" type="submit" value="Sign In">
+                    </form><br>
+        
+                </div>
+                <div class="adminSignUp">
+                    <form class="" action="{% url 'app_admin_sign_up' %}" method="POST">
+                        {% csrf_token %}
+                        <label for="useremail">
+                            Email SignUp
+                        </label><br>
+                        {{ form.email }}
+                        <!-- <input type="text" name="useremail" placeholder="enter email" id=""> -->
+                        <br><br>
+                        <label for="username">
+                            Username
+                        </label><br>
+                        {{ form.username }}
+                        <!-- <input type="text" name="username" placeholder="enter username"> -->
+                        <br><br>
+                        <label for="password">
+                            Password
+                        </label><br>
+                        {{ form.password1 }}
+                        <!-- <input type="password" name="password" placeholder="enter password" id=""> -->
+                        <br><br>
+                        <label for="confirm_password">
+                            Confirm Password
+                        </label><br>
+                        {{ form.password2 }}
+                        <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""> -->
+                        <br><br><br>
+                        <br><input id="registerBtn" type="submit" value="Sign up">
+                    </form><br>
+                </div>
+            </div>
+            
+            
+            <!-- <center><p class="change_color hide_signup">or signup with</p></center>
+            <div class="link_box_container">
+                <div class="link_box">
+                    <a href=""><img src="{% static 'images/socialLinks/google.png' %}" alt=""></a>
+                </div>
+                <div class="link_box">
+                    <a href=""><img src="{% static 'images/socialLinks/facebook.png' %}" alt=""></a>
+                </div>
+                <div class="link_box">
+                    <a href=""><img src="{% static 'images/socialLinks/github.png' %}" alt=""></a>
+                </div>  
+            </div>
+            <div class="ending">
+                <center><p class="change_color">Already have an account? <span><a href="">Login here</a></span></p></center>
+            </div> -->
+        </div>
+   </div>
+    
+</body>
+</html>

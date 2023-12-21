@@ -1,0 +1,13 @@
+.activeForm {
+    color: #4BE5CA;
+    font-weight: bold;
+    border-bottom: 2px solid #4BE5CA;
+}
+
+.adminLogin{
+    display: block;
+}
+
+.adminSignUp{
+    display: none;
+}
