@@ -58,16 +58,18 @@ def tutor_sign_up(request):
 def app_admin_sign_up(request):
     """sign_up for admin"""
     if request.method == 'POST':
-       form = AppAdminRegisterForm(request.POST) 
-       if form.is_valid():
-           form.save()
-           messages.success(request, 'Registration Successful!')
-           return redirect('user_login')
-       else:
+        form = AppAdminRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Registration Successful!')
+            return redirect('app_admin_sign_up')
+        
+        else:
             messages.error(request, 'Please correct the error below.')
-            return redirect('landing_page')
-
+            form = AppAdminRegisterForm()
+            context = {'form': form}
+            return render(request, 'generic_apps/app_admin_sign_up.html', context=context)
     else:
         form = AppAdminRegisterForm()
         context = {'form': form}
-        return render(request, 'app_admin_sign_up', context=context)
+        return render(request, 'generic_apps/app_admin_sign_up.html', context=context)

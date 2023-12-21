@@ -2,7 +2,7 @@
 
 body{
     background-image: url("../images/backgrounds/register_logo.png");
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     margin:0px;
     background-size: 100%;
 }
