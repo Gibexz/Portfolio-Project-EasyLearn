@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
-
+from app_admin.models import AppAdmin
 
 def landing_page(request):
     """Landing page"""
@@ -60,12 +60,17 @@ def app_admin_sign_up(request):
     if request.method == 'POST':
         form = AppAdminRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Registration Successful!')
-            return redirect('app_admin_sign_up')
+            email = form.cleaned_data['email']
+            if AppAdmin.objects.filter(email=email).exists():
+                messages.error(request, 'User with this email already exist')
+            
+            else:
+                form.save()
+                messages.success(request, 'Registration Successful!')
+                return redirect('app_admin_sign_up')
         
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'User with this email or username already exist')
             form = AppAdminRegisterForm()
             context = {'form': form}
             return render(request, 'generic_apps/app_admin_sign_up.html', context=context)

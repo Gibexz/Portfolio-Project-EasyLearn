@@ -43,20 +43,25 @@
             <!-- Tutor Form -->
             <div class="admin_forms">
                 <div class="adminLogin">
-                    <form class="" action="#" method="POST">
+                    <form class="" action="{% url 'app_admin_login' %}" method="POST">
                         {% csrf_token %}
-                        <label for="useremail">
-                            Email Login
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <label for="username_or_email">
+                            Username or email
                         </label><br>
-                        {{ form.email }}
-                        <!-- <input type="text" name="useremail" placeholder="enter email" id=""> -->
+                        <!-- {{ form.email }} -->
+                        <input type="text" name="username_or_email" placeholder="enter email" id="">
                         <br><br>
 
                         <label for="password">
                             Password
                         </label><br>
-                        {{ form.password1 }}
-                        <!-- <input type="password" name="password" placeholder="enter password" id=""> -->
+                        <!-- {{ form.password1 }} -->
+                        <input type="password" name="password" placeholder="enter password" id="">
                         <br><br>
 
                         <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""> -->
@@ -69,7 +74,7 @@
                     <form class="" action="{% url 'app_admin_sign_up' %}" method="POST">
                         {% csrf_token %}
                         <label for="useremail">
-                            Email SignUp
+                            Email
                         </label><br>
                         {{ form.email }}
                         <!-- <input type="text" name="useremail" placeholder="enter email" id=""> -->

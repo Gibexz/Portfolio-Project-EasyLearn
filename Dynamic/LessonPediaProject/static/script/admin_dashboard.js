@@ -74,3 +74,74 @@ $(document).ready(function(){
         $('.set_disable_account').hide()
     })
 });
+
+$(document).ready(function() {
+    $('.table_header th').on('click', function() {
+        const column = $(this).data('column');
+        const $tbody = $('.tutor_table_list tbody');
+        const $header = $(this);
+        const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+        $('.table_header th').data('direction', '');
+        $header.data('direction', direction);
+
+        const rows = $tbody.find('tr').get();
+        rows.sort(function(rowA, rowB) {
+            const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+            const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+            if (direction === 'ascending') {
+                return cellA.localeCompare(cellB);
+            } else {
+                return cellB.localeCompare(cellA);
+            }
+        });
+
+        $.each(rows, function(index, row) {
+            $tbody.append(row);
+        });
+    });
+});
+
+
+//  live table sort for client and tutor admin table list
+$(document).ready(function() {
+    $('.table_header_learner th').on('click', function() {
+        const column = $(this).data('column');
+        const $tbody = $('.learner_table_list tbody');
+        const $header = $(this);
+        const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+        $('.table_header_learner th').data('direction', '');
+        $header.data('direction', direction);
+
+        const rows = $tbody.find('tr').get();
+        rows.sort(function(rowA, rowB) {
+            const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+            const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+            if (direction === 'ascending') {
+                return cellA.localeCompare(cellB);
+            } else {
+                return cellB.localeCompare(cellA);
+            }
+        });
+
+        $.each(rows, function(index, row) {
+            $tbody.append(row);
+        });
+    });
+});
+
+$(document).ready(function() {
+    function updateTutorCount() {
+        $.getJSON('http://127.0.0.1:8000/appAdmin/api/get_tutor_count/', function(data) {
+            $("#tutorCount").text(data.tutor_count);
+        });
+    }
+
+    updateTutorCount();
+
+    setInterval(updateTutorCount, 10000)
+
+}) 

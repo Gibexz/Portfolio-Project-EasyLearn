@@ -74,3 +74,35 @@ $(document).ready(function(){
         $('.set_disable_account').hide()
     })
 });
+
+
+$(document).ready(function() {
+    let ascending = true;
+
+    function sortTable(columnIndex) {
+        const table = $('#data_table');
+        const rows = table.find('tbody > tr').get();
+
+        rows.sort(function(a, b) {
+            const cellA = $(a).find(`td:eq(${columnIndex})`).text().toUpperCase();
+            const cellB = $(b).find(`td:eq(${columnIndex})`).text().toUpperCase();
+
+            if ($.isNumeric(cellA) && $.isNumeric(cellB)) {
+                return ascending ? cellA - cellB : cellB - cellA;
+            } else {
+                return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            }
+        });
+
+        $.each(rows, function(index, row) {
+            table.children('tbody').append(row);
+        });
+    }
+
+    $('.table_header td').on('click', function() {
+        const columnIndex = $(this).index();
+        sortTable(columnIndex);
+        ascending = !ascending;
+    });
+});
+

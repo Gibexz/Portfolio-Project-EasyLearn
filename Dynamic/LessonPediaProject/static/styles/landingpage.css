@@ -477,6 +477,7 @@ body{
 /* hover for login and signup */
 .signup_button{
     display: flex;
+    /* margin-left: 10%; */
 }
 
 .signup_button .login_btn:hover{
@@ -491,19 +492,48 @@ body{
     color: black;
 }
 
-.signUp_btn a{
-    margin-left: 40%;
+.signUp_btn{
+    margin-left: 30%;
     padding: 10px 15px 10px 15px;
     border-radius: 10px;
     background: linear-gradient(0deg, #013669, #5AABFF);
     color: white;
     cursor: pointer;
     text-decoration: none;
+    width: 60px;
+    margin-right: 3px;
 }
 
 .dropdown .login_btn{
     cursor: pointer;
     text-align: center;
-    margin-bottom: 35%;
+    margin-bottom: 5%;
 }
 
+.logout a{
+    margin-left: 30%;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, #d73232, #962020);
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    width: 60px;
+    margin-right: 3px;
+}
+
+.logout a:hover, .dashb a:hover{
+    box-shadow: 0px 1px 4px 0px rgba(255, 0, 0, 0.681);
+}
+
+.dashb a{
+    margin-left: 30%;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, #dedede, #d9cece);
+    color: rgb(21, 14, 14);
+    cursor: pointer;
+    text-decoration: none;
+    width: 60px;
+    margin-right: 3px;
+}

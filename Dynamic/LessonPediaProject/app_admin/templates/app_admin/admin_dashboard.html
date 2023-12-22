@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/admin_dashboard.css">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../script/admin_dashboard.js"></script>
+    <script src="{% static 'script/admin_dashboard.js' %}"></script>
+    <script src="{% static 'script/common.js' %}"></script>
+ 
     <title>Admin - Dashboard</title>
 </head>
 <body>
@@ -20,7 +24,7 @@
                 </p>
                 <div class="disable_warning">
                     <section>
-                        <img src="../images/icons/warning.png" alt="">
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
                     </section>
                     <div class="disable_warning_box">
                         <p class="confirm_dialog">Warning!</p>
@@ -76,7 +80,7 @@
                             <div class="details">
 
                                 <section class="details_dp">
-                                    <img src="../images/tutors/pass.jpg" alt="">
+                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                     <p class="profile_userName">profile userName</p>
                                 </section>
 
@@ -203,7 +207,7 @@
     <div class="admin_dash">
         <div class="leftpane">
             <div class="leftpane_content">
-                <h2 class="dashboard_header"><img src="../images/icons/dashboard.png" width="20px" alt=""> &nbsp;Dashboard</h2><br>
+                <h2 class="dashboard_header"><img src="{% static 'images/icons/dashboard.png' %}" width="20px" alt=""> &nbsp;Dashboard</h2><br>
                 <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
                 <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
                 <p class="fa-solid fa-file-import"><span class="dashboard_list" id="set_report">&nbsp; &nbsp; Reports</span></p><br><br>
@@ -211,7 +215,7 @@
                 <p class="fa-solid fa-wrench fa-rotate-0"><span class="dashboard_list" id="set_settings">&nbsp; Settings</span></p>
             </div>
             <div class="admin_basic_profile">
-                <img src="../images/tutors/pass.jpg" alt="">
+                <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                 <p>Active Admin</p>
             </div>
         </div>
@@ -220,20 +224,21 @@
         <div class="activate_tutors">
             <div class="admin_right">
                 <h4 class="hello_admin">  
-                    Hello, <span class="admin_username">AdminUser</span>
-                    <p class="logout">Logout</p>
+                    Hello, <span class="admin_username">{{ request.user.username }}</span>
+                    <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
+                    <p class="logout"><a href="{% url 'landing_page' %}">Home</a></p>
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
-                        <img src="../images/icons/allTutors.png" alt="">
+                        <img src="{% static 'images/icons/allTutors.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top validate">Total Tutors</p>
-                            <p class="total_registered">5,200</p>
+                            <p class="total_registered" id="tutorCount">5,200</p>
                         </section>
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/active.png" alt="">
+                        <img src="{% static 'images/icons/active.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Active</p>
                             <p class="total_registered">400</p>
@@ -241,7 +246,7 @@
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/inactive.png" alt="">
+                        <img src="{% static 'images/icons/inactive.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Inactive</p>
                             <p class="total_registered">230</p>
@@ -257,58 +262,68 @@
                                 <input type="text" name="" id="" class="extend" placeholder="Search tutor">
                                 <button class="search_button">Search</button>
                             </div>
-                            <h3 class="allTutors">All Tutors <span class="sort">Sort by:
-                                <select name="" id="">
-                                    <option value="">Newest</option>
-                                    <option value="">Oldest</option>
-                                    <option value="">Active</option>
-                                    <option value="">Inactive</option>
-                                    <option value="">Ascending</option>
-                                    <option value="">Descending</option>
-                                </select>
-                            </span></h3> 
+                            <h3 class="allTutors">All Tutors 
+                                <!-- <span class="sort">Sort by:
+                                    <select name="" id="">
+                                        <option value="">Newest</option>
+                                        <option value="">Oldest</option>
+                                        <option value="">Active</option>
+                                        <option value="">Inactive</option>
+                                        <option value="">Ascending</option>
+                                        <option value="">Descending</option>
+                                    </select>
+                                </span> -->
+                            </h3> 
                                     
                         </section>
                     </div>
 
                     <div class="all_data">
-                        <table>
+                        <table class="tutor_table_list">
                             <thead class="table_header">
-                                <td>UserName</td>
-                                <td>email</td>
-                                <td>Assessment</td>
-                                <td>No of engagement</td>
-                                <td>Qualification</td>
-                                <td>Status</td>
-                                <td>Admin Action</td>
+                                <tr>
+                                    <th class="sortUserName" data-column="0">UserName</th>
+                                    <th class="sortEmail" data-column="1">Email</th>
+                                    <th class="sortEmail" data-column="2">Email</th>
+                                    <th class="sortEngagement" data-column="3">No of engagement</th>
+                                    <th class="sortQualification" data-column="4">Qualification</th>
+                                    <th class="sortStatus" data-column="5">Status</th>
+                                    <th class="sortJoinDate" data-column="6">Join Date</th>
+                                    <th class="sortAdminAction" data-column="7">Admin Action</th>
+                                </tr>
                             </thead>
-                            <tr>
-                                <td class="user_name">Engr. Chidubem</td>
-                                <td class="user_email">engen.inyang@gmail.com</td>
-                                <td>82%</td>
-                                <td>5</td>
-                                <td>Bsc</td>
-                                <td><button class="check_status">Active</button></td>
-                                <td><button class="action">take action</button></td>
-                            </tr>
-                            <tr>
-                                <td class="user_name">Mr. Gentle Inyang</td>
-                                <td class="user_email">angel@special.com</td>
-                                <td>97%</td>
-                                <td>8</td>
-                                <td>Msc</td>
-                                <td><button class="check_status">Inactive</button></td>
-                                <td><button class="action">take action</button></td>
-                            </tr>
-                            <tr>
-                                <td class="user_name">Prof. Chime Zee</td>
-                                <td class="user_email">chimeKingsley@gmail.com</td>
-                                <td>86%</td>
-                                <td>3</td>
-                                <td>waec</td>
-                                <td><button class="check_status">Active</button></td>
-                                <td><button class="action">take action</button></td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td class="user_name">Engr. Chidubem</td>
+                                    <td class="user_email">engen.inyang@gmail.com</td>
+                                    <td>82%</td>
+                                    <td>5</td>
+                                    <td>Bsc</td>
+                                    <td><button class="check_status">Active</button></td>
+                                    <td style="color: red;">2021-05-15</td>
+                                    <td><button class="action">take action</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="user_name">Mr. Gentle Inyang</td>
+                                    <td class="user_email">angel@special.com</td>
+                                    <td>97%</td>
+                                    <td>8</td>
+                                    <td>Msc</td>
+                                    <td><button class="check_status">Inactive</button></td>
+                                    <td>2020-05-15</td>
+                                    <td><button class="action">take action</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="user_name">Prof. Chime Zee</td>
+                                    <td class="user_email">chimeKingsley@gmail.com</td>
+                                    <td>86%</td>
+                                    <td>3</td>
+                                    <td>waec</td>
+                                    <td><button class="check_status">Active</button></td>
+                                    <td>2024-05-15</td>
+                                    <td><button class="action">take action</button></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>           
@@ -319,20 +334,20 @@
         <div class="activate_learners">
             <div class="admin_right">
                 <h4 class="hello_admin">  
-                    Hello, <span>AdminUser</span>
-                    <p class="logout">Logout</p>
+                    Hello, <span class="admin_username">{{ request.user.username }}</span>
+                    <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
-                        <img src="../images/icons/allTutors.png" alt="">
+                        <img src="{% static 'images/icons/allTutors.png' %}" alt="">
                         <section class="inner_content">
-                            <p class="top validate">Total Learners</p>
-                            <p class="total_registered">15,200</p>
+                            <p class="top validate">Total Tutors</p>
+                            <p class="total_registered">5,200</p>
                         </section>
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/active.png" alt="">
+                        <img src="{% static 'images/icons/active.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Active</p>
                             <p class="total_registered">400</p>
@@ -340,7 +355,7 @@
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/inactive.png" alt="">
+                        <img src="{% static 'images/icons/inactive.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Inactive</p>
                             <p class="total_registered">230</p>
@@ -356,58 +371,68 @@
                                 <input type="text" name="" id="" class="extend" placeholder="Search tutor">
                                 <button class="search_button">Search</button>
                             </div>
-                            <h3 class="allTutors">All Learners <span class="sort">Sort by:
-                                <select name="" id="">
-                                    <option value="">Newest</option>
-                                    <option value="">Oldest</option>
-                                    <option value="">Active</option>
-                                    <option value="">Expired</option>
-                                    <option value="">UserName</option>
-                                    <option value="">Tutor</option>
-                                </select>
-                            </span></h3> 
+                            <h3 class="allTutors">All Learners 
+                                <!-- <span class="sort">Sort by:
+                                    <select name="" id="">
+                                        <option value="">Newest</option>
+                                        <option value="">Oldest</option>
+                                        <option value="">Active</option>
+                                        <option value="">Inactive</option>
+                                        <option value="">Ascending</option>
+                                        <option value="">Descending</option>
+                                    </select>
+                                </span> -->
+                            </h3> 
                                     
                         </section>
                     </div>
 
                     <div class="all_data">
-                        <table>
-                            <thead class="table_header">
-                                <td>UserName</td>
-                                <td>email</td>
-                                <td>Tutor</td>
-                                <td>Subject</td>
-                                <td>Expire on</td>
-                                <td>Status</td>
-                                <td>Admin Action</td>
+                        <table class="learner_table_list">
+                            <thead class="table_header_learner">
+                                <tr>
+                                    <th class="sortUserNameL" data-column="0">UserName</th>
+                                    <th class="sortEmailL" data-column="1">Email</th>
+                                    <th class="sortEmailL" data-column="2">Email</th>
+                                    <th class="sortEngagementL" data-column="3">No of engagement</th>
+                                    <th class="sortQualificationL" data-column="4">Qualification</th>
+                                    <th class="sortStatusL" data-column="5">Status</th>
+                                    <th class="sortJoinDateL" data-column="6">Join Date</th>
+                                    <th class="sortAdminActionL" data-column="7">Admin Action</th>
+                                </tr>
                             </thead>
-                            <tr>
-                                <td class="user_name">Patrick Hillary</td>
-                                <td class="user_email">patrick_gee@gmail.com</td>
-                                <td>Engr. Chidubem</td>
-                                <td>Python programming</td>
-                                <td>3/12/2023</td>
-                                <td><button class="check_status">Expired</button></td>
-                                <td><button class="action">take action</button></td>
-                            </tr>
-                            <tr>
-                                <td class="user_name">Peace Tinubu</td>
-                                <td class="user_email">p4luv_bird@gmail.com</td>
-                                <td>Mr. Gentle Inyang</td>
-                                <td>Further Maths</td>
-                                <td>12/04/2024</td>
-                                <td><button class="check_status">Active</button></td>
-                                <td><button class="action">take action</button></td>
-                            </tr>
-                            <tr>
-                                <td class="user_name">Prince Charles</td>
-                                <td class="user_email">pprince@gmail.com</td>
-                                <td>Prof. Chime Zee</td>
-                                <td>Node Js programming</td>
-                                <td>31/06/2024</td>
-                                <td><button class="check_status">Active</button></td>
-                                <td><button class="action">take action</button></td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td class="user_name">Engr. Chidubem</td>
+                                    <td class="user_email">engen.inyang@gmail.com</td>
+                                    <td>82%</td>
+                                    <td>5</td>
+                                    <td>Bsc</td>
+                                    <td><button class="check_status">Active</button></td>
+                                    <td style="color: red;">2021-05-15</td>
+                                    <td><button class="action">take action</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="user_name">Mr. Gentle Inyang</td>
+                                    <td class="user_email">angel@special.com</td>
+                                    <td>97%</td>
+                                    <td>8</td>
+                                    <td>Msc</td>
+                                    <td><button class="check_status">Inactive</button></td>
+                                    <td>2020-05-15</td>
+                                    <td><button class="action">take action</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="user_name">Prof. Chime Zee</td>
+                                    <td class="user_email">chimeKingsley@gmail.com</td>
+                                    <td>86%</td>
+                                    <td>3</td>
+                                    <td>waec</td>
+                                    <td><button class="check_status">Active</button></td>
+                                    <td>2024-05-15</td>
+                                    <td><button class="action">take action</button></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>           
