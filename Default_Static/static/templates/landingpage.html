@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/lessonpedia/static/css/landing_page.css">
+    <link rel="stylesheet" href="/Default_Static/static/css/landing_page.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="/lessonpedia/static/script/landingpage.js"></script>
+    <script src="/Dynamic_Static/static/script/landingpage.js"></script>
     <title>Document</title>
+    <style>
+        .welcome span{
+            font-size: x-large;
+            font-weight: 600;
+        }
+
+        .left_label .top p{
+            margin: 0px;
+        }
+    </style>
 </head>
 <body>
     <div class="nav_container">
@@ -14,7 +24,7 @@
             <!-- for the logo on the leftside on navbar -->
 
             <section class="nav_left">
-                <img width="100px" height="80px" style="float: left" src="/lessonpedia/static/images/socialLinks/github.png" alt=""><p style="padding-left: 8%;">LessonPedia</p>
+                <img width="100px" height="80px" style="float: left" src="/Dynamic_Static/static/images/socialLinks/github.png" alt=""><p style="padding-left: 8%;">LessonPedia</p>
             </section>
 
             <!-- handles the drop down menu items on the nav bar -->
@@ -29,15 +39,15 @@
             </section>
 
             <section class="nav_right">
-                <img src="/lessonpedia/static/images/icons/cart.png" alt="not found">
-                <img src="/lessonpedia/static/images/icons/profile_icon.png" alt="">
-                <img src="/lessonpedia/static/images/icons/searchbar.png" alt="">
+                <img src="/Dynamic_Static/static/images/icons/cart.png" alt="not found">
+                <img src="/Dynamic_Static/static/images/icons/profile_icon.png" alt="">
+                <img src="/Dynamic_Static/static/images/icons/searchbar.png" alt="">
             <!-- handles the cart icon -->
             </section>
 
             <!-- signup button handle -->
             <section class="signup_button">
-                <p style="margin-top: 0px;">Login <span>SignUp</span></p>
+                <p style="margin-top: 0px;"><span>SignOut</span></p>
             </section>
 
         </div>
@@ -46,11 +56,12 @@
     <!-- top:after nav page -->
     <div class="upper_section">
         <div class="pics_background">
-            <img style="float: right;" src="/lessonpedia/static/images/backgrounds/lady_background.png" alt="">
+            <img style="float: right;" src="/Dynamic_Static/static/images/backgrounds/lady_background.png" alt="">
         
 
             <div class="left_label">
                 <section class="top">
+                    <p class="welcome">Hi <span>&nbsp;User</span></p>
                     <p>SUCCESSFUL COACHES ARE VISIONARIES</p>
                 </section>
 
@@ -66,7 +77,7 @@
                 <section class="last">
                     <input type="text" name="" id="" placeholder="What do you want to learn today?">
                     <section class="search">
-                        <img src="/lessonpedia/static/images/icons/inner_search.png" alt=""><span>Search</span>
+                        <img src="/Dynamic_Static/static/images/icons/inner_search.png" alt=""><span>Search</span>
                     </section>
                 </section>
             </div>
@@ -90,7 +101,7 @@
         <div class="all_tutors"> 
             <section class="tutors_display">
                 <div class="tutor_image">
-                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                    <img src="/Dynamic_Static/static/images/tutors/pass.jpg" alt="">
                 </div>
                 <article class="tutor_details">
                     <h3>Name: Chime Kingsley</h3>
@@ -102,7 +113,7 @@
 
             <section class="tutors_display">
                 <div class="tutor_image">
-                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                    <img src="/Dynamic_Static/static/images/tutors/pass.jpg" alt="">
                 </div>
                 <article class="tutor_details">
                     <h3>Name: Chime Kingsley</h3>
@@ -114,7 +125,7 @@
 
             <section class="tutors_display">
                 <div class="tutor_image">
-                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                    <img src="/Dynamic_Static/static/images/tutors/pass.jpg" alt="">
                 </div>
                 <article class="tutor_details">
                     <h3>Name: Chime Kingsley</h3>
@@ -126,7 +137,7 @@
 
             <section class="tutors_display">
                 <div class="tutor_image">
-                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                    <img src="/Dynamic_Static/static/images/tutors/pass.jpg" alt="">
                 </div>
                 <article class="tutor_details">
                     <h3>Name: Chime Kingsley</h3>
@@ -138,7 +149,7 @@
 
             <section class="tutors_display">
                 <div class="tutor_image">
-                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                    <img src="/Dynamic_Static/static/images/tutors/pass.jpg" alt="">
                 </div>
                 <article class="tutor_details">
                     <h3>Name: Chime Kingsley</h3>
@@ -150,7 +161,7 @@
 
             <section class="tutors_display">
                 <div class="tutor_image">
-                    <img src="/lessonpedia/static/images/tutors/pass.jpg" alt="">
+                    <img src="/Dynamic_Static/static/images/tutors/pass.jpg" alt="">
                 </div>
                 <article class="tutor_details">
                     <h3>Name: Chime Kingsley</h3>
@@ -173,7 +184,7 @@
                 <h3 class="questionsh3">Frequently asked Questions</h3>
                 <div class="freq_questions">
                     <section class="content">
-                        <h3>Who can use the E-Question? <img class="rightArrow" src="/lessonpedia/static/images/icons/arrow-up.png" alt=""></h3>
+                        <h3>Who can use the E-Question? <img class="rightArrow" src="/Dynamic_Static/static/images/icons/arrow-up.png" alt=""></h3>
                         <p>
                             Anyone wishing for a revolutionize learning experience by seemslessly integrating innovative technology with interactive questions. it aims to inspire curosity, foster engagement, and transform traditional education method.
                         </p>
@@ -181,14 +192,14 @@
                     </section>
     
                     <section class="content">
-                        <h3>Must I be a student of Heritage Polytechnic?<img class="rightArrow" src="/lessonpedia/static/images/icons/arrow-up.png" alt=""></h3>
+                        <h3>Must I be a student of Heritage Polytechnic?<img class="rightArrow" src="/Dynamic_Static/static/images/icons/arrow-up.png" alt=""></h3>
                         <p>
                             At the moment, the platform is designed in favour for the students of heritage polytechnic who aims at maximizing their potentials in academics and morals. Not withstanding, we will be maximizing this to reach out to the public
                         </p>
                     </section>
     
                     <section class="content">
-                        <h3>Is this platform accessible offline?<img class="rightArrow" src="/lessonpedia/static/images/icons/arrow-up.png" alt=""></h3>
+                        <h3>Is this platform accessible offline?<img class="rightArrow" src="/Dynamic_Static/static/images/icons/arrow-up.png" alt=""></h3>
                         <p>
                             The portal is accesible only via the internet as the answers to the questions found on the portal are documented in real time
                         </p>
@@ -204,7 +215,7 @@
         <div class="footer">
             <div class="top_footer">
                 <section class="about_Us">
-                    <img  src="/lessonpedia/static/images/socialLinks/github.png" alt="">
+                    <img  src="/Dynamic_Static/static/images/socialLinks/github.png" alt="">
                     <p>
                         User to client: 
                         A user wants to see hmmmmmmmmmm. sign up page 
@@ -235,17 +246,17 @@
                 </section>
 
                 <section class="chatBot">
-                    <a href=""><img src="/lessonpedia/static/images/icons/chatLogo.jpg" alt=""></a>
+                    <a href=""><img src="/Dynamic_Static/static/images/icons/chatLogo.jpg" alt=""></a>
                 </section>
             </div>
 
             <div class="buttom_footer">
                 <p>LessonPedia CopyRight 2023 | All Right reserved <span style="color:yellow">&copy;</span> </p>
                 <section class="social_medias">
-                    <a href=""><img src="/lessonpedia/static/images/icons/facebook.png" alt=""></a>
-                    <a href=""><img src="/lessonpedia/static/images/icons/instagram.png" alt=""></a>
-                    <a href=""><img src="/lessonpedia/static/images/icons/web.png" alt=""></a>
-                    <a href=""><img src="/lessonpedia/static/images/icons/twitter.png" alt=""></a>
+                    <a href=""><img src="/Dynamic_Static/static/images/icons/facebook.png" alt=""></a>
+                    <a href=""><img src="/Dynamic_Static/static/images/icons/instagram.png" alt=""></a>
+                    <a href=""><img src="/Dynamic_Static/static/images/icons/web.png" alt=""></a>
+                    <a href=""><img src="/Dynamic_Static/static/images/icons/twitter.png" alt=""></a>
                 </section>
             </div>
         </div>

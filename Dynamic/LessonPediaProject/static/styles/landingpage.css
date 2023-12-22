@@ -117,6 +117,10 @@ body{
     font-family: 'Saira', sans-serif;
 }
 
+.second_level_mid a{
+    text-decoration: none;
+}
+
 .second_level_mid button{
     padding: 70px;
     padding-bottom: 10px;
@@ -127,10 +131,27 @@ body{
     background-color: transparent;
     color: white;
     border: 2px solid white;
+    cursor: pointer;
+}
+
+.second_level_mid button:hover{
+    background-color: rgba(245, 245, 245, 0.1);
+    font-weight: 600;
+    border: 2px solid #4BE5CA;
+    color:#4BE5CA;
 }
 
 .second_level_mid p{
     padding: 40px;
+}
+
+.validate_signin{
+    color: rgb(254, 241, 169);
+    font-size: medium;
+    margin-left: 1.2%;
+    position: absolute;
+    margin-top: -2%;
+    display: none;
 }
 
 .last{
@@ -507,3 +528,11 @@ body{
     margin-bottom: 35%;
 }
 
+.welcome span{
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.left_label .top p{
+    margin: 0px;
+}

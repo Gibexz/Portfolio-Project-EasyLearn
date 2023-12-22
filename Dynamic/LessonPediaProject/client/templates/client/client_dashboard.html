@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "generic_apps/base.html" %}
+{% load static %}
+
+{% block head %}
     <title>Dashboard - Client</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/client_dashboard.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/client_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/client_dashboard.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
-</head>
-<body>
+{% endblock head %}
+{% block content %}
     <!-- deavtivate account -->
     <div class="deactivate_account_control_display">
         <div class="deactivateAccount">
             <div class="warning">
-                <img src="{% static 'images/icons/warning.png" alt="' %}">
+                <img src="{% static 'images/icons/warning.png' %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
                     <p class="action">This actions cannot be undo, do you wish to process?</p>
@@ -32,7 +30,7 @@
     <div class="logout_btn">
         <div class="logout_btn_account">
             <div class="warning">
-                <img src="{% static 'images/icons/warning.png" alt="' %}">
+                <img src="{% static 'images/icons/warning.png' %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
                     <p class="action">Are you sure to Logout?</p>
@@ -50,11 +48,10 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static 'images/clients/pass.jpg" alt="Client Passport' %}">
+                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
-                        <p>andrewetedu@gmail.com</p>
-                        <p>andybillions@x.com</p>
+                        <p>{{ request.user.email }}</p>
                     </div>
                 </div>
                 <div class="hrtop"><hr></div>
@@ -96,7 +93,7 @@
                             <section class="subject_details">
                                 <section class="tutor_info">
                                     <div class="clearfix">
-                                        <img src="{% static 'images/clients/pass.jpg" alt="Client Passport' %}">
+                                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                                         <section class="float_left">
                                             <div class="subject_table table">
                                                 <span class="tutor_subject tr">Software Development</span>
@@ -128,16 +125,16 @@
                 <div class="right_pane">
                     <div class="right_content">
                         <div class="rooms resize">Rooms
-                            <img src="{% static 'images/socialLinks/chatroom.png" alt="' %}">
+                            <img src="{% static 'images/socialLinks/chatroom.png' %}" alt="">
                         </div>
                         <div class="add_tutor resize">Connect with a Tutor
-                            <img src="{% static 'images/socialLinks/tutor.jpg" alt="' %}">
+                            <img src="{% static 'images/socialLinks/tutor.jpg' %}" alt="">
                         </div>
                         <div class="suggestion resize">Have a suggestion?
-                            <img src="{% static 'images/socialLinks/suggestion.png" alt="' %}">
+                            <img src="{% static 'images/socialLinks/suggestion.png' %}" alt="">
                         </div>               
                         <div class="spomsor resize">Become a sponsor
-                            <img src="{% static 'images/socialLinks/sponsor.jpeg" alt="' %}">
+                            <img src="{% static 'images/socialLinks/sponsor.jpeg' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -151,7 +148,7 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static 'images/clients/pass.jpg" alt="Client Passport' %}">
+                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
                         <p>andrewetedu@gmail.com</p>
@@ -199,7 +196,7 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static 'images/tutors/pass.jpg" alt="' %}">
+                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                     <p>change profile picture</p>
                                 </div>                               
                                 <h3><span>Hi,</span> UserName</h3>
@@ -222,7 +219,7 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static 'images/tutors/pass.jpg" alt="' %}">
+                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                 </div>                               
                                 <h3><span>Hi,</span> UserName</h3>
                                 
@@ -242,16 +239,16 @@
                 <div class="right_pane">
                     <div class="right_content">
                         <div class="rooms resize">Rooms
-                            <img src="{% static 'images/socialLinks/chatroom.png" alt="' %}">
+                            <img src="{% static 'images/socialLinks/chatroom.png' %}" alt="">
                         </div>
                         <div class="add_tutor resize">Connect with a Tutor
-                            <img src="{% static 'images/socialLinks/tutor.jpg" alt="' %}">
+                            <img src="{% static 'images/socialLinks/tutor.jpg' %}" alt="">
                         </div>
                         <div class="suggestion resize">Have a suggestion?
-                            <img src="{% static 'images/socialLinks/suggestion.png" alt="' %}">
+                            <img src="{% static 'images/socialLinks/suggestion.png' %}" alt="">
                         </div>               
                         <div class="spomsor resize">Become a sponsor
-                            <img src="{% static 'images/socialLinks/sponsor.jpeg" alt="' %}">
+                            <img src="{% static 'images/socialLinks/sponsor.jpeg' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -265,7 +262,7 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static 'images/clients/pass.jpg" alt="Client Passport' %}">
+                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
                         <p>andrewetedu@gmail.com</p>
@@ -338,7 +335,7 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static 'images/tutors/pass.jpg" alt="' %}">
+                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                 </div>                               
                                 <h3><span>Hi,</span> UserName</h3>
                                 
@@ -358,16 +355,16 @@
                 <div class="right_pane">
                     <div class="right_content">
                         <div class="rooms resize">Rooms
-                            <img src="{% static 'images/socialLinks/chatroom.png" alt="' %}">
+                            <img src="{% static 'images/socialLinks/chatroom.png' %}" alt="">
                         </div>
                         <div class="add_tutor resize">Connect with a Tutor
-                            <img src="{% static 'images/socialLinks/tutor.jpg" alt="' %}">
+                            <img src="{% static 'images/socialLinks/tutor.jpg' %}" alt="">
                         </div>
                         <div class="suggestion resize">Have a suggestion?
-                            <img src="{% static 'images/socialLinks/suggestion.png" alt="' %}">
+                            <img src="{% static 'images/socialLinks/suggestion.png' %}" alt="">
                         </div>               
                         <div class="spomsor resize">Become a sponsor
-                            <img src="{% static 'images/socialLinks/sponsor.jpeg" alt="' %}">
+                            <img src="{% static 'images/socialLinks/sponsor.jpeg' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -375,6 +372,4 @@
         </div>
     </div>
         
-
-</body>
-</html>
+{% endblock content %}

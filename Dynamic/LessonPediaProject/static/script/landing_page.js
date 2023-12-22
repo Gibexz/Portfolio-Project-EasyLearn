@@ -26,4 +26,12 @@ $(document).ready(function(){
             $(".dropdown-content").hide();
         }
     });
+
+    $("#explore").click(function(){
+        $(".validate_signin").show()
+    })
+    $("#explore").mouseleave(function(){
+        $(".validate_signin").hide()
+    })
+
 });

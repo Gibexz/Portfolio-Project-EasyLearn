@@ -8,6 +8,7 @@ from django.contrib.auth.models import Group, Permission
 
 
 class Client(AbstractUser):
+         others = models.CharField(max_length=50, null=True)
          phone_number = models.CharField(max_length=15, null=True, unique=True)
          state_of_residence = models.CharField(max_length=50, null=True)
          nationality = models.CharField(max_length=50, null=True)

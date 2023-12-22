@@ -24,15 +24,19 @@
             <!-- for the logo on the leftside on navbar -->
 
             <section class="nav_left">
-                <a href="{% url 'landing_page'%}" class="lessonpedia">
+                {% block direction %}
+                    <a href="{% url 'landing_page'%}" class="lessonpedia">                     
                     <img  src="{% static 'images/logo/logo_icon.png' %}" alt=""><p style="padding-left: 8%;"></a>
-                        <a href="{% url 'landing_page'%}" class="lessonpedia">LessonPedia</a></p>
+                    <a href="{% url 'landing_page'%}" class="lessonpedia">LessonPedia</a></p>
+                {% endblock direction %} 
             </section>
 
             <!-- handles the drop down menu items on the nav bar -->
             <section class="nav_center">
                 <ol>
-                    <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    {% block homeBase %}                    
+                        <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    {% endblock homeBase %}
                     {% block pricing %}
                         <li class="spaceMe"><a href="{% url 'landing_page' %}">Pricing</a></li>
                     {% endblock pricing %}                    
@@ -68,8 +72,6 @@
             {% endblock signup_button %}
             <!-- signup button handle -->
             
-            
-
         </div>
     </div>
 

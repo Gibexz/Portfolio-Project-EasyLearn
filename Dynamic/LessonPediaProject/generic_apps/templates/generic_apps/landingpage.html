@@ -17,9 +17,11 @@
                 <section class="mid">
                     <h3>Good <span>coaching</span> is <br> good teaching & <br> nothing else.</h3>
                 </section>
-
+                <p class='validate_signin'>Please Sign in to continue!</p>
                 <section class="second_level_mid">
-                    <button>Explore</button>
+                    {% block explore %}
+                        <button id="explore">Explore</button>
+                    {% endblock explore %}
                     <p>Get free consultation </p>
                 </section>
 

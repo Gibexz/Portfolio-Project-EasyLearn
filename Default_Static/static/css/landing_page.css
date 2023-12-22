@@ -56,14 +56,14 @@ body{
 
 .upper_section{
     height: 909px;
-    background-image: url("/lessonpedia/static/images/backgrounds/background.png");
+    background-image: url("/Dynamic_Static/static/images/backgrounds/background.png");
     background-repeat: no-repeat;
     background-size: cover;
     display:flex;
 }
 
 .pics_background{
-    background-image: url("/lessonpedia/static/images/backgrounds/pics_background.png");
+    background-image: url("/Dynamic_Static/static/images/backgrounds/pics_background.png");
     background-repeat: no-repeat;
     background-position: top right;
     width: 100%;
