@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/lessonpedia/static/css/assestment_instructions.css">
+    <link rel="stylesheet" href="{% static "/lessonpedia/static/css/assestment_instructions.css" %}">
     <title>Document</title>
 </head>
 <body>
     
     <div class="ins_container">
         <div class="back">
-            <p style="left: 10;"><a href="">Back to homepage</a></p>
+            <p style="left: 10;"><a href="{% static "" %}">Back to homepage</a></p>
         </div>
         <center><h2>Assesment Instructions</h2></center>
         <div class="ins">
@@ -35,7 +35,7 @@
               
         </div>
         <div class="link">
-            <center><h3><a href="">Click here to Proceed</a></h3></center>
+            <center><h3><a href="{% static "" %}">Click here to Proceed</a></h3></center>
         </div>
     </div>
     

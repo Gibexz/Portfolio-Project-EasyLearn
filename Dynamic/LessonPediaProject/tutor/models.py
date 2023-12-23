@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group, Permission
 
 class Tutor(AbstractUser):
     """Tutors database"""
+    email = models.EmailField(max_length=150, unique=True)
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     gender = models.CharField(max_length=50, null=True)
     date_of_birth = models.DateField(default=timezone.now)
@@ -23,10 +24,11 @@ class Tutor(AbstractUser):
         ('Others', 'Others')
     ]
     highest_qualification = models.CharField(max_length=50, choices=qualification_choice, default='--select one--', null=True)
+    area_of_specialization = models.CharField(max_length=100, null=True)
+    discipline = models.CharField(max_length=100, null=True)
     employment_status = models.CharField(max_length=50, null=True)
     state_of_residence = models.CharField(max_length=50, null=True)
     nationality = models.CharField(max_length=50, null=True)
-    area_of_specialization = models.CharField(max_length=100, null=True)
     personal_statement = models.TextField(max_length=5000, null=True)
     availability = models.CharField(max_length=50, null=True)
     working_hours = models.CharField(max_length=150, null=True)
@@ -39,6 +41,8 @@ class Tutor(AbstractUser):
     rejected_clients = models.IntegerField(default=0, null=True)
     reviews_id = models.IntegerField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    institution = models.CharField(max_length=150, null=True)
+    others = models.CharField(max_length=100, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     #mitigating errors when AppAdmin is looking for permissions and groups to reference
     groups = models.ManyToManyField(Group, related_name="tutor_groups", blank=True)

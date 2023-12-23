@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="../css/tutor_dashboard.css">
-    <script src="../script/tutor_dashboard.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+    <script src="{% static "https://code.jquery.com/jquery-3.6.4.min.js" %}"></script>
+    <link rel="stylesheet" href="{% static "../css/tutor_dashboard.css" %}">
+    <script src="{% static "../script/tutor_dashboard.js" %}"></script>
+    <link rel="stylesheet" href="{% static "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}">
+    <script src="{% static "https://kit.fontawesome.com/11285bfb5b.js" %}" crossorigin="anonymous"></script>
 
     <title>Document</title>
 </head>
@@ -20,7 +20,7 @@
      <div class="deactivate_account_control_display">
         <div class="deactivateAccount">
             <div class="warning">
-                <img src="../images/icons/warning.png" alt="">
+                <img src="{% static "../images/icons/warning.png" %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
                     <p class="action">This actions cannot be undo, do you wish to process?</p>
@@ -37,7 +37,7 @@
     <div class="logout_btn">
         <div class="logout_btn_account">
             <div class="warning">
-                <img src="../images/icons/warning.png" alt="">
+                <img src="{% static "../images/icons/warning.png" %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
                     <p class="action">Are you sure to Logout?</p>
@@ -84,7 +84,7 @@
             <div class="report_display">
                 <div>
                     <center><h4>Please note, all request would be reviewed first <br> 
-                    Take a look at related contract policies <a href="">here</a></h4></center>
+                    Take a look at related contract policies <a href="{% static "" %}">here</a></h4></center>
                     <form action="" id="report_form">
                         <label for="reason_reason">Reason for report</label>
                         <select name="report_reason" id="">
@@ -293,7 +293,7 @@
                 <h4><span class="fa-solid fa-gauge"></span>&nbsp; DashBoard</h4>
                 <center>
                     <section class="user_details">
-                        <img src="../images/clients/pass.jpg" alt="my image">
+                        <img src="{% static "../images/clients/pass.jpg" %}" alt="my image">
                         <p>username</p>
                         <p>useremail@email.com</p>
                     </section>
@@ -303,11 +303,11 @@
                 </center>
                 <nav class="nav_box">
                     <ol class="nav_li">
-                        <li class="nav_links dashboard active"><a href="">DashBoard</a></li>
-                        <li class="nav_links clients"><a href="">Clients</a></li>
-                        <li class="nav_links programs"><a href="">Programs</a></li>
-                        <li class="nav_links transaction"><a href="">Income</a></li>
-                        <li class="nav_links setting"><a href="">Settings</a></li>
+                        <li class="nav_links dashboard active"><a href="{% static "" %}">DashBoard</a></li>
+                        <li class="nav_links clients"><a href="{% static "" %}">Clients</a></li>
+                        <li class="nav_links programs"><a href="{% static "" %}">Programs</a></li>
+                        <li class="nav_links transaction"><a href="{% static "" %}">Income</a></li>
+                        <li class="nav_links setting"><a href="{% static "" %}">Settings</a></li>
                     </ol>
                 </nav>
                 <center>
@@ -321,7 +321,7 @@
                 <div>
                     <!-- wellcome greeting -->
                     <section class="greeting">
-                        <h3>hello <span class="username_size"><i>username    </span></i><img style="width: 20px; height: 20px;" src="../images/icons/goodbye.png" alt=""></h3>
+                        <h3>hello <span class="username_size"><i>username    </span></i><img style="width: 20px; height: 20px;" src="{% static "../images/icons/goodbye.png" %}" alt=""></h3>
                     </section>
 
                     <!-- Dashboard -->
@@ -520,7 +520,7 @@
                                         <div class="subject_add_container" >
                                             <div class="subject_add" >
                                                 <center><h2 style="margin-bottom: 0px;">Add a Subject, Course, or Program </h2><br>
-                                                        <h4 style="margin-top: 0px;">Be sure to read our policies regarding proficiency <a href="">here</a>. We take this seriously.</h4></center>
+                                                        <h4 style="margin-top: 0px;">Be sure to read our policies regarding proficiency <a href="{% static "" %}">here</a>. We take this seriously.</h4></center>
                                                 <form id="subjectForm">
                                                     <div class="subject_form_group">
                                                     <label for="subjectName">Enter the name of the subject:</label>
@@ -560,7 +560,7 @@
                                         <div class="subject_add_container" >
                                             <div class="subject_add" >
                                                 <center><h2 style="margin-bottom: 0px;">Update a Subject, Course, or Program</h2> <br>
-                                                    <h4 style="margin-top: 0px;"> <i>Reminder:</i>&nbsp; Be sure to read our policies regarding proficiency <a href="">here</a>. We take this seriously.</h4></center>
+                                                    <h4 style="margin-top: 0px;"> <i>Reminder:</i>&nbsp; Be sure to read our policies regarding proficiency <a href="{% static "" %}">here</a>. We take this seriously.</h4></center>
                                                 <form id="subjectForm">
                                                     <div class="subject_form_group">
                                                         <label for="subjectName">Enter the name of the subject:</label>
@@ -601,7 +601,7 @@
                                             <div class="subject_add" >
                                                 <center><h2 style="margin-bottom: 0px;">Delete a Subject, Course, or Program</h2><br>
                                                             <h4>Please note that only a subject with no active contracts can be removed. <br>
-                                                            For related policies, click <a href="">here</a>.</h4></center>
+                                                            For related policies, click <a href="{% static "" %}">here</a>.</h4></center>
                                                 <form id="subjectForm">
                                                     <div class="subject_form_group">
                                                         <label for="subjectName">Enter the name of the subject:</label>
@@ -926,7 +926,7 @@
                                 <div class="doc_uploads">
                                     <div class="doc_uploads_flex">
                                         <div class="dp">
-                                            <img src="../images/tutors/pass.jpg" alt="">
+                                            <img src="{% static "../images/tutors/pass.jpg" %}" alt="">
                                         </div> 
                                         <div class="">
                                             <h3>Profile Picture Upload</h3>
@@ -965,7 +965,7 @@
                                     <div class="profileUpdate">
                                         <div class="profile_update_content">
                                             <div class="dp">
-                                                <img src="../images/tutors/pass.jpg" alt="">
+                                                <img src="{% static "../images/tutors/pass.jpg" %}" alt="">
                                             </div>                               
                                             <h3><span>Hi,</span> UserName</h3>
                                             
@@ -995,13 +995,13 @@
                 <div><h4 class="quicK_links">Quicklinks</h4></div>
                 <div >
                     <ol class="qlinks">
-                        <li><a href="">Rooms</a></li>
-                        <li><a href="">Meet the team</a></li>
-                        <li><a href="">Take assement</a></li>
+                        <li><a href="{% static "" %}">Rooms</a></li>
+                        <li><a href="{% static "" %}">Meet the team</a></li>
+                        <li><a href="{% static "" %}">Take assement</a></li>
                         <li class="review_link">My reviews</li>
                         <li class="report_btn">Report an issue</li>
                         <li class="view_reports">My reports</li>
-                        <li><a href="">Print profile</a></li>
+                        <li><a href="{% static "" %}">Print profile</a></li>
                     </ol>
                 </div>
             </div>

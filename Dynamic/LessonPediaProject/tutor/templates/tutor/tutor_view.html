@@ -4,40 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutors View</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../script/tutor_view.js"></script>
-    <link rel="stylesheet" href="../css/tutor_view.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+    <script src="{% static "https://code.jquery.com/jquery-3.6.4.min.js" %}"></script>
+    <script src="{% static "../script/tutor_view.js" %}"></script>
+    <link rel="stylesheet" href="{% static "../css/tutor_view.css" %}">
+    <link rel="stylesheet" href="{% static "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}">
+    <script src="{% static "https://kit.fontawesome.com/11285bfb5b.js" %}" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="subject_pane">
         <div class="subject_list">
                 <h3>Subjects <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></h3>
             <ul class="subjects ul">
-                <li class="subject list_item"><a href="">Physics</a></li>
-                <li class="subject list_item"><a href="">Mathematics</a></li>
-                <li class="subject list_item"><a href="">Business Admin</a></li>
-                <li class="subject list_item"><a href="">Python Programming</a></li>
-                <li class="subject list_item"><a href="">JavaScript</a></li>
-                <li class="subject list_item"><a href="">NodeJS</a></li>
+                <li class="subject list_item"><a href="{% static "" %}">Physics</a></li>
+                <li class="subject list_item"><a href="{% static "" %}">Mathematics</a></li>
+                <li class="subject list_item"><a href="{% static "" %}">Business Admin</a></li>
+                <li class="subject list_item"><a href="{% static "" %}">Python Programming</a></li>
+                <li class="subject list_item"><a href="{% static "" %}">JavaScript</a></li>
+                <li class="subject list_item"><a href="{% static "" %}">NodeJS</a></li>
             </ul>
         </div>
         <div class="mentors">
             <section class="top_mentors">
                 <H3>Top Mentors <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></H3>
                 <ul class="mentor_name ul">
-                    <li class="list_item"><a href="">Esogibe Chidubem</a></li>
-                    <li class="list_item"><a href="">Gentle Inyang</a></li>
-                    <li class="list_item"><a href="">Barth Bassey</a></li>
-                    <li class="list_item"><a href="">Kingsley Chime</a></li>
+                    <li class="list_item"><a href="{% static "" %}">Esogibe Chidubem</a></li>
+                    <li class="list_item"><a href="{% static "" %}">Gentle Inyang</a></li>
+                    <li class="list_item"><a href="{% static "" %}">Barth Bassey</a></li>
+                    <li class="list_item"><a href="{% static "" %}">Kingsley Chime</a></li>
                 </ul>
             </section>
         </div>
 
         <div class="logout">
             <section class="logout_btn">
-                <h3><i class="fa fa-sign-out" aria-hidden="true"></i> <a href="#">Log Out</a></h3>
+                <h3><i class="fa fa-sign-out" aria-hidden="true"></i> <a href="{% static "#" %}">Log Out</a></h3>
             </section>
         </div>
 
@@ -52,14 +52,14 @@
                 <div>
                   <i class="fa-regular fa-sharp fa-bell"></i>
                 </div>
-                <section><img class="tiny_images"src="../images/rooms/Chime.jpg" alt="user_photo"></section>
+                <section><img class="tiny_images"src="{% static "../images/rooms/Chime.jpg" %}" alt="user_photo"></section>
                 <span class="username">Kingsley</span> <span class="fa fa-chevron-circle-down" aria-hidden="true"></span>
             </div>
         </div>
         <div class="tutor_row">
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -75,7 +75,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -91,7 +91,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -107,7 +107,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -123,7 +123,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -139,7 +139,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -155,7 +155,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -171,7 +171,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -187,7 +187,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -203,7 +203,7 @@
             </div>
             <div class="tutor_overview">
                 <section class="tutor_image_box">
-                    <img class="tutor_image" src="../images/rooms/Chime.jpg" alt="tutor_image">
+                    <img class="tutor_image" src="{% static "../images/rooms/Chime.jpg" %}" alt="tutor_image">
                 </section>
                 <div class="other_info">
                     <section class="tutor_name"><h5 class="name">Chime Kingsley &nbsp;</h5>
@@ -222,10 +222,10 @@
 <div class="buttom_footer">
     <p>LessonPedia CopyRight 2023 | All Right reserved <span style="color:yellow">&copy;</span> </p>
     <section class="social_medias">
-        <a href=""><img src="../images/icons/facebook.png" alt=""></a>
-        <a href=""><img src="../images/icons/instagram.png" alt=""></a>
-        <a href=""><img src="../images/icons/web.png" alt=""></a>
-        <a href=""><img src="../images/icons/twitter.png" alt=""></a>
+        <a href="{% static "" %}"><img src="{% static "../images/icons/facebook.png" %}" alt=""></a>
+        <a href="{% static "" %}"><img src="{% static "../images/icons/instagram.png" %}" alt=""></a>
+        <a href="{% static "" %}"><img src="{% static "../images/icons/web.png" %}" alt=""></a>
+        <a href="{% static "" %}"><img src="{% static "../images/icons/twitter.png" %}" alt=""></a>
     </section>
 </div>
 </body>

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/admin_dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../script/admin_dashboard.js"></script>
+    <link rel="stylesheet" href="{% static "../css/admin_dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}">
+    <script src="{% static "https://kit.fontawesome.com/11285bfb5b.js" %}" crossorigin="anonymous"></script>
+    <script src="{% static "https://code.jquery.com/jquery-3.6.4.min.js" %}"></script>
+    <script src="{% static "../script/admin_dashboard.js" %}"></script>
     <title>Admin - Dashboard</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
                 </p>
                 <div class="disable_warning">
                     <section>
-                        <img src="../images/icons/warning.png" alt="">
+                        <img src="{% static "../images/icons/warning.png" %}" alt="">
                     </section>
                     <div class="disable_warning_box">
                         <p class="confirm_dialog">Warning!</p>
@@ -76,7 +76,7 @@
                             <div class="details">
 
                                 <section class="details_dp">
-                                    <img src="../images/tutors/pass.jpg" alt="">
+                                    <img src="{% static "../images/tutors/pass.jpg" %}" alt="">
                                     <p class="profile_userName">profile userName</p>
                                 </section>
 
@@ -203,7 +203,7 @@
     <div class="admin_dash">
         <div class="leftpane">
             <div class="leftpane_content">
-                <h2 class="dashboard_header"><img src="../images/icons/dashboard.png" width="20px" alt=""> &nbsp;Dashboard</h2><br>
+                <h2 class="dashboard_header"><img src="{% static "../images/icons/dashboard.png" %}" width="20px" alt=""> &nbsp;Dashboard</h2><br>
                 <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
                 <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
                 <p class="fa-solid fa-file-import"><span class="dashboard_list" id="set_report">&nbsp; &nbsp; Reports</span></p><br><br>
@@ -211,7 +211,7 @@
                 <p class="fa-solid fa-wrench fa-rotate-0"><span class="dashboard_list" id="set_settings">&nbsp; Settings</span></p>
             </div>
             <div class="admin_basic_profile">
-                <img src="../images/tutors/pass.jpg" alt="">
+                <img src="{% static "../images/tutors/pass.jpg" %}" alt="">
                 <p>Active Admin</p>
             </div>
         </div>
@@ -225,7 +225,7 @@
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
-                        <img src="../images/icons/allTutors.png" alt="">
+                        <img src="{% static "../images/icons/allTutors.png" %}" alt="">
                         <section class="inner_content">
                             <p class="top validate">Total Tutors</p>
                             <p class="total_registered">5,200</p>
@@ -233,7 +233,7 @@
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/active.png" alt="">
+                        <img src="{% static "../images/icons/active.png" %}" alt="">
                         <section class="inner_content">
                             <p class="top">Active</p>
                             <p class="total_registered">400</p>
@@ -241,7 +241,7 @@
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/inactive.png" alt="">
+                        <img src="{% static "../images/icons/inactive.png" %}" alt="">
                         <section class="inner_content">
                             <p class="top">Inactive</p>
                             <p class="total_registered">230</p>
@@ -324,7 +324,7 @@
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
-                        <img src="../images/icons/allTutors.png" alt="">
+                        <img src="{% static "../images/icons/allTutors.png" %}" alt="">
                         <section class="inner_content">
                             <p class="top validate">Total Learners</p>
                             <p class="total_registered">15,200</p>
@@ -332,7 +332,7 @@
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/active.png" alt="">
+                        <img src="{% static "../images/icons/active.png" %}" alt="">
                         <section class="inner_content">
                             <p class="top">Active</p>
                             <p class="total_registered">400</p>
@@ -340,7 +340,7 @@
                     </section>
 
                     <section class="content">
-                        <img src="../images/icons/inactive.png" alt="">
+                        <img src="{% static "../images/icons/inactive.png" %}" alt="">
                         <section class="inner_content">
                             <p class="top">Inactive</p>
                             <p class="total_registered">230</p>

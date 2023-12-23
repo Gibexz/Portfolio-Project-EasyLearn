@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'tutor',
     'app_admin',
     'generic_apps',
+    'crispy_forms',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -137,3 +139,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTHENTICATION_BACKENDS = [
+    'app_admin.app_admin_backends.AppAdminAuthBackend',
+    'tutor.tutor_backends.TutorAuthBackend',
+    'client.client_backend.ClientAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_URL = 'tutor_login'
+LOGIN_REDIRECT_URL = 'tutor_dashboard'

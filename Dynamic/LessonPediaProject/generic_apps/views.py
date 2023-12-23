@@ -42,7 +42,7 @@ def tutor_sign_up(request):
        if form.is_valid():
            form.save()
            messages.success(request, 'Registration Successful!')
-           return redirect('landing_page')
+           return redirect('tutor_login')
        else:
             messages.error(request, 'Please correct the error below.')
             form = TutorRegisterForm()

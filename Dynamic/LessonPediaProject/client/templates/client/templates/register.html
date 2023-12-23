@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/lessonpedia/static/css/register.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src=".. /script/register.js"></script>
+    <link rel="stylesheet" href="{% static "/lessonpedia/static/css/register.css" %}">
+    <script src="{% static "https://code.jquery.com/jquery-3.6.4.min.js" %}"></script>
+    <script src="{% static ".. /script/register.js" %}"></script>
     <title>Register</title>
 </head>
 <body>
    <div class="register_container">
         <div class="register_container_inputs">
             <div class="logo">
-               <img src=".. /images/socialLinks/github.png" alt="">
+               <img src="{% static ".. /images/socialLinks/github.png" %}" alt="">
             </div>
             <h3 class="register_header">
                 Register As 
@@ -85,17 +85,17 @@
             <center><p class="change_color hide_signup">or signup with</p></center>
             <div class="link_box_container">
                 <div class="link_box">
-                    <a href=""><img src=".. /images/socialLinks/google.png" alt=""></a>
+                    <a href="{% static "" %}"><img src="{% static ".. /images/socialLinks/google.png" %}" alt=""></a>
                 </div>
                 <div class="link_box">
-                    <a href=""><img src=".. /images/socialLinks/facebook.png" alt=""></a>
+                    <a href="{% static "" %}"><img src="{% static ".. /images/socialLinks/facebook.png" %}" alt=""></a>
                 </div>
                 <div class="link_box">
-                    <a href=""><img src=".. /images/socialLinks/github.png" alt=""></a>
+                    <a href="{% static "" %}"><img src="{% static ".. /images/socialLinks/github.png" %}" alt=""></a>
                 </div>  
             </div>
             <div class="ending">
-                <center><p class="change_color">Already have an account? <span><a href="">Login here</a></span></p></center>
+                <center><p class="change_color">Already have an account? <span><a href="{% static "" %}">Login here</a></span></p></center>
             </div>
         </div>
    </div>
