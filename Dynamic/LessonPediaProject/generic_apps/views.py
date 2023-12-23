@@ -1,12 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
-
+from django.contrib.auth.models import AnonymousUser
+from client.models import Client
 
 def landing_page(request):
     """Landing page"""
-    return render(request, "generic_apps/landingpage.html")
-
+    active_user = request.user
+    if isinstance(active_user, AnonymousUser):
+        return render(request, "generic_apps/landingpage.html")
+    else:
+        checkActiveUser = (isinstance(request.user, Client))
+        if checkActiveUser:
+            return render(request, "client/login_landingpage.html", {"activeUser":request.user})
 
 def client_sign_up(request):
     """sign_up for client"""

@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .backends import EmailClientBackend as ClientBackend
 from django.contrib import messages
@@ -36,11 +37,13 @@ def client_login(request):
               
     return render(request, 'client/login.html')
 
+@login_required(login_url='client_signIn')
 def client_logout(request):
     """Logout active user"""
     logout(request)
     return redirect('landing_page')
 
+@login_required(login_url='client_signIn')
 def user_profile_registration(request):
     """Profile registration page"""
     current_user = request.user
@@ -57,6 +60,7 @@ def user_profile_registration(request):
         form = UserProfileRegistrationForm()
         return render(request, 'client/profilePageUpdate.html', {"form": form, "activeUser": request.user})
 
+@login_required(login_url='client_signIn')
 def render_dashboard(request, whoami):
     """validate user and render dashboard
     or redirect user to register profile page"""

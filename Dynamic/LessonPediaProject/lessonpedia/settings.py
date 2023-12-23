@@ -146,3 +146,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     # other backends if needed
 ]
+
+LOGIN_URL = '/client_signIn/'

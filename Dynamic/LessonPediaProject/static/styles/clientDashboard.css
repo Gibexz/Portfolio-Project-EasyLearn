@@ -159,7 +159,7 @@ body {
    
 }
 
-.my_tutors .search{
+.my_tutors .searchClient{
     height: 30px;
     border: 1px solid red;
     box-shadow: 1px 1px 5px 1px rgba(128, 128, 128, 0.83);
@@ -169,7 +169,7 @@ body {
     padding-right: 0px;
 }
 
-.my_tutors .search input[type="text"]{
+.my_tutors .searchClient input[type="text"]{
     height: 20px;
     margin-top: 3px;
     margin-left: 5px;
@@ -179,11 +179,11 @@ body {
     border: none
 }
 
-.my_tutors .search input[type="text"]:focus{
+.my_tutors .searchClient input[type="text"]:focus{
     outline: none;
 }
 
-.my_tutors .search .search_button{
+.my_tutors .searchClient .searchClient_button{
     height: 30px;
     border-radius: 0px 20px 20px 0px;
     background-color: rgba(2, 7, 80, 0.811);
@@ -470,8 +470,9 @@ body {
 .deactivate_account_control_display, .logout_btn{
     position: absolute;
     backdrop-filter: brightness(0.1);
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    top:0;
+    height: 100%;
 }
 
 .deactivateAccount, .logout_btn_account{

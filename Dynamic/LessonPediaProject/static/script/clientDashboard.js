@@ -54,9 +54,15 @@ $(document).ready(function(){
 
     $("#deactivate_account").click(function(){
         $(".deactivate_account_control_display").css("display", "block")
+        $("body").css("overflow", "hidden")
     })
 
     $(".mistake").click(function(){
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+        $("body").css("overflow", "auto")
         $(".deactivate_account_control_display").css("display", "none")
         $(".profile_control_display").css("display", "block")
         $(".change_password_control_display").css("display", "none")
@@ -76,10 +82,16 @@ $(document).ready(function(){
 
     $('.logout_activation').click(function(){
         $(".logout_btn").css("display", "block")
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+        $("body").css("overflow", "hidden")
     })
 
     $(".cancel_logout").click(function() {
         $(".logout_btn").css("display", "none")
+        $("body").css("overflow", "auto")
     })
 
 })

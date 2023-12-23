@@ -2,12 +2,20 @@
 {% load static %}
 
 {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Client</title>
-    <script src="{% static 'script/client_dashboard.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'styles/client_dashboard.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/clientDashboard.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/clientDashboard.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
 {% endblock head %}
+
+
+{% block signup_button %}
+
+{% endblock signup_button %}
 {% block content %}
     <!-- deavtivate account -->
     <div class="deactivate_account_control_display">
@@ -36,7 +44,7 @@
                     <p class="action">Are you sure to Logout?</p>
                 </div>
                 <div class="selections">
-                    <button class="confirm_logout">Yes</button>
+                    <a href='{% url "logoutUser" %}'><button class="confirm_logout">Yes</button></a>
                     <button class="cancel_logout">No</button>
                 </div>
             </div>
@@ -48,7 +56,7 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
+                        <img src="{{ request.user.profile_picture.url }}" alt="Client Passport">
                     </div>
                     <div class="other_info">
                         <p>{{ request.user.email }}</p>
@@ -83,9 +91,9 @@
                             <div class="completed item"><p class="progress">0/2 </p><p class="progress_text">Settled</p></div>
                         </div> 
                         <div class="my_tutors">
-                            <div class="search">
+                            <div class="searchClient">
                                 <input type="text" name="" id="" class="extend" placeholder="Search tutor">
-                                <button class="search_button">Search</button>
+                                <button class="searchClient_button">Search</button>
                             </div>
 
                         </div>
@@ -151,8 +159,7 @@
                         <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
-                        <p>andrewetedu@gmail.com</p>
-                        <p>andybillions@x.com</p>
+                        <p>{{ request.user.email }}</p>
                     </div>
                 </div>
                 <div class="hrtop"><hr></div>
@@ -265,8 +272,7 @@
                         <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
-                        <p>andrewetedu@gmail.com</p>
-                        <p>andybillions@x.com</p>
+                        <p>{{ request.user.email }}</p>
                     </div>
                 </div>
                 <div class="hrtop"><hr></div>

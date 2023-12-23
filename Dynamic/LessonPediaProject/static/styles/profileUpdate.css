@@ -326,8 +326,8 @@ body, html {
     margin-top: 3%;
 }
 
-.cert_content{
-   
+.content_left a{
+    text-decoration: none;
 }
 
 .close_cert, .close_cv{
