@@ -21,7 +21,7 @@ def client_sign_up(request):
        if form.is_valid():
            form.save()
            messages.success(request, 'Registration Successful, please Login!')
-        #    return redirect('user_login')
+            # return redirect('user_login')
            return redirect('client_signIn')
        if form.errors:
                 # Access and display first error for each field

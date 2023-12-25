@@ -27,7 +27,7 @@
                     <p class="action">This actions cannot be undo, do you wish to process?</p>
                 </div>
                 <div class="selections">
-                    <button class="confirm_remove">Confirm</button>
+                    <a href="{% url 'remove_user' %}"><button class="confirm_remove">Confirm</button></a>
                     <button class="mistake">Cancel</button>
                 </div>
             </div>
@@ -56,7 +56,11 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{{ request.user.profile_picture.url }}" alt="Client Passport">
+                        {% if request.user.is_authenticated %}
+                            <img src="{{ request.user.profile_picture.url }}" alt="Client Passport">
+                        {% else %}
+                            <img src="{% static 'images/user/default_user_icon.png' %}" alt="Client Passport">
+                        {% endif %}                    
                     </div>
                     <div class="other_info">
                         <p>{{ request.user.email }}</p>
@@ -65,7 +69,7 @@
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="#">Dashboard</a> 
+                        <a href="{% url 'validate_user' whoami=request.user %}">Dashboard</a> 
                         </div>   
                     <div class="settings side">
                     <a href="#" class="set_active">Settings</a> 
@@ -81,6 +85,15 @@
 
             <div class="content">
                 <div class="left_pane">
+                    <div class="PUpdate">
+                        <p class='logMessage'>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            {% endif %}
+                        </p>
+                    </div>
                     <div class="profile_info">
                         <h2 class="fa-solid fa-gauge"><span>&nbsp; Dashboard</span></h2>
                     </div>
@@ -165,7 +178,7 @@
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="#" class="db_active">Dashboard</a> 
+                        <a href="{% url 'validate_user' whoami=request.user %}" class="db_active">Dashboard</a> 
                         </div>   
                     <div class="settings side">
                     <a href="#">Settings</a> 
@@ -206,15 +219,22 @@
                                     <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                     <p>change profile picture</p>
                                 </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
+                                <h3><span>Hi,</span> {{ request.user.username }}</h3>
                                 
-                                <form action="">
-                                    <input type="text" name="" id="" placeholder="firstName">
-                                    <input type="text" name="" id="" class="extend" placeholder="lastName">
-                                    <input type="tel" name="" id="" class="extend" placeholder="phone Number">
-                                    <input type="text" name="" id="" class="extend" placeholder="residential Address">
-                                    <input type="text" name="" id="" class="extend" placeholder="state of resident">
-                                    <input type="text" name="" id="" class="extend" placeholder="Nationality"> <br>
+                                <form action="{% url 'ProfileUpdate' %}" method='POST'>
+                                    {% csrf_token %}
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" name="firstName" id="" placeholder="{{ request.user.first_name }}">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" name="lastName" id="" class="extend" placeholder="{{ request.user.last_name }}">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <input type="text" name="phoneNumber" id="" class="extend" placeholder="{{ request.user.phone_number }}">
+                                    <label for="address">Residential Address</label>
+                                    <input type="text" name="address" id="" class="extend" placeholder="{{ request.user.residential_address}}">
+                                    <label for="state">State of Residence</label>
+                                    <input type="text" name="state" id="" class="extend" placeholder="{{ request.user.state_of_residence }}">
+                                    <label for="nationality">Nationality</label>
+                                    <input type="text" name="nationality" id="" class="extend" placeholder="{{ request.user.nationality }}"> <br>
                                     <button class="save_button">Save</button>                               
                                 </form>
                             </div>
@@ -228,13 +248,15 @@
                                 <div class="dp">
                                     <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                 </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
+                                <h3><span>Hi,</span> {{ request.user }}</h3>
                                 
-                                <form action="">
+                                <form action="{% url 'changePassword' %}" method='POST'>
+                                    {% csrf_token %}
                                     <br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
+                                    <input type="password" name="oldPassword" id="" class="extend" placeholder="old password">
+                                    <br><br>
+                                    <input type="password" name="newPassword" id="" class="extend" placeholder="new password"><br><br>
+                                    <input type="password" name="confirmNewPassword" id="" class="extend" placeholder="confirm new password"><br><br><br>
                                     <button class="save_button">Save</button>                               
                                 </form>
                             </div>
@@ -278,7 +300,7 @@
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="#" class="db_active">Dashboard</a> 
+                        <a href="{% url 'validate_user' whoami=request.user %}" class="db_active">Dashboard</a> 
                         </div>   
                     <div class="settings side">
                     <a href="#" class="set_active">Settings</a> 
@@ -334,27 +356,7 @@
                             </div>
                         </div>
                     </div> -->
-                    <h1><center>Coming soon!</center></h1>
-
-                    <!-- change password -->
-                    <div class="change_password_control_display">
-                        <div class="profileUpdate">
-                            <div class="profile_update_content">
-                                <div class="dp">
-                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                                </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
-                                
-                                <form action="">
-                                    <br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
-                                    <button class="save_button">Save</button>                               
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <h1><center>Coming soon!</center></h1>                    
                     
                 </div>
 

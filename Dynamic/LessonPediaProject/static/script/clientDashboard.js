@@ -94,4 +94,23 @@ $(document).ready(function(){
         $("body").css("overflow", "auto")
     })
 
+    // Ajax load
+//    function loadView(){
+//     var url = $("#change_password").data("url");
+//     $.ajax({
+//         type: "GET",
+//         url: url,
+//         success: function(response) {
+//             $("#change_password").html(response);
+//         },
+//         error: function(error) {
+//             console.log('Error:', error);
+//         }
+//     });
+//    }
+   
+//    $("#change_password").click(function(){
+//     loadView()
+//    })
+    
 })

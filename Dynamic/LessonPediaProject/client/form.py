@@ -20,44 +20,6 @@ class ClientSignInForm(AuthenticationForm):
         ]
 
 class UserProfileRegistrationForm(forms.ModelForm):
-    """Update user profile form"""
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-        self.fields["first_name"].widget.attrs.update({
-            'id':'firstName',
-            'placeholder':"First Name",
-            'requires':'required'
-        })
-        self.fields["last_name"].widget.attrs.update({
-            'id':'lastName',
-            'placeholder':"Last Name",
-            'required':'required'
-        })
-        self.fields["others"].widget.attrs.update({
-            'id':'others',
-            'placeholder':"Other Names",
-        })
-        self.fields["residential_address"].widget.attrs.update({
-            'id':'address',
-            'placeholder':"Address",
-            'required': 'required'
-        })
-        self.fields["state_of_residence"].widget.attrs.update({
-            'id':'state',
-            'placeholder':"State of Resident",
-            'required': 'required'
-        })
-        self.fields["nationality"].widget.attrs.update({
-            'id':'nationality',
-            'placeholder':"Nationality",
-            'required': 'required'
-        })
-        self.fields["phone_number"].widget.attrs.update({
-            'id':'phoneNumber',
-            'placeholder':"Phone Number",
-            'required': 'required'
-        })
-        
     class Meta:
         model = Client
         fields = [
@@ -70,3 +32,13 @@ class UserProfileRegistrationForm(forms.ModelForm):
             'profile_picture',
             'residential_address'
         ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={'id': 'firstName', 'placeholder': 'First Name', 'required': 'required'}),
+            'last_name': forms.TextInput(attrs={'id': 'lastName', 'placeholder': 'Last Name', 'required': 'required'}),
+            'others': forms.TextInput(attrs={'id': 'others', 'placeholder': 'Other Names'}),
+            'residential_address': forms.TextInput(attrs={'id': 'address', 'placeholder': 'Address', 'required': 'required'}),
+            'state_of_residence': forms.TextInput(attrs={'id': 'state', 'placeholder': 'State of Resident', 'required': 'required'}),
+            'nationality': forms.TextInput(attrs={'id': 'nationality', 'placeholder': 'Nationality', 'required': 'required'}),
+            'phone_number': forms.TextInput(attrs={'id': 'phoneNumber', 'placeholder': 'Phone Number', 'required': 'required'}),
+            'profile_picture': forms.FileInput(attrs={'id': 'dp', 'class': 'file_button', 'type': 'file', 'required': 'required'}),
+        }

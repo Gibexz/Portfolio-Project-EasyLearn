@@ -5,6 +5,7 @@ from django.utils import timezone
 from tutor.models import Tutor
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group, Permission
+from django.core.validators import FileExtensionValidator
 
 
 class Client(AbstractUser):
@@ -12,7 +13,7 @@ class Client(AbstractUser):
          phone_number = models.CharField(max_length=15, null=True, unique=True)
          state_of_residence = models.CharField(max_length=50, null=True)
          nationality = models.CharField(max_length=50, null=True)
-         profile_picture = models.ImageField(upload_to='profile_picture/', default='templates/lessonpedia/static/images/user/default_user_icon.png')
+         profile_picture = models.ImageField(upload_to='profile_picture/', default='profile_picture/default_user_icon.png', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
          residential_address = models.CharField(max_length=150, null=True)
          created_at = models.DateTimeField(auto_now_add=True) 
          updated_at = models.DateTimeField(auto_now=True)
