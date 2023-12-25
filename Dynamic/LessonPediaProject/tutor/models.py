@@ -23,30 +23,71 @@ class Tutor(AbstractUser):
         ('Waec', 'Waec'),
         ('Others', 'Others')
     ]
+    INSTITUTION_TYPES = [
+        ('--select one--', '--select one--'),
+        ('university', 'University'),
+        ('polytechnic', 'Polytechnic'),
+        ('COE', 'College Of Education'),
+        ('vocational', 'Vocational'),
+        ('others', 'Others'),
+    ]
+
+    RESULT = [
+        ('--select one--', '--select one--'),
+        ('first_class', 'First Class'),
+        ('distinction', 'Distinction'),
+        ('second_class_upper', 'Second Class Upper'),
+        ('upper_credit', 'Upper Credit'),
+        ('second_class_lower', 'Second Class Lower'),
+        ('lower_credit', 'Lower Credit'),
+        ('others', 'Others'),
+    ]
+    employment_type = [
+        ('--select one--', '--select one--'),
+        ('full_time', 'Full Time'),
+        ('part_time', 'Part Time'),
+        ('freelance', 'Freelance'),
+        ('others', 'Others'),
+    ]
+    emp_status = [
+            ('', '--select one--',),
+            ('Employed', 'Employed'),
+            ('Self Employed', 'Self Employed'),
+            ('Unemployed', 'Unemployed'),
+        ]
+
+    institution = models.CharField(max_length=150, null=True)
+    institution_type = models.CharField(max_length=20, choices=INSTITUTION_TYPES, default='--select one--', null=True)
+    result = models.CharField(max_length=20, choices=RESULT, blank=True, null=True, default='--select one--')
     highest_qualification = models.CharField(max_length=50, choices=qualification_choice, default='--select one--', null=True)
     area_of_specialization = models.CharField(max_length=100, null=True)
     discipline = models.CharField(max_length=100, null=True)
-    employment_status = models.CharField(max_length=50, null=True)
+    employment_type = models.CharField(max_length=50, choices=employment_type, null=True)
+    employment_status = models.CharField(max_length=50, choices=emp_status, default='--select one--', null=True)
+    lga_resident = models.CharField(max_length=50, null=True)
     state_of_residence = models.CharField(max_length=50, null=True)
     nationality = models.CharField(max_length=50, null=True)
     personal_statement = models.TextField(max_length=5000, null=True)
     availability = models.CharField(max_length=50, null=True)
     working_hours = models.CharField(max_length=150, null=True)
     status = models.BooleanField(null=True)
-    cv_id = models.IntegerField(null=True, unique=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/', default='templates/lessonpedia/static/images/user/default_user_icon.png')
+    cv_id = models.FileField(upload_to='cv_files/', null=True, blank=True)
+    certificate = models.FileField(upload_to='certificate_files/', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
     residential_address = models.CharField(max_length=255, null=True)
     active_clients = models.IntegerField(default=0, null=True)
     total_clients = models.IntegerField(default=0, null=True)
     rejected_clients = models.IntegerField(default=0, null=True)
     reviews_id = models.IntegerField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    institution = models.CharField(max_length=150, null=True)
     others = models.CharField(max_length=100, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     #mitigating errors when AppAdmin is looking for permissions and groups to reference
     groups = models.ManyToManyField(Group, related_name="tutor_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="tutor_permissions", blank=True)
+
+    def __str__(self):
+        return self.username
 
 
 class Subject(models.Model):

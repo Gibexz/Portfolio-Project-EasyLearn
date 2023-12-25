@@ -35,8 +35,9 @@ INSTALLED_APPS = [
     'tutor',
     'app_admin',
     'generic_apps',
+    "django_flatpickr",
     'crispy_forms',
-
+    'django_countries.fields',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.contrib.staticfiles.middleware.StaticFilesMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +62,6 @@ ROOT_URLCONF = 'lessonpedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': ['app_admin/templates/app_admin'],
         'DIRS':[],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -143,11 +144,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
-    'app_admin.app_admin_backends.AppAdminAuthBackend',
     'tutor.tutor_backends.TutorAuthBackend',
-    'client.client_backend.ClientAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 7 * 24 * 60 * 60 # 7 days
+SESSION_COOKIE_SECURE = False # True for production
 
 LOGIN_URL = 'tutor_login'
 LOGIN_REDIRECT_URL = 'tutor_dashboard'

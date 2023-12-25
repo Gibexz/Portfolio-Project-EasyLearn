@@ -38,7 +38,7 @@
                     <label for="password">
                         Password
                     </label><br>
-                    <input type="password" name="password" placeholder="********" id="" autocomplete="on"><br>
+                    <input type="password" name="password" placeholder="********" id="password" autocomplete="on"><span toggle="#password" class="password-toggle"></span><br>
                     <h5 class="forgetPasscode">Forget password</h5><br><br><br>
                     <input type="submit" value="Sign in">
                 </form>
@@ -62,4 +62,10 @@
             </div>
         </div>
     {% endblock content %}
+    <script>
+        $(document).on('click', '.password-toggle', function() {
+            let input = $($(this).attr('toggle'));
+            input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
+        });        
+    </script>
     <br><br>

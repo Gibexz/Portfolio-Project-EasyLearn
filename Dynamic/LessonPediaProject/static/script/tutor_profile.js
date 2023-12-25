@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#dp').change(function() {
+    $('#pic').change(function() {
         var valid_extensions = ['.jpg', '.jpeg', '.png'];
 
         const fileInput = this;
@@ -46,6 +46,7 @@ $(document).ready(function() {
             alert('Invalid file extension. Please choose a valid image file.');
         }
     });
+
 
     // certificate validation
     $('#cert').change(function() {
@@ -145,4 +146,39 @@ $(document).ready(function() {
             behavior: "smooth"
         });
     })
-});
+
+
+    // nationality dropdown
+
+    $("#nationality").on('change', function() {
+        // Check if the selected nationality is not Nigerian
+        if ($(this).val() !== 'NG') {
+          $('#state').hide();
+          $('div .lga').hide();
+          $(".state input[type='text']").show();
+          $('.lga_frn').show();
+        } else {
+            $('.location').css({
+                'justify-content': 'flex-start',
+            })
+          $('#state').show(); // Show the state div
+          $(".state input[type='text']").hide(); // Hide the text input
+          $('div .lga').show();
+            $('.lga_frn').hide();
+        }
+      });
+
+         // Calculate the minimum date for someone who is 75 years old
+    let maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 75);
+    let formattedMaxDate = maxDate.toISOString().split('T')[0];
+
+    // Calculate the maximum date for someone who is 15 years old
+    let minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 15);
+    let formattedMinDate = minDate.toISOString().split('T')[0];
+
+    // Set the min and max attributes of the input element
+    $('#dob').attr('max', formattedMinDate);
+    $('#dob').attr('min', formattedMaxDate);
+    });

@@ -1,0 +1,182 @@
+{% extends 'tutor/base.html' %}
+{% load static %}
+
+{% comment %} Head block {% endcomment %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'styles/tutors_profile.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="{% static 'script/lga.min.js' %}"></script>
+  <script src="{% static 'script/tutor_profile.js' %}"></script>
+{% endblock head %}
+
+{% block signup_button %}
+  <div class='signUp_btn'><a href="{% url 'landing_page' %}">Skip</a></div>
+{% endblock signup_button %}
+
+{% block title %}
+  Tutor's - Profile
+{% endblock title %}
+
+{% block pricing %}{% endblock pricing %}
+
+{% block content %}
+<body>
+    <!-- display cert -->
+    <div class="set_cert_display">
+        <div class="cert_display">
+            <div class="cert_content">
+                <div class="cert_inn">
+                    <p class="close_cert" title="Close">x</p>
+                    <img src="{% static "" %}" alt="" width="100%" height="100%" id="preview_cert">
+                </div>            
+            </div>
+        </div>
+    </div>
+
+    <!-- display cv -->
+    <div class="set_cv_display">
+        <div class="cv_display">
+            <div class="cert_content">
+                <div class="cv_inn">
+                    <p class="close_cv" title="Close">x</p>
+                    <embed id="pdfViewer" width="1000px" height="600px" />
+                </div>            
+            </div>
+        </div>
+    </div>
+    <div class="background"></div>
+    <div class="content">
+        <div class="content_left">
+            <h3><span class="welcome">Welcome to</span> <span class="lesson_pedia">LessonPedia&nbsp;</span></h3>
+
+            <section class="disciplinary">
+                <p class="active_user">
+                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr"> {{ tutor.username }}</span><br><br>
+                    <p class="confirm">
+                        Ensure to provide a verifiable information on this page as any form of impersonation or false documentation will result in automatic eviction from the platform and necessary legal action.
+                    </p>
+                </p>
+                <p class="assurance">
+                    Information provided on this page is encrypted and protected under the rule of law
+                </p>
+            </section>
+            
+        </div>
+        <div class="profile_regPage_content">
+            <img src="{% static "/images/icons/profilePics.jpeg" %}" class="image_preview" alt="" id="profile_picture_review">
+            <h2 class="profile_header"><center>Profile Registration</center></h2>
+            <form action="{% url 'tutor_profile' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}              
+              {{ form.errors }}
+              {% if form.errors %}
+                    <div class="error-message">
+                        <p>There were errors in your form:</p>
+                        <ul>
+                            {% for field, error_list in form.errors.items %}
+                                {% for error in error_list %}
+                                    <li>{{ field }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                    <fieldset class="profile_form"><legend> Bio - Data </legend>
+                        <label for="first_name">First Name</label><br>
+                        {{ form.first_name }}
+                        {{ form.first_name.errors }}
+                        <div class="flex_me">
+                            <label for="last_name">Last Name </label><br> <label for="others" id="others_label">Others</label>
+                        </div>
+                        {{ form.last_name }}
+                        {{ form.last_name.errors }}
+                        {{ form.others }}
+                        {{ form.others.errors }}
+                        <div class="location">
+                            <div class="nation parallel">
+                                    <label for="nationality">Nationality</label> <br><br>
+                                    {{ form.nationality }}
+                                    {{ form.nationality.errors }}
+                                </div>
+                            <div class="state parallel">
+                                <label for="state_of_residence">State of Residence </label><br>
+                                    {{ form.state_of_residence }}
+                                    {{ form.state_of_residence.errors }}
+                                <input required type="text" name="state_of_residence" id="state_of_residence" placeholder="State of Residence">
+                            </div>
+                            <div class="lga parallel">
+                                <label for="lga" class="">LGA of Residence</label>
+                                    {{ form.lga_resident }}
+                                    {{ form.lga_resident.errors }}
+                                <input type="text" name="lga_frn" id="lga_resident" placeholder="Optional">
+                            </div>
+                        </div>
+                        <div class="flex_me_too">
+                            <label for="residential_address">Residential Address</label> <br><label for="phone_number" id="phone_label">Phone Number</label>
+                        </div>
+                        {{ form.residential_address }}
+                        {{ form.residential_address.errors }}
+                        {{ form.phone_number }}
+                        {{ form.phone_number.errors }}
+                        <div class="flex_me_too">
+                            <label for="gender">Gender</label> <br>
+                            {% comment %} <label for="dob" id="dob_label">Date of Birth</label> {% endcomment %}
+                        </div>
+                            {{ form.gender }}
+                            {{ form.gender.errors}}
+                            {{ form.date_of_birth }} 
+                            {{ form.date_of_birth.errors }}
+                    </fieldset><br>
+
+                    <fieldset class="profile_form"><legend> Academic/Employment Details </legend>
+                            <label for="institution_type">Institution Type:</label>
+                            {{ form.institution_type }}
+                            {{ form.institution_type.errors }}
+                            <br>
+
+                            <label for="institution">Institution Name</label>
+                            {{ form.institution }}
+                            {{ form.institution.errors }}
+                             <br>
+                            <label for="dis">Discipline </label><label for="qual" id="position_qual">Qualification</label><label for="degree_class" id="position_cgpa">Result</label>
+                            <section class="disqua">
+                                {{ form.discipline }}
+                                {{ form.discipline.errors}}
+                                {{ form.highest_qualification }}
+                                {{ form.highest_qualification.errors }}
+                                {{ form.result }}
+                                {{ form.result.errors }}
+
+                            </section>  
+                            <label for="area_of_specialization">Specialization (if any)</label><br>
+                            {{ form.area_of_specialization }}
+                            {{ form.area_of_specialization.errors }}
+                            <br>
+                            <label for="empStat">Employment Status </label><label for="employmentStat" id="position_stat">if employed, select option below</label>
+                            {{ form.employment_status }}
+                            {{ form.employment_status.errors }}
+                            {{ form.employment_type }}         
+                            {{ form.employment_type.errors }}                                   
+                    </fieldset><br>
+
+                    <fieldset class="profile_form"><legend> Uploads </legend>
+                        <label for="pic">Upload profile picture [only .jpg, .jpeg or .png]</label>
+                        <a class="dp_a"> {{ form.profile_picture }} {{ form.profile_picture.errors}}</a><br><br> 
+                                
+                        <label for="cv">Upload CV or Resume [only .pdf]</label>
+                        <p class="preview shiftmore" id="view_cv">Preview</p>
+                           {{ form.cv_id }}
+                           {{ form.cv_id.errors }}
+                           <br><br>
+                        <label for="cert">Upload Certificate (Highest cert only) [only .jpg, .jpeg or .png]</label>
+                        <p class="preview" id="view_cert">Preview</p>
+                        {{ form.certificate }}
+                        {{ form.certificate.errors }}
+                        <br><br>
+                    </fieldset><br>
+                    <button type="submit" id="save_me">Save and Proceed</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}
