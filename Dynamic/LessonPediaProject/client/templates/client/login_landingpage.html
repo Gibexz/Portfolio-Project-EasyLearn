@@ -1,26 +1,52 @@
 {% extends "generic_apps/base.html" %}
 {% load static %}
 
+
+{% block signup_button %}
+    <div class='signUp_btn'><a href="{% url 'logoutUser' %}">SignOut</a></div>
+{% endblock signup_button %}
+
+{% block direction %}
+    <a href="#" class="lessonpedia">                     
+    <img  src="{% static 'images/logo/logo_icon.png' %}" alt=""><p style="padding-left: 8%;"></a>
+    <a href="#" class="lessonpedia">LessonPedia</a></p>
+{% endblock direction %} 
+
+{% block homeBase %}                    
+    <li><a href="#">Home</a></li>
+{% endblock homeBase %}
+
 {% block content %}
 
     <!-- top:after nav page -->
     <div class="upper_section">
         <div class="pics_background">
             <img style="float: right;" src="{% static 'images/backgrounds/lady_background.png' %}" alt="">
-        
+            {% if messages %}
+                {% for message in messages %}
+                    <p class='intruder'>{{ message }}</p>
+                {% endfor %}
+            {% endif %}           
 
             <div class="left_label">
                 <section class="top">
+                    <p class="welcome">Hi <span>&nbsp;
+                        {% if activeUser %}
+                            {{activeUser}}
+                        {% else %}
+                            User
+                        {% endif %}
+                    </span></p>
                     <p>SUCCESSFUL COACHES ARE VISIONARIES</p>
                 </section>
 
                 <section class="mid">
                     <h3>Good <span>coaching</span> is <br> good teaching & <br> nothing else.</h3>
                 </section>
-                <p class='validate_signin'>Please Sign in to continue!</p>
+
                 <section class="second_level_mid">
                     {% block explore %}
-                        <button id="explore">Explore Dashboard</button>
+                        <a href="{% url 'validate_user' whoami=activeUser %}"><button id="explore">Explore Dashboard</button></a>
                     {% endblock explore %}
                 </section>
 
@@ -161,4 +187,5 @@
     <div class="epty">
 
     </div>
+        
 {% endblock content %}

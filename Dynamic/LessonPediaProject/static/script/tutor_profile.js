@@ -181,4 +181,18 @@ $(document).ready(function() {
     // Set the min and max attributes of the input element
     $('#dob').attr('max', formattedMinDate);
     $('#dob').attr('min', formattedMaxDate);
+
+    // cv_preview and certificate_preview
+        // Initially hide the preview elements
+    $('.cv_preview').hide();
+    $('.cert_preview').hide();
+
+    // Show CV preview when the "View CV" link is clicked
+    $('#view_cv').click(function() {
+        $('.cv_preview').toggle();
     });
+
+    $('#view_cert').click(function() {
+        $('.cert_preview').toggle();
+    });
+});

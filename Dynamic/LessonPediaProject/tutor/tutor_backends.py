@@ -41,3 +41,40 @@ class TutorAuthBackend(ModelBackend):
             return Tutor.objects.get(pk=user_id)
         except Tutor.DoesNotExist:
             return None
+
+
+# from django.contrib.auth.backends import ModelBackend
+# from .models import Tutor
+# from django.core.validators import validate_email
+
+# class TutorAuthBackend(ModelBackend):
+#     """Use the backend to validate use with email"""
+
+
+#     def authenticate(self, request, username_or_email=None, password=None, **kwargs):
+#         try:
+#             validate_email(username_or_email)
+#             is_valid_email_format = True
+#         except Exception as e:
+#             is_valid_email_format = False
+#         print('is_email', is_valid_email_format)
+
+#         if is_valid_email_format:
+#             try:
+#                 user = Tutor.objects.get(email=username_or_email)
+#             except Tutor.DoesNotExist:
+#                 return None
+#         else:
+#             try:
+#                 user = Tutor.objects.get(username=username_or_email)
+#             except Tutor.DoesNotExist:
+#                 return None
+
+#         if user.check_password(password):
+#             return user
+
+#     def get_user(self, user_id):
+#         try:
+#             return Tutor.objects.get(pk=user_id)
+#         except Tutor.DoesNotExist:
+#             return None

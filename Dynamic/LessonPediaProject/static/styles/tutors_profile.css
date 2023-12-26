@@ -179,6 +179,9 @@ body, html {
     width: 55%;
 }
 
+#lga_resident{
+    display: none;
+}
 
 #others{
     width: 40%;
@@ -495,4 +498,7 @@ body, html {
     cursor: pointer;
 }
 
-
+/* cv and cert preview after initial upload */
+.cv_preview, .cert_preview {
+    display: none !important;
+}

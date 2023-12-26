@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django_flatpickr",
     'crispy_forms',
     'django_countries.fields',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,12 +146,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
     'tutor.tutor_backends.TutorAuthBackend',
+    'client.backends.EmailClientBackend',  
+    'app_admin.backends.AppAdminAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_AGE = 7 * 24 * 60 * 60 # 7 days
 SESSION_COOKIE_SECURE = False # True for production
 
-LOGIN_URL = 'tutor_login'
-LOGIN_REDIRECT_URL = 'tutor_dashboard'

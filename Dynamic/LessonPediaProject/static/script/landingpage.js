@@ -12,5 +12,9 @@ $(document).ready(function(){
     $(".rightArrow").click(function(){
         $(this).closest(".content").find("p").toggle();
     });
+
+    $("#explore").click(function(){
+        $(".validate_signin").show()
+    })
     
 })

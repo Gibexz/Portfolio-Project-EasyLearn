@@ -299,7 +299,13 @@
                 <h4><span class="fa-solid fa-gauge"></span>&nbsp; DashBoard</h4>
                 <center>
                     <section class="user_details">
-                        <img src="{% static "images/clients/pass.jpg" %}" alt="my image">
+                        <!-- tutor_dashboard.html -->
+                            {% if tutor.profile_picture %}
+                            <img src="{{ tutor.profile_picture.url }}" alt="{{ tutor.username }}'s Profile Picture">
+                            {% else %}
+                            <p>No profile picture available</p>
+                            {% endif %}
+
                         <p>{{ tutor.username}}</p>
                         <p>{{ tutor.email }}</p>
                     </section>
@@ -318,7 +324,7 @@
                 </nav>
                 <center>
                     <div style="display: block; margin-top: 100px; width: 90px; cursor: pointer;">
-                        <p class="logout logout_activation">Logout</p>
+                        <p class="logout logout_activation"><a href="{% url 'tutor_logout' %}">Logout</a></p>
                     </div>
                 </center>
             </div>

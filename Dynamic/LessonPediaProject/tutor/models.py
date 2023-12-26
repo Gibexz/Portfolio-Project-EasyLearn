@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
@@ -7,10 +6,6 @@ from django.contrib.auth.models import Group, Permission
 
 class Tutor(AbstractUser):
     """Tutors database"""
-    email = models.EmailField(max_length=150, unique=True)
-    phone_number = models.CharField(max_length=15, null=True, unique=True)
-    gender = models.CharField(max_length=50, null=True)
-    date_of_birth = models.DateField(default=timezone.now)
     qualification_choice = [
         ('--select one--', '--select one--'),
         ('Phd', 'Phd'),
@@ -55,7 +50,10 @@ class Tutor(AbstractUser):
             ('Self Employed', 'Self Employed'),
             ('Unemployed', 'Unemployed'),
         ]
-
+    email = models.EmailField(max_length=150, unique=True)
+    phone_number = models.CharField(max_length=15, null=True, unique=True)
+    gender = models.CharField(max_length=50, default=timezone.now, null=True)
+    date_of_birth = models.DateField(null=True)
     institution = models.CharField(max_length=150, null=True)
     institution_type = models.CharField(max_length=20, choices=INSTITUTION_TYPES, default='--select one--', null=True)
     result = models.CharField(max_length=20, choices=RESULT, blank=True, null=True, default='--select one--')
@@ -82,7 +80,7 @@ class Tutor(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     others = models.CharField(max_length=100, null=True)
     updated_at = models.DateTimeField(auto_now=True)
-    #mitigating errors when AppAdmin is looking for permissions and groups to reference
+    # 
     groups = models.ManyToManyField(Group, related_name="tutor_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="tutor_permissions", blank=True)
 

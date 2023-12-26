@@ -27,7 +27,7 @@
             <div class="cert_content">
                 <div class="cert_inn">
                     <p class="close_cert" title="Close">x</p>
-                    <img src="{% static "" %}" alt="" width="100%" height="100%" id="preview_cert">
+                    <img src="{{ tutor.certificate.url }}" alt="" width="100%" height="100%" id="preview_cert">
                 </div>            
             </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="cert_content">
                 <div class="cv_inn">
                     <p class="close_cv" title="Close">x</p>
-                    <embed id="pdfViewer" width="1000px" height="600px" />
+                    <embed id="pdfViewer" width="1000px" height="600px"/>
                 </div>            
             </div>
         </div>
@@ -51,7 +51,7 @@
 
             <section class="disciplinary">
                 <p class="active_user">
-                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr"> {{ tutor.username }}</span><br><br>
+                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr"> {{ tutor.last_name }} </span><br><br>
                     <p class="confirm">
                         Ensure to provide a verifiable information on this page as any form of impersonation or false documentation will result in automatic eviction from the platform and necessary legal action.
                     </p>
@@ -63,7 +63,7 @@
             
         </div>
         <div class="profile_regPage_content">
-            <img src="{% static "/images/icons/profilePics.jpeg" %}" class="image_preview" alt="" id="profile_picture_review">
+            <img src="{{ tutor.profile_picture.url}}" class="image_preview" alt="" id="profile_picture_review">
             <h2 class="profile_header"><center>Profile Registration</center></h2>
             <form action="{% url 'tutor_profile' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}              
@@ -160,15 +160,19 @@
 
                     <fieldset class="profile_form"><legend> Uploads </legend>
                         <label for="pic">Upload profile picture [only .jpg, .jpeg or .png]</label>
-                        <a class="dp_a"> {{ form.profile_picture }} {{ form.profile_picture.errors}}</a><br><br> 
+                        <a class="dp_a"> {{ form.profile_picture }} </a><br><br> 
                                 
                         <label for="cv">Upload CV or Resume [only .pdf]</label>
                         <p class="preview shiftmore" id="view_cv">Preview</p>
+                        <img class="cv_preview" src="{{ tutor.certificate.url }}" alt="" width="100%" height="100%" id="preview_cert">
+
                            {{ form.cv_id }}
                            {{ form.cv_id.errors }}
                            <br><br>
                         <label for="cert">Upload Certificate (Highest cert only) [only .jpg, .jpeg or .png]</label>
                         <p class="preview" id="view_cert">Preview</p>
+                        <embed class="cert_preview" width="1000px" height="600px" src="{{ tutor.cv.url }}" type="application/pdf"/>
+
                         {{ form.certificate }}
                         {{ form.certificate.errors }}
                         <br><br>

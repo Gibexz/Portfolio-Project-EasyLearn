@@ -1,27 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "generic_apps/base.html" %}
+{% load static %}
+
+{% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Client</title>
-    <script src="{% static "https://code.jquery.com/jquery-3.6.4.min.js" %}"></script>
-    <script src="{% static "{% static 'script/client_dashboard.js' %}" %}"></script>
-    <link rel="stylesheet" href="{% static "{% static 'css/client_dashboard.css' %}" %}">
-    <link rel="stylesheet" href="{% static "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}">
-    <script src="{% static "https://kit.fontawesome.com/11285bfb5b.js" %}" crossorigin="anonymous"></script>
-</head>
-<body>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/clientDashboard.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/clientDashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+{% endblock head %}
+
+
+{% block signup_button %}
+
+{% endblock signup_button %}
+{% block content %}
     <!-- deavtivate account -->
     <div class="deactivate_account_control_display">
         <div class="deactivateAccount">
             <div class="warning">
-                <img src="{% static "{% static 'images/icons/warning.png" %}" alt="' %}">
+                <img src="{% static 'images/icons/warning.png' %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
                     <p class="action">This actions cannot be undo, do you wish to process?</p>
                 </div>
                 <div class="selections">
-                    <button class="confirm_remove">Confirm</button>
+                    <a href="{% url 'remove_user' %}"><button class="confirm_remove">Confirm</button></a>
                     <button class="mistake">Cancel</button>
                 </div>
             </div>
@@ -32,13 +38,13 @@
     <div class="logout_btn">
         <div class="logout_btn_account">
             <div class="warning">
-                <img src="{% static "{% static 'images/icons/warning.png" %}" alt="' %}">
+                <img src="{% static 'images/icons/warning.png' %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
                     <p class="action">Are you sure to Logout?</p>
                 </div>
                 <div class="selections">
-                    <button class="confirm_logout">Yes</button>
+                    <a href='{% url "logoutUser" %}'><button class="confirm_logout">Yes</button></a>
                     <button class="cancel_logout">No</button>
                 </div>
             </div>
@@ -50,32 +56,44 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static "{% static 'images/clients/pass.jpg" %}" alt="Client Passport' %}">
+                        {% if request.user.is_authenticated %}
+                            <img src="{{ request.user.profile_picture.url }}" alt="Client Passport">
+                        {% else %}
+                            <img src="{% static 'images/user/default_user_icon.png' %}" alt="Client Passport">
+                        {% endif %}                    
                     </div>
                     <div class="other_info">
-                        <p>andrewetedu@gmail.com</p>
-                        <p>andybillions@x.com</p>
+                        <p>{{ request.user.email }}</p>
                     </div>
                 </div>
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="{% static "#" %}">Dashboard</a> 
+                        <a href="{% url 'validate_user' whoami=request.user %}">Dashboard</a> 
                         </div>   
                     <div class="settings side">
-                    <a href="{% static "#" %}" class="set_active">Settings</a> 
+                    <a href="#" class="set_active">Settings</a> 
                     </div>            
                     <div class="history side">
-                        <a href="{% static "#" %}" class="history_active">History</a> 
+                        <a href="#" class="history_active">History</a> 
                     </div>
                     <div class="logout side logout_activation">
-                        <a href="{% static "#" %}">Logout</a> 
+                        <a href="#">Logout</a> 
                     </div>            
                 </div>
             </div>
 
             <div class="content">
                 <div class="left_pane">
+                    <div class="PUpdate">
+                        <p class='logMessage'>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            {% endif %}
+                        </p>
+                    </div>
                     <div class="profile_info">
                         <h2 class="fa-solid fa-gauge"><span>&nbsp; Dashboard</span></h2>
                     </div>
@@ -86,9 +104,9 @@
                             <div class="completed item"><p class="progress">0/2 </p><p class="progress_text">Settled</p></div>
                         </div> 
                         <div class="my_tutors">
-                            <div class="search">
+                            <div class="searchClient">
                                 <input type="text" name="" id="" class="extend" placeholder="Search tutor">
-                                <button class="search_button">Search</button>
+                                <button class="searchClient_button">Search</button>
                             </div>
 
                         </div>
@@ -96,7 +114,7 @@
                             <section class="subject_details">
                                 <section class="tutor_info">
                                     <div class="clearfix">
-                                        <img src="{% static "{% static 'images/clients/pass.jpg" %}" alt="Client Passport' %}">
+                                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                                         <section class="float_left">
                                             <div class="subject_table table">
                                                 <span class="tutor_subject tr">Software Development</span>
@@ -128,16 +146,16 @@
                 <div class="right_pane">
                     <div class="right_content">
                         <div class="rooms resize">Rooms
-                            <img src="{% static "{% static 'images/socialLinks/chatroom.png" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/chatroom.png' %}" alt="">
                         </div>
                         <div class="add_tutor resize">Connect with a Tutor
-                            <img src="{% static "{% static 'images/socialLinks/tutor.jpg" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/tutor.jpg' %}" alt="">
                         </div>
                         <div class="suggestion resize">Have a suggestion?
-                            <img src="{% static "{% static 'images/socialLinks/suggestion.png" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/suggestion.png' %}" alt="">
                         </div>               
                         <div class="spomsor resize">Become a sponsor
-                            <img src="{% static "{% static 'images/socialLinks/sponsor.jpeg" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/sponsor.jpeg' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -151,26 +169,25 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static "{% static 'images/clients/pass.jpg" %}" alt="Client Passport' %}">
+                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
-                        <p>andrewetedu@gmail.com</p>
-                        <p>andybillions@x.com</p>
+                        <p>{{ request.user.email }}</p>
                     </div>
                 </div>
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="{% static "#" %}" class="db_active">Dashboard</a> 
+                        <a href="{% url 'validate_user' whoami=request.user %}" class="db_active">Dashboard</a> 
                         </div>   
                     <div class="settings side">
-                    <a href="{% static "#" %}">Settings</a> 
+                    <a href="#">Settings</a> 
                     </div>            
                     <div class="history side" id="history">
-                        <a href="{% static "#" %}" class="history_active">History</a>
+                        <a href="#" class="history_active">History</a>
                     </div>
                     <div class="logout side logout_activation">
-                        <a href="{% static "#" %}">Logout</a> 
+                        <a href="#">Logout</a> 
                     </div>            
                 </div>
             </div>
@@ -199,18 +216,25 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static "{% static 'images/tutors/pass.jpg" %}" alt="' %}">
+                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                     <p>change profile picture</p>
                                 </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
+                                <h3><span>Hi,</span> {{ request.user.username }}</h3>
                                 
-                                <form action="">
-                                    <input type="text" name="" id="" placeholder="firstName">
-                                    <input type="text" name="" id="" class="extend" placeholder="lastName">
-                                    <input type="tel" name="" id="" class="extend" placeholder="phone Number">
-                                    <input type="text" name="" id="" class="extend" placeholder="residential Address">
-                                    <input type="text" name="" id="" class="extend" placeholder="state of resident">
-                                    <input type="text" name="" id="" class="extend" placeholder="Nationality"> <br>
+                                <form action="{% url 'ProfileUpdate' %}" method='POST'>
+                                    {% csrf_token %}
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" name="firstName" id="" placeholder="{{ request.user.first_name }}">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" name="lastName" id="" class="extend" placeholder="{{ request.user.last_name }}">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <input type="text" name="phoneNumber" id="" class="extend" placeholder="{{ request.user.phone_number }}">
+                                    <label for="address">Residential Address</label>
+                                    <input type="text" name="address" id="" class="extend" placeholder="{{ request.user.residential_address}}">
+                                    <label for="state">State of Residence</label>
+                                    <input type="text" name="state" id="" class="extend" placeholder="{{ request.user.state_of_residence }}">
+                                    <label for="nationality">Nationality</label>
+                                    <input type="text" name="nationality" id="" class="extend" placeholder="{{ request.user.nationality }}"> <br>
                                     <button class="save_button">Save</button>                               
                                 </form>
                             </div>
@@ -222,15 +246,17 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static "{% static 'images/tutors/pass.jpg" %}" alt="' %}">
+                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                 </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
+                                <h3><span>Hi,</span> {{ request.user }}</h3>
                                 
-                                <form action="">
+                                <form action="{% url 'changePassword' %}" method='POST'>
+                                    {% csrf_token %}
                                     <br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
+                                    <input type="password" name="oldPassword" id="" class="extend" placeholder="old password">
+                                    <br><br>
+                                    <input type="password" name="newPassword" id="" class="extend" placeholder="new password"><br><br>
+                                    <input type="password" name="confirmNewPassword" id="" class="extend" placeholder="confirm new password"><br><br><br>
                                     <button class="save_button">Save</button>                               
                                 </form>
                             </div>
@@ -242,16 +268,16 @@
                 <div class="right_pane">
                     <div class="right_content">
                         <div class="rooms resize">Rooms
-                            <img src="{% static "{% static 'images/socialLinks/chatroom.png" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/chatroom.png' %}" alt="">
                         </div>
                         <div class="add_tutor resize">Connect with a Tutor
-                            <img src="{% static "{% static 'images/socialLinks/tutor.jpg" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/tutor.jpg' %}" alt="">
                         </div>
                         <div class="suggestion resize">Have a suggestion?
-                            <img src="{% static "{% static 'images/socialLinks/suggestion.png" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/suggestion.png' %}" alt="">
                         </div>               
                         <div class="spomsor resize">Become a sponsor
-                            <img src="{% static "{% static 'images/socialLinks/sponsor.jpeg" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/sponsor.jpeg' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -265,27 +291,26 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static "{% static 'images/clients/pass.jpg" %}" alt="Client Passport' %}">
+                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
                     </div>
                     <div class="other_info">
-                        <p>andrewetedu@gmail.com</p>
-                        <p>andybillions@x.com</p>
+                        <p>{{ request.user.email }}</p>
                     </div>
                 </div>
                 <div class="hrtop"><hr></div>
                 <div class="side_items">
                     <div class="settings side">
-                        <a href="{% static "#" %}" class="db_active">Dashboard</a> 
+                        <a href="{% url 'validate_user' whoami=request.user %}" class="db_active">Dashboard</a> 
                         </div>   
                     <div class="settings side">
-                    <a href="{% static "#" %}" class="set_active">Settings</a> 
+                    <a href="#" class="set_active">Settings</a> 
                     </div>            
                     <div class="history side historica" id="history">
-                        <a href="{% static "#" %}">History</a>
+                        <a href="#">History</a>
                         <h6 id="coming_soon" class="coming_soon">Coming soon</h6>
                     </div>                    
                     <div class="logout side logout_activation">
-                        <a href="{% static "#" %}">Logout</a> 
+                        <a href="#">Logout</a> 
                     </div>            
                 </div>
             </div>
@@ -314,7 +339,7 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static "{% static 'images/tutors/pass.jpg" %}" alt="' %}">
+                                    <img src="{% static 'images/tutors/pass.jpg" alt="' %}">
                                     <p>change profile picture</p>
                                 </div>                               
                                 <h3><span>Hi,</span> UserName</h3>
@@ -331,43 +356,23 @@
                             </div>
                         </div>
                     </div> -->
-                    <h1><center>Coming soon!</center></h1>
-
-                    <!-- change password -->
-                    <div class="change_password_control_display">
-                        <div class="profileUpdate">
-                            <div class="profile_update_content">
-                                <div class="dp">
-                                    <img src="{% static "{% static 'images/tutors/pass.jpg" %}" alt="' %}">
-                                </div>                               
-                                <h3><span>Hi,</span> UserName</h3>
-                                
-                                <form action="">
-                                    <br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                    <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
-                                    <button class="save_button">Save</button>                               
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <h1><center>Coming soon!</center></h1>                    
                     
                 </div>
 
                 <div class="right_pane">
                     <div class="right_content">
                         <div class="rooms resize">Rooms
-                            <img src="{% static "{% static 'images/socialLinks/chatroom.png" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/chatroom.png' %}" alt="">
                         </div>
                         <div class="add_tutor resize">Connect with a Tutor
-                            <img src="{% static "{% static 'images/socialLinks/tutor.jpg" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/tutor.jpg' %}" alt="">
                         </div>
                         <div class="suggestion resize">Have a suggestion?
-                            <img src="{% static "{% static 'images/socialLinks/suggestion.png" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/suggestion.png' %}" alt="">
                         </div>               
                         <div class="spomsor resize">Become a sponsor
-                            <img src="{% static "{% static 'images/socialLinks/sponsor.jpeg" %}" alt="' %}">
+                            <img src="{% static 'images/socialLinks/sponsor.jpeg' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -375,6 +380,4 @@
         </div>
     </div>
         
-
-</body>
-</html>
+{% endblock content %}

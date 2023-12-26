@@ -1,10 +1,22 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
+from app_admin.models import AppAdmin
+from tutor.models import Tutor
+from client.models import Client
+from django.contrib.auth.models import AnonymousUser
 
 
 def landing_page(request):
     """Landing page"""
+    active_user = request.user
+    if isinstance(active_user, AnonymousUser):
+        return render(request, "generic_apps/landingpage.html")
+    else:
+        if isinstance(request.user, Tutor):
+            return render(request, "tutor/login_landingpage.html", {"activeUser":request.user})
+        elif isinstance(request.user, Client):
+            return render(request, "client/login_landingpage.html", {"activeUser":request.user})
     return render(request, "generic_apps/landingpage.html")
 
 
@@ -14,9 +26,9 @@ def client_sign_up(request):
        form = ClientRegisterForm(request.POST) 
        if form.is_valid():
            form.save()
-           messages.success(request, 'Registration Successful!')
+           messages.success(request, 'Registration Successful! Please Login')
         #    return redirect('user_login')
-           return redirect('landing_page')
+           return redirect('client_signIn')
        if form.errors:
                 # Access and display first error for each field
            for field, errors in form.errors.items():
@@ -41,7 +53,7 @@ def tutor_sign_up(request):
        form = TutorRegisterForm(request.POST) 
        if form.is_valid():
            form.save()
-           messages.success(request, 'Registration Successful!')
+           messages.success(request, 'Registration Successful! Please Login')
            return redirect('tutor_login')
        else:
             messages.error(request, 'Please correct the error below.')
@@ -61,7 +73,7 @@ def app_admin_sign_up(request):
         form = AppAdminRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Registration Successful!')
+            messages.success(request, 'Registration Successful! Please Login')
             return redirect('app_admin_sign_up')
         
         else:

@@ -159,7 +159,7 @@ body {
    
 }
 
-.my_tutors .search{
+.my_tutors .searchClient{
     height: 30px;
     border: 1px solid red;
     box-shadow: 1px 1px 5px 1px rgba(128, 128, 128, 0.83);
@@ -169,7 +169,7 @@ body {
     padding-right: 0px;
 }
 
-.my_tutors .search input[type="text"]{
+.my_tutors .searchClient input[type="text"]{
     height: 20px;
     margin-top: 3px;
     margin-left: 5px;
@@ -179,11 +179,11 @@ body {
     border: none
 }
 
-.my_tutors .search input[type="text"]:focus{
+.my_tutors .searchClient input[type="text"]:focus{
     outline: none;
 }
 
-.my_tutors .search .search_button{
+.my_tutors .searchClient .searchClient_button{
     height: 30px;
     border-radius: 0px 20px 20px 0px;
     background-color: rgba(2, 7, 80, 0.811);
@@ -399,6 +399,14 @@ body {
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.266);
     padding: 0px 20px 0px 20px;
     background-color: rgba(245, 222, 179, 0.141);
+    overflow: auto;
+    padding-bottom: 10px;
+}
+
+label{
+    padding-left: 10px;
+    font-size: small;
+    color: gray;
 }
 
 .profile_update_content h3{
@@ -440,6 +448,7 @@ body {
     font-weight: 600;
     font-size: 18px;
     border-bottom: 2px solid rgba(245, 222, 179, 0.475);
+    cursor: pointer;
 }
 
 .dp{
@@ -470,8 +479,9 @@ body {
 .deactivate_account_control_display, .logout_btn{
     position: absolute;
     backdrop-filter: brightness(0.1);
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    top:0;
+    height: 100%;
 }
 
 .deactivateAccount, .logout_btn_account{
@@ -552,4 +562,12 @@ body {
     margin-top: -50px;
     font-size: 0.6em;
     color: grey;
+}
+
+.logMessage{
+    position: absolute;
+    margin: auto;
+    color: green;
+    text-align: center;
+    width: 43%;
 }

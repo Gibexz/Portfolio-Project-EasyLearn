@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/tutors_profile_page.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/profileUpdate.css' %}">
+    <title>Learner's - Profile</title>
+</head>
+<body>
+    <!-- display cert -->
+    <div class="set_cert_display">
+        <div class="cert_display">
+            <div class="cert_content">
+                <div class="cert_inn">
+                    <p class="close_cert" title="Close">x</p>
+                    <img src="" alt="" width="100%" height="100%" id="preview_cert">
+                </div>            
+            </div>
+        </div>
+    </div>
+
+    <!-- display cv -->
+    <div class="set_cv_display">
+        <div class="cv_display">
+            <div class="cert_content">
+                <div class="cv_inn">
+                    <p class="close_cv" title="Close">x</p>
+                    <embed id="pdfViewer" width="1000px" height="600px" />
+                </div>            
+            </div>
+        </div>
+    </div>
+    <div class="background"></div>
+    <div class="content">
+        <div class="content_left">
+            <a href="{% url 'landing_page' %}"><h3><span class="welcome">Welcome to</span> <span class="lesson_pedia">LessonPedia&nbsp;</span></h3></a> 
+
+            <section class="disciplinary">
+                <p class="active_user">
+                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr">
+                        {% if activeUser %}
+                            {{ activeUser }}
+                        {% else %}
+                            {{ None }}
+                        {% endif %}
+                    </span><br><br>
+                    <p class="confirm">
+                        Ensure to provide a verifiable information on this page as any form of impersonation or false documentation will result in automatic eviction from the platform.
+                    </p>
+                </p>
+                <p class="assurance">
+                    Information provided on this page is encrypted and protected under the rule of law
+                </p>
+            </section>
+            
+        </div>
+        <div class="profile_regPage">
+            <div class="profile_regPage_content">
+                <img src="{% static 'images/icons/profilePics.jpeg' %}" class="image_preview" alt="" id="profile_picture_review">
+                <h2 class="profile_header"><center>Profile Registration</center></h2>
+                <form action="{% url 'user_profile' %}" method='POST'>
+                    {% csrf_token %}
+                    <fieldset class="profile_form"><legend> Bio - Data </legend>
+                        
+                            <label for="firstName">First Name</label><br>
+                            {{ form.first_name }}
+                            {% comment %} <input required type="text" name="" id="firstName" placeholder="First Name"> {% endcomment %}
+                            <label for="lastName">Last Name <span for="others" id="others_label">Others</span></label><br>
+                            {{ form.last_name }}
+                            {% comment %} <input required type="text" name="" id="lastName" placeholder="Last Name"> {% endcomment %}
+                            {% comment %} <input required type="text" name="" id="others" placeholder="Others"> {% endcomment %}
+                            {{ form.others }}
+                            <label for="address">Residential Address</label><br>
+                            {% comment %} <input required type="text" name="" id="address" placeholder="Address"> {% endcomment %}
+                            {{ form.residential_address}}
+                            <label for="state">State of Resident <span for="nationality" id="nationality_label">Nationality</span></label><br>
+                            {% comment %} <input required type="text" name="" id="state" placeholder="State of Resident"> {% endcomment %}
+                            {{ form.state_of_residence }}
+                            {% comment %} <input required type="text" name="" id="nationality" placeholder="Nationlaity"> {% endcomment %}
+                            {{ form.nationality }} <br>
+                            <label for="phone_number">Phone Number</label><br>
+                            {{ form.phone_number }}
+                        
+                    </fieldset><br>
+
+                   <br><br>
+                <fieldset class="profile_form"><legend> Uploads </legend>
+                    <label for="dp">Upload profile picture [only .jpg, .jpeg or .png]</label>
+                    <a href="#profile_picture_review" class="dp_a">
+                        {{ form.profile_picture }}
+                        {% comment %} <input required type="file" name="profile_picture" id="dp" class="file_button" placeholder=""> {% endcomment %}
+                    </a><br><br> 
+                </fieldset><br>
+                <input required type="submit" id="save_me" value="Save and Proceed">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/tutors_profile_page.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/profileUpdate.css' %}">
+    <title>Learner's - Profile</title>
+</head>
+<body>
+    <!-- display cert -->
+    <div class="set_cert_display">
+        <div class="cert_display">
+            <div class="cert_content">
+                <div class="cert_inn">
+                    <p class="close_cert" title="Close">x</p>
+                    <img src="" alt="" width="100%" height="100%" id="preview_cert">
+                </div>            
+            </div>
+        </div>
+    </div>
+
+    <!-- display cv -->
+    <div class="set_cv_display">
+        <div class="cv_display">
+            <div class="cert_content">
+                <div class="cv_inn">
+                    <p class="close_cv" title="Close">x</p>
+                    <embed id="pdfViewer" width="1000px" height="600px" />
+                </div>            
+            </div>
+        </div>
+    </div>
+    <div class="background"></div>
+    <div class="content">
+        <div class="content_left">
+            <a href="{% url 'landing_page' %}"><h3><span class="welcome">Welcome to</span> <span class="lesson_pedia">LessonPedia&nbsp;</span></h3></a> 
+
+            <section class="disciplinary">
+                <p class="active_user">
+                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr">
+                        {% if activeUser %}
+                            {{ activeUser }}
+                        {% else %}
+                            {{ None }}
+                        {% endif %}
+                    </span><br><br>
+                    <p class="confirm">
+                        Ensure to provide a verifiable information on this page as any form of impersonation or false documentation will result in automatic eviction from the platform.
+                    </p>
+                </p>
+                <p class="assurance">
+                    Information provided on this page is encrypted and protected under the rule of law
+                </p>
+            </section>
+            
+        </div>
+        <div class="profile_regPage">
+            <div class="profile_regPage_content">
+                <img src="{% static 'images/icons/profilePics.jpeg' %}" class="image_preview" alt="" id="profile_picture_review">
+                <h2 class="profile_header"><center>Profile Registration</center></h2>
+                <form action="{% url 'user_profile' %}" method='POST'>
+                    {% csrf_token %}
+                    <fieldset class="profile_form"><legend> Bio - Data </legend>
+                        
+                            <label for="firstName">First Name</label><br>
+                            {{ form.first_name }}
+                            {% comment %} <input required type="text" name="" id="firstName" placeholder="First Name"> {% endcomment %}
+                            <label for="lastName">Last Name <span for="others" id="others_label">Others</span></label><br>
+                            {{ form.last_name }}
+                            {% comment %} <input required type="text" name="" id="lastName" placeholder="Last Name"> {% endcomment %}
+                            {% comment %} <input required type="text" name="" id="others" placeholder="Others"> {% endcomment %}
+                            {{ form.others }}
+                            <label for="address">Residential Address</label><br>
+                            {% comment %} <input required type="text" name="" id="address" placeholder="Address"> {% endcomment %}
+                            {{ form.residential_address}}
+                            <label for="state">State of Resident <span for="nationality" id="nationality_label">Nationality</span></label><br>
+                            {% comment %} <input required type="text" name="" id="state" placeholder="State of Resident"> {% endcomment %}
+                            {{ form.state_of_residence }}
+                            {% comment %} <input required type="text" name="" id="nationality" placeholder="Nationlaity"> {% endcomment %}
+                            {{ form.nationality }} <br>
+                            <label for="phone_number">Phone Number</label><br>
+                            {{ form.phone_number }}
+                        
+                    </fieldset><br>
+
+                   <br><br>
+                <fieldset class="profile_form"><legend> Uploads </legend>
+                    <label for="dp">Upload profile picture [only .jpg, .jpeg or .png]</label>
+                    <a href="#profile_picture_review" class="dp_a">
+                        {{ form.profile_picture }}
+                        {% comment %} <input required type="file" name="profile_picture" id="dp" class="file_button" placeholder=""> {% endcomment %}
+                    </a><br><br> 
+                </fieldset><br>
+                <input required type="submit" id="save_me" value="Save and Proceed">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

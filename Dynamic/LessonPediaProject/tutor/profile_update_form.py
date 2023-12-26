@@ -104,9 +104,8 @@ class TutorUpdateForm(forms.ModelForm):
             'id': 'employmentStat',
         })
     )
-
     date_of_birth = forms.DateField(
-    widget=forms.DateInput(
+    widget=DatePickerInput(
         attrs={
             'class': 'no_outline',
             'id': 'dob',
