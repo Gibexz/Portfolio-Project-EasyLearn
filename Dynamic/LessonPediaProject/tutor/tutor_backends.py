@@ -26,6 +26,7 @@ class TutorAuthBackend(ModelBackend):
             tutor = Tutor.objects.get(**auth_param) # Tutor.objects.get(email=username_or_email) [or username=username_or_email]
             if tutor.check_password(password):
                 print(f"Authenticated: {tutor}")
+                print(f'Is_authenticated: {tutor.is_authenticated}')
                 return tutor
         except Tutor.DoesNotExist:
             pass

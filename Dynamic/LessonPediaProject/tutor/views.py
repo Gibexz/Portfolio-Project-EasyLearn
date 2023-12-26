@@ -42,7 +42,8 @@ def tutor_login(request):
 #     else:
 #         print("User not authenticated. Redirecting to login.")
 #         return redirect('tutor_login')
-    
+
+# @login_required
 def tutor_dashboard(request, tutor_id):
     """Displays Tutor Dashboard"""
     # print(request.user.is_authenticated)
