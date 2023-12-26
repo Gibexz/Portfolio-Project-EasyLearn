@@ -536,3 +536,19 @@ body{
 .left_label .top p{
     margin: 0px;
 }
+
+.intruder{
+    position: absolute;
+    right: 0;
+    margin-right: 2.5%;
+    border: 1px solid whitesmoke;
+    padding: 4px;
+    padding-left: 30px;
+    padding-right: 10px;
+    border-radius: 20px;
+    color: red;
+    background-color: white;
+    font-family: 'Saira', sans-serif;
+    font-size: small;
+    font-weight: 500;
+}

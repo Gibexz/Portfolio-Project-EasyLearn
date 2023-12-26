@@ -22,7 +22,11 @@
     <div class="upper_section">
         <div class="pics_background">
             <img style="float: right;" src="{% static 'images/backgrounds/lady_background.png' %}" alt="">
-        
+            {% if messages %}
+                {% for message in messages %}
+                    <p class='intruder'>{{ message }}</p>
+                {% endfor %}
+            {% endif %}           
 
             <div class="left_label">
                 <section class="top">

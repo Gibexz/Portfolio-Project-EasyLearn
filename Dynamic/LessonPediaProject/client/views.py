@@ -10,14 +10,22 @@ from .models import Client
 from django.http import HttpResponse
 import re
 
+def logout_required(view_func):
+    """Decorator to require the user to be logged out to access a view."""
+    def _wrapped_view(request):
+        if request.user.is_authenticated:
+            messages.error(request, f"{request.user} is already Signed in, please Sign Out!")
+            return redirect('landing_page') 
+        return view_func(request) 
+    return _wrapped_view
 
-#Check if input is email
+@logout_required
 def client_login(request):
     """client Login logic"""
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-       
+    
         if 'client' in request.path:
             clientAuth = ClientBackend()
             user = clientAuth.authenticate(request, username=username, password=password)
@@ -25,12 +33,12 @@ def client_login(request):
             if user is not None:
                 if user.is_active == 1:
                     login(request, user, backend='client.backends.EmailClientBackend')
-                    return render(request, 'client/login_landingpage.html', {'activeUser': user})
+                    return redirect('landing_page')
                 else:
                     messages.error(request, "This account has been deactivated by User")
             else:
                 messages.error(request, "Invalid User Credentials for client")
-                return render(request, 'client/login.html')  
+                return render(request, 'client/login.html') 
               
     return render(request, 'client/login.html')
 
