@@ -9,6 +9,7 @@ from django.core.validators import FileExtensionValidator
 
 
 class Client(AbstractUser):
+         email = models.EmailField(max_length=255, unique=True)
          others = models.CharField(max_length=50, null=True)
          phone_number = models.CharField(max_length=15, null=True, unique=True)
          state_of_residence = models.CharField(max_length=50, null=True)
@@ -18,6 +19,13 @@ class Client(AbstractUser):
          created_at = models.DateTimeField(auto_now_add=True) 
          updated_at = models.DateTimeField(auto_now=True)
          tutor = models.ManyToManyField(Tutor, related_name='engaged_tutor')
+         date_of_birth = models.DateField(null=True)
+         genderchoice = [
+                ('Male', "Male"),
+                ("Female", "Female")
+              ]
+         gender = models.CharField(max_length=10, choices=genderchoice, null=True)
+         educational_level = models.CharField(max_length=200, null=True)
         # Added the below attributes to resolve permission and group conflict having same name
         # all inherits from Abstract user and hence need unique related_name
          groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)

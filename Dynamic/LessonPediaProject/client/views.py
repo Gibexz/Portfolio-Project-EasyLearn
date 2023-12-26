@@ -13,7 +13,7 @@ import re
 def logout_required(view_func):
     """Decorator to require the user to be logged out to access a view."""
     def _wrapped_view(request):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and "client" in request.path:
             messages.error(request, f"{request.user} is already Signed in, please Sign Out!")
             return redirect('landing_page') 
         return view_func(request) 
