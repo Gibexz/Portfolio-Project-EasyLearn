@@ -5,12 +5,14 @@
     {% block head %}
     
     {% endblock head %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'styles/landingpage.css' %}">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="{% static 'script/landing_page.js' %}"></script>
+  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="{% static 'styles/landingpage.css' %}">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="{% static 'script/landing_page.js' %}"></script>
+    
     <title>
         {%block title%}
             Home
@@ -24,15 +26,19 @@
             <!-- for the logo on the leftside on navbar -->
 
             <section class="nav_left">
-                <a href="{% url 'landing_page'%}" class="lessonpedia">
+                {% block direction %}
+                    <a href="{% url 'landing_page'%}" class="lessonpedia">                     
                     <img  src="{% static 'images/logo/logo_icon.png' %}" alt=""><p style="padding-left: 8%;"></a>
-                        <a href="{% url 'landing_page'%}" class="lessonpedia">LessonPedia</a></p>
+                    <a href="{% url 'landing_page'%}" class="lessonpedia">LessonPedia</a></p>
+                {% endblock direction %} 
             </section>
 
             <!-- handles the drop down menu items on the nav bar -->
             <section class="nav_center">
                 <ol>
-                    <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    {% block homeBase %}                    
+                        <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    {% endblock homeBase %}
                     {% block pricing %}
                         <li class="spaceMe"><a href="{% url 'landing_page' %}">Pricing</a></li>
                     {% endblock pricing %}                    
@@ -58,7 +64,7 @@
                     <div class="dropdown">
                         <div class="login_btn">Login</div>
                         <div class="dropdown-content">
-                            <a href="{% url 'client_sign_up' %}">Learner</a>
+                            <a href="{% url 'client_signIn' %}">Learner</a>
                             <a href="{% url 'tutor_sign_up' %}">Tutor</a>
                             <a href="{% url 'app_admin_sign_up' %}">Admin</a>
                         </div>
@@ -68,8 +74,6 @@
             {% endblock signup_button %}
             <!-- signup button handle -->
             
-            
-
         </div>
     </div>
 

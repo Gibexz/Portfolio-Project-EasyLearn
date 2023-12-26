@@ -1,0 +1,24 @@
+.register_as .learner {
+    color: #4BE5CA;
+    font-weight: bold;
+    border-bottom: 2px solid #4BE5CA;
+}
+
+.learner_form {
+    display: block;
+}
+
+.error{
+    display: flex;
+    background-color: rgba(245, 245, 245, 0.512);
+    border-radius: 15px;
+}
+
+.flash_error{
+    margin: 0px;
+    color: red;
+    padding: 3px 20px 3px 20px;
+    font-size: medium;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+}
