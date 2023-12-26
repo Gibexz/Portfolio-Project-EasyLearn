@@ -67,7 +67,7 @@ def app_admin_sign_up(request):
             else:
                 form.save()
                 messages.success(request, 'Registration Successful!')
-                return redirect('app_admin_sign_up')
+                return redirect('app_admin_sign_up')    
         
         else:
             messages.error(request, 'User with this email or username already exist')

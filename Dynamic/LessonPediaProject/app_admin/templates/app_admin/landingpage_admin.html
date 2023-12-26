@@ -1,6 +1,36 @@
 {% extends "generic_apps/base.html" %}
 {% load static %}
+{% block signup_button %}
+    
 
+    {% if request.session.logged_in %}
+        {% if request.session.account_type == 'admin' %}
+            <p class="dashb"><a href="{% url 'app_admin_dashboard' %}">Dashboard</a></p>
+        {% endif %}
+        <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
+    {% else %}
+
+    <section class="signup_button">
+        <div class="dropdown">
+            <div class="login_btn signUp_btn">Login</div>
+            <div class="dropdown-content">
+                <a href="{% url 'client_sign_up' %}">Learner</a>
+                <a href="{% url 'tutor_sign_up' %}">Tutor</a>
+                <a href="{% url 'app_admin_sign_up' %}">Admin</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="login_btn signUp_btn">SignUp</div>
+            <div class="dropdown-content">
+                <a href="{% url 'client_sign_up' %}">Learner</a>
+                <a href="{% url 'tutor_sign_up' %}">Tutor</a>
+                <a href="{% url 'app_admin_sign_up' %}">Admin</a>
+            </div>
+        </div>
+        <!-- <div class='signUp_btn'><a href="{% url 'client_sign_up' %}"></a></div> -->
+    </section>
+    {% endif %}
+{% endblock signup_button %}
 {% block content %}
 
     <!-- top:after nav page -->

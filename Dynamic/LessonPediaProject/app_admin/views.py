@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from .models import AppAdmin
 from client.models import Client
@@ -15,6 +14,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 import hashlib
+
+
+def landing_page_admin(request):
+    """Landing page"""
+    return render(request, "app_admin/landingpage_admin.html")
 
 
 def generate_browser_fingerprint(request):
@@ -91,38 +95,6 @@ def app_admin_dashboard(request):
 
         all_tutors = Tutor.objects.all()
         all_clients = Client.objects.all()
-
-        # show_all_tutors = request.GET.get('all_tutors')
-        # if show_all_tutors:
-        #     return render(request, 'app_admin/admin_dashboard.html', {'tutors': all_tutors, 'clients': all_clients, 'show_tutor_pagination': True})
-        
-        # show_all_clients = request.GET.get('all_clients')
-        # if show_all_clients:
-        #     return render(request, 'app_admin/admin_dashboard.html', {'tutors': all_tutors, 'clients': all_clients, 'show_client_pagination': True})
-
-        # Pagination for tutors
-        # paginator_tutor = Paginator(all_tutors, 3)  # Show 3 tutors per page
-        # page_number_tutor = request.GET.get('page_tutors')
-
-        # try:
-        #     tutors = paginator_tutor.page(page_number_tutor)
-        # except PageNotAnInteger:
-        #     # If page is not an integer, deliver first page
-        #     tutors = paginator_tutor.page(1)
-        # except EmptyPage:
-        #     # If page is out of range, deliver last page of results
-        #     tutors = paginator_tutor.page(paginator_tutor.num_pages)
-
-        # Pagination for clients
-        # paginator_client = Paginator(all_clients, 3)
-        # page_number_client = request.GET.get('page_clients')
-
-        # try:
-        #     clients = paginator_client.page(page_number_client)
-        # except PageNotAnInteger:
-        #     clients = paginator_client.page(1)
-        # except EmptyPage:
-        #     clients = paginator_client.page(paginator_client.num_pages)
 
         return render(request, 'app_admin/admin_dashboard.html', {'tutors': all_tutors, 'clients': all_clients})
 

@@ -146,4 +146,3 @@ AUTHENTICATION_BACKENDS = [
     # other backends if needed
 ]
 
-LOGIN_URL = '/app_admin_sign_up/' # login required
