@@ -23,6 +23,7 @@ from .admin import lessonPedia_admin_site
 urlpatterns = [
     path('lessonpedia/', lessonPedia_admin_site.urls),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),  # For DRF's browsable API authentication
     path("", include("generic_apps.urls")),
     path("client/", include('client.urls')),
     path("appAdmin/", include('app_admin.urls')),

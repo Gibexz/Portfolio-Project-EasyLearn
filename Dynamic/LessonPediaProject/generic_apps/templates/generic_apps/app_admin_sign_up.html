@@ -27,7 +27,13 @@
    {% endblock signup_button %}
 
    <div class="register_container">
+        
         <div class="register_container_inputs">
+            {% if messages %}
+            {% for message in messages %}
+                <center><p id="admin_login_message">{{ message }}</p></center>
+            {% endfor %}
+            {% endif %}
             <div class="logo">
                <img src="{% static 'images/logo/logo_icon.png' %}" alt="">
             </div>
@@ -45,11 +51,7 @@
                 <div class="adminLogin">
                     <form class="" action="{% url 'app_admin_login' %}" method="POST">
                         {% csrf_token %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p>{{ message }}</p>
-                            {% endfor %}
-                        {% endif %}
+                        
                         <label for="username_or_email">
                             Username or email
                         </label><br>

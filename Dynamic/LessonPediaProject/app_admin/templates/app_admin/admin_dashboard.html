@@ -80,24 +80,24 @@
                             <div class="details">
 
                                 <section class="details_dp">
-                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
+                                    <img id="tutor_profile_image" src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                     <p class="profile_userName">profile userName</p>
                                 </section>
 
                                 <section class="head">
-                                    <h4 class="display_full_name">Gentle Inyang  <span class="sex">(M)</span></h4>
-                                    <p class="display_number">08039678842</p>
+                                    <h4 class="full_name">Gentle Inyang  <span class="gender">(M)</span></h4>
+                                    <p class="phone_number">08039678842</p>
                                 </section>
 
                                 <div class="set_other_details">
                                     <section class="other_details">
                                         <section class="bio_data">
                                             <fieldset><legend>Residential Address</legend>
-                                                <p class="tag">Address: <p class="value">24, Anthony village, Ikorodu</p></p>
+                                                <p class="tag">Address: <p class="value residential_address">24, Anthony village, Ikorodu</p></p>
                                                 <p class="tag">State of Resident/Nationality:</p>
                                                 <section class="state_national">
-                                                    <p class="state">Lagos</p>
-                                                    <p class="national">Nigeria</p>
+                                                    <p class="state state_of_residence">Lagos</p>
+                                                    <p class="national nationality">Nigeria</p>
                                                 </section>                                            
                                             </fieldset>
                                         </section><br>
@@ -108,11 +108,11 @@
                                                 <section class="bio_data">
                                                     <fieldset><legend>Academic Details</legend>
                                                         <button class="cv_view">View CV</button>
-                                                        <p class="tag">Institution Attended: <p class="value">Iscom University, Benin Republic</p></p>
+                                                        <p class="tag">Institution Attended: <p class="value institution_attended">Iscom University, Benin Republic</p></p>
                                                         <p class="tag">Specialization/Qualification/CGPA:</p>
                                                         <section class="state_national">
-                                                            <p class="state">Software Engineering</p>
-                                                            <p class="national grade">Msc</p>
+                                                            <p class="state area_of_specialization">Software Engineering</p>
+                                                            <p class="national grade highest_qualification">Msc</p>
                                                             <p class="national gpa">4.2</p>
                                                         </section>
                                                         
@@ -125,24 +125,24 @@
                                                     <fieldset><legend>Engagements</legend>             
                                                         <p class="tag">Employment/Status:</p>
                                                         <section class="state_national">
-                                                            <p class="state grade">Employed</p>
-                                                            <p class="national accepted">Full time</p>
+                                                            <p class="state grade employment_status">Employed</p>
+                                                            <p class="national accepted employment_type">Full time</p>
                                                         </section>
-                                                        <p class="tag">Availability: <p class="value">Hybrid</p></p>
+                                                        <p class="tag">Availability: <p class="value availability">Hybrid</p></p>
                                                         <p class="tag">Clients: Total/Accepted/Rejected</p>
                                                         <section class="state_national">
-                                                            <p class="state total">Total: 21</p>
-                                                            <p class="national accepted">Accepted: 5</p>
-                                                            <p class="national gpa">Rejected: 16</p>
+                                                            <p class="state total total_clients">Total: 21</p>
+                                                            <p class="national accepted active_clients">Active: 5</p>
+                                                            <p class="national rejected rejected_clients">Rejected: 16</p>
                                                         </section>
-                                                        <p class="tag">Ranking: <p class="value">Average Rank: 4 stars</p></p>                                                
+                                                        <p class="tag">Ranking: <p class="value ranking">Average Rank: 4 stars</p></p>                                                
                                                     </fieldset>
                                                 </section>
                                             </section>
                                         </div>
 
                                         <!-- Learners details -->
-                                        <div class="set_Learners_details">
+                                        <!-- <div class="set_Learners_details"> -->
                                             <!-- <section class="academics">
                                                 <section class="bio_data">
                                                     <fieldset><legend>Academic Details</legend>
@@ -177,7 +177,7 @@
                                                     </fieldset>
                                                 </section>
                                             </section> -->
-                                        </div>
+                                        <!-- </div> -->
                                     </section>
                                 </div>
 
@@ -224,7 +224,14 @@
         <div class="activate_tutors">
             <div class="admin_right">
                 <h4 class="hello_admin">  
-                    Hello, <span class="admin_username">{{ request.user.username }}</span>
+                    Hello, <span class="admin_username" id="admin_username">Admin1
+                        <!-- {% if request.session.username %}
+                            {{ request.session.username }}
+                        {% else %}
+                            {{ admin }}
+                        {% endif %} -->
+                        
+                    </span>
                     <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
                     <p class="logout"><a href="{% url 'landing_page' %}">Home</a></p>
                 </h4>
@@ -241,7 +248,7 @@
                         <img src="{% static 'images/icons/active.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Active</p>
-                            <p class="total_registered">400</p>
+                            <p class="total_registered" id="activeTutors">400</p>
                         </section>
                     </section>
 
@@ -249,7 +256,7 @@
                         <img src="{% static 'images/icons/inactive.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Inactive</p>
-                            <p class="total_registered">230</p>
+                            <p class="total_registered" id="inactiveTutors">230</p>
                         </section>
                     </section>
                 </div>
@@ -293,40 +300,69 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for tutor in tutors %}
                                 <tr>
-                                    <td class="user_name">Engr. Chidubem</td>
-                                    <td class="user_email">engen.inyang@gmail.com</td>
+                                    <td class="user_name">{{ tutor.username }}</td>
+                                    <td class="user_email">{{ tutor.email }}</td>
                                     <td>82%</td>
-                                    <td>5</td>
-                                    <td>Bsc</td>
-                                    <td><button class="check_status">Active</button></td>
-                                    <td style="color: red;">2021-05-15</td>
-                                    <td><button class="action">take action</button></td>
+                                    <td>{{ tutor.active_clients }}</td>
+                                    <td>{{ tutor.highest_qualification }}</td>
+                                    <td><button class="check_status">{{ tutor.is_active }}</button></td>
+                                    <td>{{ tutor.created_at}}</td>
+                                    <td>
+                                        <button class="action"
+                                            data-tutor='{
+                                                "id": "{{ tutor.id }}",
+                                                "first_name": "{{ tutor.first_name|default:"null" }}",
+                                                "last_name": "{{ tutor.last_name|default:"null" }}",
+                                                "username": "{{ tutor.username }}",
+                                                "is_active": "{{ tutor.is_active }}",
+                                                "last_login": "{{ tutor.last_login|default:"null" }}",
+                                                "reviews_id": "{{ tutor.reviews_id|default:"null" }}",
+                                                "email": "{{ tutor.email }}",
+                                                "highest_qualification": "{{ tutor.highest_qualification }}",
+                                                "status": "{{ tutor.status|default:"null" }}",
+                                                "created_at": "{{ tutor.created_at }}",
+                                                "date_of_birth": "{{ tutor.date_of_birth|default:"null" }}",
+                                                "area_of_specialization": "{{ tutor.area_of_specialization }}",
+                                                "profile_picture": "{{ tutor.profile_picture.url }}",
+                                                "phone_number": "{{ tutor.phone_number|default:"null" }}",
+                                                "gender": "{{ tutor.gender|default:"null" }}",
+                                                "employment_status": "{{ tutor.employment_status|default:"null" }}",
+                                                "state_of_residence": "{{ tutor.state_of_residence|default:"null" }}",
+                                                "nationality": "{{ tutor.nationality|default:"null" }}",
+                                                "personal_statement": "{{ tutor.personal_statement|default:"null" }}",
+                                                "availability": "{{ tutor.availability|default:"null" }}",
+                                                "working_hours": "{{ tutor.working_hours|default:"null" }}",
+                                                "cv_id": "{{ tutor.cv_id|default:"null" }}",
+                                                "residential_address": "{{ tutor.residential_address|default:"null" }}",
+                                                "active_clients": "{{ tutor.active_clients|default:"null" }}",
+                                                "total_clients": "{{ tutor.total_clients|default:"null" }}",
+                                                "rejected_clients": "{{ tutor.rejected_clients|default:"null" }}",
+                                                "reviews_id": "{{ tutor.reviews_id|default:"null" }}",
+                                                "updated_at": "{{ tutor.updated_at }}"
+                                            }'>Take action
+                                        </button>
+                                    </td>
+                                    
                                 </tr>
-                                <tr>
-                                    <td class="user_name">Mr. Gentle Inyang</td>
-                                    <td class="user_email">angel@special.com</td>
-                                    <td>97%</td>
-                                    <td>8</td>
-                                    <td>Msc</td>
-                                    <td><button class="check_status">Inactive</button></td>
-                                    <td>2020-05-15</td>
-                                    <td><button class="action">take action</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="user_name">Prof. Chime Zee</td>
-                                    <td class="user_email">chimeKingsley@gmail.com</td>
-                                    <td>86%</td>
-                                    <td>3</td>
-                                    <td>waec</td>
-                                    <td><button class="check_status">Active</button></td>
-                                    <td>2024-05-15</td>
-                                    <td><button class="action">take action</button></td>
-                                </tr>
+                                {% endfor %}
+
                             </tbody>
                         </table>
                     </div>
-                </div>           
+                </div> 
+                <!-- Pagination tutor -->
+                <center>
+                    <div class="pagination" id="pagination">
+                        <button id="tutorFirstPage">First</button>
+                        <button id="tutorPrevPage">Previous</button>
+                        <span id="tutorPageNumbers"></span>
+                        <button id="tutorNextPage">Next</button>
+                        <button id="tutorLastPage">Last</button>
+                        <button id="tutorShowAll">All</button>
+                    </div>
+                </center>
             </div>
         </div>
 
@@ -335,14 +371,16 @@
             <div class="admin_right">
                 <h4 class="hello_admin">  
                     Hello, <span class="admin_username">{{ request.user.username }}</span>
+
                     <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
+                    <p class="logout"><a href="{% url 'landing_page' %}">Home</a></p>
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
                         <img src="{% static 'images/icons/allTutors.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top validate">Total Tutors</p>
-                            <p class="total_registered">5,200</p>
+                            <p class="total_registered" id="clientCount">5,200</p>
                         </section>
                     </section>
 
@@ -350,7 +388,7 @@
                         <img src="{% static 'images/icons/active.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Active</p>
-                            <p class="total_registered">400</p>
+                            <p class="total_registered" id="activeClient">400</p>
                         </section>
                     </section>
 
@@ -358,7 +396,7 @@
                         <img src="{% static 'images/icons/inactive.png' %}" alt="">
                         <section class="inner_content">
                             <p class="top">Inactive</p>
-                            <p class="total_registered">230</p>
+                            <p class="total_registered" id="inactiveClients">230</p>
                         </section>
                     </section>
                 </div>
@@ -401,41 +439,59 @@
                                     <th class="sortAdminActionL" data-column="7">Admin Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            {% for client in clients %}
                                 <tr>
-                                    <td class="user_name">Engr. Chidubem</td>
-                                    <td class="user_email">engen.inyang@gmail.com</td>
+                                    <td class="user_name">{{ client.username }}</td>
+                                    <td class="user_email">{{ client.email }}</td>
                                     <td>82%</td>
-                                    <td>5</td>
-                                    <td>Bsc</td>
-                                    <td><button class="check_status">Active</button></td>
-                                    <td style="color: red;">2021-05-15</td>
-                                    <td><button class="action">take action</button></td>
+                                    <td>{{ client.active_clients }}</td>
+                                    <td>{{ client.highest_qualification }}</td>
+                                    <td><button class="check_status">{{ client.is_active }}</button></td>
+                                    <td>{{ client.created_at}}</td>
+                                    <td>
+                                        <button class="action"
+                                            data-client='{
+                                                "id": "{{ client.id }}",
+                                                "first_name": "{{ client.first_name|default:"null" }}",
+                                                "last_name": "{{ client.last_name|default:"null" }}",
+                                                "username": "{{ client.username }}",
+                                                "is_active": "{{ client.is_active }}",
+                                                "last_login": "{{ client.last_login|default:"null" }}",
+                                                "reviews_id": "{{ client.reviews_id|default:"null" }}",
+                                                "email": "{{ client.email }}",
+                                                "status": "{{ client.status|default:"null" }}",
+                                                "created_at": "{{ client.created_at }}",
+                                                "profile_picture": "{{ client.profile_picture.url }}",
+                                                "phone_number": "{{ client.phone_number|default:"null" }}",
+                                                "gender": "{{ client.gender|default:"null" }}",
+                                                "state_of_residence": "{{ client.state_of_residence|default:"null" }}",
+                                                "nationality": "{{ client.nationality|default:"null" }}",
+                                                "residential_address": "{{ client.residential_address|default:"null" }}",
+                                                "reviews_id": "{{ client.reviews_id|default:"null" }}",
+                                                "updated_at": "{{ client.updated_at }}"
+                                            }'>Take action
+                                        </button>
+                                    </td>
+                                    
                                 </tr>
-                                <tr>
-                                    <td class="user_name">Mr. Gentle Inyang</td>
-                                    <td class="user_email">angel@special.com</td>
-                                    <td>97%</td>
-                                    <td>8</td>
-                                    <td>Msc</td>
-                                    <td><button class="check_status">Inactive</button></td>
-                                    <td>2020-05-15</td>
-                                    <td><button class="action">take action</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="user_name">Prof. Chime Zee</td>
-                                    <td class="user_email">chimeKingsley@gmail.com</td>
-                                    <td>86%</td>
-                                    <td>3</td>
-                                    <td>waec</td>
-                                    <td><button class="check_status">Active</button></td>
-                                    <td>2024-05-15</td>
-                                    <td><button class="action">take action</button></td>
-                                </tr>
+                                {% endfor %}
+
                             </tbody>
                         </table>
                     </div>
-                </div>           
+                </div>
+                <!-- Pagination client -->
+                <center>
+                    <div class="pagination" id="pagination">
+                        <button id="clientFirstPage">First</button>
+                        <button id="clientPrevPage">Previous</button>
+                        <span id="clientPageNumbers"></span>
+                        <button id="clientNextPage">Next</button>
+                        <button id="clientLastPage">Last</button>
+                        <button id="clientShowAll">All</button>
+                    </div>
+                </center>
+                
             </div>
         </div>
     </div>

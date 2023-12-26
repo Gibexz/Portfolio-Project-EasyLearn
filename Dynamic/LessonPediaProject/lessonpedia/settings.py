@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'tutor',
     'app_admin',
     'generic_apps',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,4 +140,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-LOGIN_URL = '/app_admin_sign_up/' # login required 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'app_admin.backends.AppAdminAuthBackend',
+    # other backends if needed
+]
+
+LOGIN_URL = '/app_admin_sign_up/' # login required

@@ -18,7 +18,7 @@ body{
 }
 
 .set_tutors_details{
-    display: none;
+    display: block;
 }
 
 .set_other_details{
@@ -188,11 +188,12 @@ body{
 
 /* Tutors list logic */
 .tutors_list{
-    margin-top: 10px;
+    margin-top: 0px;
     width: 1000px;
-    height: 500px;
+    height: 480px;
     background-color: white;
     border-radius: 20px;
+    overflow-x: hidden;
 }
 
 .tutors_list .allTutors{
@@ -542,7 +543,7 @@ table {
     height: 16px;
 }
 
-.gpa{
+.gpa, .rejected{
     padding-left: 30px;
 }
 
@@ -665,3 +666,13 @@ table {
 .selections .confirm_remove{
     background-color: red;
 }
+
+/* Pagination */
+#pagination {
+    background-color: white;
+    padding: 3px;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: 50%;
+}
+
