@@ -1,35 +1,35 @@
 $(document).ready(function(){
-    $(".check_status").each(function() {
-        const value = $(this).text();
-        if (value === "Active") {
-            $(this).css({
-                "border": "1px solid green",
-                "background-color": "rgb(205, 243, 209)"
-            })
-        } else {
-            $(this).css({
-                "border": "1px solid red",
-                "background-color": "rgb(252, 206, 206)"
-            })
-        }
-    });
+    // $(".check_status").each(function() {
+    //     const value = $(this).text();
+    //     if (value === "Active") {
+    //         $(this).css({
+    //             "border": "1px solid green",
+    //             "background-color": "rgb(205, 243, 209)"
+    //         })
+    //     } else {
+    //         $(this).css({
+    //             "border": "1px solid red",
+    //             "background-color": "rgb(252, 206, 206)"
+    //         })
+    //     }
+    // });
 
-    $("#set_tutor").click(function(){
-        $(".activate_tutors").show()
-        $(".activate_learners").hide()
-    })
-    $("#set_learner").click(function(){
-        $(".activate_tutors").hide()
-        $(".activate_learners").show()
-    })
+    // $("#set_tutor").click(function(){
+    //     $(".activate_tutors").show()
+    //     $(".activate_learners").hide()
+    // })
+    // $("#set_learner").click(function(){
+    //     $(".activate_tutors").hide()
+    //     $(".activate_learners").show()
+    // })
     
 
     // Take action dialogue for Tutor
     $('.action').click(function(){
+
         const adminName = $(".admin_username").text()
         var tutorData = $(this).data('tutor')
 
-    
         // console.log(tutorData); // Check the entire tutorData object
         
         let tutorProfileImage = tutorData.profile_picture
@@ -299,28 +299,28 @@ $(document).ready(function() {
 
 }) 
 
-$(document).ready(function() {
-    // status check for tutor
-    $('.check_status').each(function() {
-        const isActive = $(this).data('active');
+// $(document).ready(function() {
+//     // status check for tutor
+//     $('.check_status').each(function() {
+//         const isActive = $(this).data('active');
         
-        if (isActive === true || isActive == 'True') {
-            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
-        } else {
-            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
-        }
-    });
-    // status check for client
-    $('.check_status_client').each(function() {
-        const isActive = $(this).data('active_client');
+//         if (isActive === true || isActive == 'True') {
+//             $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+//         } else {
+//             $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+//         }
+//     });
+//     // status check for client
+//     $('.check_status_client').each(function() {
+//         const isActive = $(this).data('active_client');
         
-        if (isActive === true || isActive == 'True') {
-            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
-        } else {
-            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
-        }
-    });
-});
+//         if (isActive === true || isActive == 'True') {
+//             $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+//         } else {
+//             $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+//         }
+//     });
+// });
 
 
 // Pagination for Tutors view
