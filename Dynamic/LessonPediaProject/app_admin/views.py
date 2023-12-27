@@ -189,7 +189,7 @@ def get_clients_data(request):
         clients_data_serialized = ClientSerializer(client_data, many=True)
         
         return Response({
-            'tutors_data': clients_data_serialized.data  # Serialized tutor data
+            'clients_data': clients_data_serialized.data  # Serialized tutor data
         }, status=status.HTTP_200_OK)
 
 @login_required(login_url='app_admin_sign_up')

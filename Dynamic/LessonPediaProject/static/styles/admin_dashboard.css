@@ -13,7 +13,7 @@ body{
     display: nne;
 }
 
-.set_action, .set_action_client{
+.set_action, .set_action_client, .set_action_tutor{
     display: none;
 }
 
@@ -251,7 +251,7 @@ table {
     cursor: pointer;
 }
 
-.check_status, .action, .action_client{
+.check_status, .check_status_client, .action, .action_client{
     border-radius: 5px;
     padding: 4px;
     width: 60px;

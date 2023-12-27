@@ -40,7 +40,7 @@
     </div>
 
     <!-- take action tutor -->
-    <div class="set_action">
+    <div class="set_action_tutor">
         <div class="activate_action">
             <div class="action_dialog">
                 <section class="top_action">
@@ -141,43 +141,6 @@
                                             </section>
                                         </div>
 
-                                        <!-- Learners details -->
-                                        <!-- <div class="set_Learners_details"> -->
-                                            <!-- <section class="academics">
-                                                <section class="bio_data">
-                                                    <fieldset><legend>Academic Details</legend>
-                                                        <button class="cv_view">View CV</button>
-                                                        <p class="tag">Institution Attended: <p class="value">Iscom University, Benin Republic</p></p>
-                                                        <p class="tag">Specialization/Qualification/CGPA:</p>
-                                                        <section class="state_national">
-                                                            <p class="state">Software Engineering</p>
-                                                            <p class="national grade">Msc</p>
-                                                            <p class="national gpa">4.2</p>
-                                                        </section>
-                                                        
-                                                    </fieldset>
-                                                </section>
-                                            </section><br> -->
-
-                                            <!-- <section class="engagements">
-                                                <section class="bio_data">
-                                                    <fieldset><legend>Engagements</legend>             
-                                                        <p class="tag">Employment/Status:</p>
-                                                        <section class="state_national">
-                                                            <p class="state grade">Employed</p>
-                                                            <p class="national accepted">Full time</p>
-                                                        </section>
-                                                        <p class="tag">Availability: <p class="value">Hybrid</p></p>
-                                                        <p class="tag">Tutors: Total/Accepted/Pending</p>
-                                                        <section class="state_national">
-                                                            <p class="state total">Request: 10</p>
-                                                            <p class="national accepted">Accepted: 8</p>
-                                                            <p class="national gpa">Pending: 2</p>
-                                                        </section>                                                               
-                                                    </fieldset>
-                                                </section>
-                                            </section> -->
-                                        <!-- </div> -->
                                     </section>
                                 </div>
 
@@ -245,13 +208,13 @@
                             <div class="details">
 
                                 <section class="details_dp">
-                                    <img id="tutor_profile_image_client" src="{% static 'images/tutors/pass.jpg' %}" alt="">
+                                    <img id="client_profile_image" src="{% static 'images/tutors/pass.jpg' %}" alt="">
                                     <p class="profile_userName_client">profile userName</p>
                                 </section>
 
                                 <section class="head">
-                                    <h4 class="full_name_client">Gentle Inyang  <span class="gender_client">(M)</span></h4>
-                                    <p class="phone_number_client">08039678842</p>
+                                    <h4 class="full_name_client">firstname lastname  <span class="gender_client">(M/F)</span></h4>
+                                    <p class="phone_number_client">080XXXXXXXX</p>
                                 </section>
 
                                 <div class="set_other_details">
@@ -267,12 +230,12 @@
                                             </fieldset>
                                         </section><br>
 
-                                        <!-- Tutors details -->
+                                        <!-- Client details -->
                                         <div class="set_tutors_details">
                                             <section class="academics">
                                                 <section class="bio_data">
                                                     <fieldset><legend>Academic Details</legend>
-                                                        <button class="cv_view">View CV</button>
+                                                        <!-- <button class="cv_view">View CV</button> -->
                                                         <p class="tag">Institution Attended: <p class="value institution_attended_client">Iscom University, Benin Republic</p></p>
                                                         <p class="tag">Specialization/Qualification/CGPA:</p>
                                                         <section class="state_national">
@@ -305,44 +268,6 @@
                                                 </section>
                                             </section>
                                         </div>
-
-                                        <!-- Learners details -->
-                                        <!-- <div class="set_Learners_details"> -->
-                                            <!-- <section class="academics">
-                                                <section class="bio_data">
-                                                    <fieldset><legend>Academic Details</legend>
-                                                        <button class="cv_view">View CV</button>
-                                                        <p class="tag">Institution Attended: <p class="value">Iscom University, Benin Republic</p></p>
-                                                        <p class="tag">Specialization/Qualification/CGPA:</p>
-                                                        <section class="state_national">
-                                                            <p class="state">Software Engineering</p>
-                                                            <p class="national grade">Msc</p>
-                                                            <p class="national gpa">4.2</p>
-                                                        </section>
-                                                        
-                                                    </fieldset>
-                                                </section>
-                                            </section><br> -->
-
-                                            <!-- <section class="engagements">
-                                                <section class="bio_data">
-                                                    <fieldset><legend>Engagements</legend>             
-                                                        <p class="tag">Employment/Status:</p>
-                                                        <section class="state_national">
-                                                            <p class="state grade">Employed</p>
-                                                            <p class="national accepted">Full time</p>
-                                                        </section>
-                                                        <p class="tag">Availability: <p class="value">Hybrid</p></p>
-                                                        <p class="tag">Tutors: Total/Accepted/Pending</p>
-                                                        <section class="state_national">
-                                                            <p class="state total">Request: 10</p>
-                                                            <p class="national accepted">Accepted: 8</p>
-                                                            <p class="national gpa">Pending: 2</p>
-                                                        </section>                                                               
-                                                    </fieldset>
-                                                </section>
-                                            </section> -->
-                                        <!-- </div> -->
                                     </section>
                                 </div>
 
@@ -472,10 +397,10 @@
                                     <td>82%</td>
                                     <td>{{ tutor.active_clients }}</td>
                                     <td>{{ tutor.highest_qualification }}</td>
-                                    <td><button class="check_status">{{ tutor.is_active }}</button></td>
+                                    <td><button class="check_status" data-active="{{ tutor.is_active }}">{{ tutor.is_active }}</button></td>
                                     <td>{{ tutor.created_at}}</td>
                                     <td>
-                                        <button class="action"
+                                        <button class="action" 
                                             data-tutor='{
                                                 "id": "{{ tutor.id }}",
                                                 "first_name": "{{ tutor.first_name|default:"null" }}",
@@ -597,11 +522,11 @@
                                 <tr>
                                     <th class="sortUserNameL" data-column="0">UserName</th>
                                     <th class="sortEmailL" data-column="1">Email</th>
-                                    <th class="sortEmailL" data-column="2">Email</th>
-                                    <th class="sortEngagementL" data-column="3">No of engagement</th>
-                                    <th class="sortQualificationL" data-column="4">Qualification</th>
-                                    <th class="sortStatusL" data-column="5">Status</th>
-                                    <th class="sortJoinDateL" data-column="6">Join Date</th>
+                                    <th class="sortEmailL" data-column="2">Gender</th>
+                                    <th class="sortEngagementL" data-column="3">Educational_level</th>
+                                    <th class="sortQualificationL" data-column="4">Status</th>
+                                    <th class="sortStatusL" data-column="5">Last login</th>
+                                    <th class="sortJoinDateL" data-column="6">Date joined</th>
                                     <th class="sortAdminActionL" data-column="7">Admin Action</th>
                                 </tr>
                             </thead>
@@ -609,11 +534,11 @@
                                 <tr>
                                     <td class="user_name">{{ client.username }}</td>
                                     <td class="user_email">{{ client.email }}</td>
-                                    <td>82%</td>
-                                    <td>{{ client.active_clients }}</td>
-                                    <td>{{ client.highest_qualification }}</td>
-                                    <td><button class="check_status">{{ client.is_active }}</button></td>
-                                    <td>{{ client.created_at}}</td>
+                                    <td>{{ client.gender }}</td>
+                                    <td>{{ client.educational_level }}</td>
+                                    <td><button class="check_status_client" data-active_client="{{ client.is_active }}">{{ client.is_active }}</button></td>
+                                    <td>{{ client.last_login }}</td>
+                                    <td>{{ client.created_at }}</td>
                                     <td>
                                         <button class="action_client"
                                             data-client='{
@@ -623,9 +548,9 @@
                                                 "username": "{{ client.username }}",
                                                 "is_active": "{{ client.is_active }}",
                                                 "last_login": "{{ client.last_login|default:"null" }}",
-                                                "reviews_id": "{{ client.reviews_id|default:"null" }}",
                                                 "email": "{{ client.email }}",
                                                 "status": "{{ client.status|default:"null" }}",
+                                                "date_of_birth": "{{ client.date_of_birth|default:"null" }}",
                                                 "created_at": "{{ client.created_at }}",
                                                 "profile_picture": "{{ client.profile_picture.url }}",
                                                 "phone_number": "{{ client.phone_number|default:"null" }}",

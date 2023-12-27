@@ -26,16 +26,11 @@ $(document).ready(function(){
 
     // Take action dialogue for Tutor
     $('.action').click(function(){
-        // const userType = $(this).closest(".activate_tutors, .activate_learners").find(".inner_content .validate").text();
-
-        // $('.selected_user').text(tutorData.username);
-        // $('.selected_email').text(tutorData.email)
-
         const adminName = $(".admin_username").text()
         var tutorData = $(this).data('tutor')
 
     
-        console.log(tutorData); // Check the entire tutorData object
+        // console.log(tutorData); // Check the entire tutorData object
         
         let tutorProfileImage = tutorData.profile_picture
 
@@ -43,7 +38,7 @@ $(document).ready(function(){
     
         $('.selected_user').text(tutorData.username);
         $('.profile_userName').text(tutorData.username);
-        $('.full_name').text(tutorData.first_name +" "+tutorData.last_name);
+        $('.full_name').text(tutorData.first_name +" "+ tutorData.last_name);
         $('.gender').text(tutorData.gender);
         $('.phone_number').text(tutorData.phone_number);
         $('.residential_address').text(tutorData.residential_address);
@@ -60,6 +55,7 @@ $(document).ready(function(){
         $('.active_clients').text(tutorData.active_clients);
         $('.rejected_clients').text(tutorData.rejected_clients);
         $('.ranking').text(tutorData.ranking);
+        $('.is_active').text(tutor.is_active ); // not used yet
 
     
     
@@ -69,14 +65,14 @@ $(document).ready(function(){
             // console.log(tutorData.email); // Check if tutorData.email is populated
             $('.selected_email').text(tutorData.email);
         } else {
-            console.log('nit accsisble');
+            console.log('n0t accsisble');
         }
 
-        $('.set_action').show()
+        $('.set_action_tutor').show()
     })
 
     $('.close').click(function(){
-        $('.set_action').hide()
+        $('.set_action_tutor').hide()
     })
 
 
@@ -88,7 +84,7 @@ $(document).ready(function(){
         var clientData = $(this).data('client')
 
     
-        console.log(clientData); // Check the entire clientData object
+        // console.log(clientData); // Check the entire clientData object
         
         let clientProfileImage = clientData.profile_picture
 
@@ -163,6 +159,9 @@ $(document).ready(function(){
         $('.set_disable_account').hide()
     })
 });
+
+
+
 //  live table sort for tutor admin table list
 $(document).ready(function() {
     $('.table_header th').on('click', function() {
@@ -299,6 +298,29 @@ $(document).ready(function() {
     setInterval(inactiveClientNos, 1080000);
 
 }) 
+
+$(document).ready(function() {
+    // status check for tutor
+    $('.check_status').each(function() {
+        const isActive = $(this).data('active');
+        
+        if (isActive === true || isActive == 'True') {
+            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+        } else {
+            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+        }
+    });
+    // status check for client
+    $('.check_status_client').each(function() {
+        const isActive = $(this).data('active_client');
+        
+        if (isActive === true || isActive == 'True') {
+            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+        } else {
+            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+        }
+    });
+});
 
 
 // Pagination for Tutors view
