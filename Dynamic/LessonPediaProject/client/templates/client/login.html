@@ -33,7 +33,7 @@
         <h3 class="login_header">
             Login
         </h3>
-        <form action="{% url 'client_signIn' %}" method='POST'>
+        <form action="{% url 'client_signIn' %}?next={{ request.GET.next }}" method='POST'>
             {% csrf_token %}
             <label for="useremail">
                 UserName or Email
