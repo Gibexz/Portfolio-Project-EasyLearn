@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_in
 from django.contrib import messages
-from .tutor_backends import TutorAuthBackend
+from .backends import TutorAuthBackend
 from .profile_update_form import TutorUpdateForm
 from .models import Tutor
 
@@ -64,13 +64,15 @@ def tutor_login(request):
 #         print("User not authenticated. Redirecting to login.")
 #         return redirect('tutor_login')
 
-# @login_required
+@login_required(login_url='tutor_login')
 def tutor_dashboard(request, tutor):
     """Displays Tutor Dashboard"""
     print("User is authenticated in tutor_dashboard:", request.user)
     tutor = get_object_or_404(Tutor, username=tutor)
     return render(request, 'tutor/tutor_dashboard.html', context={'tutor': tutor})
 
+
+@login_required(login_url='tutor_login')
 def tutor_profile(request):
     """profile update form"""
     # print(request.user.username)
@@ -97,7 +99,9 @@ def tutor_profile(request):
     else:
         messages.error(request, 'Tutor not found for the given username')
         return redirect('tutor_login')
-    
+
+
+@login_required(login_url='tutor_login')
 def tutor_logout(request):
     logout(request)
     messages.success(request, "You're Logged Out")

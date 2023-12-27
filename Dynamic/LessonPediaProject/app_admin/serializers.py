@@ -6,11 +6,11 @@ class ClientSerializer(serializers.ModelSerializer):
     """"""
     class Meta:
         model = Client
-        fields = '_all_'
+        fields = '__all__'
 
 
 class TutorSerializer(serializers.ModelSerializer):
     """"""
     class Meta:
         model = Tutor
-        fields = '_all_' # You can specify the fields explicitly if needed
+        fields = '__all__' # You can specify the fields explicitly if needed
