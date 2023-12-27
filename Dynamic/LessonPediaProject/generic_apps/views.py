@@ -11,7 +11,6 @@ def landing_page(request):
     """Landing page"""
     active_user = request.user
     if isinstance(active_user, AnonymousUser):
-        print(active_user)
         return render(request, "generic_apps/landingpage.html")
     
     else:

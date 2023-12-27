@@ -169,7 +169,7 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
+                        <img src="{{ request.user.profile_picture.url }}" alt="Client Passport">
                     </div>
                     <div class="other_info">
                         <p>{{ request.user.email }}</p>
@@ -216,7 +216,7 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
+                                    <img src="{{ request.user.profile_picture.url }}" alt="">
                                     <p>change profile picture</p>
                                 </div>                               
                                 <h3><span>Hi,</span> {{ request.user.username }}</h3>
@@ -291,7 +291,7 @@
             <div class="sidebar">
                 <div class="personal side">
                     <div class="profile_pics">
-                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
+                        <img src="{{ request.user.profile_picture.url }}" alt="Client Passport">
                     </div>
                     <div class="other_info">
                         <p>{{ request.user.email }}</p>
