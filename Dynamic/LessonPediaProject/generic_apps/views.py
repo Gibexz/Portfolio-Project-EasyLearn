@@ -11,12 +11,15 @@ def landing_page(request):
     """Landing page"""
     active_user = request.user
     if isinstance(active_user, AnonymousUser):
+        print(active_user)
         return render(request, "generic_apps/landingpage.html")
+    
     else:
+        model_name = active_user._meta.model_name
         if isinstance(request.user, Tutor):
-            return render(request, "tutor/login_landingpage.html", {"activeUser":request.user})
+            return render(request, "generic_apps/login_landingpage.html", {"activeUser":request.user, 'model': model_name})
         elif isinstance(request.user, Client):
-            return render(request, "client/login_landingpage.html", {"activeUser":request.user})
+            return render(request, "generic_apps/login_landingpage.html", {"activeUser":request.user, 'model': model_name})
     return render(request, "generic_apps/landingpage.html")
 
 

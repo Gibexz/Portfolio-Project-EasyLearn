@@ -14,19 +14,26 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 import hashlib
-
+import uuid
 
 def landing_page_admin(request):
     """Landing page"""
     return render(request, "app_admin/landingpage_admin.html")
 
 
-def generate_browser_fingerprint(request):
-    """Generate a unique fingerprint based on browser information"""
-    user_agent = request.META.get('HTTP_USER_AGENT', '').encode()
-    ip_address = request.META.get('REMOTE_ADDR', '').encode()
+# def generate_browser_fingerprint(request):
+#     """Generate a unique fingerprint based on browser information"""
+#     user_agent = request.META.get('HTTP_USER_AGENT', '').encode()
+#     ip_address = request.META.get('REMOTE_ADDR', '').encode()
 
-    fingerprint = hashlib.sha256((user_agent + ip_address)).hexdigest()
+#     fingerprint = hashlib.sha256((user_agent + ip_address)).hexdigest()
+#     return fingerprint
+
+def generate_browser_fingerprint(request):
+    """Generate a unique fingerprint based on a UUIDv4"""
+    random_uuid = uuid.uuid4().hex.encode()
+    
+    fingerprint = hashlib.sha256(random_uuid).hexdigest()
     return fingerprint
 
 def app_admin_login(request):

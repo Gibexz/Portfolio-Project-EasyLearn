@@ -27,7 +27,7 @@
             <div class="cert_content">
                 <div class="cert_inn">
                     <p class="close_cert" title="Close">x</p>
-                    <img src="{{ tutor.certificate.url }}" alt="" width="100%" height="100%" id="preview_cert">
+                    <img src="#" alt="" width="100%" height="100%" id="preview_cert">
                 </div>            
             </div>
         </div>
@@ -164,14 +164,14 @@
                                 
                         <label for="cv">Upload CV or Resume [only .pdf]</label>
                         <p class="preview shiftmore" id="view_cv">Preview</p>
-                        <img class="cv_preview" src="{{ tutor.certificate.url }}" alt="" width="100%" height="100%" id="preview_cert">
+                        <img class="cv_preview" src="#" alt="" width="100%" height="100%" id="preview_cert">
 
                            {{ form.cv_id }}
                            {{ form.cv_id.errors }}
                            <br><br>
                         <label for="cert">Upload Certificate (Highest cert only) [only .jpg, .jpeg or .png]</label>
                         <p class="preview" id="view_cert">Preview</p>
-                        <embed class="cert_preview" width="1000px" height="600px" src="{{ tutor.cv.url }}" type="application/pdf"/>
+                        <embed class="cert_preview" width="1000px" height="600px" src="#" type="application/pdf"/>
 
                         {{ form.certificate }}
                         {{ form.certificate.errors }}

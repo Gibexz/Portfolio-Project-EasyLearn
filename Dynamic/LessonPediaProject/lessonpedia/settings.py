@@ -51,9 +51,9 @@ MIDDLEWARE = [
     # 'django.contrib.staticfiles.middleware.StaticFilesMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -145,11 +145,11 @@ MEDIA_ROOT = BASE_DIR / "media"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
-    'tutor.tutor_backends.TutorAuthBackend',
+    'tutor.backends.TutorAuthBackend',
     'client.backends.EmailClientBackend',  
     'app_admin.backends.AppAdminAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SECURE = False # True for production
 

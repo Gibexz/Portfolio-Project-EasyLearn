@@ -122,9 +122,9 @@ class TutorUpdateForm(forms.ModelForm):
         })
     )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nationality'].choices = [('', '- Select -'), ("NG", 'Nigeria')] + list(self.fields['nationality'].choices[1:-1])
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['nationality'].choices = [('', '- Select -'), ("NG", 'Nigeria')] + list(self.fields['nationality'].choices[1:-1])
     state_of_residence = forms.ChoiceField(
         choices=[
             ('', '- Select -'),

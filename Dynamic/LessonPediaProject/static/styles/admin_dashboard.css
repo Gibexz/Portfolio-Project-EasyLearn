@@ -13,7 +13,7 @@ body{
     display: nne;
 }
 
-.set_action{
+.set_action, .set_action_client{
     display: none;
 }
 
@@ -251,7 +251,7 @@ table {
     cursor: pointer;
 }
 
-.check_status, .action{
+.check_status, .action, .action_client{
     border-radius: 5px;
     padding: 4px;
     width: 60px;
@@ -259,7 +259,7 @@ table {
     border: 1px solid gray;
 }
 
-.action{
+.action, .action_client{
     width: 80px;
     background: linear-gradient(90deg, darkblue, rgba(57, 104, 88, 0.794));
     color: white;
@@ -287,7 +287,7 @@ table {
     border-bottom: 2px solid rgba(239, 2, 2, 0.433);
 }
 
-.close{
+.close, .close_client{
     margin-left: 40px;
     color: rgba(203, 1, 1, 0.329);
     border: 1px solid rgb(117, 0, 0);

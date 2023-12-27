@@ -79,6 +79,62 @@ $(document).ready(function(){
         $('.set_action').hide()
     })
 
+
+
+    // Take action dialogue for Client
+    $('.action_client').click(function(){
+
+        const adminName = $(".admin_username").text()
+        var clientData = $(this).data('client')
+
+    
+        console.log(clientData); // Check the entire clientData object
+        
+        let clientProfileImage = clientData.profile_picture
+
+        $('#client_profile_image').attr('src', clientProfileImage);
+    
+        $('.selected_user_client').text(clientData.username);
+        $('.profile_userName_client').text(clientData.username);
+        $('.full_name_client').text(clientData.first_name +" "+clientData.last_name);
+        $('.gender_client').text(clientData.gender);
+        $('.phone_number_client').text(clientData.phone_number);
+        $('.residential_address_client').text(clientData.residential_address);
+        $('.state_of_residence_client').text(clientData.state_of_residence);
+        $('.nationality_client').text(clientData.nationality);
+        $('.institution_attended_client').text(clientData.institution_attended);  // not in the database yet
+        $('.area_of_specialization_client').text(clientData.area_of_specialization);
+        $('.highest_qualification_client').text(clientData.highest_qualification);
+        $('.gpa_client').text(clientData.gpa);
+        $('.employment_status_client').text(clientData.employment_status);
+        $('.employment_type_client').text(clientData.employment_type);
+        $('.availability_client').text(clientData.availability);
+        $('.total_clients_client').text(clientData.total_clients);
+        $('.active_clients_client').text(clientData.active_clients);
+        $('.rejected_clients_client').text(clientData.rejected_clients);
+        $('.ranking_client').text(clientData.ranking);
+
+    
+    
+        $('.active_admin').text(adminName);
+    
+        if (clientData.hasOwnProperty('email')) {
+            // console.log(clientData.email); // Check if clientData.email is populated
+            $('.selected_email_client').text(clientData.email);
+        } else {
+            console.log('not accsisble');
+        }
+
+        $('.set_action_client').show()
+    })
+
+    $('.close_client').click(function(){
+        $('.set_action_client').hide()
+    })
+
+
+
+
     // profile, review and report activation logic
     $('#activate_review').click(function(){
         $('.set_other_details').hide()
@@ -244,140 +300,11 @@ $(document).ready(function() {
 
 }) 
 
-//     var tutorRows = $('.tutor_table_list tbody tr');
-//     var tutorRowsPerPage = 1;
-//     var tutorTotalPages = Math.ceil(tutorRows.length / tutorRowsPerPage);
-//     var tutorCurrentPage = 1;
-//     var tutorPaginatedView = true;
-//     var tutorStoredPage = 1; // Store the current page before showing all rows
 
-//     function showTutorPage(page) {
-//         tutorRows.hide();
-//         tutorRows.slice((page - 1) * tutorRowsPerPage, page * tutorRowsPerPage).show();
-//     }
-
-//     function setupTutorPagination() {
-//         var tutorPageNumbers = '';
-//         var maxVisiblePages = 5; // Maximum visible page numbers
-//         var totalPages = tutorTotalPages;
-//         var startPage = 1;
-//         var endPage = totalPages;
-
-//         if (totalPages > maxVisiblePages) {
-//             if (tutorCurrentPage > Math.floor(maxVisiblePages / 2)) {
-//                 startPage = tutorCurrentPage - Math.floor(maxVisiblePages / 2);
-//                 endPage = startPage + maxVisiblePages - 1;
-//                 if (endPage > totalPages) {
-//                     endPage = totalPages;
-//                     startPage = endPage - maxVisiblePages + 1;
-//                 }
-//             } else {
-//                 endPage = maxVisiblePages;
-//             }
-//         }
-
-//         if (startPage > 1) {
-//             tutorPageNumbers += `<button class="tutor-page-number" data-page="1">1</button>`;
-//             if (startPage > 2) {
-//                 tutorPageNumbers += `<span>...</span>`;
-//             }
-//         }
-
-//         for (var i = startPage; i <= endPage; i++) {
-//             tutorPageNumbers += `<button class="tutor-page-number" data-page="${i}">${i}</button>`;
-//         }
-
-//         if (endPage < totalPages) {
-//             if (endPage < totalPages - 1) {
-//                 tutorPageNumbers += `<span>...</span>`;
-//             }
-//             tutorPageNumbers += `<button class="tutor-page-number" data-page="${totalPages}">${totalPages}</button>`;
-//         }
-
-//         $('#tutorPageNumbers').html(tutorPageNumbers);
-//     }
-
-//     function updateTutorPaginationButtons() {
-//         if (tutorCurrentPage === 1) {
-//             $('#tutorPrevPage, #tutorFirstPage').prop('disabled', true);
-//         } else {
-//             $('#tutorPrevPage, #tutorFirstPage').prop('disabled', false);
-//         }
-//         if (tutorCurrentPage === tutorTotalPages) {
-//             $('#tutorNextPage, #tutorLastPage').prop('disabled', true);
-//         } else {
-//             $('#tutorNextPage, #tutorLastPage').prop('disabled', false);
-//         }
-//     }
-
-//     showTutorPage(tutorCurrentPage);
-//     setupTutorPagination();
-//     updateTutorPaginationButtons();
-
-//     // Click handlers...
-//     // Click handler for specific page number
-//     $('#tutorPageNumbers').on('click', '.tutor-page-number', function() {
-//         tutorCurrentPage = parseInt($(this).data('page'));
-//         showTutorPage(tutorCurrentPage);
-//         updateTutorPaginationButtons();
-//     });
-
-//     // Click handler for first page
-//     $('#tutorFirstPage').on('click', function() {
-//         tutorCurrentPage = 1;
-//         showTutorPage(tutorCurrentPage);
-//         updateTutorPaginationButtons();
-//     });
-
-//     // Click handler for last page
-//     $('#tutorLastPage').on('click', function() {
-//         tutorCurrentPage = tutorTotalPages;
-//         showTutorPage(tutorCurrentPage);
-//         updateTutorPaginationButtons();
-//     });
-
-//     // Click handler for previous page
-//     $('#tutorPrevPage').on('click', function() {
-//         if (tutorCurrentPage > 1) {
-//             tutorCurrentPage--;
-//             showTutorPage(tutorCurrentPage);
-//             updateTutorPaginationButtons();
-//         }
-//     });
-
-//     // Click handler for next page
-//     $('#tutorNextPage').on('click', function() {
-//         if (tutorCurrentPage < tutorTotalPages) {
-//             tutorCurrentPage++;
-//             showTutorPage(tutorCurrentPage);
-//             updateTutorPaginationButtons();
-//         }
-//     });
-
-//     // Click handler for 'All' / 'Back to Pagination' button
-//     $('#tutorShowAll').on('click', function() {
-//         if (tutorPaginatedView) {
-//             tutorStoredPage = tutorCurrentPage;
-//             tutorRows.show();
-//             $('#tutorShowAll').text('Back to Pagination');
-//             $('#tutorPageNumbers').empty();
-//             $('#tutorPrevPage, #tutorNextPage, #tutorFirstPage, #tutorLastPage').prop('disabled', true);
-//             tutorPaginatedView = false;
-//         } else {
-//             tutorRows.hide();
-//             showTutorPage(tutorStoredPage);
-//             setupTutorPagination();
-//             updateTutorPaginationButtons();
-//             $('#tutorShowAll').text('All');
-//             tutorPaginatedView = true;
-//         }
-//     });
-
-// });
-
+// Pagination for Tutors view
 $(document).ready(function() {
     var tutorRows = $('.tutor_table_list tbody tr');
-    var tutorRowsPerPage = 1;
+    var tutorRowsPerPage = 5;
     var tutorTotalPages = Math.ceil(tutorRows.length / tutorRowsPerPage);
     var tutorCurrentPage = 1;
     var tutorPaginatedView = true;
@@ -485,9 +412,10 @@ $(document).ready(function() {
 });
 
 
+// pagination for learners view
 $(document).ready(function() {
     var clientRows = $('.learner_table_list tbody tr');
-    var clientRowsPerPage = 3;
+    var clientRowsPerPage = 2;
     var clientTotalPages = Math.ceil(clientRows.length / clientRowsPerPage);
     var clientCurrentPage = 1;
     var clientPaginatedView = true;

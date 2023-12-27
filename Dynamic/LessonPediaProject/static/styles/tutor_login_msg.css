@@ -1,0 +1,22 @@
+
+
+#msgs p{
+    position: absolute;
+    display: block;
+    padding: 3px 20px 3px 20px;
+    margin: auto;
+    border-radius: 15px;
+    font-size: medium;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+}
+
+#msgs .flash_message{
+    color: green;
+    background-color: white;
+}
+
+#msgs .danger_flash_message{
+    color: white;
+    background-color: red;
+}
