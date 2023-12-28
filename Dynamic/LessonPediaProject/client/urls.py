@@ -9,5 +9,6 @@ urlpatterns = [
     path('signIn/User_Profile_Registration/', views.user_profile_registration, name='user_profile'),
     path('SignIn/User_dashboard/ProfileUpdate', views.ClientProfileUpdate, name='ProfileUpdate'),
     path('SignIn/User_dashboard/Password_change', views.ClientChangePassword, name='changePassword'),
-    path("user/deactivate", views.deactivate_account, name="remove_user")
+    path("user/deactivate", views.deactivate_account, name="remove_user"),
+    path("user/profile_picture_Update", views.profilePictureUpdate, name="dpUpdate"),
 ]

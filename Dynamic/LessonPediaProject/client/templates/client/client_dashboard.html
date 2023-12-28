@@ -24,7 +24,7 @@
                 <img src="{% static 'images/icons/warning.png' %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
-                    <p class="action">This actions cannot be undo, do you wish to process?</p>
+                    <p class="action">This actions cannot be undo, do you wish to proceed?</p>
                 </div>
                 <div class="selections">
                     <a href="{% url 'remove_user' %}"><button class="confirm_remove">Confirm</button></a>
@@ -216,15 +216,20 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{{ request.user.profile_picture.url }}" alt="">
-                                    <p>change profile picture</p>
+                                    <form action="{% url 'dpUpdate' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <img id="previewDp" src="{{ request.user.profile_picture.url }}" alt="">
+                                        <input type="file" name="profilePicture" id="UpdateDp">
+                                        <button id="change">change profile picture</button>
+                                    </form>
+                                    
                                 </div>                               
                                 <h3><span>Hi,</span> {{ request.user.username }}</h3>
                                 
                                 <form action="{% url 'ProfileUpdate' %}" method='POST'>
                                     {% csrf_token %}
                                     <label for="firstName">First Name</label>
-                                    <input type="text" name="firstName" id="" placeholder="{{ request.user.first_name }}">
+                                    <input type="text" name="firstName" id="" placeholder="{{ request.user.first_name }}"><br>
                                     <label for="lastName">Last Name</label>
                                     <input type="text" name="lastName" id="" class="extend" placeholder="{{ request.user.last_name }}">
                                     <label for="phoneNumber">Phone Number</label>
@@ -246,7 +251,7 @@
                         <div class="profileUpdate">
                             <div class="profile_update_content">
                                 <div class="dp">
-                                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
+                                    <img src="{{ request.user.profile_picture.url }}" alt="">
                                 </div>                               
                                 <h3><span>Hi,</span> {{ request.user }}</h3>
                                 

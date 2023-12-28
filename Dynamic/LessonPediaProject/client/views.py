@@ -143,3 +143,17 @@ def deactivate_account(request):
     activeUser.is_active = False
     activeUser.save()
     return redirect("logoutUser")
+
+@login_required(login_url='client_signIn')
+def profilePictureUpdate(request):
+    """Update user profile picture"""
+    activeUser = request.user
+    if request.method == "POST":
+        profilePicture = request.FILES.get('profilePicture')
+        if profilePicture:
+            activeUser.profile_picture = profilePicture
+            activeUser.save()
+            messages.success(request, "Profile Picture Succesfully Updated")
+        else:
+            messages.error(request, "No file was Uploaded")
+        return redirect("validate_user", whoami=request.user)
