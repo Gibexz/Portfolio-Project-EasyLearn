@@ -108,12 +108,12 @@
                                                 <section class="bio_data">
                                                     <fieldset><legend>Academic Details</legend>
                                                         <button class="cv_view">View CV</button>
-                                                        <p class="tag">Institution Attended: <p class="value institution_attended">Iscom University, Benin Republic</p></p>
-                                                        <p class="tag">Specialization/Qualification/CGPA:</p>
+                                                        <p class="tag">Institution Attended: <p class="value institution">Iscom University, Benin Republic</p></p>
+                                                        <p class="tag">Specialization/Qualification/Result:</p>
                                                         <section class="state_national">
                                                             <p class="state area_of_specialization">Software Engineering</p>
                                                             <p class="national grade highest_qualification">Msc</p>
-                                                            <p class="national gpa">4.2</p>
+                                                            <p class="national gpa result">4.2</p>
                                                         </section>
                                                         
                                                     </fieldset>
@@ -419,13 +419,20 @@
                                                 "phone_number": "{{ tutor.phone_number|default:"null" }}",
                                                 "gender": "{{ tutor.gender|default:"null" }}",
                                                 "employment_status": "{{ tutor.employment_status|default:"null" }}",
+                                                "employment_type": "{{ tutor.employment_type|default:"null" }}",
+                                                "residential_address": "{{ tutor.residential_address|default:"null" }}",
                                                 "state_of_residence": "{{ tutor.state_of_residence|default:"null" }}",
+                                                "lga_resident": "{{ tutor.lga_resident|default:"null" }}",
                                                 "nationality": "{{ tutor.nationality|default:"null" }}",
                                                 "personal_statement": "{{ tutor.personal_statement|default:"null" }}",
+                                                "institution": "{{ tutor.institution|default:"null" }}",
+                                                "institution_type": "{{ tutor.institution_type|default:"null" }}",
+                                                "result": "{{ tutor.result|default:"null" }}",
+                                                "discipline": "{{ tutor.discipline|default:"null" }}",
+                                                "others": "{{ tutor.others|default:"null" }}",
                                                 "availability": "{{ tutor.availability|default:"null" }}",
                                                 "working_hours": "{{ tutor.working_hours|default:"null" }}",
                                                 "cv_id": "{{ tutor.cv_id|default:"null" }}",
-                                                "residential_address": "{{ tutor.residential_address|default:"null" }}",
                                                 "active_clients": "{{ tutor.active_clients|default:"null" }}",
                                                 "total_clients": "{{ tutor.total_clients|default:"null" }}",
                                                 "rejected_clients": "{{ tutor.rejected_clients|default:"null" }}",
@@ -470,7 +477,7 @@
                     <section class="content">
                         <img src="{% static 'images/icons/allTutors.png' %}" alt="">
                         <section class="inner_content">
-                            <p class="top validate">Total Tutors</p>
+                            <p class="top validate">Total Clients</p>
                             <p class="total_registered" id="clientCount">5,200</p>
                         </section>
                     </section>
@@ -549,7 +556,6 @@
                                                 "is_active": "{{ client.is_active }}",
                                                 "last_login": "{{ client.last_login|default:"null" }}",
                                                 "email": "{{ client.email }}",
-                                                "status": "{{ client.status|default:"null" }}",
                                                 "date_of_birth": "{{ client.date_of_birth|default:"null" }}",
                                                 "created_at": "{{ client.created_at }}",
                                                 "profile_picture": "{{ client.profile_picture.url }}",
@@ -558,7 +564,6 @@
                                                 "state_of_residence": "{{ client.state_of_residence|default:"null" }}",
                                                 "nationality": "{{ client.nationality|default:"null" }}",
                                                 "residential_address": "{{ client.residential_address|default:"null" }}",
-                                                "reviews_id": "{{ client.reviews_id|default:"null" }}",
                                                 "educational_level": "{{ client.educational_level|default:"null" }}",
                                                 "updated_at": "{{ client.updated_at }}",
                                                 "tutor": "{{ tutor.tutor|default:"[]" }}",

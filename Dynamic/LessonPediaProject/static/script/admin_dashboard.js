@@ -14,14 +14,14 @@ $(document).ready(function(){
     //     }
     // });
 
-    // $("#set_tutor").click(function(){
-    //     $(".activate_tutors").show()
-    //     $(".activate_learners").hide()
-    // })
-    // $("#set_learner").click(function(){
-    //     $(".activate_tutors").hide()
-    //     $(".activate_learners").show()
-    // })
+    $("#set_tutor").click(function(){
+        $(".activate_tutors").show()
+        $(".activate_learners").hide()
+    })
+    $("#set_learner").click(function(){
+        $(".activate_tutors").hide()
+        $(".activate_learners").show()
+    })
     
 
     // Take action dialogue for Tutor
@@ -30,7 +30,7 @@ $(document).ready(function(){
         const adminName = $(".admin_username").text()
         var tutorData = $(this).data('tutor')
 
-        // console.log(tutorData); // Check the entire tutorData object
+        console.log(tutorData); // Check the entire tutorData object
         
         let tutorProfileImage = tutorData.profile_picture
 
@@ -44,10 +44,11 @@ $(document).ready(function(){
         $('.residential_address').text(tutorData.residential_address);
         $('.state_of_residence').text(tutorData.state_of_residence);
         $('.nationality').text(tutorData.nationality);
-        $('.institution_attended').text(tutorData.institution_attended);  // not in the database yet
+        $('.institution').text(tutorData.institution);
+        $('.institution_type').text(tutorData.institution_type);
         $('.area_of_specialization').text(tutorData.area_of_specialization);
         $('.highest_qualification').text(tutorData.highest_qualification);
-        $('.gpa').text(tutorData.gpa);
+        $('.result').text(tutorData.result);
         $('.employment_status').text(tutorData.employment_status);
         $('.employment_type').text(tutorData.employment_type);
         $('.availability').text(tutorData.availability);
@@ -55,9 +56,22 @@ $(document).ready(function(){
         $('.active_clients').text(tutorData.active_clients);
         $('.rejected_clients').text(tutorData.rejected_clients);
         $('.ranking').text(tutorData.ranking);
-        $('.is_active').text(tutor.is_active ); // not used yet
+        $('.is_active').text(tutorData.is_active );
+        $('.id_tutor').text(tutorData.id);
+        $('.last_login_tutor').text(tutorData.last_login);
+        $('.date_of_birth_tutor').text(tutorData.date_of_birth);
+        $('.reviews_id_tutor').text(tutorData.reviews_id);
+        $('.status_tutor').text(tutorData.status);
+        $('.created_at_tutor').text(tutorData.created_at);
+        $('.lga_resident_tutor').text(tutorData.lga_resident);
+        $('.personal_statement_tutor').text(tutorData.personal_statement);
+        $('.discipline_tutor').text(tutorData.discipline);
+        $('.others_tutor').text(tutorData.others);
+        $('.working_hours_tutor').text(tutorData.working_hours);
+        $('.cv_id_tutor').text(tutorData.cv_id);
+        $('.updated_at_tutor').text(tutorData.updated_at);
+        $('.groups_tutor').text(tutorData.groups);
 
-    
     
         $('.active_admin').text(adminName);
     
@@ -90,6 +104,7 @@ $(document).ready(function(){
 
         $('#client_profile_image').attr('src', clientProfileImage);
     
+        $('.id_client').text(clientData.id);
         $('.selected_user_client').text(clientData.username);
         $('.profile_userName_client').text(clientData.username);
         $('.full_name_client').text(clientData.first_name +" "+clientData.last_name);
@@ -98,20 +113,16 @@ $(document).ready(function(){
         $('.residential_address_client').text(clientData.residential_address);
         $('.state_of_residence_client').text(clientData.state_of_residence);
         $('.nationality_client').text(clientData.nationality);
-        $('.institution_attended_client').text(clientData.institution_attended);  // not in the database yet
-        $('.area_of_specialization_client').text(clientData.area_of_specialization);
-        $('.highest_qualification_client').text(clientData.highest_qualification);
-        $('.gpa_client').text(clientData.gpa);
-        $('.employment_status_client').text(clientData.employment_status);
-        $('.employment_type_client').text(clientData.employment_type);
-        $('.availability_client').text(clientData.availability);
-        $('.total_clients_client').text(clientData.total_clients);
-        $('.active_clients_client').text(clientData.active_clients);
-        $('.rejected_clients_client').text(clientData.rejected_clients);
-        $('.ranking_client').text(clientData.ranking);
+        $('.is_active_client').text(clientData.is_active);
+        $('.last_login_client').text(clientData.last_login);
+        $('.date_of_birth_client').text(clientData.date_of_birth);
+        $('.created_at_client').text(clientData.created_at);
+        $('.educational_level_client').text(clientData.educational_level);
+        $('.updated_at_client').text(clientData.updated_at);
+        $('.tutor_client').text(clientData.tutor);
+        $('.groups_client').text(clientData.groups);
+        
 
-    
-    
         $('.active_admin').text(adminName);
     
         if (clientData.hasOwnProperty('email')) {
@@ -299,28 +310,28 @@ $(document).ready(function() {
 
 }) 
 
-// $(document).ready(function() {
-//     // status check for tutor
-//     $('.check_status').each(function() {
-//         const isActive = $(this).data('active');
+$(document).ready(function() {
+    // status check for tutor
+    $('.check_status').each(function() {
+        const isActive = $(this).data('active');
         
-//         if (isActive === true || isActive == 'True') {
-//             $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
-//         } else {
-//             $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
-//         }
-//     });
-//     // status check for client
-//     $('.check_status_client').each(function() {
-//         const isActive = $(this).data('active_client');
+        if (isActive === true || isActive == 'True') {
+            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+        } else {
+            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+        }
+    });
+    // status check for client
+    $('.check_status_client').each(function() {
+        const isActive = $(this).data('active_client');
         
-//         if (isActive === true || isActive == 'True') {
-//             $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
-//         } else {
-//             $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
-//         }
-//     });
-// });
+        if (isActive === true || isActive == 'True') {
+            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+        } else {
+            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+        }
+    });
+});
 
 
 // Pagination for Tutors view
