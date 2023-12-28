@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/tutorView.css">
+{% extends "tutor/base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'styles/tutorView.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../script/tutorView.js"></script>
-    <title>Document</title>
-</head>
-<body>
+    <script src="{% static 'script/tutorView.js' %}"></script>
+    <title>view - tutor</title>
+{% endblock head %}
+
+{% block content %}
+    <hr>
     <div class="pageDiv">
         <div class="left">
             <div class="top_left_empty">
@@ -17,7 +17,7 @@
             
             <section class="left_header">
                 <h2>Courses </h2>
-                <img src="../images/icons/arrow-up.png" alt="">
+                <img src="{% static 'images/icons/arrow-up.png' %}" alt="">
             </section>
 
             <section class="courses">
@@ -37,7 +37,7 @@
             </section><br><br>
             <section class="left_header optimize">
                 <h3>Mentors </h3>
-                <img src="../images/icons/arrow-up.png" alt="">
+                <img src="{% static 'images/icons/arrow-up.png' %}" alt="">
             </section>
         </div>
 
@@ -51,22 +51,22 @@
                                 
 
                 <section class="pushRight">
-                    <img src="../images/icons/notification.png"  class="shift" alt="">
-                    <img src="../images/icons/avatar.png" class="shift" alt="">
+                    <img src="{% static 'images/icons/notification.png' %}"  class="shift" alt="">
+                    <img src="{% static 'images/icons/avatar.png' %}" class="shift" alt="">
                     <section class="userName shift">
                         <p>Gentle</p>
-                        <img src="../images/icons/arrow-up.png" alt="">
+                        <img src="{% static 'images/icons/arrow-up.png' %}" alt="">
                     </section>
                 </section>
             </div>
             
 
             <div class="dpDisplay">
-                <img class='tutordp' src="../images/tutors/pass.jpg" alt="">
+                <img class='tutordp' src="{% static 'images/tutors/pass.jpg' %}" alt="">
                 <section class="goRight">
-                    <img src="../images/icons/likebutton.png" alt="">
-                    <img src="../images/icons/message.png" alt="">
-                    <img src="../images/icons/more.png" alt="">
+                    <img src="{% static 'images/icons/likebutton.png' %}" alt="">
+                    <img src="{% static 'images/icons/message.png' %}" alt="">
+                    <img src="{% static 'images/icons/more.png' %}" alt="">
                 </section>
                 <section class="UserBioData">
                     <h3>Gentle Inyang</h3>
@@ -113,44 +113,44 @@
             </section><hr>
             
             <section class="arrows">
-                <img id='nextArrow' src="../images/icons/arrow-left.png" alt="">
-                <img id='prevArrow' src="../images/icons/arrow-right.png" alt="">
+                <img id='nextArrow' src="{% static 'images/icons/arrow-left.png' %}" alt="">
+                <img id='prevArrow' src="{% static 'images/icons/arrow-right.png' %}" alt="">
             </section>
             <h3 class="similarHead">Similar Tutors Profile</h3>
             <div class="similarTutors">
                 <section class="similarTutors_body">
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gtle Inyang</p>
                         <p class="specialty">Software Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentle Inng</p>
                         <p class="specialty">Software Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gene Inyang</p>
                         <p class="specialty">Software Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentle Inyang</p>
                         <p class="specialty">Softre Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentle Iang</p>
                         <p class="specialty">Software Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentlyang</p>
                         <p class="specialty">Sofare Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
@@ -158,37 +158,37 @@
 
 
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentle Iang</p>
                         <p class="specialty">Software Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentle Ing</p>
                         <p class="specialty">Softre Eineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentlnyang</p>
                         <p class="specialty">Sofwarengineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentleng</p>
                         <p class="specialty">Softwangineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentlyang</p>
                         <p class="specialty">SoftwareEngineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
                     </div>
                     <div class="similarTutors_body_div">
-                        <img src="../images/tutors/pass.jpg" alt="">
+                        <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
                         <p class="name">Gentle Iyang</p>
                         <p class="specialty">Software Engineer</p>
                         <p class="ratings">Rating: <span class="positive">★★★★</span><span class='negative'>★</span></p>
@@ -196,6 +196,6 @@
                 </section>
             </div>
         </div>
-    </div>
-</body>
-</html>
+    </div><hr>
+
+{% endblock content %}

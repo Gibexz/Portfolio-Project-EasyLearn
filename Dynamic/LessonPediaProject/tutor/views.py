@@ -69,4 +69,8 @@ def tutor_profile(request):
 def tutor_logout(request):
     logout(request)
     messages.success(request, "You're Logged Out")
-    return redirect('tutor_login') 
+    return redirect('tutor_login')
+
+def tutor_view_page(request):
+    """Rewrite this to the way that will suit you"""
+    return render(request, 'tutor/tutorView.html')
