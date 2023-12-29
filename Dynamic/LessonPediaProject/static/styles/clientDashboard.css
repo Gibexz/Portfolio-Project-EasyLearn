@@ -457,6 +457,12 @@ label{
     float: right;
     flex-direction: column;
     margin-top: 20px;
+    border: 1px solid black;
+    padding: 5px;
+    width: 110px;
+    border-radius: 10px;
+    border-color: whitesmoke;
+    box-shadow: 1px 1px 5px 1px rgba(210, 206, 206, 0.705);
 }
 
 .dp img{
@@ -468,12 +474,24 @@ label{
     margin-bottom: 2px;
 }
 
-.dp p{
-    font-size: small;
-    color: rgba(128, 128, 128, 0.769);
-    margin-top: 2px;
+.dp #change{
+    font-size: x-small;
+    color: rgba(62, 61, 61, 0.769);
+    margin-top: 0px;
+    padding-top: 0px;
+    background-color: transparent;
     cursor: pointer;
-    border-bottom: 2px solid gray;
+    border: none;
+    border-bottom: 1px solid gray;
+    cursor: not-allowed;
+    
+}
+
+.dp #change:hover{
+    color: rgb(0, 50, 22);
+    border-bottom: 1px solid black;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .deactivate_account_control_display, .logout_btn{
@@ -570,4 +588,30 @@ label{
     color: green;
     text-align: center;
     width: 43%;
+}
+
+#UpdateDp{
+    color: rgb(208, 207, 207);
+    font-size: xx-small;
+    margin-bottom: 0px;
+    padding: 0px;
+    margin-left: 10px;
+    line-height: 0px !important;
+}
+
+#UpdateDp::file-selector-button{
+    border-radius: 20px;
+    border: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    outline: none;
+    font-size: xx-small;
+    position: rlative;
+    margin-bottom: 0px;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+#UpdateDp:focus{
+    outline: none;
 }

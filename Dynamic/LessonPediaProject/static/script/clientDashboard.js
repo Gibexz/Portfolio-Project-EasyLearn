@@ -112,5 +112,20 @@ $(document).ready(function(){
 //    $("#change_password").click(function(){
 //     loadView()
 //    })
+
+// Profile picture preview
+$("#UpdateDp").change(function(){
+    var fileInput = this;
+    var file = fileInput.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var previewImage = $('#previewDp');
+            previewImage.attr('src', e.target.result);
+            $("#change").css({color: 'blue', "pointer-events": 'auto', cursor: 'pointer'})
+        };
+        reader.readAsDataURL(file);
+    }
+})
     
 })

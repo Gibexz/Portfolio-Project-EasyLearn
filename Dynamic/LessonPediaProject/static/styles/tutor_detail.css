@@ -255,7 +255,7 @@ body{
     margin: 1% 10% ;
     border-radius: 10px;
     box-shadow: 3px 3px 1px 1px  rgba(115, 116, 115, 0.7);
-
+    background-color: #f8f8f8;
     overflow-y:auto;
     overflow-x: visible;
 }
@@ -267,7 +267,6 @@ body{
     width: 100%;
     margin-bottom: 20px;
     flex-direction: column;
-    background-color: #192551;
 }
 
 .review_item .space_content {
@@ -292,7 +291,17 @@ body{
     font-family: 'saira', sans-serif;
     font-weight: bold;
     font-size: 0.8em;
-    color: rgba(255, 255, 255, 0.59);
+    color: rgba(13, 13, 13, 0.59);
+    height: 20px;
+}
+
+.reviewer {
+    font-family: 'saira', sans-serif;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: rgba(13, 13, 13, 0.59);
+    height: 20px;
+
 }
 /* Rank Tutor Temporarily */
 .stars {

@@ -1,18 +1,18 @@
 $(document).ready(function(){
-    $(".check_status").each(function() {
-        const value = $(this).text();
-        if (value === "Active") {
-            $(this).css({
-                "border": "1px solid green",
-                "background-color": "rgb(205, 243, 209)"
-            })
-        } else {
-            $(this).css({
-                "border": "1px solid red",
-                "background-color": "rgb(252, 206, 206)"
-            })
-        }
-    });
+    // $(".check_status").each(function() {
+    //     const value = $(this).text();
+    //     if (value === "Active") {
+    //         $(this).css({
+    //             "border": "1px solid green",
+    //             "background-color": "rgb(205, 243, 209)"
+    //         })
+    //     } else {
+    //         $(this).css({
+    //             "border": "1px solid red",
+    //             "background-color": "rgb(252, 206, 206)"
+    //         })
+    //     }
+    // });
 
     $("#set_tutor").click(function(){
         $(".activate_tutors").show()
@@ -24,18 +24,17 @@ $(document).ready(function(){
     })
     
 
-    // Take action dialogue for Tutor
+    // Take action dialogue for Tutor ==============================
     $('.action').click(function(){
-        // const userType = $(this).closest(".activate_tutors, .activate_learners").find(".inner_content .validate").text();
-
-        // $('.selected_user').text(tutorData.username);
-        // $('.selected_email').text(tutorData.email)
 
         const adminName = $(".admin_username").text()
         var tutorData = $(this).data('tutor')
 
-    
-        console.log(tutorData); // Check the entire tutorData object
+        let tutorId = tutorData.id
+        // // Associate the tutor ID with the suspension dialogue
+        $('.confirm_remove_tutor').attr('data-tutor-id', tutorId);
+
+        // console.log(tutorData); // Check the entire tutorData object
         
         let tutorProfileImage = tutorData.profile_picture
 
@@ -43,16 +42,17 @@ $(document).ready(function(){
     
         $('.selected_user').text(tutorData.username);
         $('.profile_userName').text(tutorData.username);
-        $('.full_name').text(tutorData.first_name +" "+tutorData.last_name);
+        $('.full_name').text(tutorData.first_name +" "+ tutorData.last_name);
         $('.gender').text(tutorData.gender);
         $('.phone_number').text(tutorData.phone_number);
         $('.residential_address').text(tutorData.residential_address);
         $('.state_of_residence').text(tutorData.state_of_residence);
         $('.nationality').text(tutorData.nationality);
-        $('.institution_attended').text(tutorData.institution_attended);  // not in the database yet
+        $('.institution').text(tutorData.institution);
+        $('.institution_type').text(tutorData.institution_type);
         $('.area_of_specialization').text(tutorData.area_of_specialization);
         $('.highest_qualification').text(tutorData.highest_qualification);
-        $('.gpa').text(tutorData.gpa);
+        $('.result').text(tutorData.result);
         $('.employment_status').text(tutorData.employment_status);
         $('.employment_type').text(tutorData.employment_type);
         $('.availability').text(tutorData.availability);
@@ -60,8 +60,22 @@ $(document).ready(function(){
         $('.active_clients').text(tutorData.active_clients);
         $('.rejected_clients').text(tutorData.rejected_clients);
         $('.ranking').text(tutorData.ranking);
+        $('.is_active').text(tutorData.is_active );
+        $('.id_tutor').text(tutorData.id);
+        $('.last_login_tutor').text(tutorData.last_login);
+        $('.date_of_birth_tutor').text(tutorData.date_of_birth);
+        $('.reviews_id_tutor').text(tutorData.reviews_id);
+        $('.status_tutor').text(tutorData.status);
+        $('.created_at_tutor').text(tutorData.created_at);
+        $('.lga_resident_tutor').text(tutorData.lga_resident);
+        $('.personal_statement_tutor').text(tutorData.personal_statement);
+        $('.discipline_tutor').text(tutorData.discipline);
+        $('.others_tutor').text(tutorData.others);
+        $('.working_hours_tutor').text(tutorData.working_hours);
+        $('.cv_id_tutor').text(tutorData.cv_id);
+        $('.updated_at_tutor').text(tutorData.updated_at);
+        $('.groups_tutor').text(tutorData.groups);
 
-    
     
         $('.active_admin').text(adminName);
     
@@ -69,31 +83,35 @@ $(document).ready(function(){
             // console.log(tutorData.email); // Check if tutorData.email is populated
             $('.selected_email').text(tutorData.email);
         } else {
-            console.log('nit accsisble');
+            // console.log('n0t accsisble');
         }
 
-        $('.set_action').show()
+        $('.set_action_tutor').show()
     })
 
     $('.close').click(function(){
-        $('.set_action').hide()
+        $('.set_action_tutor').hide()
     })
 
 
 
-    // Take action dialogue for Client
+    // Take action dialogue for Client ==============================
     $('.action_client').click(function(){
 
         const adminName = $(".admin_username").text()
         var clientData = $(this).data('client')
 
+        let clientId = clientData.id
+        // // Associate the tutor ID with the suspension dialogue
+        $('.confirm_remove_client').attr('data-client-id', clientId);
     
-        console.log(clientData); // Check the entire clientData object
+        // console.log(clientData); // Check the entire clientData object
         
         let clientProfileImage = clientData.profile_picture
 
         $('#client_profile_image').attr('src', clientProfileImage);
     
+        $('.id_client').text(clientData.id); //not used
         $('.selected_user_client').text(clientData.username);
         $('.profile_userName_client').text(clientData.username);
         $('.full_name_client').text(clientData.first_name +" "+clientData.last_name);
@@ -102,20 +120,16 @@ $(document).ready(function(){
         $('.residential_address_client').text(clientData.residential_address);
         $('.state_of_residence_client').text(clientData.state_of_residence);
         $('.nationality_client').text(clientData.nationality);
-        $('.institution_attended_client').text(clientData.institution_attended);  // not in the database yet
-        $('.area_of_specialization_client').text(clientData.area_of_specialization);
-        $('.highest_qualification_client').text(clientData.highest_qualification);
-        $('.gpa_client').text(clientData.gpa);
-        $('.employment_status_client').text(clientData.employment_status);
-        $('.employment_type_client').text(clientData.employment_type);
-        $('.availability_client').text(clientData.availability);
-        $('.total_clients_client').text(clientData.total_clients);
-        $('.active_clients_client').text(clientData.active_clients);
-        $('.rejected_clients_client').text(clientData.rejected_clients);
-        $('.ranking_client').text(clientData.ranking);
+        $('.is_active_client').text(clientData.is_active);
+        $('.last_login_client').text(clientData.last_login);
+        $('.date_of_birth_client').text(clientData.date_of_birth);
+        $('.created_at_client').text(clientData.created_at);
+        $('.educational_level_client').text(clientData.educational_level);
+        $('.updated_at_client').text(clientData.updated_at);
+        $('.tutor_client').text(clientData.tutor);
+        $('.groups_client').text(clientData.groups);
+        
 
-    
-    
         $('.active_admin').text(adminName);
     
         if (clientData.hasOwnProperty('email')) {
@@ -131,8 +145,6 @@ $(document).ready(function(){
     $('.close_client').click(function(){
         $('.set_action_client').hide()
     })
-
-
 
 
     // profile, review and report activation logic
@@ -152,18 +164,110 @@ $(document).ready(function(){
         $('.set_report_details').show()
     })
 
-    // account disabling logics
+    // account suspending dialogue display for tutor  ==============================
     $('#activate_suspend').click(function(){
-        $('.set_action').hide()
+        const tutor_id = $(this).data('tutor')
+
+        $('.set_action_tutor').hide()
         $('.set_disable_account').show()
     })
 
     $('.disable_close, .mistake').click(function(){
-        $('.set_action').show()
+        $('.set_action_tutor').show()
         $('.set_disable_account').hide()
     })
+
+
+    // account suspending dialogue display for client  ==============================
+    $('#activate_suspend_client').click(function(){
+        $('.set_action_client').hide()
+        $('.set_disable_account_client').show()
+    })
+
+    $('.disable_close_client, .mistake_client').click(function(){
+        $('.set_action_client').show()
+        $('.set_disable_account_client').hide()
+    })
+
 });
-//  live table sort for tutor admin table list
+
+
+$(document).ready(function() {
+
+    function displayMessageSuccess(message) {
+        let messageDivSuccess = $('#messageDivSuccess');
+        messageDivSuccess.text(message);
+        messageDivSuccess.fadeIn().delay(5000).fadeOut();
+    }
+    function displayMessageError(message) {
+        let messageDivError = $('#messageDivError');
+        messageDivError.text(message);
+        messageDivError.fadeIn().delay(5000).fadeOut();
+    }
+
+    // logic to disable a tutor's account  ==========================================
+    $('.confirm_remove_tutor').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let tutor_id = $(this).data('tutor-id'); 
+        // console.log(tutor_id);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/tutors_action_api/suspend_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/suspend_tutor/`,
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Tutor suspended successfully');
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error suspending tutor: ' + errorThrown);
+            }
+        });
+        $('.set_action_tutor').show()
+        $('.set_disable_account').hide()
+    });
+
+    // logic to disable a client's account  =====================================
+    $('.confirm_remove_client').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let client_id = $(this).data('client-id'); 
+        // console.log(client_id);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/clients_action_api/suspend_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/suspend_client/`,
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Client suspended successfully');
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error suspending client: ' + errorThrown);
+            }
+        });
+        $('.set_action_client').show()
+        $('.set_disable_account_client').hide()
+    });
+})
+
+
+//  live table sort for tutor admin table list  ===================================
 $(document).ready(function() {
     $('.table_header th').on('click', function() {
         const column = $(this).data('column');
@@ -193,7 +297,7 @@ $(document).ready(function() {
 });
 
 
-//  live table sort for client admin table list
+//  live table sort for client admin table list  ====================================
 $(document).ready(function() {
     $('.table_header_learner th').on('click', function() {
         const column = $(this).data('column');
@@ -300,11 +404,34 @@ $(document).ready(function() {
 
 }) 
 
+$(document).ready(function() {
+    // status check for tutor  ==============================
+    $('.check_status').each(function() {
+        const isActive = $(this).data('active');
+        
+        if (isActive === true || isActive == 'True') {
+            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+        } else {
+            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+        }
+    });
+    // status check for client ==============================
+    $('.check_status_client').each(function() {
+        const isActive = $(this).data('active_client');
+        
+        if (isActive === true || isActive == 'True') {
+            $(this).css({'background-color': 'lightgreen', 'border': '1px solid white'});
+        } else {
+            $(this).css({'background-color': ' rgb(235, 64, 64)', 'border': '1px solid white', 'color': 'white'});
+        }
+    });
+});
 
-// Pagination for Tutors view
+
+// Pagination for Tutors view  ===============================================
 $(document).ready(function() {
     var tutorRows = $('.tutor_table_list tbody tr');
-    var tutorRowsPerPage = 5;
+    var tutorRowsPerPage = 10;
     var tutorTotalPages = Math.ceil(tutorRows.length / tutorRowsPerPage);
     var tutorCurrentPage = 1;
     var tutorPaginatedView = true;
@@ -412,10 +539,10 @@ $(document).ready(function() {
 });
 
 
-// pagination for learners view
+// pagination for learners/clients view ========================================
 $(document).ready(function() {
     var clientRows = $('.learner_table_list tbody tr');
-    var clientRowsPerPage = 2;
+    var clientRowsPerPage = 10;
     var clientTotalPages = Math.ceil(clientRows.length / clientRowsPerPage);
     var clientCurrentPage = 1;
     var clientPaginatedView = true;

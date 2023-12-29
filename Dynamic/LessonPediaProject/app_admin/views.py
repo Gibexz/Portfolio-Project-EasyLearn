@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from .models import AppAdmin
 from client.models import Client
 from tutor.models import Tutor
@@ -13,6 +13,9 @@ from .serializers import ClientSerializer, TutorSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 import hashlib
 import uuid
 
@@ -189,7 +192,7 @@ def get_clients_data(request):
         clients_data_serialized = ClientSerializer(client_data, many=True)
         
         return Response({
-            'tutors_data': clients_data_serialized.data  # Serialized tutor data
+            'clients_data': clients_data_serialized.data  # Serialized tutor data
         }, status=status.HTTP_200_OK)
 
 @login_required(login_url='app_admin_sign_up')
@@ -215,3 +218,96 @@ def get_nos_inactive_clients(request):
     if request.method == 'GET':
         inactive_client_count = Client.objects.filter(is_active=False).count()
         return Response({'inactive_client_count': inactive_client_count}, status=status.HTTP_200_OK)
+    
+
+# Tutor and client suspension logics
+
+# Tutor suspension logics
+
+# @api_view(['POST'])
+# @login_required(login_url='app_admin_sign_up')
+# def suspend_tutor(request, tutor_id):
+#     try:
+#         tutor = Tutor.objects.get(pk=tutor_id)
+#         tutor.is_active = False
+#         tutor.save()
+#         return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
+#     except Tutor.DoesNotExist:
+#         return Response({'message': 'Tutor not found'}, status=status.HTTP_404_NOT_FOUND)
+#     except Exception as e:
+#         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TutorViewSet(ModelViewSet):
+    """Tutor viewset"""
+    permission_classes = [IsAuthenticated] # Sets the permission class for the viewset
+
+    queryset = Tutor.objects.all()
+    serializer_class = TutorSerializer
+
+    @action(detail=True, methods=['POST'])
+    def suspend_tutor(self, request, pk=None):
+        """Suspend_tutor method"""
+        try:
+            tutor = Tutor.objects.get(pk=pk)
+            tutor.is_active = False
+            tutor.save()
+            return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Tutor not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)                                                                                                                                                    
+
+    
+    @action(detail=True, methods=['POST'])
+    def activate_tutor(self, request, pk=None):
+        """Activate tutor method"""
+        try:
+            # tutor = tutor.objects.get(pk=pk)
+            tutor = self.get_object()
+            tutor.is_active = True
+            tutor.save()
+            return Response({'message': 'Tutor activated successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Tutor not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)                                                                                                                                                    
+
+
+# # Client suspension logics
+class ClientViewSet(ModelViewSet):
+    """Client viewset"""
+    permission_classes = [IsAuthenticated] # Sets the permission class for the viewset
+
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+    @action(detail=True, methods=['POST'])
+    def suspend_client(self, request, pk=None):
+        """Suspend_client method"""
+        try:
+            # client = client.objects.get(pk=pk)
+            client = self.get_object()
+            client.is_active = False
+            client.save()
+            return Response({'message': 'Client suspended successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+    @action(detail=True, methods=['POST'])
+    def activate_client(self, request, pk=None):
+        """Activate client method"""
+        try:
+            # client = client.objects.get(pk=pk)
+            client = self.get_object()
+            client.is_active = True
+            client.save()
+            return Response({'message': 'Client activated successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
