@@ -4,6 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,9 +16,13 @@
     <title>Admin - Dashboard</title>
 </head>
 <body>
-    <!-- disable account -->
+    <!-- display Ajax messages -->
+    <div id="messageDivSuccess"></div>
+    <div id="messageDivError"></div>
+
+    <!-- disable account tutor-->
     <div class="set_disable_account">
-        <div class="disable_account">
+        <div class="disable_account" id="disable_account_dialog">
             <div class="disable_account_content">
                 <p class="disable_close" title="close">
                     x
@@ -31,8 +36,32 @@
                         <p class="disable_action">You are about suspending the active user, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_remove">Suspend</button>
+                        <button class="confirm_remove_tutor" data-tutor-id="">Suspend</button>
                         <button class="mistake">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+    <!-- disable account client-->
+    <div class="set_disable_account_client">
+        <div class="disable_account">
+            <div class="disable_account_content">
+                <p class="disable_close_client" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Warning!</p>
+                        <p class="disable_action">You are about suspending the active user, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <button class="confirm_remove_client" data-client-id="">Suspend</button>
+                        <button class="mistake_client">Cancel</button>
                     </div>
                 </div>           
             </div>
@@ -188,7 +217,7 @@
                         <div class="action_leftpane">
                             <p class="action_head">Admin Privilege</p>
                             <p class="fa-solid fa-street-view"><span class="action_list" id="activate_views">Views</span></p><br>
-                            <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend">Suspend Account</span></p>
+                            <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend_client">Suspend Account</span></p>
                             <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block">Block Account</span></p>
                             <p class="fa-solid fa-xmark"><span class="action_list" id="activate_remove">Remove Account</span></p>
                             <footer class="pedia">
@@ -234,14 +263,14 @@
                                         <div class="set_tutors_details">
                                             <section class="academics">
                                                 <section class="bio_data">
-                                                    <fieldset><legend>Academic Details</legend>
+                                                    <fieldset><legend>Other Details</legend>
                                                         <!-- <button class="cv_view">View CV</button> -->
-                                                        <p class="tag">Institution Attended: <p class="value institution_attended_client">Iscom University, Benin Republic</p></p>
-                                                        <p class="tag">Specialization/Qualification/CGPA:</p>
+                                                        <p class="tag">DOB: <p class="value date_of_birth_client">Iscom University, Benin Republic</p></p>
+                                                        <p class="tag">Educational_Level/null/null/</p>
                                                         <section class="state_national">
-                                                            <p class="state area_of_specialization_client">Software Engineering</p>
-                                                            <p class="national grade highest_qualification_client">Msc</p>
-                                                            <p class="national gpa_client">4.2</p>
+                                                            <p class="state educational_level_client">null</p>
+                                                            <p class="national grade highest_qualification_client">null</p>
+                                                            <p class="national gpa_client">null</p>
                                                         </section>
                                                         
                                                     </fieldset>
@@ -263,7 +292,7 @@
                                                             <p class="national accepted active_clients">Active: 5</p>
                                                             <p class="national rejected rejected_clients">Rejected: 16</p>
                                                         </section>
-                                                        <p class="tag">Ranking: <p class="value ranking">Average Rank: 4 stars</p></p>                                                
+                                                        <p class="tag">Active Tutors: <p class="value ranking tutor_client">Tutors List</p></p>                                                
                                                     </fieldset>
                                                 </section>
                                             </section>
