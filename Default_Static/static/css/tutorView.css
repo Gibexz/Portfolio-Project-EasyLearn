@@ -1,0 +1,357 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.pageDiv{
+    display: flex;
+}
+
+.left{
+    width: 300px;
+    border-right: 2px solid #1168FF;
+    padding-left: 50px;
+    background-color: whitesmoke;
+    min-height: 100vh;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+}
+
+.courses p:hover{
+    color: darkblue;
+    cursor: pointer;
+    background-color: #FFF6E0;
+    padding-left: 5px;
+    border-radius: 5px;
+}
+
+.top_left_empty{
+    height: 150px;
+}
+
+.left img{
+    width: 25px;
+    height: 25px;
+    margin-top: 25px;
+    margin-left: 20px;
+}
+
+.left_header{
+    display:flex;
+}
+
+.optimize img{
+    margin-top: 20px !important;
+}
+
+.courses{
+    margin-left: 5px;
+    height: 300px;
+    width: 200px;
+    overflow: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    padding-top: 0px;
+}
+
+/* Right styling */
+.right{
+    padding: 25px;
+    width: 90%
+}
+
+.right_top{
+    display: flex;
+}
+
+.right_top input{
+    border: none;
+}
+
+.right_top input:focus{
+    outline: none;
+}
+
+.right_top form{
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 10px;
+    width: 500px;
+}
+
+.top_form_section{
+    margin-right: 40%;
+}
+
+.pushRight{
+    display: flex;
+    height: 22px;
+    margin-top: 10px;
+    margin-left: 28%;
+}
+
+.userName{
+    display: flex;
+}
+
+.userName p{
+    margin: 1.5px;
+    margin-left: 5px;
+}
+
+.userName img{
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+.shift{
+    margin-right: 10px;
+}
+
+.dpDisplay{
+    margin-top: 50px;
+}
+
+.dpDisplay .tutordp{
+    width: 203px;
+    height: 218px;
+    border-radius: 10%;
+    float: left;
+    margin-right: 20px;
+}
+
+.UserBioData{
+    padding-top: 1px;
+    line-height: 5px;
+}
+
+.UserBioData h2{
+    margin-bottom: 0px;
+}
+
+.UserBioData p{
+    margin-top: 0px;
+    color: rgb(69, 61, 61);
+}
+
+.UserBioData span{
+    color: rgb(167, 0, 89);
+}
+
+.ratings{
+    padding-top: 10px;
+    color: darkblue !important;
+    height: 20px;
+}
+
+.negative{
+    color: gray !important;
+}
+
+.goRight{
+    float: right;
+    margin-right: 70px;
+    margin-top: 30px;
+    border: 1px solid rgb(227, 227, 230);
+    height: 35px;
+    overflow: hidden;
+    width: 128px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+}
+
+.goRight img{
+    width: 40px;
+    margin-right: px;
+}
+
+.overview{
+    margin-top: 130px;
+}
+
+.overview_header{
+    border-bottom: 1px solid rgb(189, 178, 178);
+    width: 95%
+}
+
+.overview_header h3{
+    display: inline-block;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: -1.5px;
+    cursor: pointer;
+}
+
+.active{
+    color: darkblue;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to left, rgb(0, 84, 229), rgb(167, 0, 89));
+    border-image-slice: 1;
+    padding-bottom: 5px !important;
+}
+
+.overview_body{
+    width: 600px;
+    text-align: justify;
+    font-size: small;
+    padding: 10px;
+    line-height: 1.4em;
+}
+
+.link2social{
+    margin-left: 20px;
+}
+
+.link2social button{
+    margin-right: 20px;
+    background-color: #1168FF;
+    padding: 5px 25px 5px 25px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.background{
+    margin-left: 40px;
+    color: #1168FF;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+.insideExpertise{
+    margin-left: 30px;
+}
+
+.insideExpertise p{
+    font-size: small;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.expertLev{
+    margin-right: 100px;
+}
+
+.first{
+    background-color: #FDE0FF;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px 15px 5px 15px;
+}
+
+.second{
+    background-color: #FFE6E0;
+    padding: 10px 15px 10px 15px;
+    border-radius: 15px 5px 15px 5px;
+}
+
+.others{
+    background-color: #FFF6E0;
+    padding: 10px 15px 10px 15px;
+    border-radius: 15px;
+}
+
+.fluent{
+    background-color: #E5EEFF;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+}
+
+/* Similar Tutor logix */
+.similarHead{
+    margin-top: 50px;
+    margin-left: 40px;
+    color:darkblue;
+    font-weight: 600;
+    font-size: 1.3em;
+}
+
+.similarTutors_body{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+.similarTutors_body_div{
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 40px;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+    width: 150px;
+    margin-right: 20px;
+    margin-bottom: 12px;
+}
+
+.similarTutors_body_div img{
+    width: 150px;
+    height: 140px;
+    border-top-left-radius: 40px;
+}
+
+.similarTutors_body_div .name{
+    margin-top: 7px;
+    font-size: large;
+    font-weight: 600;
+    color: darkblue;
+    padding-left: 10px;
+}
+
+.similarTutors_body_div .specialty{
+    font-size: small;
+    color: gray;
+    padding-left: 10px;
+}
+
+.similarTutors_body_div .ratings{
+    padding-top: 1px !important;
+    margin: 0px !important;
+    font-size: small;
+    margin-bottom: 20px !important;
+    padding-left: 10px;
+    color: gray !important;
+}
+
+.similarTutors_body_div .ratings .negative{
+    color: rgb(230, 223, 223) !important;
+
+}
+
+.similarTutors_body_div p{
+    line-height: 5px;
+}
+
+.arrows{
+    float: right;
+    margin-right: 20px;
+    height: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.addTutor{
+    text-align: center;
+}
+
+.addbutton{
+    margin-top: 20px;
+    padding: 5px 40px 5px 40px;
+    color: white;
+    background-color: #1168FF;
+    font-size: large;
+    font-weight: 800;
+    width: 70%;
+    border-radius: 40px;
+    border: none;
+    border-bottom: 3px solid rgb(157, 141, 141);
+    cursor: pointer;
+}
+
+.addbutton:hover{
+    background-color: #1168ffdc;
+    border-bottom: 3px solid rgb(144, 113, 113);
+}

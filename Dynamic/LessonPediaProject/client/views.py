@@ -32,14 +32,17 @@ def client_login(request):
             
             if user is not None:
                 if user.is_active == 1:
-                    login(request, user, backend='client.backends.EmailClientBackend')
-                    next_param = request.POST.get('next', request.GET.get('next'))
-                    if next_param:
-                        return redirect(next_param)
+                    if user.deactivateByClient == 1:
+                        login(request, user, backend='client.backends.EmailClientBackend')
+                        next_param = request.POST.get('next', request.GET.get('next'))
+                        if next_param:
+                            return redirect(next_param)
+                        else:
+                            return redirect("landing_page")
                     else:
-                        return redirect("landing_page")
+                        messages.error(request, "This account has been deactivated by User")
                 else:
-                    messages.error(request, "This account has been deactivated by User")
+                    messages.error(request, "This account has been suspended by Admin")
             else:
                 messages.error(request, "Invalid User Credentials for client")
                 return render(request, 'client/login.html') 
@@ -140,7 +143,7 @@ def ClientChangePassword(request):
 def deactivate_account(request):
     """deactivate account as requested by user"""
     activeUser = request.user
-    activeUser.is_active = False
+    activeUser.deactivateByClient = False
     activeUser.save()
     return redirect("logoutUser")
 
@@ -151,6 +154,9 @@ def profilePictureUpdate(request):
     if request.method == "POST":
         profilePicture = request.FILES.get('profilePicture')
         if profilePicture:
+            get_previous_picture = activeUser.profile_picture
+            if get_previous_picture:
+                get_previous_picture.delete()
             activeUser.profile_picture = profilePicture
             activeUser.save()
             messages.success(request, "Profile Picture Succesfully Updated")
