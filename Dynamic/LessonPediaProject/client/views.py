@@ -33,7 +33,8 @@ def client_login(request):
             if user is not None:
                 if user.is_active == 1:
                     login(request, user, backend='client.backends.EmailClientBackend')
-                    return redirect('landing_page')
+                    return redirect ('view_tutors')
+                    # return redirect('landing_page')
                 else:
                     messages.error(request, "This account has been deactivated by User")
             else:

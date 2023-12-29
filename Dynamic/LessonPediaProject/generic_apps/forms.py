@@ -62,9 +62,9 @@ class TutorRegisterForm(UserCreationForm):
             'id':'con_pass'
         })
 
-        self.fields['area_of_specialization'].widget.attrs.update({
+        self.fields['primary_subject'].widget.attrs.update({
             'id': 'high_qual',
-            'placeholder': 'enter your specialization'
+            'placeholder': 'first core subject'
         })
 
         self.fields['highest_qualification'].widget.attrs.update({
@@ -74,7 +74,7 @@ class TutorRegisterForm(UserCreationForm):
     class Meta:
         model = Tutor
         fields = [
-            'username', 'email', 'password1', 'password2', 'area_of_specialization', 'highest_qualification'
+            'username', 'email', 'password1', 'password2', 'primary_subject', 'highest_qualification'
         ]
 
 

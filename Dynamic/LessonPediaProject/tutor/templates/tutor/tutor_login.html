@@ -2,70 +2,67 @@
 {% load static %}
 
 {% block head %} 
-    <link rel="stylesheet" href="{% static "styles/login.css" %}">
+    <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 {% endblock head %}
-  
-  {% block title %}Login{% endblock title %}
-    {% block signup_button %}{% endblock signup_button %}
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{message.tags}}">
-                {{message}}
-            </div>
-        {% endfor %}
-    {% endif %}
-    {% block content %}
-    <br>  
-        <div class="login_container">
-            <div class="login_container_inputs">
-                <div class="logo">
-                <img src="{% static "images/socialLinks/github.png" %}" alt="">
-                </div>
-                <h3 class="login_header">
-                    Login
-                </h3>
-                <form action="{% url 'tutor_login'%}" method="POST">
-                    {% csrf_token %}
-                  {% if error %}
-                        <p class="error">{{error}}</p>
-                    {% endif %} 
-                    <label for="username_or_email">
-                        UserName or Email
-                    </label><br>
 
-                    <input type="text" name="username_or_email" placeholder="enter username or email" id="">
-                    <br><br><br>
-                    <label for="password">
-                        Password
-                    </label><br>
-                    <input type="password" name="password" placeholder="********" id="password" autocomplete="on"><span toggle="#password" class="password-toggle"></span><br>
-                    <h5 class="forgetPasscode">Forget password</h5><br><br><br>
-                    <input type="submit" value="Sign in">
-                </form>
-                <br>
-                
-                <p><center class="change_color">or continue with</center></p>
-                <div class="link_box_container">
-                    <div class="link_box">
-                        <a href="{% static "" %}"><img src="{% static 'images/socialLinks/google.png' %}" alt=""></a>
-                    </div>
-                    <div class="link_box">
-                        <a href="{% static "" %}"><img src="{% static 'images/socialLinks/facebook.png' %}" alt=""></a>
-                    </div>
-                    <div class="link_box">
-                        <a href="{% static "" %}"><img src="{% static 'images/socialLinks/github.png' %}" alt=""></a>
-                    </div>  
-                </div>
-                <div class="ending">
-                    <center><p class="change_color">Don't have account account yet? <span><a href="{% static "" %}">Register here</a></span></p></center>
-                </div>
-            </div>
+{% block title %}Login{% endblock title %}
+{% block signup_button %}{% endblock signup_button %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert">
+            {{ message }}
         </div>
-    {% endblock content %}
-    <script>
-        $(document).on('click', '.password-toggle', function() {
-            let input = $($(this).attr('toggle'));
-            input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
-        });        
-    </script>
-    <br><br>
+    {% endfor %}
+{% endif %}
+
+{% block content %}
+<br>  
+<div class="login_container">
+    <div class="login_container_inputs">
+        <div class="logo">
+            <img src="{% static 'images/logo/logo_icon.png' %}" alt="">
+        </div>
+        <h3 class="login_header">Login</h3>
+        <form action="{% url 'tutor_login' %}" method="POST">
+            {% csrf_token %}
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %} 
+            <label for="username_or_email">UserName or Email</label><br>
+            <input type="text" name="username_or_email" placeholder="enter username or email" id=""><br><br><br>
+            <label for="password">Password</label><br>
+            <input type="password" name="password" placeholder="********" id="password" autocomplete="on">
+            <span toggle="#password" class="password-toggle"></span><br>
+            <h5 class="forgetPasscode">Forget password</h5><br><br><br>
+            <input type="submit" value="Sign in">
+        </form>
+        <br>
+        <p><center class="change_color">or continue with</center></p>
+        <div class="link_box_container">
+            <div class="link_box">
+                <a href="{% static '' %}"><img src="{% static 'images/socialLinks/google.png' %}" alt=""></a>
+            </div>
+            <div class="link_box">
+                <a href="{% static '' %}"><img src="{% static 'images/socialLinks/facebook.png' %}" alt=""></a>
+            </div>
+            <div class="link_box">
+                <a href="{% static '' %}"><img src="{% static 'images/socialLinks/github.png' %}" alt=""></a>
+            </div>  
+        </div>
+        <div class="ending">
+            <center><p class="change_color">Don't have an account yet? <span><a href="{% url 'tutor_sign_up' %}">Register here</a></span></p></center>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).on('click', '.password-toggle', function() {
+        let input = $($(this).attr('toggle'));
+        input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
+    });        
+</script>
+<br><br>

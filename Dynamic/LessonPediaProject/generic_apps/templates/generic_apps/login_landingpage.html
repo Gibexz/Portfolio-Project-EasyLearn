@@ -46,7 +46,7 @@
                 <section class="second_level_mid">
                     {% block explore %}
                         {% if model == 'tutor' %}
-                            <a href="{% url 'tutor_dashboard' tutor=activeUser %}"><button id="explore">Explore Dashboard</button></a>
+                            <a href="{% url 'tutor_dashboard' %}"><button id="explore">Explore Dashboard</button></a>
                         {% else %}
                             <a href="{% url 'validate_user' whoami=activeUser %}"><button id="explore">Explore Dashboard</button></a>
                         {% endif %}

@@ -154,7 +154,6 @@ $(document).ready(function() {
         // Check if the selected nationality is not Nigerian
         if ($(this).val() !== 'NG') {
           $('#state').hide();
-          $('div .lga').hide();
           $(".state input[type='text']").show();
           $('.lga_frn').show();
         } else {
@@ -177,6 +176,15 @@ $(document).ready(function() {
     let minDate = new Date();
     minDate.setFullYear(minDate.getFullYear() - 15);
     let formattedMinDate = minDate.toISOString().split('T')[0];
+
+
+    $("#lga_resident").change(function() {
+        // Get the selected option value
+        let selectedLga = $(this).val();
+
+        // Assign the selected value to the input field #lga_resident_val
+        $("#lga").val(selectedLga);
+    });
 
     // Set the min and max attributes of the input element
     $('#dob').attr('max', formattedMinDate);

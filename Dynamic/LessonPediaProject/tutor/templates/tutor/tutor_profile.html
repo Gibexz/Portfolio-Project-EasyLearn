@@ -5,7 +5,6 @@
 {% block head %}
   <link rel="stylesheet" href="{% static 'styles/tutors_profile.css' %}">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="{% static 'script/lga.min.js' %}"></script>
   <script src="{% static 'script/tutor_profile.js' %}"></script>
 {% endblock head %}
 
@@ -83,79 +82,65 @@
                     <fieldset class="profile_form"><legend> Bio - Data </legend>
                         <label for="first_name">First Name</label><br>
                         {{ form.first_name }}
-                        {{ form.first_name.errors }}
                         <div class="flex_me">
                             <label for="last_name">Last Name </label><br> <label for="others" id="others_label">Others</label>
                         </div>
                         {{ form.last_name }}
-                        {{ form.last_name.errors }}
                         {{ form.others }}
-                        {{ form.others.errors }}
                         <div class="location">
                             <div class="nation parallel">
                                     <label for="nationality">Nationality</label> <br><br>
                                     {{ form.nationality }}
-                                    {{ form.nationality.errors }}
+                                    
                                 </div>
                             <div class="state parallel">
                                 <label for="state_of_residence">State of Residence </label><br>
                                     {{ form.state_of_residence }}
-                                    {{ form.state_of_residence.errors }}
-                                <input required type="text" name="state_of_residence" id="state_of_residence" placeholder="State of Residence">
+                                {% comment %} <input required type="text" name="state_of_residence" id="state_of_residence" placeholder="State of Residence"> {% endcomment %}
                             </div>
-                            <div class="lga parallel">
+                            {% comment %} <div class="lga parallel">
                                 <label for="lga" class="">LGA of Residence</label>
                                     {{ form.lga_resident }}
-                                    {{ form.lga_resident.errors }}
-                                <input type="text" name="lga_frn" id="lga_resident" placeholder="Optional">
-                            </div>
+                                   <select name="lga_resident" id="lga_resident">
+                                        <option value="">Select LGA</option> 
+                                <input hidden type="text" name="lga_frn" id="lga_resident_val" placeholder="Optional">
+                            </div> {% endcomment %}
                         </div>
                         <div class="flex_me_too">
                             <label for="residential_address">Residential Address</label> <br><label for="phone_number" id="phone_label">Phone Number</label>
                         </div>
                         {{ form.residential_address }}
-                        {{ form.residential_address.errors }}
                         {{ form.phone_number }}
-                        {{ form.phone_number.errors }}
                         <div class="flex_me_too">
                             <label for="gender">Gender</label> <br>
                             {% comment %} <label for="dob" id="dob_label">Date of Birth</label> {% endcomment %}
                         </div>
                             {{ form.gender }}
-                            {{ form.gender.errors}}
                             {{ form.date_of_birth }} 
-                            {{ form.date_of_birth.errors }}
-                    </fieldset><br>
-
-                    <fieldset class="profile_form"><legend> Academic/Employment Details </legend>
+                        </fieldset><br>
+                        
+                        <fieldset class="profile_form"><legend> Academic/Employment Details </legend>
                             <label for="institution_type">Institution Type:</label>
                             {{ form.institution_type }}
-                            {{ form.institution_type.errors }}
                             <br>
-
+                            
                             <label for="institution">Institution Name</label>
+                            {% comment %} {{ form.primary_subject }} {% endcomment %}
                             {{ form.institution }}
-                            {{ form.institution.errors }}
                              <br>
                             <label for="dis">Discipline </label><label for="qual" id="position_qual">Qualification</label><label for="degree_class" id="position_cgpa">Result</label>
                             <section class="disqua">
                                 {{ form.discipline }}
-                                {{ form.discipline.errors}}
                                 {{ form.highest_qualification }}
-                                {{ form.highest_qualification.errors }}
                                 {{ form.result }}
-                                {{ form.result.errors }}
 
                             </section>  
                             <label for="area_of_specialization">Specialization (if any)</label><br>
                             {{ form.area_of_specialization }}
-                            {{ form.area_of_specialization.errors }}
                             <br>
                             <label for="empStat">Employment Status </label><label for="employmentStat" id="position_stat">if employed, select option below</label>
                             {{ form.employment_status }}
-                            {{ form.employment_status.errors }}
                             {{ form.employment_type }}         
-                            {{ form.employment_type.errors }}                                   
                     </fieldset><br>
 
                     <fieldset class="profile_form"><legend> Uploads </legend>
@@ -167,14 +152,12 @@
                         <img class="cv_preview" src="#" alt="" width="100%" height="100%" id="preview_cert">
 
                            {{ form.cv_id }}
-                           {{ form.cv_id.errors }}
                            <br><br>
                         <label for="cert">Upload Certificate (Highest cert only) [only .jpg, .jpeg or .png]</label>
                         <p class="preview" id="view_cert">Preview</p>
                         <embed class="cert_preview" width="1000px" height="600px" src="#" type="application/pdf"/>
 
                         {{ form.certificate }}
-                        {{ form.certificate.errors }}
                         <br><br>
                     </fieldset><br>
                     <button type="submit" id="save_me">Save and Proceed</button>

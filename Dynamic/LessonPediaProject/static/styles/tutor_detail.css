@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.subject_pane{
+    position: relative;
+    width: 300px;
+    border-right: 2px solid #1168FF;
+    padding-left: 50px;
+    background-color: whitesmoke;
+    height: 100vh;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+    margin-right: 5px;
+}
+
+.subject_list{
+    margin-top: 100px;
+}
+/* Right styling */
+.right{
+    padding: 25px;
+    flex: 4;
+}
+
+
+.dpDisplay{
+    margin-top: 50px;
+}
+
+.dpDisplay .tutordp{
+    width: 203px;
+    height: 218px;
+    border-radius: 10%;
+    float: left;
+    margin-right: 20px;
+}
+
+.UserBioData{
+    padding-top: 1px;
+    line-height: 5px;
+}
+
+.reviews {
+    display: none;
+}
+
+.UserBioData h2{
+    margin-bottom: 0px;
+}
+
+.UserBioData p{
+    margin-top: 0px;
+    color: rgb(69, 61, 61);
+}
+
+.UserBioData span{
+    color: rgb(167, 0, 89);
+}
+
+.ratings{
+    padding-top: 10px;
+    color: darkblue !important;
+    height: 20px;
+}
+/* ranks */
+#my_rank {
+    color: gold
+}
+.empty_rank{
+    color: gray;
+}
+
+.goRight{
+    float: right;
+    margin-right: 10%;
+    margin-top: 30px;
+    border: 1px solid rgb(227, 227, 230);
+    height: 35px;
+    overflow: hidden;
+    width: 128px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+}
+
+.goRight img{
+    width: 40px;
+    margin-right: px;
+}
+
+.overview{
+    margin-top: 10%;
+}
+
+.overview_header{
+    border-bottom: 1px solid rgb(189, 178, 178);
+    width: 95%
+}
+
+.overview_header h3{
+    display: inline-block;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: -1.5px;
+    cursor: pointer;
+}
+
+.active{
+    color: darkblue;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to left, rgb(0, 84, 229), rgb(167, 0, 89));
+    border-image-slice: 1;
+    padding-bottom: 5px !important;
+}
+
+.overview_body{
+    width: 600px;
+    text-align: justify;
+    font-size: small;
+    padding: 10px;
+    line-height: 1.4em;
+}
+
+.link2social{
+    margin-left: 20px;
+}
+
+.link2social button{
+    margin-right: 20px;
+    background-color: #1168FF;
+    padding: 5px 25px 5px 25px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.background{
+    margin-left: 40px;
+    color: #1168FF;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+.insideExpertise{
+    margin-left: 30px;
+}
+
+.insideExpertise p{
+    font-size: small;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.expertLev{
+    margin-right: 100px;
+}
+
+.first{
+    background-color: #FDE0FF;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px 15px 5px 15px;
+}
+
+.second{
+    background-color: #FFE6E0;
+    padding: 10px 15px 10px 15px;
+    border-radius: 15px 5px 15px 5px;
+}
+
+.others{
+    background-color: #FFF6E0;
+    padding: 10px 15px 10px 15px;
+    border-radius: 15px;
+}
+
+.fluent{
+    background-color: #E5EEFF;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+}
+
+/* Similar Tutor logix */
+.similarHead{
+    margin-top: 50px;
+    margin-left: 40px;
+    color:darkblue;
+    font-weight: 600;
+    font-size: 1.3em;
+}
+
+.similarTutors_body{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+.arrows{
+    float: right;
+    margin-right: 20px;
+    height: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.addTutor{
+    text-align: center;
+}
+
+.addbutton{
+    margin-top: 20px;
+    padding: 5px 40px 5px 40px;
+    color: white;
+    background-color: #1168FF;
+    font-size: large;
+    font-weight: 800;
+    width: 70%;
+    border-radius: 40px;
+    border: none;
+    border-bottom: 3px solid rgb(157, 141, 141);
+    cursor: pointer;
+}
+
+.addbutton:hover{
+    background-color: #1168ffdc;
+    border-bottom: 3px solid rgb(144, 113, 113);
+}
+
+/* Reviews */
+.hrtop {
+    margin-top: 5px;
+    width: 100%;
+    margin: auto auto;
+}
+.hrtop hr {
+    height: 1px;
+}
+.tiny_images{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    margin-top: 2px;
+}
+
+.review_body{
+    display: flex;
+    flex-direction: column;
+    margin: 1% 10% ;
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px 1px  rgba(115, 116, 115, 0.7);
+
+    overflow-y:auto;
+    overflow-x: visible;
+}
+
+.review_body .review_item{
+    border-radius: 10px;
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    margin-bottom: 20px;
+    flex-direction: column;
+    background-color: #192551;
+}
+
+.review_item .space_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.review_item .review_text{
+    width: 60%;    
+    margin: 0 auto;
+    text-align: justify;
+    font-style: italic;
+}
+
+.no_height {
+    height: 0px;
+}
+
+.user_signature  {
+    font-family: 'saira', sans-serif;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.59);
+}
+/* Rank Tutor Temporarily */
+.stars {
+    display: flex;
+    cursor: pointer;
+  }
+
+  .star {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+
+  .gold {
+    color: gold;
+  }
+
+  #rankForm {
+    display: none;
+  }

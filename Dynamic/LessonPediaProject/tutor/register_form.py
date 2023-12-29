@@ -31,9 +31,9 @@ class TutorRegisterForm(UserCreationForm):
             'id':'con_pass'
         })
 
-        self.fields['area_of_specialization'].widget.attrs.update({
+        self.fields['primary_subject'].widget.attrs.update({
             'id': 'high_qual',
-            'placeholder': 'enter your specialization',
+            'placeholder': 'enter first core subject',
         })
 
         self.fields['highest_qualification'].widget.attrs.update({

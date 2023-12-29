@@ -1,5 +1,5 @@
 from django import forms
-from django_countries.fields import CountryField
+from django_countries.fields import countries
 from django_flatpickr.widgets import DatePickerInput
 from .models import Tutor
 
@@ -64,13 +64,13 @@ class TutorUpdateForm(forms.ModelForm):
     result = forms.ChoiceField(
         choices=[
             ('', '-- Select One --'),
-            ('first_class', 'First Class'),
-            ('distinction', 'Distinction'),
-            ('second_class_upper', 'Second Class Upper'),
-            ('upper credit', 'Upper credit'),
-            ('second_class_lower', 'Second Class Lower'),
-            ('lower credit', 'Lower credit'),
-            ('others', 'Others'),
+            ('First Class', 'First Class'),
+            ('Distinction', 'Distinction'),
+            ('Second Class Upper', 'Second Class Upper'),
+            ('Upper credit', 'Upper credit'),
+            ('Second Class Lower', 'Second Class Lower'),
+            ('Lower credit', 'Lower credit'),
+            ('Others', 'Others'),
         ],
         widget=forms.Select(attrs={
             'class': 'no_outline',
@@ -115,16 +115,13 @@ class TutorUpdateForm(forms.ModelForm):
 )
 
 
-    nationality = CountryField().formfield(
-        widget=forms.Select(attrs={
-            'class': 'no_outline',
-            'id': 'nationality',
-        })
+    nationality = forms.CharField(
+        widget=forms.Select(choices=countries),
+        required=True
     )
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['nationality'].choices = [('', '- Select -'), ("NG", 'Nigeria')] + list(self.fields['nationality'].choices[1:-1])
+
+    
     state_of_residence = forms.ChoiceField(
         choices=[
             ('', '- Select -'),
@@ -149,13 +146,6 @@ class TutorUpdateForm(forms.ModelForm):
         })
     )
 
-    lga_resident = forms.CharField(
-        widget=forms.Select(attrs={
-            'class': 'select-lga',
-            'id': 'lga',
-            'required': False,
-        })
-    )
     
     certificate = forms.FileField(
         required=False,
@@ -203,9 +193,9 @@ class TutorUpdateForm(forms.ModelForm):
         fields = [
                 'first_name', 'last_name', 'others', 'phone_number', 'highest_qualification', 
                 'area_of_specialization', 'discipline', 'employment_status','employment_type','nationality',
-                'state_of_residence', 'lga_resident', 'institution_type', 'institution', 'result', 
+                'state_of_residence', 'institution_type', 'institution', 'result', 
                 'residential_address', 'cv_id', 'certificate', 'profile_picture', 'gender',
-                'date_of_birth', 
+                'date_of_birth',
                 
             ]
         widgets = {
