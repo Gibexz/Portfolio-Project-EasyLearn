@@ -5,21 +5,32 @@ from django.utils import timezone
 from tutor.models import Tutor
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group, Permission
+from django.core.validators import FileExtensionValidator
 
 
 class Client (AbstractUser):
-         phone_number = models.CharField(max_length=15, null=True, unique=True)
-         state_of_residence = models.CharField(max_length=50, null=True)
-         nationality = models.CharField(max_length=50, null=True)
-         profile_picture = models.ImageField(upload_to='profile_picture/', default='templates/lessonpedia/static/images/user/default_user_icon.png')
-         residential_address = models.CharField(max_length=150, null=True)
-         created_at = models.DateTimeField(auto_now_add=True) 
-         updated_at = models.DateTimeField(auto_now=True)
-         tutor = models.ManyToManyField(Tutor, related_name='engaged_tutor')
-        # Added the below attributes to resolve permission and group conflict having same name
-        # all inherits from Abstract user and hence need unique related_name
-         groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
-         user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
+    deactivateByClient = models.BooleanField(default=True)
+    email = models.EmailField(max_length=255, unique=True)
+    others = models.CharField(max_length=50, null=True)
+    phone_number = models.CharField(max_length=15, null=True, unique=True)
+    state_of_residence = models.CharField(max_length=50, null=True)
+    nationality = models.CharField(max_length=50, null=True)
+    profile_picture = models.ImageField(upload_to='profile_picture/Client', default='default_user_icon.png', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
+    residential_address = models.CharField(max_length=150, null=True)
+    created_at = models.DateTimeField(auto_now_add=True) 
+    updated_at = models.DateTimeField(auto_now=True)
+    tutor = models.ManyToManyField(Tutor, related_name='engaged_tutor')
+    date_of_birth = models.DateField(null=True)
+    genderchoice = [
+        ('Male', "Male"),
+        ("Female", "Female")
+        ]
+    gender = models.CharField(max_length=10, choices=genderchoice, null=True)
+    educational_level = models.CharField(max_length=200, null=True)
+    # Added the below attributes to resolve permission and group conflict having same name
+    # all inherits from Abstract user and hence need unique related_name
+    groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
 
 class Review(models.Model):
     review_text = models.TextField(max_length=500)

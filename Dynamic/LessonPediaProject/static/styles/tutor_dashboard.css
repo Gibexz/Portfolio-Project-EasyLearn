@@ -12,9 +12,30 @@
 }
 .bg {
     background-color: rgba(246, 246, 246, 0.584);
+
     height: 720px;
     border-radius: 3px;
     /* position: fixed; */
+}
+#logout_btn_top {
+    /* background: #eee;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: black;
+    cursor: pointer; */
+    padding: 10px 20px;
+    background: #dc3545; /* Bootstrap's danger color */
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+#logout_btn_top:hover {
+    background: #c82333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .tutor_dasboard {
     display: flex;
@@ -131,7 +152,7 @@
     display: none;
 }
 
-.logout{
+.logout {
     text-decoration: none;
     text-align: left;
     font-weight: 400;
@@ -140,6 +161,14 @@
     cursor: pointer;
 }
 
+.logout_activation a {
+    text-decoration: none;
+    text-align: left;
+    font-weight: 800;
+    color: rgb(223, 11, 15);
+    font-size:large;
+    cursor: pointer;
+}
 /* right_section */
 
 .username_size i{
@@ -1043,3 +1072,5 @@ select{
 th {
     cursor: pointer;
 }
+
+/* previews when loaded */

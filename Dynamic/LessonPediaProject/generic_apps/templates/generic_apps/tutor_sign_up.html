@@ -87,11 +87,11 @@
                 <!-- <input type="text" name="username" placeholder="enter username"> -->
                 <br><br>
                 <label for="specialization">
-                    Specialization | Qualification
+                    Primary Subject | Qualification
                 </label><br>
                 <div class="tutor_detail">
                     <section class="specialization_container">
-                        {{ form.area_of_specialization }}
+                        {{ form.primary_subject }}
                         {% comment %} <input type="text" name="specialization" placeholder="enter specialization" id="specialization"> {% endcomment %}
                         <br><br>
                     </section>
@@ -138,7 +138,7 @@
                 </div>  
             </div>
             <div class="ending">
-                <center><p class="change_color">Already have an account? <span><a href="">Login here</a></span></p></center>
+                <center><p class="change_color">Already have an account? <span><a href="{% url 'tutor_login' %}">Login here</a></span></p></center>
             </div>
         </div>
    </div>

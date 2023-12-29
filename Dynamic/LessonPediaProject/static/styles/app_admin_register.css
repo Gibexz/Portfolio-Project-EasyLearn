@@ -11,3 +11,11 @@
 .adminSignUp{
     display: none;
 }
+
+#admin_login_message{
+    background-color: ghostwhite;
+    padding: 10px;
+    width: 50%;
+    font-size: large;
+    box-shadow: 1px 1px 4px 1px rgb(234, 173, 173);
+}

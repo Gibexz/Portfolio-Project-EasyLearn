@@ -474,4 +474,3 @@ $(document).ready(function() {
       }
     });
 });
-

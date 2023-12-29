@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/jquery.tablesorter.min.js' %}"></script>
+    <script src="{% static 'script/tutor_search.js' %}" ></script>
+    <link rel="stylesheet" href="{% static 'styles/tutor_search.css' %}">
+    <title>Search Result</title>
+</head>
+<body>
+        <!-- Modal to display the search results -->
+    <div class="searchResultContainer">
+            <h2>Search Results for "{{ query }}"</h2>
+        <div class="tutor_row">
+            {% if tutors.has_other_pages %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if tutors.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ tutors.previous_page_number }}">previous</a>
+                        {% endif %}
+                        
+                        <span class="current">
+                            Page {{ tutors.number }} of {{ tutors.paginator.num_pages }}.
+                        </span>
+                        
+                        {% if tutors.has_next %}
+                            <a href="?page={{ tutors.next_page_number }}">next</a>
+                            <a href="?page={{ tutors.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+            
+            {% for tutor in tutors %}
+                <!-- Display tutor information as you do in the existing tutor list -->
+                <div class="tutor_overview">
+                    <section class="tutor_image_box">
+                        <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo">
+                    </section>
+                    <div class="other_info">
+                        <section class="tutor_name">
+                            <h5 class="name">{{ tutor.first_name }} {{ tutor.last_name }} &nbsp;</h5>
+                            <span class="ranks">
+                                {% if tutor.rank %}
+                                        {% if tutor.rank > 4 %}
+                                        <span class="rank_5" id="my_rank">★★★★★</span>
+                                        {% elif tutor.rank > 3 %}
+                                            <span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>
+                                        {% elif tutor.rank > 2 %}
+                                            <span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>
+                                        {% elif tutor.rank > 1 %}
+                                            <span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>
+                                        {% else  %}
+                                            <span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>
+                                        {% endif %}
+                                {% else %}
+                                <div id="no_rank">
+                                    <span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>
+                                </div>
+                                {% endif %}
+                            </span>
+                        </section>
+                        <section class="tutor_subject">
+                            {% if tutor.subjects %}
+                                {% with subject as tutor.subjects.0 %}
+                                    <h6 class="show_block"> {{ subject }}<i class="fa fa-circle" aria-hidden="true"></i></h6>
+                                {% endwith %}
+                            {% endif %}
+                        </section>
+                        <section>
+                            <a class="view_tutor_profile" href="{% url 'tutor_public_profil' tutor.username %}">View Profile</a>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if tutors.has_other_pages %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if tutors.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ tutors.previous_page_number }}">previous</a>
+                        {% endif %}
+                        
+                        <span class="current">
+                            Page {{ tutors.number }} of {{ tutors.paginator.num_pages }}.
+                        </span>
+                        
+                        {% if tutors.has_next %}
+                            <a href="?page={{ tutors.next_page_number }}">next</a>
+                            <a href="?page={{ tutors.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="subject_row">
+            {% if subjects %}
+                <h3>Subjects:</h3>
+                {% for subject in subjects %}
+                    <div class="subject_overview">
+                        <section class="subject_name">
+                            <h5>{{ subject.subject_name }}</h5>
+                        </section>
+                        <section>
+                            <button class="view_subject_profile">
+                                <a href="{% url 'subject_profile' subject.id %}">View Profile</a>
+                            </button>
+                        </section>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No subjects found for "{{ query }}"</p>
+            {% endif %}
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -35,6 +35,10 @@ INSTALLED_APPS = [
     'tutor',
     'app_admin',
     'generic_apps',
+    "django_flatpickr",
+    'crispy_forms',
+    'django_countries.fields',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,11 +48,12 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.contrib.staticfiles.middleware.StaticFilesMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -58,7 +63,6 @@ ROOT_URLCONF = 'lessonpedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': ['app_admin/templates/app_admin'],
         'DIRS':[],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -137,3 +141,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTHENTICATION_BACKENDS = [
+    'tutor.backends.TutorAuthBackend',
+    'client.backends.EmailClientBackend',  
+    'app_admin.backends.AppAdminAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+SESSION_COOKIE_SECURE = False # True for production

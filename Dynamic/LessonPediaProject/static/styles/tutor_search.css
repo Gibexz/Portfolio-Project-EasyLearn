@@ -1,0 +1,106 @@
+/* Add this to your existing CSS or create a new CSS file
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+} */
+
+.searchResultContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tutor_row,
+.subject_row {
+    margin-top: 20px;
+}
+
+.tutor_overview,
+.subject_overview {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+.ranks span {
+    color: gold;
+}
+
+.tutor_subject h6 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.view_tutor_profile,
+.view_subject_profile {
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a:hover:not(.current) {
+    background-color: #ddd;
+}
+
+.current {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 16px;
+}
+/* Styles for the popover container */
+.popover-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  /* Styles for the popover content */
+  .popover-content {
+      display: none;
+    width: 100%;
+    position: absolute;
+    background-color: #c9c3c3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1;
+  }
+  
+  /* Styles for the popover arrow */
+  .popover-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  #my_rank{
+    margin: auto;
+  }
+.flex_tutor_row{
+        display: flex;
+        justify-content: space-around;
+      }

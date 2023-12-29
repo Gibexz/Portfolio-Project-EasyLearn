@@ -24,7 +24,10 @@ urlpatterns = [
     path('lessonpedia/', lessonPedia_admin_site.urls),
     path('admin/', admin.site.urls),
     path("", include("generic_apps.urls")),
-    path("client/", include('client.urls'))
+    path("client/", include('client.urls')),
+    path("tutor/", include('tutor.urls')),
+    path("appAdmin/", include('app_admin.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:

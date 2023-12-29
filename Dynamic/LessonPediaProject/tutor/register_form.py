@@ -1,10 +1,12 @@
 from typing import Any
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from tutor.models import Tutor
 
 
 class TutorRegisterForm(UserCreationForm):
     """this class abstracts the tutor registration model"""
+    email = forms.EmailField(max_length=150, required=True, help_text='Enter Email')
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({
@@ -29,9 +31,9 @@ class TutorRegisterForm(UserCreationForm):
             'id':'con_pass'
         })
 
-        self.fields['area_of_specialization'].widget.attrs.update({
+        self.fields['primary_subject'].widget.attrs.update({
             'id': 'high_qual',
-            'placeholder': 'enter your specialization',
+            'placeholder': 'enter first core subject',
         })
 
         self.fields['highest_qualification'].widget.attrs.update({
