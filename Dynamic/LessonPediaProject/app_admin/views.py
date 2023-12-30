@@ -251,8 +251,8 @@ class TutorViewSet(ModelViewSet):
         try:
             tutor = Tutor.objects.get(pk=pk)
             tutor.is_active = False
-            tutor.is_blocked = True
-            tutor.is_suspended = True
+            tutor.is_blocked_admin = True
+            tutor.is_suspended_admin = True
             tutor.save()
             return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
         except Http404:
@@ -265,14 +265,14 @@ class TutorViewSet(ModelViewSet):
     def activate_tutor(self, request, pk=None):
         """Activate tutor method"""
         try:
-            # tutor = Tutor.objects.get(pk=pk) #works
-            tutor = self.get_object() # works too
+            tutor = Tutor.objects.get(pk=pk) #works
+            # tutor = self.get_object() # works too
             tutor.is_active = True
-            tutor.is_blocked = False
-            tutor.is_suspended = False
-            tutor.suspension_duration = None
-            tutor.suspension_reason = None
-            tutor.block_reason = None
+            tutor.is_blocked_admin = False
+            tutor.is_suspended_admin = False
+            tutor.suspension_duration_admin = None
+            tutor.suspension_reason_admin = None
+            tutor.block_reason_admin = None
             tutor.save()
             return Response({'message': 'Tutor activated successfully'}, status=status.HTTP_200_OK)
         except Http404:
