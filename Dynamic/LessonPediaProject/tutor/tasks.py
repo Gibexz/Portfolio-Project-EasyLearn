@@ -16,9 +16,9 @@ class CheckSuspensionTutorStatus(CronJobBase):
         for tutor in expired_tutors:
             if tutor.is_suspended_expired():
                 tutor.is_active = True
-                tutor.is_suspended = False
-                tutor.suspended_at = None
-                tutor.suspension_duration = None
-                tutor.suspension_reason = None
+                tutor.is_suspended_admin = False
+                tutor.suspended_at_admin = None
+                tutor.suspension_duration_admin = None
+                tutor.suspension_reason_admin = None
                 tutor.save()
 

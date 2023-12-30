@@ -16,9 +16,9 @@ class CheckSuspensionClientStatus(CronJobBase):
         for client in expired_clients:
             if client.is_suspended_expired():
                 client.is_active = True
-                client.is_suspended = False
-                client.suspended_at = None
-                client.suspension_duration = None
-                client.suspension_reason = None
+                client.is_suspended_admin = False
+                client.suspended_at_admin = None
+                client.suspension_duration_admin = None
+                client.suspension_reason_admin = None
                 client.save()
 

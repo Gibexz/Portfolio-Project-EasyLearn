@@ -40,7 +40,8 @@ body{
 .set_reactivate_account_client,
 .set_delete_account_tutor,
 .set_delete_account_client,
-.set_suspend_account_tutor {
+.set_suspend_account_tutor,
+.set_suspend_account_client {
     display: none;
 }
 

@@ -200,6 +200,7 @@ $(document).ready(function(){
         $('.set_report_details_client').show()
     })
 
+
     // account suspending dialogue display for tutor  ==============================
     $('#activate_suspend_tutor').click(function(){
         const tutor_id = $(this).data('tutor')
@@ -211,6 +212,20 @@ $(document).ready(function(){
     $('.disable_close, .mistake').click(function(){
         $('.set_action_tutor').show()
         $('.set_suspend_account_tutor').hide()
+    })
+    
+
+    // account suspending dialogue display for client  ==============================
+    $('#activate_suspend_client').click(function(){
+        const client_id = $(this).data('client')
+
+        $('.set_action_client').hide()
+        $('.set_suspend_account_client').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action_client').show()
+        $('.set_suspend_account_client').hide()
     })
 
     
