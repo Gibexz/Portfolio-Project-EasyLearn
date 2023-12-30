@@ -9,8 +9,9 @@ from django_countries import countries
 import json
 from django.db.models import Q
 from django.http import JsonResponse
-from client.models import Ranking
-from client.models import Review
+from client.models import Ranking, Review
+from django.core.mail import send_mail
+from client.models import Client
 
 
 
@@ -49,6 +50,9 @@ def tutor_login(request):
 @login_required(login_url='tutor_login')
 def tutor_profile(request):
     """profile update form"""
+    if not isinstance(request.user, Tutor):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('tutor_login')
     tutor = Tutor.objects.get(username=request.user.username)
     
     country_list = [('Select Country', 'Select Country'), ('NG', 'Nigeria')]
@@ -80,6 +84,9 @@ def tutor_profile(request):
 @login_required(login_url='tutor_login')
 def tutor_dashboard(request):
     """Displays Tutor Dashboard"""
+    if not isinstance(request.user, Tutor):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('tutor_login')
     tutor = Tutor.objects.filter(username=request.user.username).first()
     return render(request, 'tutor/tutor_dashboard.html', context={'tutor': tutor})
 
@@ -87,6 +94,9 @@ def tutor_dashboard(request):
 @login_required(login_url='client_signIn')
 def view_tutors(request):
     """Displays all tutors"""
+    if not isinstance(request.user, Client):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('client_signIn')
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
     user = request.user
@@ -96,6 +106,10 @@ def view_tutors(request):
 @login_required(login_url='client_signIn')
 def search_tutors(request):
     """Search for tutors based on query"""
+    if not isinstance(request.user, Client):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('client_signIn')
+    
     query = request.GET.get('query', None)
     print('query', query)
     if query is not None:
@@ -119,6 +133,9 @@ def search_tutors(request):
 @login_required(login_url='client_signIn')
 def tutor_detail(request, tutor_id):
     """Displays Tutor Public Profile"""
+    if not isinstance(request.user, Client):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('client_signIn')
     user = request.user
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
@@ -129,9 +146,37 @@ def tutor_detail(request, tutor_id):
 
 
 
+@login_required(login_url='client_signIn')
+def email_tutor(request, tutor_id):
+    if not isinstance(request.user, Client):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('client_signIn')
+    
+    if request.method == 'POST':
+        sender = request.POST.get('sender')
+        recipient = request.POST.get('recipient')
+        subject = request.POST.get('subject')
+        senderInfo = request.POST.get('senderInfo')
+        received_msg = request.POST.get('message')
+        if senderInfo is not None:
+            message = f"{received_msg}\n\n{senderInfo}"
+        else:
+            message = received_msg
+        try:
+            send_mail(subject, message, sender, [recipient])
+            response_data = {'success': True}
+        except Exception as e:
+            response_data = {'success': False, 'error_message': str(e)}
+            print('error sending email')
+
+        return JsonResponse(response_data)
+    return redirect('view_tutors')
 
 @login_required(login_url='client_signIn')
 def submit_rank(request, tutor_id):
+    if not isinstance(request.user, Client):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('client_signIn')
     if request.method == 'POST':
         tutor = Tutor.objects.get(pk=tutor_id)
         rank_number = int(request.POST.get('rank'))
@@ -151,6 +196,9 @@ def submit_rank(request, tutor_id):
 
 @login_required(login_url='client_signIn')
 def submit_review(request, tutor_id):
+    if not isinstance(request.user, Client):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('client_signIn')
     if request.method == 'POST':
         tutor = Tutor.objects.get(pk=tutor_id)
         review_text = request.POST.get('review_text')
@@ -162,9 +210,36 @@ def submit_review(request, tutor_id):
         else:
             Review.objects.create(tutor=tutor, client=request.user, review_text=review_text)
 
-        # Update the tutor's average rank
-
     return redirect('tutor_detail', tutor_id=tutor_id)
+
+
+@login_required(login_url='tutor_login')
+def quiz_guide(request):
+    """Displays Tutor Quiz and Results"""
+    if not isinstance(request.user, Tutor):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('tutor_login')
+    
+    return render(request, 'tutor/quiz_guide.html')
+
+
+@login_required(login_url='tutor_login')
+def tutor_quiz(request):
+    """Displays Tutor Quiz and Results"""
+    if not isinstance(request.user, Tutor):
+        messages.error(request, 'You are not authorized to view this page')
+        return redirect('tutor_login')
+    csfr_token = request.session.get('csrf_token')
+    print('csrf_token', csfr_token)
+    if request.method == 'POST':
+        tutor = Tutor.objects.get(username=request.user.username)
+        tutor.quiz_result = request.POST.get('quiz_result')
+        tutor.save()
+        messages.success(request, 'Quiz Submitted Successfully')
+        print('quiz_result', tutor.quiz_result)
+        return redirect('tutor_dashboard')
+    return render(request, 'tutor/tutor_quiz.html', context={'csrf_token': csfr_token})
+
 
 # Tutor Logout   
 def tutor_logout(request):

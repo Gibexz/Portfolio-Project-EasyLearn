@@ -1,25 +1,182 @@
 @import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
-
 body{
+    margin: 0px;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+#main_content{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    min-width: 100vw;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Sora', Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    color: #26144A;
+    background-color: #EEF4FF;
 }
 
-.subject_pane{
-    position: relative;
-    width: 300px;
-    border-right: 2px solid #1168FF;
-    padding-left: 50px;
-    background-color: whitesmoke;
-    height: 100vh;
-    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
-    margin-right: 5px;
+.subject_pane {
+    flex: 1;
+    box-sizing: border-box;
+    max-width: 300px;
+    padding: 0 2%;
+    background-color: #FFF;
+    border-radius: 10px 0 10px 10px;
 }
-
 .subject_list{
     margin-top: 100px;
+    max-height: 400px;
+    overflow: hidden;
 }
+.subject_pane h3{
+    display: block;
+    margin: 8.4px;
+    padding: 5%;
+    color: #26144A;
+    font-family:'Sora', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    /* line-height: 34px; */
+}
+
+.mentors {
+    margin-top: 10%;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.ul {
+    list-style: none;
+    background-color: #DDD;
+    padding: 3% 10%;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: visible;
+    width: 100%;
+}
+
+.ul .list_item{
+    line-height: 1.5;
+    font-family:'Sora', Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.list_item a{
+    color: #26144A;
+    text-decoration: none;
+}
+
+.logout_btn a{
+    text-decoration: none;
+    color: #d50e0e;
+}
+
+/* Rightside tutors pane */
+.tutors_pane{
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2%;
+    margin: 0px 0px 0px 2%;
+    padding: 0px 0 5px 10px;
+    overflow-y: auto;
+    overflow-x: visible;
+    /* margin-left: 320px; */
+    background-color: #EEF4FF;
+}
+
+/* search bar in the header */
+.tutors_pane .header{
+    display: flex;
+    height: 96px;
+    background-color: #EEF4FF;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 2%;
+    /* overflow-y: auto;
+    overflow-x: visible; */
+}
+.header{
+    display: flex;
+}
+
+.header .search_bar {
+    display: flex;
+    border-radius: 10px;
+    width: 60%;
+    height: 10%;
+    padding: 3px 10px 3px 0px;
+    margin: auto 0;
+    margin-left: 2%;
+    align-items: center;
+    }
+
+.search_bar_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ddd;
+    margin-left: 0px;
+    border-radius: 50px;
+    box-shadow: 1px 2px 1.5px gray;
+}
+
+
+.search_bar .fa-solid {
+    margin-left: 10px;
+    font-size: 16px !important;
+    color: #1A202C;
+}
+.fa_bell {
+    font-size: 24px !important;
+}
+.search_bar input[type='text']{
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 2% 10px;
+    background: transparent;
+}
+
+
+
+.query_btn {
+    background-color: #02102BD6;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding: 2% 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+    display: inline-block;
+    height: 55px;
+    font-weight: bold;
+}
+    .header .user_info{
+        margin-left: 15%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 20px;
+    }
+    .user_info .username, .search_bar input[type='text'] {
+        font-weight: 400;
+        line-height: 27px;
+    }
+    
 /* Right styling */
 .right{
     padding: 25px;
@@ -28,12 +185,25 @@ body{
 
 
 .dpDisplay{
-    margin-top: 50px;
+    margin-top: 2%;
+    display: flex;
+}
+
+.dpContent{
+    flex: 1;
+    display: flex;
+}
+
+.dpLinks {
+    flex: 1;
+    display: flex;
+    position: relative;
 }
 
 .dpDisplay .tutordp{
     width: 203px;
     height: 218px;
+    object-fit: cover;
     border-radius: 10%;
     float: left;
     margin-right: 20px;
@@ -42,6 +212,124 @@ body{
 .UserBioData{
     padding-top: 1px;
     line-height: 5px;
+}
+.goRight{
+    margin: 10% auto;
+    border: 1px solid rgb(227, 227, 230);
+    height: 35px;
+    overflow: hidden;
+    width: 30%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+}
+/* Email and dropdown */
+.email-form,
+.dropdownContainer {
+    position: absolute;
+    top: 42%;
+    font-size: 12px;
+    /* margin: auto   auto; */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 10px;
+    display: none;
+    box-shadow: 1.5px 1.5px 1px black;
+}
+.dropdownContainer{
+    margin-left: 30%;
+}
+
+.email-form input[type='text'] {
+    border: 1px solid #ccc;
+    width: 80%;
+    border-radius: 5px;
+}
+#emailForm textarea{
+    outline: none;
+    border-radius: 5px;
+    width: 95%;
+    margin: auto;
+}
+#emailForm textarea:focus {
+    outline: none;
+    box-shadow: 1px 1px 0.5px gray;
+}
+
+#emailForm button, .rankTutor button {
+    background-color: #ddd;
+    color: black; 
+    padding: 5px 10px;
+    margin: 0 6%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 75px;
+}
+.rankTutor button{
+    margin-top: 15px !important;
+    width: 150px;
+    font-weight: normal;
+    color: darkblue;
+}
+
+.sendEmail{
+    background-color: #ccc;
+    box-shadow: 1px 1px 1px 1px gray;
+}
+
+.sendEmail:hover{
+    background-color: #73d488 !important;
+}
+
+.cancelEmail{
+    background: red !important;
+    color: white !important;
+}
+.cancelEmail:hover{
+    background-color: rgb(199, 24, 24) !important;
+}
+.email-form input:focus{
+    outline: none;
+}
+
+.dropdownContainer .dropdown-item:hover {
+    background-color: #eee;
+}
+
+.dropdownContainer .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdownContainer .dropdown-item:first-child {
+    border-top: none;
+}
+
+#emailForm{
+    /* width: 70%; */
+    border-radius: 10px;
+}
+
+.dropdown-item {
+    cursor: pointer;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.fa {
+    cursor: pointer;
+}
+ .fa-heart {
+    color: gray;
+}
+
+.heart-red {
+    color: red;
 }
 
 .reviews {
@@ -61,6 +349,26 @@ body{
     color: rgb(167, 0, 89);
 }
 
+.BackToTutors{
+    margin: auto auto;
+    margin-top: 50px ;
+    font-weight: 600;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fa-arrow-circle-left{
+    display: inline;
+    padding-right: 5px;
+}
+
+.BackToTutors a {
+    display: inline;
+    color: rgb(167, 0, 89);
+}
+
 .ratings{
     padding-top: 10px;
     color: darkblue !important;
@@ -71,28 +379,13 @@ body{
     color: gold
 }
 .empty_rank{
-    color: gray;
+    color: gray !important;
 }
 
-.goRight{
-    float: right;
-    margin-right: 10%;
-    margin-top: 30px;
-    border: 1px solid rgb(227, 227, 230);
-    height: 35px;
-    overflow: hidden;
-    width: 128px;
-    border-radius: 10px;
-    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
-}
 
-.goRight img{
-    width: 40px;
-    margin-right: px;
-}
 
 .overview{
-    margin-top: 10%;
+    margin-top: 1%;
 }
 
 .overview_header{
@@ -120,7 +413,7 @@ body{
 .overview_body{
     width: 600px;
     text-align: justify;
-    font-size: small;
+    font-size: 0.9em;
     padding: 10px;
     line-height: 1.4em;
 }
@@ -129,7 +422,7 @@ body{
     margin-left: 20px;
 }
 
-.link2social button{
+.link2social button {
     margin-right: 20px;
     background-color: #1168FF;
     padding: 5px 25px 5px 25px;
@@ -151,7 +444,7 @@ body{
 }
 
 .insideExpertise p{
-    font-size: small;
+    font-size: 0.9em;
     display: inline-block;
     margin-left: 10px;
 }
@@ -231,7 +524,10 @@ body{
     background-color: #1168ffdc;
     border-bottom: 3px solid rgb(144, 113, 113);
 }
-
+hr {
+    margin: 0;
+    padding: 0%;
+}
 /* Reviews */
 .hrtop {
     margin-top: 5px;
@@ -301,6 +597,8 @@ body{
     font-size: 0.8em;
     color: rgba(13, 13, 13, 0.59);
     height: 20px;
+    text-align: right;
+    padding-right: 20%;
 
 }
 /* Rank Tutor Temporarily */
@@ -312,12 +610,416 @@ body{
   .star {
     font-size: 20px;
     margin-right: 5px;
+    color: gray !important;
   }
 
   .gold {
-    color: gold;
+    color: gold !important;
   }
 
   #rankForm {
     display: none;
   }
+  .tutor_row {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-right: 10px;
+    margin-top: 2%;
+}
+
+.tutor_overview{
+    height: 320px;
+    background-color: #FFF;
+    border-radius: 43.5px 0px 43.5px 0px;
+    width: 23%;
+    margin: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    
+}
+
+.tutor_overview .tutor_image{
+    height: 200px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    display: block;
+    object-position: top;
+}
+
+.tutor_image {
+    border-top-left-radius: 15%;
+}
+
+.tutor_overview .other_info section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.other_info .tutor_subject h6{
+    display: inline-block;
+}
+
+.tutor_subject, .tutor_name .name {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+}
+
+.fa-circle{
+    color: rgb(20, 236, 20);
+    padding-left: 10px;
+}
+
+.other_info section .show_block, .tutor_name .name{
+    display: flex;
+    height: 0px;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+
+}
+
+.show_block {
+    font-family:'Sora', Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+}
+.tutor_name .name {
+    font-family:'Sora', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.rank{
+    color: white;
+}
+#no_rank span {
+    color: gray !important;
+}
+
+
+#logout_btn_top {
+    cursor: pointer; 
+    padding: 10px 20px;
+    background: #dc3545; /* Bootstrap's danger color */
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+#logout_btn_top:hover {
+    background: #c82333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.tutor_subject .status {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: rgb(20, 236, 20);
+}
+.other_info .view_tutor_profile{
+    height: 35px;
+    color: darkblue;
+    box-shadow: 1px 2px 1.5px lightblue;
+    /* width: 50%; */
+    font-weight: bolder;
+}
+
+.view_tutor_profile a {
+    text-decoration: none;
+    /* color: white; */
+}
+    
+#flex_tutor_row{
+    flex-direction: row;
+}
+
+/* Pagination for tutors */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 60%;
+}
+
+.pagination button {
+    background-color: #ddd;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    margin: 0 5px;
+    padding: 2% 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+    display: inline-block;
+    height: 55px;
+    font-weight: bold;
+}
+
+#pageButtons button.activeBtn {
+    /* background-color: #1abc9c; */
+    background-color: #12406e;
+    font-weight: bolder;
+    color: white;
+
+}
+
+/* Email response */
+/* Add your modal styles here */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content a {
+    color: #333;
+    text-decoration: none;
+}
+.modal-content a:hover {
+    text-decoration: none;
+}
+
+.back-to-home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+.modal-content .continue {
+    background-color: #ddd;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    margin: 0 5px;
+    padding: 2% 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+    display: inline-block;
+    height: 55px;
+    font-weight: bold;
+}
+
+
+/* CSS for modal button copied */
+.modal-content .continue {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.modal-content .continue:hover {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+.closeModal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-content .moreTutors {
+  background-color: #0078d0;
+  border: 0;
+  border-radius: 56px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  outline: 0;
+  padding: 16px 21px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.modal-content .moreTutors:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 125px;
+  content: "";
+  height: 50%;
+  left: 4%;
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  transition: all .3s;
+  width: 92%;
+}
+
+.modal-content .moreTutors:hover {
+  box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .modal-content .moreTutors {
+    padding: 16px 48px;
+  }
+}
+.sendingEmail {
+    display: block;
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    left: 42%;
+    top: 42%;
+  }
+  .sendingEmail div {
+    animation: sendingEmail 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+  }
+  .sendingEmail div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #000;
+    margin: -4px 0 0 -4px;
+  }
+  .sendingEmail div:nth-child(1) {
+    animation-delay: -0.036s;
+  }
+  .sendingEmail div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+  }
+  .sendingEmail div:nth-child(2) {
+    animation-delay: -0.072s;
+  }
+  .sendingEmail div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+  }
+  .sendingEmail div:nth-child(3) {
+    animation-delay: -0.108s;
+  }
+  .sendingEmail div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+  }
+  .sendingEmail div:nth-child(4) {
+    animation-delay: -0.144s;
+  }
+  .sendingEmail div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+  }
+  .sendingEmail div:nth-child(5) {
+    animation-delay: -0.18s;
+  }
+  .sendingEmail div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+  }
+  .sendingEmail div:nth-child(6) {
+    animation-delay: -0.216s;
+  }
+  .sendingEmail div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+  }
+  .sendingEmail div:nth-child(7) {
+    animation-delay: -0.252s;
+  }
+  .sendingEmail div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+  }
+  .sendingEmail div:nth-child(8) {
+    animation-delay: -0.288s;
+  }
+  .sendingEmail div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+  }
+  @keyframes sendingEmail {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+.closeModal:hover,
+.closeModal:focus {
+    color: rgb(147, 20, 20);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.success-message {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #e74c3c;
+}

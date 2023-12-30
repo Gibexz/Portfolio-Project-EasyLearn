@@ -11,4 +11,8 @@ urlpatterns = [
     path('searchTutors/', views.search_tutors, name='search_tutors'),
     path('submitRank/<int:tutor_id>/', views.submit_rank, name='submit_rank'),
     path('tutorDetail/<int:tutor_id>/', views.tutor_detail, name='tutor_detail'),
+    path('emailTutor/<int:tutor_id>/', views.email_tutor, name='email_tutor'),
+    path('quizGuide/', views.quiz_guide, name='quiz_guide'),
+    path('tutorQuiz/', views.tutor_quiz, name='tutor_quiz'),
+
 ]

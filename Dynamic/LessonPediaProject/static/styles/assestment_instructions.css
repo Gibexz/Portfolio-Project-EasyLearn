@@ -9,7 +9,7 @@ body {
 
 .ins_container {
     border: 1px solid rgb(198, 198, 198);
-    background-color: rgb(235, 241, 253);
+    background-color: rgb(200, 203, 211);
     width: 1200px;
     height: 700px;
     display: flex;
@@ -103,7 +103,5 @@ body {
       width: 150px; /* Adjust button width */
       font-size: 14px; /* Decrease font size for smaller screens */
     }
-    
-    /* Additional specific styles for mobile phones */
   }
   

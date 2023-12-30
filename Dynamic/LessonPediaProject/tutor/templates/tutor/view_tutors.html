@@ -19,6 +19,7 @@
 {% endblock signup_button %} 
 
 {% block content %}
+<hr>
 <body>
     <div id="main_content">
         <div class="subject_pane">
@@ -27,7 +28,7 @@
                     {% if subjects %}
                         <ul class="subjects ul">
                             {% for subject in subjects %}
-                                <li class="subject list_item" ><a class="popover-trigger" id="checkValue" href="#">{{ subject }}</a></li> 
+                                <li class="subject list_item" ><a class="checkValue" href="#">{{ subject }}</a></li> 
                                 {% endfor %}
                                 {% comment "TODO" %} for every subject, query the database for the tutors that teach that subject and display them in the tutor_pane
                                 {% endcomment %}
@@ -48,7 +49,7 @@
                     <H3>Top Mentors <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></H3>
                     {% if tutors %}
                         <ul class="mentor_name ul">
-                            {% for tutor in tutors|slice:':5' %}
+                            {% for tutor in tutors|slice:':10' %}
                                 <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li> 
                             {% endfor %}
                         </ul>
@@ -138,6 +139,7 @@
             </div>
         </div>        
     </div>
+    <hr>
 {% endblock content %}
 
 

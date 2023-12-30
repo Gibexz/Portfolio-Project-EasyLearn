@@ -1,9 +1,8 @@
 {% extends "tutor/base.html" %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'styles/tutor_detail.css' %}">
 <link rel="stylesheet" href="{% static 'styles/tutor_search.css' %}">
-<link rel="stylesheet" href="{% static 'styles/view_tutors.css' %}">
+<link rel="stylesheet" href="{% static 'styles/tutor_detail.css' %}">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/view_tutors.js' %}"></script>
@@ -18,55 +17,58 @@
 {% block content %}
     <hr>
     <div id="main_content">
-    <div class="subject_pane">
-        <div class="subject_list">
-                <h3>Subjects <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></h3>
-                {% if subjects %}
-                    <ul class="subjects ul">
-                        {% for subject in subjects %}
-                            <li class="subject list_item" ><a class="popover-trigger" id="checkValue" href="#">{{ subject }}</a></li> 
+        <div class="subject_pane">
+            <section class="BackToTutors">
+                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i><span><a style="text-decoration: none; margin-bottom: 10%;" href="{% url 'view_tutors' %}"> Other Tutors </a></span>
+            </section>
+            <div class="subject_list">
+                    <h3>Subjects <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></h3>
+                    {% if subjects %}
+                        <ul class="subjects ul">
+                            {% for subject in subjects %}
+                                <li class="subject list_item" ><a class="checkValue" href="#">{{ subject }}</a></li> 
+                                {% endfor %}
+                                {% comment "TODO" %} for every subject, query the database for the tutors that teach that subject and display them in the tutor_pane
+                                {% endcomment %}
+                        </ul>
+                    {% else %}
+                        <ul class="subjects ul">
+                            <li class="subject list_item"><a href="#">Physics</a></li>
+                            <li class="subject list_item"><a href="#">Mathematics</a></li>
+                            <li class="subject list_item"><a href="#">Business Admin</a></li>
+                            <li class="subject list_item"><a href="#">Python Programming</a></li>
+                            <li class="subject list_item"><a href="#">JavaScript</a></li>
+                            <li class="subject list_item"><a href="#">NodeJS</a></li>
+                        </ul>
+                    {% endif %}
+            </div>
+            <div class="mentors">
+                <section class="top_mentors">
+                    <H3>Top Mentors <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></H3>
+                    {% if tutors %}
+                        <ul class="mentor_name ul">
+                            {% for tutor in tutors|slice:':10' %}
+                                <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li> 
                             {% endfor %}
-                            {% comment "TODO" %} for every subject, query the database for the tutors that teach that subject and display them in the tutor_pane
-                            {% endcomment %}
-                    </ul>
-                {% else %}
-                    <ul class="subjects ul">
-                        <li class="subject list_item"><a href="#">Physics</a></li>
-                        <li class="subject list_item"><a href="#">Mathematics</a></li>
-                        <li class="subject list_item"><a href="#">Business Admin</a></li>
-                        <li class="subject list_item"><a href="#">Python Programming</a></li>
-                        <li class="subject list_item"><a href="#">JavaScript</a></li>
-                        <li class="subject list_item"><a href="#">NodeJS</a></li>
-                    </ul>
-                {% endif %}
-        </div>
-        <div class="mentors">
-            <section class="top_mentors">
-                <H3>Top Mentors <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></H3>
-                {% if tutors %}
-                    <ul class="mentor_name ul">
-                        {% for tutor in tutors|slice:':5' %}
-                            <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li> 
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <ul class="mentor_name ul">
-                        <li class="list_item"><a href="#">Esogibe Chidubem</a></li>
-                        <li class="list_item"><a href="#">Gentle Inyang</a></li>
-                        <li class="list_item"><a href="#">Barth Bassey</a></li>
-                        <li class="list_item"><a href="#">Kingsley Chime</a></li>
-                    </ul>
-                {% endif %}
-            </section>
-        </div>
+                        </ul>
+                    {% else %}
+                        <ul class="mentor_name ul">
+                            <li class="list_item"><a href="#">Esogibe Chidubem</a></li>
+                            <li class="list_item"><a href="#">Gentle Inyang</a></li>
+                            <li class="list_item"><a href="#">Barth Bassey</a></li>
+                            <li class="list_item"><a href="#">Kingsley Chime</a></li>
+                        </ul>
+                    {% endif %}
+                </section>
+            </div>
 
-        <div class="logout">
-            <section class="logout_btn">
-                <h3><i class="fa fa-sign-out" aria-hidden="true"></i> <a href="{% url 'logoutUser' %}">Log Out</a></h3>
-            </section>
-        </div>
+            <div class="logout">
+                <section class="logout_btn">
+                    <h3><i class="fa fa-sign-out" aria-hidden="true"></i> <a href="{% url 'logoutUser' %}">Log Out</a></h3>
+                </section>
+            </div>
 
-    </div>
+        </div>
         <div class="right">           
             <div class="header">
                 <div class="search_bar">
@@ -76,13 +78,11 @@
                         <button id="popover-trigger2" class="query_btn popover-trigger" type="submit">Search</button>
                     </form>
                 </div>
-                <div id="notification-box" class="notification-box">
-                  <p>You have no new notifications</p>
-              </div>
+
                 <div class="user_info">
-                    <div>
+                    {% comment %} <div>
                       <i class="fa-regular fa-sharp fa-bell"></i>
-                    </div>
+                    </div> {% endcomment %}
                     <section><img class="tiny_images"src="{{ user.profile_picture.url }}" alt="user_photo"></section>
                     <span class="username">{{ user.username }}</span> <span class="fa fa-chevron-circle-down" aria-hidden="true"></span>
                 </div>
@@ -92,56 +92,113 @@
                     <!-- Search results content will be loaded here -->
                 </div>
             </div>
-
+            
             <div class="dpDisplay">
-                <img class='tutordp' src="{{ tutor.profile_picture.url}}" alt="">
-                <section class="goRight">
-                    <img src="{% static 'images/icons/likebutton.png' %}" alt="">
-                    <img src="{% static 'images/icons/message.png' %}" alt="">
-                    <img src="{% static 'images/icons/more.png' %}" alt="">
-                </section>
-                <section class="UserBioData">
-                    <h3>{{ tutor.get_full_name }}</h3>
-                    <p>{{ tutor.primary_subject }} <span>{{ tutor.highest_qualification }}</span></p>
-                    <p class="ratings">Rating: <span>
-                        <span class="ranks">
-                            {% if tutor.rank %}
-                                    {% if tutor.rank > 4 %}
-                                    <span class="rank_5" id="my_rank">★★★★★</span>
-                                    {% elif tutor.rank > 3 %}
-                                        <span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>
-                                    {% elif tutor.rank > 2 %}
-                                        <span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>
-                                    {% elif tutor.rank > 1 %}
-                                        <span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>
-                                    {% else  %}
-                                        <span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>
+                <div class="dpContent">
+                    <section class="dpImage">
+                        <img class='tutordp' src="{{ tutor.profile_picture.url}}" alt="">
+                    </section>
+                    <section class="UserBioData">
+                        <h3>{{ tutor.get_full_name }}</h3>
+                        <p>{{ tutor.primary_subject }} <span>{{ tutor.highest_qualification }}</span></p>
+                        <p class="ratings">Rating:
+                            <span>
+                                <span class="ranks">
+                                    {% if tutor.rank %}
+                                            {% if tutor.rank > 4 %}
+                                            <span class="rank_5" id="my_rank">★★★★★</span>
+                                            {% elif tutor.rank > 3 %}
+                                                <span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>
+                                            {% elif tutor.rank > 2 %}
+                                                <span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>
+                                            {% elif tutor.rank > 1 %}
+                                                <span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>
+                                            {% else  %}
+                                                <span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>
+                                            {% endif %}
+                                    {% else %}
+                                    <div id="no_rank">
+                                        <span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>
+                                    </div>
                                     {% endif %}
-                            {% else %}
-                            <div id="no_rank">
-                                <span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>
-                            </div>
-                            {% endif %}
-                        </span>
-                    </span></p>
-                </section>
-                <section class="rankTutor">
-                    <button class="rankTutorDisplay">Rate this Tutor</button>
-                    <form method="post" id="rankForm" action="{% url 'submit_rank' tutor.id %}">
-                        {% csrf_token %}
-                        <label for="rank">Rate this tutor:</label>
-                        <div class="stars">
-                          <span class="star" data-value="1">★</span>
-                          <span class="star" data-value="2">★</span>
-                          <span class="star" data-value="3">★</span>
-                          <span class="star" data-value="4">★</span>
-                          <span class="star" data-value="5">★</span>
+                                </span>
+                            </span>
+                        </p>
+                        <section class="rankTutor">
+                            <button class="rankTutorDisplay">Rate this Tutor</button>
+                            <form method="post" id="rankForm" action="{% url 'submit_rank' tutor.id %}">
+                                {% csrf_token %}
+                                <label for="rank"></label>
+                                <div class="stars">
+                                  <span class="star" data-value="1">★</span>
+                                  <span class="star" data-value="2">★</span>
+                                  <span class="star" data-value="3">★</span>
+                                  <span class="star" data-value="4">★</span>
+                                  <span class="star" data-value="5">★</span>
+                                </div>
+                                <input type="hidden" name="rank" id="rank" value="1"> <!-- Default value -->
+                                <button id="submitRankBtn" type="submit">Submit</button>
+                              </form>
+                        </section>
+                    </section>
+                </div>
+                <div class="dpLinks">
+                    <section class="goRight">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                        <div class="email-form">
+                            <form id="emailForm" method="post" action="{%url 'email_tutor' tutor.id %}">
+                                {% csrf_token %}
+                                <label for="sender">From:</label> <span><input type="text" id="sender" name="sender" required readonly value="{{ user.email }}"></span>
+                                <br>
+                                <label for="recipient">To:</label> <span> <input type="text" id="recipient" name="recipient" required readonly value="{{ tutor.email }}"></span>
+                                <br>
+                                <label for="subject">Subject:</label> <span> <input type="text" id="subject" name="subject" required value="Interested in Tutoring Session"></span>
+                                <br>
+                                <input type="hidden" id="lessonPedia" name="senderInfo" value="Client: {{ user.get_full_name }} - {{ user.email }}">
+                                <label for="message">Message:</label><br>
+                                <textarea id="message" name="message" rows="5" required></textarea><br>
+                                
+                                <button type="submit" class="sendEmail">Send</button>
+                                <button class="cancelEmail" type="button">Cancel</button>
+                            </form>
                         </div>
-                        <input type="hidden" name="rank" id="rank" value="1"> <!-- Default value -->
-                        <button type="submit">Submit</button>
-                      </form>
-                </section>
+                        <div id="loadingMessage" style="display: none;">
+                            <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        </div>
+                        <!-- email_sent_modal.html -->
+
+                        <div class="dropdownContainer">
+                            <div class="dropdown-item engage-tutor">Engage tutor</div>
+                            <div class="dropdown-item see-reviews-btn"id="seeReviewsBtn">See reviews</div>
+                        </div>
+                    </section>
+                </div>
             </div>
+                <div id="emailSentModal" class="modal">
+                    <div class="modal-content">
+                        <span class="closeModal">&times;</span>
+                        <h1>Email Sent Successfully!</h1>
+                        <center><p class="success-message">Your email has been sent successfully. Thank you for using our service.</p></center>
+                        <div class="back-to-home">
+                            <a href="{% url 'view_tutors' %}"><button class="moreTutors">More</button></a>
+                            <a><button class="continue">Continue</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- email_error_modal.html -->
+                <div id="emailErrorModal" class="modal">
+                    <div class="modal-content">
+                        <span class="closeModal">&times;</span>
+                        <h1 class="error-message">Error Sending Email</h1>
+                        <p >There was an issue sending the email. Please try again later.</p>
+                        {% comment %} <a href="#" class="back-link">Go back</a> {% endcomment %}
+                    </div>
+                </div>
+                <input style="display: none;" id="tutorId" type="hidden" value="{{ tutor.id }}">
+
 
             <div class="overview">
                 <section class="overview_header">
@@ -158,7 +215,7 @@
                     </p>
                 </section>
             </div>
-            <div class="reviews">
+            <div class="reviews" id="reviewsSection">
                 <section class="review_body">
                     {% comment %} Implement a well structured review {% endcomment %}
 
@@ -196,7 +253,7 @@
                 <section class="insideExpertise">
                     <p class="expertLev">Expertise</p> 
                     <p class="first">
-                        {% if tutor.area_of_specialization %}
+                       {% if tutor.areaof_specialization %}
                             {{ tutor.area_of_specialization }}
                         {% else %}
                            Teaching
@@ -217,12 +274,8 @@
                 <section class="addTutor">
                     <button class="addbutton">Add Tutor</button>
                 </section>
-            </section><hr>
-            
-            <section class="arrows">
-                <img id='nextArrow' src="{% static 'images/icons/arrow-left.png' %}" alt="">
-                <img id='prevArrow' src="{% static 'images/icons/arrow-right.png' %}" alt="">
             </section>
+            
             <h3 class="similarHead">Similar Tutors Profile</h3>
             <div class="similarTutors">
                 <div class="tutor_row">
@@ -264,6 +317,12 @@
                     {% endif %}
                 </div>
             </div>
+            <div class="pagination">
+                <button id="prevPage">Previous</button>
+                <div id="pageButtons"></div>
+                <button id="nextPage">Next</button>
+            </div>
+            
         </div>
     </div>
 </div><hr>

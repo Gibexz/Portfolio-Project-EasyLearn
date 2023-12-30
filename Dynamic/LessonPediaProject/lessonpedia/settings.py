@@ -28,6 +28,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'developers.lessonpedia@gmail.com'
+EMAIL_HOST_PASSWORD = 'opjo uumf rycy hicr'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -152,6 +159,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -162,3 +170,4 @@ REST_FRAMEWORK = {
 }
 
 SESSION_COOKIE_SECURE = False # True for production
+# settings.py

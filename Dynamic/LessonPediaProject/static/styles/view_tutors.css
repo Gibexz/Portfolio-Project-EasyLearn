@@ -1,13 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@200;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Sora:wght@200;400;600&display=swap');
-/* 
+
 body{
     margin: 0px;
-    min-height: 100vh;
-    display: flex;
-    color: black;
-    min-width: none;
-} */
+}
 /* container for subjects and tutor overview */
 
 #main_content{
@@ -25,6 +21,10 @@ body{
     background-color: #EEF4FF;
 }
 
+hr {
+    padding: 0%;
+    margin: 0px;
+}
 /* leftside container for subjects, mentors and logout */
 .subject_pane {
     flex: 1;
@@ -38,11 +38,13 @@ body{
 }
 .subject_list{
     margin-top: 100px;
+    max-height: 400px;
+    overflow: hidden;
 }
 .subject_pane h3{
     display: block;
     margin: 8.4px;
-    padding: 0;
+    padding: 5%;
     color: #26144A;
     font-family:'Sora', Arial, Helvetica, sans-serif;
     font-weight: 600;
@@ -50,15 +52,24 @@ body{
     /* line-height: 34px; */
 }
 
+.mentors {
+    margin-top: 10%;
+    max-height: 400px;
+    overflow: hidden;
+}
+
 .ul {
     list-style: none;
     background-color: #DDD;
-    padding: 2% 10%;
+    padding: 3% 10%;
     border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: visible;
+    width: 100%;
 }
 
 .ul .list_item{
-    line-height: 27px;
+    line-height: 1.5;
     font-family:'Sora', Arial, Helvetica, sans-serif;
     font-size: 18px;
     font-weight: 400;
@@ -71,7 +82,7 @@ body{
 
 .logout_btn a{
     text-decoration: none;
-    color: #26144A;
+    color: #d50e0e;
 }
 
 
@@ -259,21 +270,15 @@ body{
     color: gold;
 }
 .empty_rank {
-    color: black !important;
+    color: gray !important;
 }
 
 .rank{
     color: white;
 }
 #no_rank span {
-    color: black;
+    color: gray !important;
 }
-/* .rank_5 {
-    color: white;
-} */
-
-
-
 
 /* for rounded icon-like images */
 .tiny_images{
@@ -321,35 +326,6 @@ body{
     /* color: white; */
 }
     
-    /* Bottom Footer */
-    
-    .buttom_footer{
-        background:linear-gradient(90deg, rgba(8, 5, 5, 0.757) 40%, rgba(12, 12, 12, 0.789) 60%);
-        display: flex;
-        padding-left: 10%;
-        color:white;
-        height: 80px;
-        align-items: center;
-        margin-top: auto;
-    }
-    
-    .buttom_footer p{
-        margin-top: 12px;
-        max-width: 450px;
-        font-family: 'Saira', sans-serif;
-    }
-    
-    .buttom_footer .social_medias{
-        padding-left: 40%;
-        width: 200px;
-    }
-    
-    .buttom_footer .social_medias img{
-        padding-right: 10%;
-    }
-
-
-
 #flex_tutor_row{
     flex-direction: row;
 }
@@ -422,7 +398,6 @@ MEDIA QUERIES
 /* Media Query for screens less than 768px */
 @media only screen and (max-width: 780px) {
     .tutors_pane{
-        margin-left: 400px !important;
         justify-content: end;
     }
     .tutor_overview {

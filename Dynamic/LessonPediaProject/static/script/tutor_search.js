@@ -7,37 +7,47 @@ $(document).ready(function () {
         $('#searchResultsModal').hide();
     }
 
-    let popoverTrigger = $(".popover-trigger");
-    let popoverContent = $("#popover-content");
-    let searchForm = $(".search_bar_form");
+    let subjectName = "";
+let popoverTrigger = $(".popover-trigger");
+let popoverContent = $("#popover-content");
+let searchForm = $(".search_bar_form");
 
+// Click handler for list items
+$('.checkValue').click(function () {
+    subjectName = $(this).text();
+    $('.checkValue').removeClass('popover-trigger');
+    $(this).addClass('popover-trigger');
+    performAjaxQuery();
+});
 
-    let subjectName = $('#checkValue').text();
+// Click handler for popover trigger
+popoverTrigger.click(function (e) {
+    e.preventDefault();
+    performAjaxQuery();
+});
 
-    // Show popover content on button click
-    popoverTrigger.click(function (e) {
-        e.preventDefault();
+function performAjaxQuery() {
+    let searchQuery = searchForm.find("input[name='query']").val().trim();
+    if (searchQuery === "") {
+        searchQuery = subjectName;
+    }
+    subjectName = "";
 
-        let searchQuery = searchForm.find("input[name='query']").val().trim();
-        if (searchQuery === "") {
-            searchQuery = subjectName;
-        }
+    if (searchQuery !== "") {
+        $.ajax({
+            type: 'GET',
+            url: '/tutor/searchTutors/',
+            data: {query: searchQuery},
+            success: function (data) {
+                updatePopoverContent(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+}
 
-
-        if (searchQuery !== "") {
-            $.ajax({
-                type: 'GET',
-                url: '/tutor/searchTutors/', 
-                data: {query: searchQuery}, 
-                success: function(data) {
-                    updatePopoverContent(data);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-    });
 
     // Close popover when clicking outside the popover
     $(document).click(function (event) {
@@ -70,29 +80,25 @@ $(document).ready(function () {
                     '</section>');
 
                 // Append other_info div
-                tutorOverview.append('<div class="other_info">' +
-                '<section class="tutor_name flex_tutor_name">' +
-                '<h5 class="name" style="display: inline-block;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>');
+                // tutorOverview.append('<div class="other_info">' +
+                // '<section class="tutor_name">');
+                
             
             // Adjust the rank display based on the rank value
                 if (tutor.rank) {
                     if (tutor.rank > 4) {
-                        tutorOverview.append('<span class="rank_5" id="my_rank">★★★★★</span>');
+                        tutorOverview.append('<center>' + '<h5 class="name" style="display: inline-block; margin: 0px auto;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>' + '<span class="rank_5" id="my_rank">★★★★★</span>'+ '</center>');
                     } else if (tutor.rank > 3) {
-                        tutorOverview.append('<span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>');
+                        tutorOverview.append('<center>' + '<h5 class="name" style="display: inline-block; margin: 0px auto;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>' + '<span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>'+ '</center>');
                     } else if (tutor.rank > 2) {
-                        tutorOverview.append('<span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>');
+                         tutorOverview.append('<center>' + '<h5 class="name" style="display: inline-block; margin: 0px auto;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>' + '<span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>'+ '</center>');
                     } else if (tutor.rank > 1) {
-                        tutorOverview.append('<span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>');
+                         tutorOverview.append('<center>' + '<h5 class="name" style="display: inline-block; margin: 0px auto;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>' + '<span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>'+ '</center>');
                     } else {
-                        tutorOverview.append('<div id="no_rank">');
-                        tutorOverview.append('<span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>');
-                        tutorOverview.append('</div>');
+                         tutorOverview.append('<center>' + '<h5 class="name" style="display: inline-block; margin: 0px auto;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>' + '<span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>'+ '</center>');
                     }
                 } else {
-                    tutorOverview.append('<div id="no_rank">');
-                    tutorOverview.append('<span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>');
-                    tutorOverview.append('</div>');
+                     tutorOverview.append('<center>' + '<h5 class="name" style="display: inline-block; margin: 0px auto;">' + tutor.first_name + ' ' + tutor.last_name + ' &nbsp;</h5>' + '<span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>'+ '</center>');
                 }
 
                 tutorOverview.append('</section>' +
@@ -114,8 +120,9 @@ $(document).ready(function () {
         }
 
         if (data.subjects.length > 0) {
+            let subjects_count = data.subjects.length;
             popoverContent.append('<div class="subject_row">');
-            popoverContent.append('<h3>Subjects:</h3>');
+            popoverContent.append('<h3>Subjects: ' + subjects_count+ '</h3>');
             data.subjects.forEach(function(subject) {
                 tutors = data.tutors.slice()
                 console.log(subject);

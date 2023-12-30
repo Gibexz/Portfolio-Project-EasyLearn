@@ -20,9 +20,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .admin import lessonPedia_admin_site
 
+
 urlpatterns = [
     path('lessonpedia/', lessonPedia_admin_site.urls),
     path('admin/', admin.site.urls),
+    # path('auth/', include('social_django.urls', namespace='social')),
     path("", include("generic_apps.urls")),
     path("client/", include('client.urls')),
     path("tutor/", include('tutor.urls')),
