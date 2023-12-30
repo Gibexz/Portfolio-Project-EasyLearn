@@ -5,7 +5,7 @@ body{
 }
 
 /* Hide logics */
-.activate_learners{
+.activate_learners, .tutor_report, .client_report {
     display: none;
 }
 
@@ -13,7 +13,8 @@ body{
     display: nne;
 }
 
-.set_action, .set_action_client, .set_action_tutor{
+.set_action, .set_action_client, .set_action_tutor,
+.client_report, .tutor_report {
     display: none;
 }
 
@@ -25,15 +26,22 @@ body{
     display:non;
 }
 
-.set_review_details{
+.set_review_details, .set_review_details_client{
     display: none;
 }
 
-.set_report_details{
+.set_report_details, .set_report_details_client{
     display: none;
 }
 
-.set_disable_account, .set_disable_account_client{
+.set_disable_account, 
+.set_disable_account_client,
+.set_reactivate_account_tutor, 
+.set_reactivate_account_client,
+.set_delete_account_tutor,
+.set_delete_account_client,
+.set_suspend_account_tutor,
+.set_suspend_account_client {
     display: none;
 }
 
@@ -181,6 +189,7 @@ body{
     color: gray;
 }
 
+
 .inner_content .total_registered{
     font-weight: 600;
     font-family: 'Marko One', serif;
@@ -200,6 +209,22 @@ body{
     font-family: 'Roboto', sans-serif;
     padding: 20px;
     font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.tutors_list_content {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.table_header, .table_header_learner {
+    position: sticky;
+    top: 65px;
+    background-color: white;
+    border-bottom: 1px solid gray;
+    background-color: ghostwhite;
 }
 
 table {
@@ -236,6 +261,7 @@ table {
     margin: auto auto;
 }
 
+
 .all_data td, th{
     border-bottom: 1px solid gray;
     padding: 20px 15px 15px 15px;
@@ -250,6 +276,7 @@ table {
     padding: 2px 10px, 2px 10px;
     cursor: pointer;
 }
+
 
 .check_status, .check_status_client, .action, .action_client{
     border-radius: 5px;
@@ -274,17 +301,20 @@ table {
     height: 100vh;
     width: 100vw;
     backdrop-filter: brightness(0.2);
+    z-index: 2;
 }
 
 .action_dialog{
     height: 600px;
-    width: 900px;
+    width: 75%;
+    min-width: 800px;
     background-color: whitesmoke;
     margin: auto;
     border-radius: 20px;
     box-shadow: 1px 1px 12px 1px white;
     padding: 10px 20px 10px 20px;
     border-bottom: 2px solid rgba(239, 2, 2, 0.433);
+
 }
 
 .close, .close_client{
@@ -400,7 +430,7 @@ table {
 
 .pedia{
     text-align: center;
-    margin-top: 180px;
+    margin-top: 135px;
     color: rgb(1, 1, 118);
     padding-top: 10px;
     border-top: 2px solid rgba(0, 0, 0, 0.287);
@@ -413,7 +443,7 @@ table {
 /* View section */
 .view_container{
     margin-left: 20px;
-    width: 650px;
+    width: 85%;
     background: linear-gradient(450deg, white, whitesmoke);
     box-shadow: none;
 }
@@ -440,7 +470,7 @@ table {
     border-radius: 10px;
     margin: auto;
     height: 53vh;
-    width: 40vw;
+    width: 85%;
     box-shadow: 1px 1px 5px 1px rgba(222, 222, 211, 0.624);
     font-family: 'DM Sans', sans-serif;
     overflow-y: auto;
@@ -579,6 +609,7 @@ table {
    position: absolute;
    display: flex;
    backdrop-filter: brightness(0.3);
+   z-index: 2;
 }
 
 .disable_account_content{
@@ -663,8 +694,13 @@ table {
     background-color: blue;
 }
 
-.selections .confirm_remove_tutor, .selections .confirm_remove_client{
+.selections .confirm_remove_tutor, .selections .confirm_remove_client,
+.selections .confirm_delete_tutor, .selections .confirm_delete_client {
     background-color: red;
+}
+
+.selections .confirm_activate_tutor, .selections .confirm_activate_client{
+    background-color: rgb(21, 253, 17);
 }
 
 /* Pagination */
@@ -720,4 +756,53 @@ table {
 #messageDivError{
     border: 2px solid rgba(247, 34, 34, 0.804);
     box-shadow: 1px 1px 5px 1px rgba(247, 34, 34, 0.804);  
+}
+
+/* Reports DropDown */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdownReports {
+  /* position: relative; */
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-contentReports {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  font-weight: 300;
+}
+
+
+.dropdown-contentReports ol {
+    list-style-type: none;
+    font-weight: 300;
+}
+
+/* Links inside the dropdown */
+.dropdown-contentReports li {
+  color: black;
+  cursor: pointer;
+  display: block;
+  margin: 0px;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-contentReports li:hover {
+    background-color: #f1f1f1;
+    color: rgba(13, 95, 5, 0.625);
+}
+
+/* Show the dropdown menu on hover */
+.dropdownReports:hover .dropdown-contentReports {
+  display: block;
 }

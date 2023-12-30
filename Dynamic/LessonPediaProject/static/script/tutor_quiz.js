@@ -57,7 +57,7 @@ $(document).ready(function () {
 
     // Function to calculate the score based on selected answers
     function calculateScore() {
-        var totalQuestions = 10; // Total number of questions
+        var totalQuestions = 10;
         var correctAnswers = 0;
 
         // Function to compare user-selected answers with correct answers
@@ -75,27 +75,21 @@ $(document).ready(function () {
 
         // Check Abstract section answers
         checkAnswers(abstractAnswers);
-
         var scorePercentage = (correctAnswers / totalQuestions) * 100;
-        return scorePercentage.toFixed(2); // Return the score percentage with two decimal places
+        return scorePercentage.toFixed(2);
     }
 
     // Function to display score in a popup
     function displayScorePopup(score) {
         // Show the popup
         $("#popup").fadeIn();
-
-        // Display the score and redirect message
         $("#scoreDisplay").text(`Your score: ${score}%`);
-
-        // Hide the popup after 5 seconds and redirect
         setTimeout(function () {
             $("#popup").fadeOut();
             window.location.href = "/tutor/dashboard/"; 
         }, 5000);
     }
 
-    // Function to store the score in the database (This should be handled server-side)
     // Modify the storeScoreToDatabase function
     function storeScoreToDatabase(score) {
         $.ajax({
@@ -106,8 +100,6 @@ $(document).ready(function () {
             csrfmiddlewaretoken: getCookie('csrftoken')
           },
           success: function (response) {
-            alert('Score stored in the database');
-      
             // Reset the form after successful submission
             $('#quizForm')[0].reset();
             $("#quiz").hide();
@@ -118,10 +110,9 @@ $(document).ready(function () {
       
             // Disable the finish button to prevent further submissions
             $("#finishBtn").prop('disabled', true);
-      
             window.onbeforeunload = null;
-      
           },
+
           error: function (error) {
             alert('Error storing score:', error);
           }

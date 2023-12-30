@@ -17,10 +17,26 @@ $(document).ready(function(){
     $("#set_tutor").click(function(){
         $(".activate_tutors").show()
         $(".activate_learners").hide()
+        $(".tutor_report").hide()
+        $(".client_report").hide()
     })
     $("#set_learner").click(function(){
         $(".activate_tutors").hide()
         $(".activate_learners").show()
+        $(".tutor_report").hide()
+        $(".client_report").hide()
+    })
+    $("#set_tutor_report").click(function(){
+        $(".activate_tutors").hide()
+        $(".activate_learners").hide()
+        $(".tutor_report").show()
+        $(".client_report").hide()
+    })
+    $("#set_client_report").click(function(){
+        $(".activate_tutors").hide()
+        $(".activate_learners").hide()
+        $(".tutor_report").hide()
+        $(".client_report").show()
     })
     
 
@@ -33,6 +49,7 @@ $(document).ready(function(){
         let tutorId = tutorData.id
         // // Associate the tutor ID with the suspension dialogue
         $('.confirm_remove_tutor').attr('data-tutor-id', tutorId);
+        $('.confirm_activate_tutor').attr('data-tutor-id_activate', tutorId);
 
         // console.log(tutorData); // Check the entire tutorData object
         
@@ -104,6 +121,7 @@ $(document).ready(function(){
         let clientId = clientData.id
         // // Associate the tutor ID with the suspension dialogue
         $('.confirm_remove_client').attr('data-client-id', clientId);
+        $('.confirm_activate_client').attr('data-client-id_activate', clientId);
     
         // console.log(clientData); // Check the entire clientData object
         
@@ -147,7 +165,7 @@ $(document).ready(function(){
     })
 
 
-    // profile, review and report activation logic
+    // profile, review and report activation logic for tutor ==============================
     $('#activate_review').click(function(){
         $('.set_other_details').hide()
         $('.set_review_details').show()
@@ -163,9 +181,56 @@ $(document).ready(function(){
         $('.set_review_details').hide()
         $('.set_report_details').show()
     })
+    
+    
+    // profile, review and report activation logic for client ==============================
+    $('#activate_review_client').click(function(){
+        $('.set_other_details_client').hide()
+        $('.set_review_details_client').show()
+        $('.set_report_details_client').hide()
+    })
+    $('#activate_profile_client').click(function(){
+        $('.set_other_details_client').show()
+        $('.set_review_details_client').hide()
+        $('.set_report_details_client').hide()
+    })
+    $('#activate_report_client').click(function(){
+        $('.set_other_details_client').hide()
+        $('.set_review_details_client').hide()
+        $('.set_report_details_client').show()
+    })
+
 
     // account suspending dialogue display for tutor  ==============================
-    $('#activate_suspend').click(function(){
+    $('#activate_suspend_tutor').click(function(){
+        const tutor_id = $(this).data('tutor')
+
+        $('.set_action_tutor').hide()
+        $('.set_suspend_account_tutor').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action_tutor').show()
+        $('.set_suspend_account_tutor').hide()
+    })
+    
+
+    // account suspending dialogue display for client  ==============================
+    $('#activate_suspend_client').click(function(){
+        const client_id = $(this).data('client')
+
+        $('.set_action_client').hide()
+        $('.set_suspend_account_client').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action_client').show()
+        $('.set_suspend_account_client').hide()
+    })
+
+    
+    // account blocking dialogue display for tutor  ==============================
+    $('#activate_block').click(function(){
         const tutor_id = $(this).data('tutor')
 
         $('.set_action_tutor').hide()
@@ -179,7 +244,7 @@ $(document).ready(function(){
 
 
     // account suspending dialogue display for client  ==============================
-    $('#activate_suspend_client').click(function(){
+    $('#activate_block_client').click(function(){
         $('.set_action_client').hide()
         $('.set_disable_account_client').show()
     })
@@ -187,6 +252,54 @@ $(document).ready(function(){
     $('.disable_close_client, .mistake_client').click(function(){
         $('.set_action_client').show()
         $('.set_disable_account_client').hide()
+    })
+
+
+    // account reactivation dialogue display for tutor  ==============================
+    $('#reactivate_account_tutor').click(function(){
+        $('.set_action_tutor').hide()
+        $('.set_reactivate_account_tutor').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action_tutor').show()
+        $('.set_reactivate_account_tutor').hide()
+    })
+
+
+    // account reactivation dialogue display for client  ==============================
+    $('#reactivate_account_client').click(function(){
+        $('.set_action_client').hide()
+        $('.set_reactivate_account_client').show()
+    })
+
+    $('.disable_close_client, .mistake_client').click(function(){
+        $('.set_action_client').show()
+        $('.set_reactivate_account_client').hide()
+    })
+
+
+    // account deletion dialogue display for tutor  ==============================
+    $('#delete_account_tutor').click(function(){
+        $('.set_action_tutor').hide()
+        $('.set_delete_account_tutor').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action_tutor').show()
+        $('.set_delete_account_tutor').hide()
+    })
+
+
+    // account deletion dialogue display for client  ==============================
+    $('#delete_account_client').click(function(){
+        $('.set_action_client').hide()
+        $('.set_delete_account_client').show()
+    })
+
+    $('.disable_close_client, .mistake_client').click(function(){
+        $('.set_action_client').show()
+        $('.set_delete_account_client').hide()
     })
 
 });
@@ -205,27 +318,29 @@ $(document).ready(function() {
         messageDivError.fadeIn().delay(5000).fadeOut();
     }
 
+
+
     // logic to disable a tutor's account  ==========================================
     $('.confirm_remove_tutor').click(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
         let tutor_id = $(this).data('tutor-id'); 
-        // console.log(tutor_id);
+        console.log(tutor_id);
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         $.ajax({
             method: 'POST',
-            // url: `${api_url}/api/tutors_action_api/suspend_tutor/${tutor_id}/`, // works too
-            url: `${api_url}/api/tutors_action_api/${tutor_id}/suspend_tutor/`,
+            // url: `${api_url}/api/tutors_action_api/deactivate_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/deactivate_tutor/`,
 
             beforeSend: function(xhr) { 
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Tutor suspended successfully');
+                displayMessageSuccess('Tutor deactivated (blocked) successfully');
             },
             error: function(xhr, textStatus, errorThrown) {
                 displayMessageError('Error suspending tutor: ' + errorThrown);
@@ -234,6 +349,8 @@ $(document).ready(function() {
         $('.set_action_tutor').show()
         $('.set_disable_account').hide()
     });
+
+
 
     // logic to disable a client's account  =====================================
     $('.confirm_remove_client').click(function() {
@@ -264,7 +381,81 @@ $(document).ready(function() {
         $('.set_action_client').show()
         $('.set_disable_account_client').hide()
     });
+
+
+
+    // logic to reactivate a tutor's account  ==========================================
+    $('.confirm_activate_tutor').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let tutor_id = $(this).data('tutor-id_activate'); 
+        console.log(tutor_id);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/tutors_action_api/activate_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/activate_tutor/`,
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Tutor profile reactivated successfully');
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating tutor profile: ' + errorThrown);
+            }
+        });
+        $('.set_action_tutor').show()
+        $('.set_reactivate_account_tutor').hide()
+    });
+
+
+
+    // logic to reactivate a clients's account  ==========================================
+    $('.confirm_activate_client').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let client_id = $(this).data('client-id_activate'); 
+        console.log(client_id);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/clients_action_api/activate_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/activate_client/`,
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('client profile reactivated successfully');
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating client profile: ' + errorThrown);
+            }
+        });
+        $('.set_action_client').show()
+        $('.set_reactivate_account_client').hide()
+    });
+
+
+
+
+
 })
+
+
+
+
+
 
 
 //  live table sort for tutor admin table list  ===================================

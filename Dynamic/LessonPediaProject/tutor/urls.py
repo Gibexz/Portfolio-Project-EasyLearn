@@ -14,5 +14,7 @@ urlpatterns = [
     path('emailTutor/<int:tutor_id>/', views.email_tutor, name='email_tutor'),
     path('quizGuide/', views.quiz_guide, name='quiz_guide'),
     path('quiz/', views.tutor_quiz, name='tutor_quiz'),
-
+    path('adminSupport/', views.admin_support, name='admin_support'),
+    path('suspendTutor/<int:tutor_id>/', views.suspend_tutor, name='suspend_tutor'),
+    path('blockTutor/<int:tutor_id>/', views.block_tutor, name='block_tutor'),
 ]

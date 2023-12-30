@@ -29,11 +29,32 @@
                 <img src="{% static "images/icons/warning.png" %}" alt="">
                 <div class="warning_box">
                     <p class="confirm_dialog">Warning!</p>
-                    <p class="action">This actions cannot be undo, do you wish to process?</p>
+                    <p class="action">This action cannot be undone, do you wish to proceed?</p>
                 </div>
                 <div class="selections">
+                    <!-- Button to trigger password input -->
                     <button class="confirm_remove">Confirm</button>
-                    <button class="mistake">Cancel</button>
+                    <button class="mistake cancel_suspend" onclick="cancelSuspension()">Cancel</button>
+                    
+                    <!-- Password input initially hidden -->
+                    <div id="passwordInputContainer" style="display: none;">
+                        <form method="post" action="{% url 'suspend_tutor' request.user.id %}">
+                            {% csrf_token %}
+                            
+                            <!-- Password field for confirmation -->
+                            <div class="confirmSuspend">
+                              <b><label for="password">Confirm Password:</label></b><br>
+                                <input type="password" name="password" required>
+                            </div>
+                            
+                            <!-- Actual submit button -->
+                            <div class="styleButtons">
+                                <button type="submit" class="suspend_button confirm_remove">Suspend Account</button>
+                                <button type="button" class="mistake" onclick="cancelSuspension()">Cancel</button>
+                            </div>
+                        </form>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -991,14 +1012,9 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                
-                                
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
             

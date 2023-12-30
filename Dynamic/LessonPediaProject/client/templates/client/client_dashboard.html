@@ -77,6 +77,9 @@
                     <div class="history side">
                         <a href="#" class="history_active">History</a> 
                     </div>
+                    <div class='addTutors side'>
+                        <a href="{% url 'view_tutors' %}" class="exploreTutors">View Tutors</a>
+                    </div><br>
                     <div class="logout side logout_activation">
                         <a href="#">Logout</a> 
                     </div>            
@@ -99,9 +102,9 @@
                     </div>
                     <div class="activities">
                         <div class="courses">
-                            <div class="not_started item"><p class="progress">1/2 </p><p class="progress_text">In Progress</p></div>
-                            <div class="in_progress item"><p class="progress">1/2 </p><p class="progress_text">Pending</p></div>
-                            <div class="completed item"><p class="progress">0/2 </p><p class="progress_text">Settled</p></div>
+                            <div class="not_started item"><p class="progress">1/{{ totalTutors }} </p><p class="progress_text">In Progress</p></div>
+                            <div class="in_progress item"><p class="progress">1/{{ totalTutors }} </p><p class="progress_text">Pending</p></div>
+                            <div class="completed item"><p class="progress">0/{{ totalTutors }} </p><p class="progress_text">Settled</p></div>
                         </div> 
                         <div class="my_tutors">
                             <div class="searchClient">
@@ -110,36 +113,79 @@
                             </div>
 
                         </div>
-                        <div class="subjects">
-                            <section class="subject_details">
-                                <section class="tutor_info">
-                                    <div class="clearfix">
-                                        <img src="{% static 'images/clients/pass.jpg' %}" alt="Client Passport">
-                                        <section class="float_left">
-                                            <div class="subject_table table">
-                                                <span class="tutor_subject tr">Software Development</span>
-                                                <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="time"> 4:00pm - 6:30pm (3hrs)</span>
-                                            </div>
-                                            <span class="tutor_name"><b>Esogibe Chidubem</b></span>
-                                            <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
+                        {% if tutors %}
+                        {% for tutor in tutors %}                        
+                            <div class="subjects">
+                                <section class="subject_details">
+                                    <section class="tutor_info">
+                                        <div class="clearfix">
+                                            <img src="{{ tutor.target_tutor.profile_picture.url }}" alt="Client Passport">
+                                            <section class="float_left">
+                                                <div class="subject_table table">
+                                                    <span class="tutor_subject tr">{{ tutor.target_tutor.area_of_specialization }}</span>
+                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="time"> 4:00pm - 6:30pm (3hrs)</span>
+                                                </div>
+                                                <span class="tutor_name"><b>{{ tutor.target_tutor.first_name }} {{ tutor.target_tutor.last_name}}</b></span>
+                                                <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
 
-                                        
-                                        </section>
-                                        <section class="status"></section>
-                                    </div>
-                                    <div class="tutor_toggles">
-                                        <button class="remove_tutor even-width">Remove</button>
-                                    
-                                        <button class="report_abuse even-width">Report Abuse</button>
-                                        <button class="review even-width">Review</button>
-                                        <button class="rank even-width">Rank</button>
-                                        <section class="status_icon"></section>
-                                    </div>
+                                            
+                                            </section>
+                                            <section 
+                                                {% if tutor.target_tutor.is_active == 1 %}
+                                                    class="status"
+                                                {% else %}
+                                                    class="redStatus"
+                                                {% endif %}
+                                                >
+                                            </section>
+                                        </div>                                        
+
+                                        <div class="tutor_toggles">
+                                            <button class="remove_tutor even-width">Remove</button>
+                                            <button class="report_abuse even-width">Report Abuse</button>
+                                            <button class="review even-width">Review</button>
+
+                                            <button class="rank even-width">
+                                                <div class='rankStar'>
+                                                    <p class='rankTutor'>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                        <span>★</span>
+                                                    </p>
+                                                    <section>
+                                                        <p class="rankText">Rank with stars</p>
+                                                    </section>
+                                                </div>
+                                                Rank <span class="getID" style="display: none;">{{ tutor.target_tutor.id }}</span></button>                                  
+                                            <section class="status_icon"></section>
+                                        </div>
+                                                                                
+                                        <div class="removeUser">
+                                            <div class="warning">
+                                                <div class="warning_box">
+                                                    <p class="confirm_dialog">Warning!</p>
+                                                    <p class="action">Are you sure to remove this tutor?</p>
+                                                </div>
+                                                <div class="selections">
+                                                    <a href="{% url 'remove_tutor' tutorId=tutor.target_tutor.id %}"><button class="confirm_remove">Yes</button></a>
+                                                    <button class="cancel_remove">No</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </section>
-                            </section>
-                            <div class="hr"><hr></div>
+                                <div class="hr"><hr></div>
+                                
+                            </div>
                             
-                        </div>
+                            {% endfor %}
+                            {% else %}
+                                <center><h3 style="font-family: 'Roboto', sans-serif;">
+                                    No tutor yet, please click view tutor to add some!
+                                </h3></center>
+                            {% endif %}
                     </div>
                 </div>
 
@@ -186,8 +232,11 @@
                     <div class="history side" id="history">
                         <a href="#" class="history_active">History</a>
                     </div>
+                    <div class='addTutors side'>
+                        <a href="{% url 'view_tutors' %}" class="exploreTutors">View Tutors</a>
+                    </div><br>
                     <div class="logout side logout_activation">
-                        <a href="#">Logout</a> 
+                        <a href="#">Logout</a>
                     </div>            
                 </div>
             </div>
@@ -313,7 +362,10 @@
                     <div class="history side historica" id="history">
                         <a href="#">History</a>
                         <h6 id="coming_soon" class="coming_soon">Coming soon</h6>
-                    </div>                    
+                    </div>
+                    <div class='addTutors side'>
+                        <a href="{% url 'view_tutors' %}" class="exploreTutors">View Tutors</a>
+                    </div><br>                  
                     <div class="logout side logout_activation">
                         <a href="#">Logout</a> 
                     </div>            

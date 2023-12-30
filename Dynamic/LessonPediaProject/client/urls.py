@@ -11,4 +11,7 @@ urlpatterns = [
     path('SignIn/User_dashboard/Password_change', views.ClientChangePassword, name='changePassword'),
     path("user/deactivate", views.deactivate_account, name="remove_user"),
     path("user/profile_picture_Update", views.profilePictureUpdate, name="dpUpdate"),
+    path("user/add_tutor/<int:tutorId>", views.addTutor_2_cart, name='add_tutor'),
+    path("user/remove_tutor/<int:tutorId>", views.removeTutorFromCart, name='remove_tutor'),
+    path("tutor/ranking/<int:tutorId>/<int:rankValue>", views.tutors_ranking, name='rank_tutor'),
 ]

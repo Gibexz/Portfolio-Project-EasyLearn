@@ -473,4 +473,13 @@ $(document).ready(function() {
         $('#save_btn').addClass('inactive');
       }
     });
+
+
+    // suspend tutor account
+    $('.confirm_remove').on('click', function() {
+      $(this).hide(); 
+    $('#passwordInputContainer').toggle();
+    $('.cancel_suspend').hide();
+  });
+
 });

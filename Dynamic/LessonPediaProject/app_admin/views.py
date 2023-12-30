@@ -246,11 +246,13 @@ class TutorViewSet(ModelViewSet):
     serializer_class = TutorSerializer
 
     @action(detail=True, methods=['POST'])
-    def suspend_tutor(self, request, pk=None):
-        """Suspend_tutor method"""
+    def deactivate_tutor(self, request, pk=None):
+        """block_tutor method"""
         try:
             tutor = Tutor.objects.get(pk=pk)
             tutor.is_active = False
+            tutor.is_blocked_admin = True
+            tutor.is_suspended_admin = True
             tutor.save()
             return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
         except Http404:
@@ -263,9 +265,14 @@ class TutorViewSet(ModelViewSet):
     def activate_tutor(self, request, pk=None):
         """Activate tutor method"""
         try:
-            # tutor = tutor.objects.get(pk=pk)
-            tutor = self.get_object()
+            tutor = Tutor.objects.get(pk=pk) #works
+            # tutor = self.get_object() # works too
             tutor.is_active = True
+            tutor.is_blocked_admin = False
+            tutor.is_suspended_admin = False
+            tutor.suspension_duration_admin = None
+            tutor.suspension_reason_admin = None
+            tutor.block_reason_admin = None
             tutor.save()
             return Response({'message': 'Tutor activated successfully'}, status=status.HTTP_200_OK)
         except Http404:
@@ -286,7 +293,7 @@ class ClientViewSet(ModelViewSet):
     def suspend_client(self, request, pk=None):
         """Suspend_client method"""
         try:
-            # client = client.objects.get(pk=pk)
+            # client = Client.objects.get(pk=pk)
             client = self.get_object()
             client.is_active = False
             client.save()
@@ -302,7 +309,7 @@ class ClientViewSet(ModelViewSet):
     def activate_client(self, request, pk=None):
         """Activate client method"""
         try:
-            # client = client.objects.get(pk=pk)
+            # client = Client.objects.get(pk=pk)
             client = self.get_object()
             client.is_active = True
             client.save()

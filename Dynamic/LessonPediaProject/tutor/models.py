@@ -73,6 +73,9 @@ class Tutor(AbstractUser):
     availability = models.CharField(max_length=50, null=True)
     working_hours = models.CharField(max_length=150, null=True)
     status = models.BooleanField(null=True)
+    # suspend and block
+    is_suspended = models.BooleanField(default=False)
+    is_blocked = models.BooleanField(default=False)
     cv_id = models.FileField(upload_to='cv_files/', null=True, blank=True)
     certificate = models.FileField(upload_to='certificate_files/', null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
@@ -92,6 +95,15 @@ class Tutor(AbstractUser):
     groups = models.ManyToManyField(Group, related_name="tutor_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="tutor_permissions", blank=True)
 
+    #suspension and ban(blocked) check
+    is_suspended_admin = models.BooleanField(default=False)
+    is_blocked_admin = models.BooleanField(default=False)
+    suspended_at_admin = models.DateTimeField(null=True, blank=True)
+    blocked_at_admin = models.DateTimeField(null=True, blank=True)
+    suspension_duration_admin = models.IntegerField(default=0, null=True)
+    suspension_reason_admin = models.TextField(null=True, blank=True)
+    block_reason_admin = models.TextField(null=True, blank=True)
+
     def update_rank(self, new_rank):
         self.total_ratings += 1
         self.accumulated_rating += new_rank
@@ -110,6 +122,11 @@ class Tutor(AbstractUser):
             'rank': self.rank,
             'status': self.status,
         }
+    
+    def is_suspended_expired(self):
+        if self.suspended_at_admin and self.suspension_duration_admin:
+            return timezone.now() > self.suspended_at_admin + self.suspension_duration_admin #timezone.timedelta(days=self.suspension_duration)
+        return False
     
     def __str__(self):
         return self.username

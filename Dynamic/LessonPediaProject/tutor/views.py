@@ -12,36 +12,82 @@ from django.http import JsonResponse
 from client.models import Ranking, Review
 from django.core.mail import send_mail
 from client.models import Client
+from app_admin.models import AppAdmin
 
 
 
 
 # Tutor Login
 def tutor_login(request):
-    if request.method == 'POST':
-        username_or_email = request.POST.get('username_or_email')
-        password = request.POST.get('password')
-        tutor = TutorAuthBackend().authenticate(request, username_or_email=username_or_email, password=password)
-        if tutor:
-            if 'tutor' in request.path:
-                login(request, tutor, backend='tutor.backends.TutorAuthBackend')
-                messages.success(request, "You're Logged In")
-                if tutor.institution:
-                    return redirect('tutor_dashboard')
-                return redirect ('tutor_profile')
-
+    """Tutor Login"""
+    if 'tutor' in request.path:
+        if request.method == 'POST':
+            username_or_email = request.POST.get('username_or_email')
+            password = request.POST.get('password')
+            tutor = TutorAuthBackend().authenticate(request, username_or_email=username_or_email, password=password)
+            if tutor:
+                if tutor.is_suspended == False and tutor.is_blocked == False:
+                    login(request, tutor, backend='tutor.backends.TutorAuthBackend')
+                    messages.success(request, "You're Logged In")
+                    if tutor.institution:
+                        return redirect('tutor_dashboard')
+                    return redirect ('tutor_profile')
+                else:
+                    return redirect('tutor_login')
+            elif tutor.is_suspended == True:
+                messages.error(request, 'This account is suspended by user, please contact support')
+                return redirect('admin_support')
+            elif tutor.is_blocked == True:
+                messages.error(request, 'This account is blocked by admin, please contact support')
+                return redirect('admin_support')
         else:
-            tutor_exists = Tutor.objects.filter(username=username_or_email).exists()
+            tutor_exists = Tutor.objects.filter(username=request.user.username).exists()
             if tutor_exists:
                 messages.error(request, 'Incorrect Password')
             else:
                 messages.error(request, 'User Not Found')
-
-            return render(request, 'tutor/tutor_login.html', context={'username_or_email': username_or_email})
-
+            return render(request, 'tutor/tutor_login.html', context={'username_or_email': request.user.username})
     else:
         return render(request, 'tutor/tutor_login.html')
     
+
+
+
+# Email an Admin
+def admin_support(request):
+    """Email an Admin"""
+    if request.method == 'POST':
+        sender = request.POST.get('sender')
+        recipient = request.POST.get('recipient')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        try:
+            send_mail(subject, message, sender, [recipient])
+            messages.success(request, 'Email Sent Successfully')
+        except Exception as e:
+            messages.error(request, 'Email Sending Failed')
+            print('error sending email')
+        return redirect('tutor_login')
+    return render(request, 'tutor/admin_support.html')
+
+
+
+# block tutor
+@login_required(login_url='admin_login')
+def block_tutor(request, tutor_id):
+    """Block Tutor Account"""
+    if not isinstance(request.user, AppAdmin):
+        error_message = 'You lack the authorization to perform this action'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+    tutor = Tutor.objects.get(pk=tutor_id)
+    if tutor is not None:
+        tutor.is_blocked = True
+        tutor.save()
+        messages.success(request, 'Account Blocked Successfully')
+        return redirect('admin_dashboard')
+    else:
+        messages.error(request, 'Account Blocking Failed')
+        return redirect('admin_dashboard')
 
 
 # Tutor Profile Update
@@ -73,14 +119,12 @@ def tutor_profile(request):
         else:
             form = TutorUpdateForm(instance=tutor)
             return render(request, 'tutor/tutor_profile.html',  context={'form': form, 'tutor': tutor, 'country_list': country_list_json, 'form_errors': form.errors})
-    
     else:
         messages.error(request, 'Tutor not found for the given username')
         return redirect('tutor_login')
 
 
 # Tutor Dashboard
-
 @login_required(login_url='tutor_login')
 def tutor_dashboard(request):
     """Displays Tutor Dashboard"""
@@ -128,7 +172,6 @@ def search_tutors(request):
         return JsonResponse({'error': 'No query provided'})
 
 
-
 # Tutor public profile
 @login_required(login_url='client_signIn')
 def tutor_detail(request, tutor_id):
@@ -171,6 +214,7 @@ def email_tutor(request, tutor_id):
 
         return JsonResponse(response_data)
     return redirect('view_tutors')
+
 
 @login_required(login_url='client_signIn')
 def submit_rank(request, tutor_id):
@@ -230,62 +274,28 @@ def quiz_guide(request):
 
 
 @login_required(login_url='tutor_login')
-# def tutor_quiz(request):
-#     """Displays Tutor Quiz and Results"""
-#     if not isinstance(request.user, Tutor):
-#         messages.error(request, 'You are not authorized to view this page')
-#         return render(request, 'tutor/access_denied.html')
-#     quiz_count = request.user.quiz_count
-#     print('quiz_count for this Tutor', quiz_count)
-#     if request.method == 'POST':
-#         tutor = Tutor.objects.get(username=request.user.username)
-#         quiz_result = request.POST.get('quiz_result')
-#         quiz_result = float(quiz_result)
-#         if tutor.quiz_result and tutor.quiz_count > 1:
-#             messages.error(request, 'You have already taken the quiz for twice')
-#             return redirect('tutor_dashboard')
-#         elif tutor.quiz_result and tutor.quiz_count < 2:
-#             tutor.quiz_count += 1
-#             if tutor.quiz_result < quiz_result:
-#                 tutor.quiz_result = quiz_result
-#                 tutor.save()
-#                 messages.success(request, 'Quiz Submitted Successfully')
-#                 return redirect('tutor_dashboard')
-#             else:
-#                 messages.success(request, 'Your previous score is higher than this one')
-#                 return redirect('tutor_dashboard')
-#         else:
-#             tutor.quiz_result = quiz_result
-#             tutor.quiz_count += 1
-#             tutor.save()
-#             print('quiz_result', tutor.quiz_result)
-#             return redirect('tutor_dashboard')
-        
-
-#     elif request.user.quiz_result and request.user.quiz_count > 1:
-#             messages.error(request, 'You have already taken the quiz')
-#             return redirect('tutor_dashboard')
-#     return render(request, 'tutor/tutor_quiz.html', context={'quiz_count': quiz_count})
-
-@login_required(login_url='tutor_login')
 def tutor_quiz(request):
     if not isinstance(request.user, Tutor):
         error_message = "Are you a tutor?"
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
 
-    tutor = Tutor.objects.get(username=request.user.username)  # Fetch Tutor object directly
-    quiz_count = tutor.quiz_count  # Get quiz_count from the database
+    tutor = Tutor.objects.get(username=request.user.username)
+    print(tutor.quiz_count)
+    quiz_count = tutor.quiz_count 
 
     if request.method == 'POST':
-        quiz_result = float(request.POST.get('quiz_result'))
+        quiz_result = (request.POST.get('quiz_result'))
+        quiz_result= float(quiz_result)
 
         if tutor.quiz_count >= 2:
             messages.error(request, 'You have already taken the quiz twice')
         else:
-            tutor.quiz_count += 1  # Increment quiz_count
-            tutor.save()  # Save the change to the database
+            tutor.quiz_count += 1
+            tutor.save()
 
             if quiz_result > tutor.quiz_result:
+                print('quiz_result', quiz_result)
+                print('tutor.quiz_result', tutor.quiz_result)
                 tutor.quiz_result = quiz_result
                 tutor.save()
                 messages.success(request, 'Quiz Submitted Successfully')
@@ -301,11 +311,32 @@ def tutor_quiz(request):
     return render(request, 'tutor/tutor_quiz.html', context={'quiz_count': quiz_count})
 
 
-
+# Deactivate Tutor Account
+@login_required(login_url='tutor_login')
+def suspend_tutor(request, tutor_id):
+    """Suspend Tutor Account"""
+    if not isinstance(request.user, Tutor) and not isinstance(request.user, AppAdmin):
+        error_message = 'You lack the authorization to perform this action'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+    if request.method == 'POST':
+        tutor = Tutor.objects.get(id=tutor_id)
+        password = request.POST.get('password')
+        if tutor is not None:
+            if not tutor.check_password(password):
+                messages.error(request, 'Incorrect Password')
+                return redirect('tutor_dashboard')
+            tutor.is_suspended = True
+            tutor.save()
+            logout(request)
+            messages.success(request, 'Account Suspended Successfully')
+            return redirect('tutor_login')
+        else:
+            messages.error(request, 'Account Suspension Failed')
+            return redirect('tutor_dashboard')
+    return redirect('tutor_dashboard')
 
 # Tutor Logout   
 def tutor_logout(request):
     logout(request)
     messages.success(request, "You're Logged Out")
     return redirect('tutor_login') 
-

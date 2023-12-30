@@ -32,6 +32,20 @@ class Client (AbstractUser):
     groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
 
+        #suspension and ban(blocked) check
+    is_suspended_admin = models.BooleanField(default=False)
+    is_blocked_admin = models.BooleanField(default=False)
+    suspended_at_admin = models.DateTimeField(null=True, blank=True)
+    blocked_at_admin = models.DateTimeField(null=True, blank=True)
+    suspension_duration_admin = models.IntegerField(default=0, null=True)
+    suspension_reason_admin = models.TextField(null=True, blank=True)
+    block_reason_admin = models.TextField(null=True, blank=True)
+
+    def is_suspended_expired(self):
+        if self.suspended_at_admin and self.suspension_duration_admin:
+            return timezone.now() > self.suspended_at_admin + self.suspension_duration_admin #timezone.timedelta(days=self.suspension_duration)
+        return False
+
 class Review(models.Model):
     review_text = models.TextField(max_length=500)
     tutor = models.ForeignKey(Tutor,  related_name='reviews', null=True, on_delete=models.SET_NULL)
@@ -60,8 +74,9 @@ class ClientReportAbuse(models.Model):
 
 class Cart(models.Model):
     target_tutor = models.ForeignKey(Tutor, related_name="selling_tutor", null=True, on_delete=models.SET_NULL)
-    tutors_count = models.IntegerField(null=True)
-    tutor_status = models.BooleanField(null=True)
+    contract_validity = models.DateTimeField(null=True)
+    contract_validated_start_date = models.DateTimeField(null=True)
+    contract_validity_end_date = models.DateTimeField(null=True)
     client = models.ForeignKey(Client,  related_name='carts', null=True, on_delete=models.SET_NULL)
 
 class Payment(models.Model):
