@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'app_admin',
     'generic_apps',
     "django_flatpickr",
+    'django_crontab',
     'crispy_forms',
     'django_countries.fields',
     'rest_framework',
@@ -160,5 +161,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+CRONJOBS = [
+    ('54 19 * * *', 'tutor.tasks.check_suspension_tutor_status'),
+    ('54 19 * * *', 'client.tasks.check_suspension_client_status'),
+]
 
 SESSION_COOKIE_SECURE = False # True for production

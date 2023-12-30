@@ -82,6 +82,16 @@ class Tutor(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     others = models.CharField(max_length=100, null=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    #suspension and ban(blocked) check
+    is_suspended_admin = models.BooleanField(default=False)
+    is_blocked_admin = models.BooleanField(default=False)
+    suspended_at_admin = models.DateTimeField(null=True, blank=True)
+    blocked_at_admin = models.DateTimeField(null=True, blank=True)
+    suspension_duration_admin = models.IntegerField(default=0, null=True)
+    suspension_reason_admin = models.TextField(null=True, blank=True)
+    block_reason_admin = models.TextField(null=True, blank=True)
+
     # rankings
     rank = models.FloatField(default=1.0, null=True)
     total_ratings = models.IntegerField(default=0)
@@ -111,6 +121,11 @@ class Tutor(AbstractUser):
     
     def __str__(self):
         return self.username
+    
+    def is_suspended_expired(self):
+        if self.suspended_at_admin and self.suspension_duration_admin:
+            return timezone.now() > self.suspended_at_admin + self.suspension_duration_admin #timezone.timedelta(days=self.suspension_duration)
+        return False
 
 
 class Subject(models.Model):

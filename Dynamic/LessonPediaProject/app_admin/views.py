@@ -246,11 +246,13 @@ class TutorViewSet(ModelViewSet):
     serializer_class = TutorSerializer
 
     @action(detail=True, methods=['POST'])
-    def suspend_tutor(self, request, pk=None):
-        """Suspend_tutor method"""
+    def deactivate_tutor(self, request, pk=None):
+        """block_tutor method"""
         try:
             tutor = Tutor.objects.get(pk=pk)
             tutor.is_active = False
+            tutor.is_blocked = True
+            tutor.is_suspended = True
             tutor.save()
             return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
         except Http404:
@@ -266,6 +268,11 @@ class TutorViewSet(ModelViewSet):
             # tutor = Tutor.objects.get(pk=pk) #works
             tutor = self.get_object() # works too
             tutor.is_active = True
+            tutor.is_blocked = False
+            tutor.is_suspended = False
+            tutor.suspension_duration = None
+            tutor.suspension_reason = None
+            tutor.block_reason = None
             tutor.save()
             return Response({'message': 'Tutor activated successfully'}, status=status.HTTP_200_OK)
         except Http404:

@@ -26,11 +26,11 @@ body{
     display:non;
 }
 
-.set_review_details{
+.set_review_details, .set_review_details_client{
     display: none;
 }
 
-.set_report_details{
+.set_report_details, .set_report_details_client{
     display: none;
 }
 
@@ -39,7 +39,8 @@ body{
 .set_reactivate_account_tutor, 
 .set_reactivate_account_client,
 .set_delete_account_tutor,
-.set_delete_account_client {
+.set_delete_account_client,
+.set_suspend_account_tutor {
     display: none;
 }
 
@@ -215,7 +216,6 @@ body{
     position: sticky;
     top: 0;
     background-color: white;
-    /* Set any necessary styles for the top content */
 }
 
 .table_header, .table_header_learner {
@@ -223,7 +223,6 @@ body{
     top: 65px;
     background-color: white;
     border-bottom: 1px solid gray;
-    /* Set any necessary styles for the top content */
     background-color: ghostwhite;
 }
 
@@ -301,6 +300,7 @@ table {
     height: 100vh;
     width: 100vw;
     backdrop-filter: brightness(0.2);
+    z-index: 2;
 }
 
 .action_dialog{
@@ -313,6 +313,7 @@ table {
     box-shadow: 1px 1px 12px 1px white;
     padding: 10px 20px 10px 20px;
     border-bottom: 2px solid rgba(239, 2, 2, 0.433);
+
 }
 
 .close, .close_client{
@@ -607,6 +608,7 @@ table {
    position: absolute;
    display: flex;
    backdrop-filter: brightness(0.3);
+   z-index: 2;
 }
 
 .disable_account_content{

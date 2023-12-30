@@ -27,10 +27,25 @@ class Client (AbstractUser):
         ]
     gender = models.CharField(max_length=10, choices=genderchoice, null=True)
     educational_level = models.CharField(max_length=200, null=True)
+
+    #suspension and ban(blocked) check
+    is_suspended_admin = models.BooleanField(default=False)
+    is_blocked_admin = models.BooleanField(default=False)
+    suspended_at_admin = models.DateTimeField(null=True, blank=True)
+    blocked_at_admin = models.DateTimeField(null=True, blank=True)
+    suspension_duration_admin = models.IntegerField(default=0, null=True)
+    suspension_reason_admin = models.TextField(null=True, blank=True)
+    block_reason_admin = models.TextField(null=True, blank=True)
+    
     # Added the below attributes to resolve permission and group conflict having same name
     # all inherits from Abstract user and hence need unique related_name
     groups = models.ManyToManyField(Group, related_name="client_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="client_permissions", blank=True)
+
+    def is_suspended_expired(self):
+        if self.suspended_at_admin and self.suspension_duration_admin:
+            return timezone.now() > self.suspended_at_admin + self.suspension_duration_admin #timezone.timedelta(days=self.suspension_duration)
+        return False
 
 class Review(models.Model):
     review_text = models.TextField(max_length=500)

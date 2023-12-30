@@ -201,6 +201,20 @@ $(document).ready(function(){
     })
 
     // account suspending dialogue display for tutor  ==============================
+    $('#activate_suspend_tutor').click(function(){
+        const tutor_id = $(this).data('tutor')
+
+        $('.set_action_tutor').hide()
+        $('.set_suspend_account_tutor').show()
+    })
+
+    $('.disable_close, .mistake').click(function(){
+        $('.set_action_tutor').show()
+        $('.set_suspend_account_tutor').hide()
+    })
+
+    
+    // account blocking dialogue display for tutor  ==============================
     $('#activate_block').click(function(){
         const tutor_id = $(this).data('tutor')
 
@@ -304,14 +318,14 @@ $(document).ready(function() {
 
         $.ajax({
             method: 'POST',
-            // url: `${api_url}/api/tutors_action_api/suspend_tutor/${tutor_id}/`, // works too
-            url: `${api_url}/api/tutors_action_api/${tutor_id}/suspend_tutor/`,
+            // url: `${api_url}/api/tutors_action_api/deactivate_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/deactivate_tutor/`,
 
             beforeSend: function(xhr) { 
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Tutor suspended (blocked) successfully');
+                displayMessageSuccess('Tutor deactivated (blocked) successfully');
             },
             error: function(xhr, textStatus, errorThrown) {
                 displayMessageError('Error suspending tutor: ' + errorThrown);
