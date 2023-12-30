@@ -8,6 +8,13 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/tutor_quiz.js' %}"></script>
     <link rel="stylesheet" href="{% static "styles/tutor_quiz.css" %}">
+    <script>
+      $(document).ready(function () {
+        window.onbeforeunload = function() {
+          return "Leaving this page will reset your quiz progress. Are you sure?";
+        };
+      });
+    </script>
 </head>
 <body>
     <div id="timer"></div>
@@ -28,11 +35,15 @@
           <li><p><span style="color: red; font-weight: bold;">If you see a pop-up or a window alert saying "Leaving site: Changes you made may not be saved," please click on the <span style="color: rgb(0, 0, 0); font-weight: bold;">Leave button</span>. Scores are dynamically stored.</span></p></li>
       </ul>
     </div>
+    <div id="completionMessage">
+      <h2>Congratulations!</h2>
+      <p>Thank you for taking the quiz. Your score has been recorded.</p>
+      <a href="{% url 'tutor_dashboard' %}"> Go to Dashboard </a>
+  </div>
 
   <div id="quiz">
     <form id="quizForm" method="post" action="{% url 'tutor_quiz' %}">
       {% csrf_token %}
-      <!-- English Questions -->
       <h2>English Questions</h2>
       <table>
         <tr>
@@ -52,7 +63,6 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more English questions here -->
         <tr>
           <td class="num">2</td>
           <td>What is the plural of 'child'?</td>
@@ -65,7 +75,6 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more English questions here -->
         <tr>
           <td class="num">3</td>
           <td>What is a synonym for 'happy'?</td>
@@ -78,20 +87,20 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more English questions here -->
         <tr>
           <td class="num">4</td>
           <td>What is the past tense of 'eat'?</td>
           <td>
             <ul>
-              <li><input type="radio" name="englishQ4" value="Ate"> Ate</li>
+              <li><input type="radio" name="englishQ4" value
+
+="Ate"> Ate</li>
               <li><input type="radio" name="englishQ4" value="Eated"> Eated</li>
               <li><input type="radio" name="englishQ4" value="Eaten"> Eaten</li>
               <li><input type="radio" name="englishQ4" value="Eat"> Eat</li>
             </ul>
           </td>
         </tr>
-        <!-- Add more English questions here -->
         <tr>
           <td class="num">5</td>
           <td>Which of these is a synonym for 'angry'?</td>
@@ -104,10 +113,8 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more English questions here -->
       </table>
 
-      <!-- Abstract Questions -->
       <h2>Abstract Questions</h2>
       <table>
         <tr>
@@ -127,7 +134,6 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more Abstract questions here -->
         <tr>
           <td class="num">2</td>
           <td>Which shape comes next in the sequence: Triangle, Circle, Square, ___</td>
@@ -140,7 +146,6 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more Abstract questions here -->
         <tr>
           <td class="num">3</td>
           <td>Complete the series: 1, 4, 9, 16, ___</td>
@@ -153,7 +158,6 @@
             </ul>
           </td>
         </tr>
-        <!-- Add more Abstract questions here -->
         <tr>
           <td class="num">4</td>
           <td>What comes next in the sequence: 3, 6, 12, 24, ___</td>
@@ -166,7 +170,6 @@
               </ul>
             </td>
           </tr>
-          <!-- Add more Abstract questions here -->
           <tr>
             <td class="num">5</td>
             <td>Which symbol logically belongs to the space?</td>
@@ -179,12 +182,12 @@
               </ul>
             </td>
           </tr>
-          <!-- Add more Abstract questions here -->
         </table>
-       
-          <input type="hidden" name='quiz_result' id="quiz_result" value="">
+        <input type="hidden" name='quiz_count' id="quiz_count" value="{{ quiz_count }}">
+        <input type="hidden" name='quiz_result' id="quiz_result" value="">
         <input type="submit" id="finishBtn" value="Finish">
       </form>
     </div>
+
   </body>
   </html>

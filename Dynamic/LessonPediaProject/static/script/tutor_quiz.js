@@ -1,7 +1,15 @@
 $(document).ready(function () {
     // Quiz finish button click event
-    $("#finishBtn").on("click", function () {
-        calculateScoreAndRedirect();
+    $("#finishBtn").on("click", function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Check if quiz count is less than 2
+        var quizCount = parseInt($("#quiz_count").val());
+        if (quizCount < 2) {
+            calculateScoreAndRedirect();
+        } else {
+            alert("You have already taken the quiz twice.");
+        }
     });
 
     const englishAnswers = {
@@ -10,19 +18,18 @@ $(document).ready(function () {
         englishQ3: 'Joyful',
         englishQ4: 'Ate',
         englishQ5: 'Mad'
-      };
-  
-      const abstractAnswers = {
+    };
+
+    const abstractAnswers = {
         abstractQ1: '8.5',
         abstractQ2: 'Pentagon',
         abstractQ3: '25',
         abstractQ4: '48',
         abstractQ5: '□'
-      };
-  
-    
+    };
+
     // Countdown timer
-    var timeLeft = 20; // 1 minute in seconds
+    var timeLeft = 20;
     var timer = setInterval(function () {
         $("#timer").text(formatTime(timeLeft));
         timeLeft--;
@@ -43,19 +50,16 @@ $(document).ready(function () {
     function calculateScoreAndRedirect() {
         clearInterval(timer);
         var score = calculateScore();
-        $("#quiz_result").val(score)
+        $("#quiz_result").val(score);
         storeScoreToDatabase(score);
         displayScorePopup(score);
-        setTimeout(function () {
-            window.location.href = "/tutor/dashboard";
-        }, 8000);
     }
 
     // Function to calculate the score based on selected answers
     function calculateScore() {
         var totalQuestions = 10; // Total number of questions
         var correctAnswers = 0;
-    
+
         // Function to compare user-selected answers with correct answers
         function checkAnswers(answers) {
             for (const question in answers) {
@@ -65,28 +69,29 @@ $(document).ready(function () {
                 }
             }
         }
-    
+
         // Check English section answers
         checkAnswers(englishAnswers);
-    
+
         // Check Abstract section answers
         checkAnswers(abstractAnswers);
-    
+
         var scorePercentage = (correctAnswers / totalQuestions) * 100;
         return scorePercentage.toFixed(2); // Return the score percentage with two decimal places
     }
+
     // Function to display score in a popup
     function displayScorePopup(score) {
         // Show the popup
         $("#popup").fadeIn();
-    
+
         // Display the score and redirect message
         $("#scoreDisplay").text(`Your score: ${score}%`);
-    
+
         // Hide the popup after 5 seconds and redirect
         setTimeout(function () {
             $("#popup").fadeOut();
-            window.location.href = "/tutor/dashboard/"; // Redirect to dashboard
+            window.location.href = "/tutor/dashboard/"; 
         }, 5000);
     }
 
@@ -94,26 +99,48 @@ $(document).ready(function () {
     // Modify the storeScoreToDatabase function
     function storeScoreToDatabase(score) {
         $.ajax({
-            type: 'POST',
-            url: '/tutor/tutorQuiz/', // Replace with your actual URL
-            data: {
-                quiz_result: score,
-                csrfmiddlewaretoken: getCookie('csrftoken')
-            },
-            success: function (response) {
-                alert('Score stored in the database');
-            },
-            error: function (error) {
-                alert('Error storing score:', error);
-            }
-        });
-    }
+          type: 'POST',
+          url: '/tutor/quiz/',
+          data: {
+            quiz_result: score,
+            csrfmiddlewaretoken: getCookie('csrftoken')
+          },
+          success: function (response) {
+            alert('Score stored in the database');
+      
+            // Reset the form after successful submission
+            $('#quizForm')[0].reset();
+            $("#quiz").hide();
+            $("#timer").hide();
+            $('.instruction').hide();
+            $('#completionMessage').toggle();
 
-    // Check if the page is reloaded (not on the first access)
-    if (performance.navigation.type === 1) {
-        $("#finishBtn").trigger("click");
-        setTimeout(function () {
-            window.location.href = "/tutor/dashboard/"; 
-        }, 10000);
+      
+            // Disable the finish button to prevent further submissions
+            $("#finishBtn").prop('disabled', true);
+      
+            window.onbeforeunload = null;
+      
+          },
+          error: function (error) {
+            alert('Error storing score:', error);
+          }
+        });
+      }
+    // Function to get CSRF token from cookie
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 });

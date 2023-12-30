@@ -111,6 +111,39 @@ body {
   color: #070a5c;
 }
 
+
+/* Completion Message */
+
+
+#completionMessage {
+  display: none;
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-shadow: 1px 1px 10px 1px rgba(0, 17, 128, 0.633);
+
+}
+
+#completionMessage h2 {
+  color: #28a745;
+}
+
+#completionMessage p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+#completionMessage a {
+  text-decoration: none;
+  color: #0b3b05;
+  font-weight: bold;
+}
+
+
 /* For Tablet Screens */
 @media (max-width: 1024px) {
   body {

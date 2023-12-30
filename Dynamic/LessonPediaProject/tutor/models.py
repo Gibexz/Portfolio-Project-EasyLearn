@@ -57,7 +57,9 @@ class Tutor(AbstractUser):
     institution = models.CharField(max_length=150, null=True)
     institution_type = models.CharField(max_length=20, choices=INSTITUTION_TYPES, default='--select one--', null=True)
     result = models.CharField(max_length=20, choices=RESULT, blank=True, null=True, default='--select one--')
-    assessment_score = models.FloatField(null=True, default=0.0)
+    # quiz assessment
+    quiz_result = models.FloatField(null=True)
+    quiz_count = models.IntegerField(default=0, null=True)
     highest_qualification = models.CharField(max_length=50, choices=qualification_choice, default='--select one--', null=True)
     area_of_specialization = models.CharField(max_length=100, null=True)
     discipline = models.CharField(max_length=100, null=True)

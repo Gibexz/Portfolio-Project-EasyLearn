@@ -51,8 +51,8 @@ def tutor_login(request):
 def tutor_profile(request):
     """profile update form"""
     if not isinstance(request.user, Tutor):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('tutor_login')
+        error_message = "Are you a tutor?"
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     tutor = Tutor.objects.get(username=request.user.username)
     
     country_list = [('Select Country', 'Select Country'), ('NG', 'Nigeria')]
@@ -85,8 +85,8 @@ def tutor_profile(request):
 def tutor_dashboard(request):
     """Displays Tutor Dashboard"""
     if not isinstance(request.user, Tutor):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('tutor_login')
+        error_message = 'Are you a tutor?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     tutor = Tutor.objects.filter(username=request.user.username).first()
     return render(request, 'tutor/tutor_dashboard.html', context={'tutor': tutor})
 
@@ -95,8 +95,8 @@ def tutor_dashboard(request):
 def view_tutors(request):
     """Displays all tutors"""
     if not isinstance(request.user, Client):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('client_signIn')
+        error_message = 'Are you logged in as a learner?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
     user = request.user
@@ -107,8 +107,8 @@ def view_tutors(request):
 def search_tutors(request):
     """Search for tutors based on query"""
     if not isinstance(request.user, Client):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('client_signIn')
+        error_message = 'Are you logged in as a learner?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     
     query = request.GET.get('query', None)
     print('query', query)
@@ -134,8 +134,8 @@ def search_tutors(request):
 def tutor_detail(request, tutor_id):
     """Displays Tutor Public Profile"""
     if not isinstance(request.user, Client):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('client_signIn')
+        error_message = 'Are you logged in as a learner?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     user = request.user
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
@@ -149,8 +149,8 @@ def tutor_detail(request, tutor_id):
 @login_required(login_url='client_signIn')
 def email_tutor(request, tutor_id):
     if not isinstance(request.user, Client):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('client_signIn')
+        error_message = 'Are you logged in as a learner?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     
     if request.method == 'POST':
         sender = request.POST.get('sender')
@@ -175,8 +175,8 @@ def email_tutor(request, tutor_id):
 @login_required(login_url='client_signIn')
 def submit_rank(request, tutor_id):
     if not isinstance(request.user, Client):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('client_signIn')
+        error_message = 'Are you logged in as a learner?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     if request.method == 'POST':
         tutor = Tutor.objects.get(pk=tutor_id)
         rank_number = int(request.POST.get('rank'))
@@ -197,8 +197,8 @@ def submit_rank(request, tutor_id):
 @login_required(login_url='client_signIn')
 def submit_review(request, tutor_id):
     if not isinstance(request.user, Client):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('client_signIn')
+        error_message = 'Are you logged in as a learner?'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     if request.method == 'POST':
         tutor = Tutor.objects.get(pk=tutor_id)
         review_text = request.POST.get('review_text')
@@ -213,32 +213,94 @@ def submit_review(request, tutor_id):
     return redirect('tutor_detail', tutor_id=tutor_id)
 
 
+
 @login_required(login_url='tutor_login')
 def quiz_guide(request):
     """Displays Tutor Quiz and Results"""
     if not isinstance(request.user, Tutor):
         messages.error(request, 'You are not authorized to view this page')
-        return redirect('tutor_login')
+        error_message = 'You must be logged in as a Tutor'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+    tutor = Tutor.objects.get(username=request.user.username)
+    if tutor.quiz_count > 1:
+        error_message = 'You have already taken the assessment twice'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message, 'quiz_count': tutor.quiz_count})
     
     return render(request, 'tutor/quiz_guide.html')
 
 
 @login_required(login_url='tutor_login')
+# def tutor_quiz(request):
+#     """Displays Tutor Quiz and Results"""
+#     if not isinstance(request.user, Tutor):
+#         messages.error(request, 'You are not authorized to view this page')
+#         return render(request, 'tutor/access_denied.html')
+#     quiz_count = request.user.quiz_count
+#     print('quiz_count for this Tutor', quiz_count)
+#     if request.method == 'POST':
+#         tutor = Tutor.objects.get(username=request.user.username)
+#         quiz_result = request.POST.get('quiz_result')
+#         quiz_result = float(quiz_result)
+#         if tutor.quiz_result and tutor.quiz_count > 1:
+#             messages.error(request, 'You have already taken the quiz for twice')
+#             return redirect('tutor_dashboard')
+#         elif tutor.quiz_result and tutor.quiz_count < 2:
+#             tutor.quiz_count += 1
+#             if tutor.quiz_result < quiz_result:
+#                 tutor.quiz_result = quiz_result
+#                 tutor.save()
+#                 messages.success(request, 'Quiz Submitted Successfully')
+#                 return redirect('tutor_dashboard')
+#             else:
+#                 messages.success(request, 'Your previous score is higher than this one')
+#                 return redirect('tutor_dashboard')
+#         else:
+#             tutor.quiz_result = quiz_result
+#             tutor.quiz_count += 1
+#             tutor.save()
+#             print('quiz_result', tutor.quiz_result)
+#             return redirect('tutor_dashboard')
+        
+
+#     elif request.user.quiz_result and request.user.quiz_count > 1:
+#             messages.error(request, 'You have already taken the quiz')
+#             return redirect('tutor_dashboard')
+#     return render(request, 'tutor/tutor_quiz.html', context={'quiz_count': quiz_count})
+
+@login_required(login_url='tutor_login')
 def tutor_quiz(request):
-    """Displays Tutor Quiz and Results"""
     if not isinstance(request.user, Tutor):
-        messages.error(request, 'You are not authorized to view this page')
-        return redirect('tutor_login')
-    csfr_token = request.session.get('csrf_token')
-    print('csrf_token', csfr_token)
+        error_message = "Are you a tutor?"
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+
+    tutor = Tutor.objects.get(username=request.user.username)  # Fetch Tutor object directly
+    quiz_count = tutor.quiz_count  # Get quiz_count from the database
+
     if request.method == 'POST':
-        tutor = Tutor.objects.get(username=request.user.username)
-        tutor.quiz_result = request.POST.get('quiz_result')
-        tutor.save()
-        messages.success(request, 'Quiz Submitted Successfully')
-        print('quiz_result', tutor.quiz_result)
+        quiz_result = float(request.POST.get('quiz_result'))
+
+        if tutor.quiz_count >= 2:
+            messages.error(request, 'You have already taken the quiz twice')
+        else:
+            tutor.quiz_count += 1  # Increment quiz_count
+            tutor.save()  # Save the change to the database
+
+            if quiz_result > tutor.quiz_result:
+                tutor.quiz_result = quiz_result
+                tutor.save()
+                messages.success(request, 'Quiz Submitted Successfully')
+            else:
+                messages.success(request, 'Your previous score is higher than this one')
+
         return redirect('tutor_dashboard')
-    return render(request, 'tutor/tutor_quiz.html', context={'csrf_token': csfr_token})
+
+    elif quiz_count >= 2:
+        error_message = 'You have already taken the assessment twice'
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+
+    return render(request, 'tutor/tutor_quiz.html', context={'quiz_count': quiz_count})
+
+
 
 
 # Tutor Logout   
