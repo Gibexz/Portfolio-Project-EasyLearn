@@ -20,7 +20,7 @@
     <div id="messageDivSuccess"></div>
     <div id="messageDivError"></div>
 
-    <!-- disable account tutor-->
+    <!--block account tutor-->
     <div class="set_disable_account">
         <div class="disable_account" id="disable_account_dialog">
             <div class="disable_account_content">
@@ -33,10 +33,10 @@
                     </section>
                     <div class="disable_warning_box">
                         <p class="confirm_dialog">Warning!</p>
-                        <p class="disable_action">You are about suspending the active user, Proceed?</p>
+                        <p class="disable_action">You are about to indefinitely suspend this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_remove_tutor" data-tutor-id="">Suspend</button>
+                        <button class="confirm_remove_tutor" data-tutor-id="">Blocked</button>
                         <button class="mistake">Cancel</button>
                     </div>
                 </div>           
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <!-- disable account client-->
+    <!--block account client-->
     <div class="set_disable_account_client">
         <div class="disable_account">
             <div class="disable_account_content">
@@ -57,7 +57,7 @@
                     </section>
                     <div class="disable_warning_box">
                         <p class="confirm_dialog">Warning!</p>
-                        <p class="disable_action">You are about suspending the active user, Proceed?</p>
+                        <p class="disable_action">You are about to indefinitely suspend this learner's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
                         <button class="confirm_remove_client" data-client-id="">Suspend</button>
@@ -68,6 +68,107 @@
         </div>
     </div>
 
+
+    <!--activate account tutor-->
+    <div class="set_reactivate_account_tutor">
+        <div class="disable_account">
+            <div class="disable_account_content">
+                <p class="disable_close" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Notice!</p>
+                        <p class="disable_action">You are about to reactivate this tutor's acccount, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <button class="confirm_activate_tutor" data-tutor-id_activate="">Reactivate</button>
+                        <button class="mistake">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--activate account client-->
+    <div class="set_reactivate_account_client">
+        <div class="disable_account">
+            <div class="disable_account_content">
+                <p class="disable_close_client" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Notice!</p>
+                        <p class="disable_action">You are about to reactivate this tutor's acccount, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <button class="confirm_activate_client" data-client-id_activate="">Reactivate</button>
+                        <button class="mistake">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--Delete account tutor-->
+    <div class="set_delete_account_tutor">
+        <div class="disable_account">
+            <div class="disable_account_content">
+                <p class="disable_close" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Notice!</p>
+                        <p class="disable_action">You are about to permanently delete this tutor's acccount, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <button class="confirm_delete_tutor" data-client-id="">Delete</button>
+                        <button class="mistake">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+    <!--Delete account client-->
+    <div class="set_delete_account_client">
+        <div class="disable_account">
+            <div class="disable_account_content">
+                <p class="disable_close_client" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Notice!</p>
+                        <p class="disable_action">You are about to permanently delete this client's acccount, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <button class="confirm_delete_client" data-client-id="">Delete</button>
+                        <button class="mistake_client">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+    
     <!-- take action tutor -->
     <div class="set_action_tutor">
         <div class="activate_action">
@@ -91,7 +192,8 @@
                             <p class="fa-solid fa-street-view"><span class="action_list" id="activate_views">Views</span></p><br>
                             <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend">Suspend Account</span></p>
                             <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block">Block Account</span></p>
-                            <p class="fa-solid fa-xmark"><span class="action_list" id="activate_remove">Remove Account</span></p>
+                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="reactivate_account_tutor">Reactivate Account</span></p>
+                            <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_tutor">Delete Account</span></p>
                             <footer class="pedia">
                                 @lessonpedia 
                             </footer>
@@ -218,8 +320,9 @@
                             <p class="action_head">Admin Privilege</p>
                             <p class="fa-solid fa-street-view"><span class="action_list" id="activate_views">Views</span></p><br>
                             <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend_client">Suspend Account</span></p>
-                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block">Block Account</span></p>
-                            <p class="fa-solid fa-xmark"><span class="action_list" id="activate_remove">Remove Account</span></p>
+                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block_client">Block Account</span></p>
+                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="reactivate_account_client">Reactivate Account</span></p>
+                            <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_client">_client Account</span></p>
                             <footer class="pedia">
                                 @lessonpedia 
                             </footer>
@@ -228,9 +331,9 @@
                     
                     <div class="view_container">
                         <div class="nav_content">
-                            <p class="list_content" id="activate_profile">Profile</p>
-                            <p class="list_content" id="activate_review">Review</p>
-                            <p class="list_content" id="activate_report">Report</p>
+                            <p class="list_content" id="activate_profile_client">Profile</p>
+                            <p class="list_content" id="activate_review_client">Review</p>
+                            <p class="list_content" id="activate_report_client">Report</p>
                         </div>
 
                         <div class="profile_view">
@@ -246,7 +349,7 @@
                                     <p class="phone_number_client">080XXXXXXXX</p>
                                 </section>
 
-                                <div class="set_other_details">
+                                <div class="set_other_details_client">
                                     <section class="other_details">
                                         <section class="bio_data">
                                             <fieldset><legend>Residential Address</legend>
@@ -301,14 +404,14 @@
                                 </div>
 
                                 <!-- Review page -->
-                                <div class="set_review_details">
+                                <div class="set_review_details_client">
                                     <section class="other_details">
                                         <center>Review Service in Progress</center>                                          
                                     </section>
                                 </div>
 
                                 <!-- Report page -->
-                                <div class="set_report_details">
+                                <div class="set_report_details_client">
                                     <section class="other_details">
                                         <center>Report Service in Progress</center>                                          
                                     </section>
@@ -322,6 +425,7 @@
             </div>
         </div>
     </div>
+
     
     <div class="admin_dash">
         <div class="leftpane">
@@ -329,7 +433,13 @@
                 <h2 class="dashboard_header"><img src="{% static 'images/icons/dashboard.png' %}" width="20px" alt=""> &nbsp;Dashboard</h2><br>
                 <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
                 <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
-                <p class="fa-solid fa-file-import"><span class="dashboard_list" id="set_report">&nbsp; &nbsp; Reports</span></p><br><br>
+                <div class="dropdownReports">
+                    <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list">&nbsp; &nbsp; Reports</span></p>
+                    <ol class="dropdown-contentReports">
+                        <li class="" id="set_tutor_report">Tutor Reports</li>
+                        <li class="" id="set_client_report">Client Reports</li>  
+                    </ol>
+                </div><br><br>
                 <p class="fa-solid fa-money-bill-transfer"><span class="dashboard_list" id="set_transactions">&nbsp; &nbsp; Transactions</span></p><br><br>
                 <p class="fa-solid fa-wrench fa-rotate-0"><span class="dashboard_list" id="set_settings">&nbsp; Settings</span></p>
             </div>
@@ -352,7 +462,6 @@
                         
                     </span>
                     <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
-                    <p class="logout"><a href="{% url 'landing_page_admin' %}">Home</a></p>
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
@@ -381,7 +490,7 @@
                 </div>
                 <br>
 
-                <div class="tutors_list">
+                <div class="tutors_list" >
                     <div class="tutors_list_content">
                         <section class="top">
                             <div class="search">
@@ -405,7 +514,7 @@
                     </div>
 
                     <div class="all_data">
-                        <table class="tutor_table_list">
+                        <table class="tutor_table_list" >
                             <thead class="table_header">
                                 <tr>
                                     <th class="sortUserName" data-column="0">UserName</th>
@@ -500,7 +609,6 @@
                     Hello, <span class="admin_username">{{ request.user.username }}</span>
 
                     <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
-                    <p class="logout"><a href="{% url 'landing_page' %}">Home</a></p>
                 </h4>
                 <div class="admin_right_top">
                     <section class="content">
@@ -621,6 +729,78 @@
                 </center>
                 
             </div>
+        </div>
+
+        <!-- Reports display -->
+
+        <!-- tutor reports -->
+        <div class="tutor_report">
+            <div class="admin_right">
+                <h4 class="hello_admin">  
+                    Hello, <span class="admin_username">{{ request.user.username }}</span>
+
+                    <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
+                </h4>
+                <div class="admin_right_top">
+                </div>
+                <br>
+
+                <div class="tutors_list">
+                    <div class="tutors_list_content">
+                        <section class="top">
+                            <div class="search">
+                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
+                                <button class="search_button">Search</button>
+                            </div>
+                            <h3 class="allTutors">Tutors Reports
+                            </h3>   
+                        </section>
+                    </div>
+
+                    <div class="all_data">
+                        <table class="learner_table_list">
+                            <thead class="table_header_learner">
+                                <tr>
+                                    <th class="sortUserNameL" data-column="0">UserName</th>
+                                    <th class="sortEmailL" data-column="1">Email</th>
+                                    <th class="sortEmailL" data-column="2">Gender</th>
+                                    <th class="sortEngagementL" data-column="3">Educational_level</th>
+                                    <th class="sortQualificationL" data-column="4">Status</th>
+                                    <th class="sortStatusL" data-column="5">Last login</th>
+                                </tr>
+                            </thead>
+                            <!-- {% for client in clients %} -->
+                                <tr>
+                                    <td class="user_name">{{ client.username }}</td>
+                                    <td class="user_email">{{ client.email }}</td>
+                                    <td>{{ client.gender }}</td>
+                                    <td>{{ client.educational_level }}</td>
+                                    <td><button class="check_status_client" data-active_client="{{ client.is_active }}">{{ client.is_active }}</button></td>
+                                    <td>
+                                        <button class="action_client">Take action
+                                        </button>
+                                    </td>
+                                    
+                                </tr>
+                                <!-- {% endfor %} -->
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Pagination client -->
+                <center>
+                    <div class="pagination" id="pagination">
+
+                    </div>
+                </center>
+                
+            </div>
+        </div>
+
+        <!-- client reports -->
+        <div class="client_report">
+            <center><h4 style="color: white; font-size: larger; margin-top: 200px;">Active development in progress</h4></center>
         </div>
     </div>
 </body>

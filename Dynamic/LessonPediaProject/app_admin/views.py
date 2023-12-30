@@ -263,8 +263,8 @@ class TutorViewSet(ModelViewSet):
     def activate_tutor(self, request, pk=None):
         """Activate tutor method"""
         try:
-            # tutor = tutor.objects.get(pk=pk)
-            tutor = self.get_object()
+            # tutor = Tutor.objects.get(pk=pk) #works
+            tutor = self.get_object() # works too
             tutor.is_active = True
             tutor.save()
             return Response({'message': 'Tutor activated successfully'}, status=status.HTTP_200_OK)
@@ -286,7 +286,7 @@ class ClientViewSet(ModelViewSet):
     def suspend_client(self, request, pk=None):
         """Suspend_client method"""
         try:
-            # client = client.objects.get(pk=pk)
+            # client = Client.objects.get(pk=pk)
             client = self.get_object()
             client.is_active = False
             client.save()
@@ -302,7 +302,7 @@ class ClientViewSet(ModelViewSet):
     def activate_client(self, request, pk=None):
         """Activate client method"""
         try:
-            # client = client.objects.get(pk=pk)
+            # client = Client.objects.get(pk=pk)
             client = self.get_object()
             client.is_active = True
             client.save()
