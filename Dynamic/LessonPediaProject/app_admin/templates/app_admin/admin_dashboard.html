@@ -64,7 +64,7 @@
                         <input type="number" id="suspension_duration" name="suspension_duration" min="1">
                         <label for="reason_for_suspension">Reason for Suspension</label>
                         <input type="text" id="reason_for_suspension" name="reason_for_suspension">
-                        <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Blocked</button>
+                        <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Suspend</button>
                         <button class="mistake">Cancel</button>
                     </div>
                 </div>           
@@ -89,6 +89,35 @@
                     </div>
                     <div class="selections">
                         <button class="confirm_remove_client" data-client-id="">Suspend</button>
+                        <button class="mistake_client">Cancel</button>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+
+    <!--suspend account client-->
+    <div class="set_suspend_account_client">
+        <div class="disable_account" id="disable_account_dialog">
+            <div class="disable_account_content">
+                <p class="disable_close_client" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Warning!</p>
+                        <p class="disable_action">You are about to suspend this client's acccount, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <label for="suspension_duration">suspension duration</label>
+                        <input type="number" id="suspension_duration" name="suspension_duration" min="1">
+                        <label for="reason_for_suspension">Reason for Suspension</label>
+                        <input type="text" id="reason_for_suspension" name="reason_for_suspension">
+                        <button class="confirm_suspend_client" data-client-id_suspend="">Suspend</button>
                         <button class="mistake_client">Cancel</button>
                     </div>
                 </div>           
@@ -140,7 +169,7 @@
                     </div>
                     <div class="selections">
                         <button class="confirm_activate_client" data-client-id_activate="">Reactivate</button>
-                        <button class="mistake">Cancel</button>
+                        <button class="mistake_client">Cancel</button>
                     </div>
                 </div>           
             </div>
@@ -477,7 +506,7 @@
             </div>
         </div>
         
-        <!-- Tutors logic -->
+        <!-- Tutors display -->
         <div class="activate_tutors">
             <div class="admin_right">
                 <h4 class="hello_admin">  

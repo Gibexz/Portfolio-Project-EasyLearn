@@ -50,6 +50,7 @@ $(document).ready(function(){
         // // Associate the tutor ID with the suspension dialogue
         $('.confirm_remove_tutor').attr('data-tutor-id', tutorId);
         $('.confirm_activate_tutor').attr('data-tutor-id_activate', tutorId);
+        $('.confirm_suspend_tutor').attr('data-tutor-id_suspend', tutorId);
 
         // console.log(tutorData); // Check the entire tutorData object
         
@@ -122,6 +123,7 @@ $(document).ready(function(){
         // // Associate the tutor ID with the suspension dialogue
         $('.confirm_remove_client').attr('data-client-id', clientId);
         $('.confirm_activate_client').attr('data-client-id_activate', clientId);
+        $('.confirm_suspend_client').attr('data-client-id_suspend', clientId);
     
         // console.log(clientData); // Check the entire clientData object
         
@@ -203,12 +205,9 @@ $(document).ready(function(){
 
     // account suspending dialogue display for tutor  ==============================
     $('#activate_suspend_tutor').click(function(){
-        const tutor_id = $(this).data('tutor')
-
         $('.set_action_tutor').hide()
         $('.set_suspend_account_tutor').show()
     })
-
     $('.disable_close, .mistake').click(function(){
         $('.set_action_tutor').show()
         $('.set_suspend_account_tutor').hide()
@@ -217,22 +216,17 @@ $(document).ready(function(){
 
     // account suspending dialogue display for client  ==============================
     $('#activate_suspend_client').click(function(){
-        const client_id = $(this).data('client')
-
         $('.set_action_client').hide()
         $('.set_suspend_account_client').show()
     })
-
-    $('.disable_close, .mistake').click(function(){
+    $('.disable_close_client, .mistake_client').click(function(){
         $('.set_action_client').show()
         $('.set_suspend_account_client').hide()
     })
 
     
-    // account blocking dialogue display for tutor  ==============================
+    // account activating dialogue display for tutor  ==============================
     $('#activate_block').click(function(){
-        const tutor_id = $(this).data('tutor')
-
         $('.set_action_tutor').hide()
         $('.set_disable_account').show()
     })
@@ -243,7 +237,7 @@ $(document).ready(function(){
     })
 
 
-    // account suspending dialogue display for client  ==============================
+    // account activating dialogue display for client  ==============================
     $('#activate_block_client').click(function(){
         $('.set_action_client').hide()
         $('.set_disable_account_client').show()
