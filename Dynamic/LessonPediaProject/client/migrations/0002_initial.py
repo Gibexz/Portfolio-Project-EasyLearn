@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         ('tutor', '0001_initial'),
         ('client', '0001_initial'),
     ]
-
+    
     operations = [
         migrations.AddField(
             model_name='review',

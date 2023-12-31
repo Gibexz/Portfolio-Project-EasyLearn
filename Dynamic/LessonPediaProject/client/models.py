@@ -53,7 +53,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ranking(models.Model):
-    rank_number = models.IntegerField(choices=RANK, null=True)
+    rank_number = models.IntegerField(null=True)
     tutor = models.ForeignKey(Tutor, null=True, on_delete=models.SET_NULL, related_name='rankings')
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name='rankings')
     created_at = models.DateTimeField(auto_now_add=True)
