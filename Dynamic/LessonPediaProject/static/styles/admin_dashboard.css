@@ -675,8 +675,8 @@ table {
 
 .selections{
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
-    margin-top: 50px;
 }
 
 .selections button{
@@ -688,6 +688,52 @@ table {
     color: white;
     border: 1px solid wheat;
     cursor: pointer;
+}
+
+.selections .suspending {
+    /* margin: 10px 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2% 8%;
+}
+
+.selections .blocking, .selections .deleting{
+    margin: 2% 8%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.selections .blocking textarea, .selections .suspending textarea {
+    border-radius: 10px;
+    font-size: 400;
+    font-family: 'Inika', serif;
+    background-color: rgba(221, 221, 255, 0.311);
+}
+
+.selections .suspending input {
+    border-radius: 4px;
+    font-size: 400;
+    width: 80px;
+    font-family: 'Inika', serif;
+    background-color: rgba(221, 221, 255, 0.311);
+}
+
+.selections .deleting input {
+    border-radius: 4px;
+    font-size: 500;
+    width: 120px;
+    padding: 4px;
+    font-family: 'Inika', serif;
+    background-color: rgba(221, 221, 255, 0.311);
+}
+
+.selections .confirm_buttons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .selections .mistake, .selections .mistake_client{

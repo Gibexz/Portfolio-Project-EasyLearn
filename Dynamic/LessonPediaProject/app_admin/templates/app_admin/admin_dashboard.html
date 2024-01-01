@@ -36,8 +36,14 @@
                         <p class="disable_action">You are about to indefinitely suspend this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_remove_tutor" data-tutor-id="">Blocked</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="blocking">
+                            <label for="reason_for_blocking">Reason for Deactivation</label>
+                            <textarea id="reason_for_blocking_tutor" name="reason_for_blocking" rows="4" cols="60"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_remove_tutor" data-tutor-id="">Blocked</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -60,19 +66,23 @@
                         <p class="disable_action">You are about to suspend this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <label for="suspension_duration">suspension duration</label>
-                        <input type="number" id="suspension_duration" name="suspension_duration" min="1">
-                        <label for="reason_for_suspension">Reason for Suspension</label>
-                        <input type="text" id="reason_for_suspension" name="reason_for_suspension">
-                        <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Suspend</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="suspending">
+                            <label for="suspension_duration">suspension duration</label>
+                            <input type="number" id="suspension_duration_tutor" name="suspension_duration" min="1">
+                            <label for="reason_for_suspension">Reason for Suspension</label>
+                            <textarea id="reason_for_suspension_tutor" name="reason_for_suspension" rows="2" cols="50"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Suspend</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
         </div>
     </div>
 
-    <!--block account client-->
+    <!--block acctutor-->
     <div class="set_disable_account_client">
         <div class="disable_account">
             <div class="disable_account_content">
@@ -88,8 +98,14 @@
                         <p class="disable_action">You are about to indefinitely suspend this learner's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_remove_client" data-client-id="">Suspend</button>
-                        <button class="mistake_client">Cancel</button>
+                        <div class="blocking">
+                            <label for="reason_for_blocking">Reason for Deactivation</label>
+                            <textarea id="reason_for_blocking_client" name="reason_for_blocking" rows="4" cols="60"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_remove_client" data-client-id="">Block</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -113,12 +129,16 @@
                         <p class="disable_action">You are about to suspend this client's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <label for="suspension_duration">suspension duration</label>
-                        <input type="number" id="suspension_duration" name="suspension_duration" min="1">
-                        <label for="reason_for_suspension">Reason for Suspension</label>
-                        <input type="text" id="reason_for_suspension" name="reason_for_suspension">
-                        <button class="confirm_suspend_client" data-client-id_suspend="">Suspend</button>
-                        <button class="mistake_client">Cancel</button>
+                        <div class="suspending">
+                            <label for="suspension_duration">suspension duration</label>
+                            <input type="number" id="suspension_duration_client" name="suspension_duration" min="1">
+                            <label for="reason_for_suspension">Reason for Suspension</label>
+                            <textarea id="reason_for_suspension_client" name="reason_for_suspension" rows="2" cols="50"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_suspend_client" data-client-id_suspend="">Suspend</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -194,8 +214,15 @@
                         <p class="disable_action">You are about to permanently delete this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_delete_tutor" data-client-id="">Delete</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="deleting">
+                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" below to delete</label>
+                            <input type="text" id="confirm_delete_tutor" name="confirm_delete" autocomplete="off">
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_delete_tutor" data-tutor-id_delete="">Delete</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
+                        <!-- <center><h3>Temporarily disabled</h3></center> -->
                     </div>
                 </div>           
             </div>
@@ -218,8 +245,15 @@
                         <p class="disable_action">You are about to permanently delete this client's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_delete_client" data-client-id="">Delete</button>
-                        <button class="mistake_client">Cancel</button>
+                        <div class="deleting">
+                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" below to delete</label>
+                            <input type="text" id="confirm_delete_client" name="confirm_delete" autocomplete="off">
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_delete_client" data-client-id_delete="">Delete</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
+                        <!-- <center><h3>Temporarily disabled</h3></center> -->
                     </div>
                 </div>           
             </div>
@@ -379,7 +413,7 @@
                             <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend_client">Suspend Account</span></p>
                             <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block_client">Block Account</span></p>
                             <p class="fa-solid fa-user-xmark"><span class="action_list" id="reactivate_account_client">Reactivate Account</span></p>
-                            <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_client">_client Account</span></p>
+                            <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_client">Delete Account</span></p>
                             <footer class="pedia">
                                 @lessonpedia 
                             </footer>

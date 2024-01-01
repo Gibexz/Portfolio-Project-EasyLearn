@@ -51,6 +51,8 @@ $(document).ready(function(){
         $('.confirm_remove_tutor').attr('data-tutor-id', tutorId);
         $('.confirm_activate_tutor').attr('data-tutor-id_activate', tutorId);
         $('.confirm_suspend_tutor').attr('data-tutor-id_suspend', tutorId);
+        $('.confirm_delete_tutor').attr('data-tutor-id_delete', tutorId);
+
 
         // console.log(tutorData); // Check the entire tutorData object
         
@@ -124,6 +126,7 @@ $(document).ready(function(){
         $('.confirm_remove_client').attr('data-client-id', clientId);
         $('.confirm_activate_client').attr('data-client-id_activate', clientId);
         $('.confirm_suspend_client').attr('data-client-id_suspend', clientId);
+        $('.confirm_delete_client').attr('data-client-id_delete', clientId);
     
         // console.log(clientData); // Check the entire clientData object
         
@@ -314,13 +317,15 @@ $(document).ready(function() {
 
 
 
-    // logic to disable a tutor's account  ==========================================
+    // logic to disable (blocking) a tutor's account  ==========================================
     $('.confirm_remove_tutor').click(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
         let tutor_id = $(this).data('tutor-id'); 
-        console.log(tutor_id);
+        // console.log(tutor_id);
+
+        let blockingReason = $('#reason_for_blocking_tutor').val();
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -330,14 +335,17 @@ $(document).ready(function() {
             // url: `${api_url}/api/tutors_action_api/deactivate_tutor/${tutor_id}/`, // works too
             url: `${api_url}/api/tutors_action_api/${tutor_id}/deactivate_tutor/`,
 
+            data: {
+                'block_reason': blockingReason
+            },
             beforeSend: function(xhr) { 
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Tutor deactivated (blocked) successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error suspending tutor: ' + errorThrown);
+                displayMessageError('Error deactivating tutor: ' + errorThrown.message);
             }
         });
         $('.set_action_tutor').show()
@@ -346,30 +354,35 @@ $(document).ready(function() {
 
 
 
-    // logic to disable a client's account  =====================================
+    // logic to disable (blocking) a client's account  =====================================
     $('.confirm_remove_client').click(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
         let client_id = $(this).data('client-id'); 
         // console.log(client_id);
+
+        let blockingReason = $('#reason_for_blocking_client').val();
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         $.ajax({
             method: 'POST',
-            // url: `${api_url}/api/clients_action_api/suspend_client/${client_id}/`, // works too
-            url: `${api_url}/api/clients_action_api/${client_id}/suspend_client/`,
+            // url: `${api_url}/api/clients_action_api/deactivate_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/deactivate_client/`,
 
+            data: {
+                'block_reason': blockingReason
+            },
             beforeSend: function(xhr) { 
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Client suspended successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error suspending client: ' + errorThrown);
+                displayMessageError('Error deactivating client: ' + errorThrown.message);
             }
         });
         $('.set_action_client').show()
@@ -384,7 +397,7 @@ $(document).ready(function() {
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
         let tutor_id = $(this).data('tutor-id_activate'); 
-        console.log(tutor_id);
+        // console.log(tutor_id);
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -398,10 +411,10 @@ $(document).ready(function() {
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Tutor profile reactivated successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error reactivating tutor profile: ' + errorThrown);
+                displayMessageError('Error reactivating tutor profile: ' + errorThrown.message);
             }
         });
         $('.set_action_tutor').show()
@@ -416,7 +429,7 @@ $(document).ready(function() {
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
         let client_id = $(this).data('client-id_activate'); 
-        console.log(client_id);
+        // console.log(client_id);
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -430,19 +443,182 @@ $(document).ready(function() {
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('client profile reactivated successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error reactivating client profile: ' + errorThrown);
+                displayMessageError('Error reactivating client profile: ' + errorThrown.message);
             }
         });
         $('.set_action_client').show()
         $('.set_reactivate_account_client').hide()
     });
 
+    
+    // logic to reactivate a tutor's account  ==========================================
+    $('.confirm_suspend_tutor').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let tutor_id = $(this).data('tutor-id_suspend'); 
+        // console.log(tutor_id);
+
+        let suspensionDuration = $('#suspension_duration_tutor').val();
+        // console.log(suspensionDuration);
+        let suspensionReason = $('#reason_for_suspension_tutor').val();
+        // console.log(suspensionReason);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/tutors_action_api/suspend_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/suspend_tutor/`,
+
+            data: {
+                'suspension_duration': suspensionDuration,
+                'suspension_reason': suspensionReason
+            },
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error Suspending tutor profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_tutor').show()
+        $('.set_suspend_account_tutor').hide()
+    });
+
+
+    // logic to reactivate a client's account  ==========================================
+    $('.confirm_suspend_client').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let client_id = $(this).data('client-id_suspend'); 
+        // console.log(client_id);
+
+        let suspensionDuration = $('#suspension_duration_client').val();
+        // console.log(suspensionDuration);
+        let suspensionReason = $('#reason_for_suspension_client').val();
+        // console.log(suspensionReason);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/clients_action_api/suspend_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/suspend_client/`,
+
+            data: {
+                'suspension_duration': suspensionDuration,
+                'suspension_reason': suspensionReason
+            },
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating client profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_client').show()
+        $('.set_suspend_account_client').hide()
+    });
 
 
 
+    // logic to delete a clients's account  ==========================================
+    $('.confirm_delete_client').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let client_id = $(this).data('client-id_delete'); 
+        // console.log(client_id);
+
+        let confirmation = $('#confirm_delete_client').val()
+
+        if (confirmation !== 'CONFIRM DELETE') {
+            displayMessageError('Error: Please type CONFIRM DELETE in the confirmation box');
+            return; // Prevent futher execution of the codes below
+        }
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'DELETE',
+            // url: `${api_url}/api/clients_action_api/activate_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/delete_client/`,
+            
+            data: {
+                'confirmation': confirmation,
+            },
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating client profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_client').show()
+        $('.set_delete_account_client').hide()
+    });
+
+
+    // logic to delete a tutor's account  ==========================================
+    $('.confirm_delete_tutor').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let tutor_id = $(this).data('tutor-id_delete'); 
+        // console.log(tutor_id);
+
+        let confirmation = $('#confirm_delete_tutor').val()
+
+        if (confirmation !== 'CONFIRM DELETE') {
+            displayMessageError('Error: Please type CONFIRM DELETE in the confirmation box');
+            return; // Prevent futher execution of the codes below
+        }
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'DELETE',
+            // url: `${api_url}/api/tutors_action_api/activate_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/delete_tutor/`,
+            
+            data: {
+                'confirmation': confirmation,
+            },
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating tutor profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_tutor').show()
+        $('.set_delete_account_tutor').hide()
+    });
 
 })
 
