@@ -52,6 +52,7 @@ $(document).ready(function(){
         $('.confirm_activate_tutor').attr('data-tutor-id_activate', tutorId);
         $('.confirm_suspend_tutor').attr('data-tutor-id_suspend', tutorId);
         $('.confirm_delete_tutor').attr('data-tutor-id_delete', tutorId);
+        $('.set_report_details').attr('data-tutor-id_report', tutorId);
 
 
         // console.log(tutorData); // Check the entire tutorData object
@@ -93,6 +94,21 @@ $(document).ready(function(){
         $('.others_tutor').text(tutorData.others);
         $('.working_hours_tutor').text(tutorData.working_hours);
         $('.cv_id_tutor').text(tutorData.cv_id);
+        $('.is_suspended_tutor').text(tutorData.is_suspended);
+        $('.is_blocked_tutor').text(tutorData.is_blocked);
+        $('.rank_tutor').text(tutorData.rank);
+        $('.total_ratings_tutor').text(tutorData.total_ratings);
+        $('.accumulated_rating_tutor').text(tutorData.accumulated_rating);
+        $('.is_suspended_admin_tutor').text(tutorData.is_suspended_admin);
+        $('.is_blocked_admin_tutor').text(tutorData.is_blocked_admin);
+        $('.suspended_at_admin_tutor').text(tutorData.suspended_at_admin);
+        $('.blocked_at_admin_tutor').text(tutorData.blocked_at_admin);
+        $('.suspension_duration_tutor').text(tutorData.suspension_duration);
+        $('.suspension_reason_tutor').text(tutorData.suspension_reason);
+        $('.block_reason_tutor').text(tutorData.block_reason);
+        $('.quiz_result_tutor').text(tutorData.quiz_result);
+        $('.quiz_count_tutor').text(tutorData.quiz_count);
+        $('.certificate_tutor').text(tutorData.certificate);
         $('.updated_at_tutor').text(tutorData.updated_at);
         $('.groups_tutor').text(tutorData.groups);
 
@@ -127,6 +143,7 @@ $(document).ready(function(){
         $('.confirm_activate_client').attr('data-client-id_activate', clientId);
         $('.confirm_suspend_client').attr('data-client-id_suspend', clientId);
         $('.confirm_delete_client').attr('data-client-id_delete', clientId);
+        $('.set_report_details_client').attr('data-client-id_report', clientId);
     
         // console.log(clientData); // Check the entire clientData object
         
@@ -151,6 +168,13 @@ $(document).ready(function(){
         $('.updated_at_client').text(clientData.updated_at);
         $('.tutor_client').text(clientData.tutor);
         $('.groups_client').text(clientData.groups);
+        $('.is_suspended_admin_client').text(clientData.is_suspended_admin);
+        $('.is_blocked_admin_client').text(clientData.is_blocked_admin);
+        $('.suspended_at_admin_client').text(clientData.suspended_at_admin);
+        $('.blocked_at_admin_client').text(clientData.blocked_at_admin);
+        $('.suspension_duration_client').text(clientData.suspension_duration);
+        $('.suspension_reason_client').text(clientData.suspension_reason);
+        $('.block_reason_client').text(clientData.block_reason);
         
 
         $('.active_admin').text(adminName);
@@ -322,7 +346,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let tutor_id = $(this).data('tutor-id'); 
+        let tutor_id = $(this).attr('data-tutor-id');
         // console.log(tutor_id);
 
         let blockingReason = $('#reason_for_blocking_tutor').val();
@@ -359,7 +383,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let client_id = $(this).data('client-id'); 
+        let client_id = $(this).attr('data-client-id');
         // console.log(client_id);
 
         let blockingReason = $('#reason_for_blocking_client').val();
@@ -396,7 +420,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let tutor_id = $(this).data('tutor-id_activate'); 
+        let tutor_id = $(this).attr('data-tutor-id_activate');
         // console.log(tutor_id);
         
         // collect the csrf token and store it in a variable
@@ -428,7 +452,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let client_id = $(this).data('client-id_activate'); 
+        let client_id = $(this).attr('data-client-id_activate'); 
         // console.log(client_id);
         
         // collect the csrf token and store it in a variable
@@ -459,7 +483,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let tutor_id = $(this).data('tutor-id_suspend'); 
+        let tutor_id = $(this).attr('data-tutor-id_suspend'); 
         // console.log(tutor_id);
 
         let suspensionDuration = $('#suspension_duration_tutor').val();
@@ -499,7 +523,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let client_id = $(this).data('client-id_suspend'); 
+        let client_id = $(this).attr('data-client-id_suspend'); 
         // console.log(client_id);
 
         let suspensionDuration = $('#suspension_duration_client').val();
@@ -540,7 +564,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let client_id = $(this).data('client-id_delete'); 
+        let client_id = $(this).attr('data-client-id_delete'); 
         // console.log(client_id);
 
         let confirmation = $('#confirm_delete_client').val()
@@ -583,7 +607,7 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let tutor_id = $(this).data('tutor-id_delete'); 
+        let tutor_id = $(this).attr('data-tutor-id_delete'); 
         // console.log(tutor_id);
 
         let confirmation = $('#confirm_delete_tutor').val()
@@ -1008,5 +1032,186 @@ $(document).ready(function() {
             $('#clientShowAll').text('All');
             clientPaginatedView = true;
         }
+    });
+});
+
+
+
+// Reports =======================================================================
+let tutorReportsData = null;
+let clientReportsData = null;
+// Report logic for tutors and clients ============================================
+$(document).ready(function() {
+    const api_url = 'http://127.0.0.1:8000/appAdmin/api/'
+
+    // Tutor report logic ==========================================================
+    function populataTutorReportTable() {
+    
+        const url = `${api_url}get_tutors_reports/`;
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                const reports = response.tutors_reports;
+                tutorReportsData = reports;
+                // console.log(reports);
+                // console.log(response);
+                // console.log(reports.length);
+
+                //clear existing table data
+                $('#tutor_reports tbody').empty();
+
+                //loop through the reports and append to the table\
+                // $.each(reports, function(index, report) {
+                //     $('#tutor_reports tbody').append(`
+                reports.forEach(function(report) {
+                $('.tutor_reports tbody').append(`
+                        <tr>
+                            <td>${report.id}</td>
+                            <td>${report.tutor}</td>
+                            <td>${report.target_client_id}</td>
+                            <td>${report.subject}</td>
+                            <td>${report.message}</td>
+                            <td>${new Date(report.created_at).toLocaleString()}</td>
+                            <td><button class="resolve_tutor">${report.resolve_by_admin}</button></td>
+                        </tr>
+                    `);
+                });// <td><button class="your-button-class">Your Button Text</button></td>
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching reports: ' + errorThrown.message);
+            }
+        });
+
+    }
+    populataTutorReportTable();
+
+    
+
+    // Client report logic ==========================================================
+    function populataClientReportTable() {
+    
+        const url = `${api_url}get_clients_reports/`;
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                const reports = response.clients_reports;
+                clientReportsData = reports;
+                // console.log(reports);
+                // console.log(response);
+                // console.log(reports.length);
+
+                //clear existing table data
+                $('#client_reports tbody').empty();
+
+                reports.forEach(function(report) {
+                $('.client_reports tbody').append(`
+                        <tr>
+                            <td>${report.id}</td>
+                            <td>${report.client}</td>
+                            <td>${report.target_tutor}</td>
+                            <td>${report.subject}</td>
+                            <td>${report.message}</td>
+                            <td>${ new Date(report.created_at).toLocaleString()}</td>
+                            <td><button class="resolve_client">${report.resolved_by_admin}</button></td>
+                        </tr>
+                    `);
+                });// <td><button class="your-button-class">Your Button Text</button></td>
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching reports: ' + errorThrown.message);
+            }
+        });
+
+    }
+    populataClientReportTable();
+});
+
+
+function populateTutorDataByID(tutor_id) {
+    const tableBody = $('.tutor_reports_in tbody');
+
+    tableBody.empty();
+
+    if (tutorReportsData !== null) {
+        tutorReportsData.forEach(function(report) {
+            if (report.tutor == tutor_id) {
+                tableBody.append(`
+                    <tr>
+                        <td>${report.id}</td>
+                        <td>${report.tutor}</td>
+                        <td>${report.target_client_id}</td>
+                        <td>${report.subject}</td>
+                        <td>${report.message}</td>
+                        <td>${new Date(report.created_at).toLocaleString()}</td>
+                        <td><button class="resolve_tutor">${report.resolve_by_admin}</button></td>
+                    </tr>
+                `);
+            }
+        });
+    }
+}
+
+function populateClientDataByID(client_id) {
+    const tableBody = $('.client_reports_in tbody');
+
+    tableBody.empty();
+
+    if (clientReportsData !== null) {
+        clientReportsData.forEach(function(report) {
+            if (report.client == client_id) {
+                tableBody.append(`
+                    <tr>
+                        <td>${report.id}</td>
+                        <td>${report.client}</td>
+                        <td>${report.target_tutor}</td>
+                        <td>${report.subject}</td>
+                        <td>${report.message}</td>
+                        <td>${ new Date(report.created_at).toLocaleString()}</td>
+                        <td><button class="resolve_client">${report.resolved_by_admin}</button></td>
+                    </tr>
+                `);
+            }
+        });
+    }
+}
+
+
+$(document).ready(function() {
+    $('#activate_report').on('click', function() {
+        const tutor_id = $('.set_report_details').attr('data-tutor-id_report');
+
+        console.log(tutor_id);
+        populateTutorDataByID(tutor_id);
+    })
+
+    $('#activate_report_client').on('click', function() {
+        const client_id = $('.set_report_details_client').attr('data-client-id_report');
+
+        console.log('clicked');
+        console.log(client_id);
+        populateClientDataByID(client_id);
+    })
+})
+
+
+
+// seach logic for tutor and client tables ================================================
+$(document).ready(function() {
+    $('.search_button_tutor').on('click', function() {
+        var searchText = $('.tutor_search').val().toLowerCase();
+        $('.tutor_table_list tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
+    });
+
+    $('.search_button_client').on('click', function() {
+        var searchText = $('.client_search').val().toLowerCase();
+        $('.learner_table_list tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
     });
 });
