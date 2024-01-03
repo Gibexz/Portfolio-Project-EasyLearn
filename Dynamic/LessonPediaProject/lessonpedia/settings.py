@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'client',
     'tutor',
     'app_admin',
+    'mathfilters',
     'generic_apps',
     "django_flatpickr",
     'crispy_forms',

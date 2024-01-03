@@ -47,6 +47,7 @@ class Client (AbstractUser):
         return False
 
 class Review(models.Model):
+    review_subject = models.CharField(max_length=100, null=True)
     review_text = models.TextField(max_length=500)
     tutor = models.ForeignKey(Tutor,  related_name='reviews', null=True, on_delete=models.SET_NULL)
     client = models.ForeignKey(Client, related_name='reviews', null=True, on_delete=models.SET_NULL)
@@ -58,9 +59,16 @@ class Ranking(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name='rankings')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def rankAverage(self, tutorId):
+        """Return the average Ranks for each tutor"""
+        averageRank = Ranking.objects.filter(tutor_id=tutorId).aggregate(avg_rank=models.Avg('rank_number'))
+        return averageRank
+
+
 class ClientReportAbuse(models.Model):
     target_tutor = models.ForeignKey(Tutor, related_name="reported_tutor", null=True, on_delete=models.SET_NULL)
     message = models.TextField(max_length=400)
+    resolved_by_admin = models.BooleanField(default=False, null=True)
     subject = models.CharField(max_length=100)
     client = models.ForeignKey(Client, related_name='abuse_reports', null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -2,8 +2,6 @@
 {% load static %}
 
 {% block head %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Client</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/clientDashboard.js' %}"></script>
@@ -16,7 +14,10 @@
 {% block signup_button %}
 
 {% endblock signup_button %}
+
 {% block content %}
+
+<div class="check">
     <!-- deavtivate account -->
     <div class="deactivate_account_control_display">
         <div class="deactivateAccount">
@@ -51,7 +52,50 @@
         </div>
     </div>
     
-    <div class="db">
+    {% comment %} Review template {% endcomment %}
+    
+    <div class="reviews" style="display: none">
+        <div class="review_main">
+            
+            <section class="review_top">
+                <div class="closeReview">
+                    x
+                </div>
+                <center><h2 class="review_heading">REVIEW</h2></center>
+            </section><hr>
+
+            <section class="profilePicture">
+                <img src="{% static 'images/user/default_user_icon.png' %}" alt="">
+                <p>tutor@emailaddress.com</p>
+            </section>
+            <section class="review_tutor_details">
+                <h4>Tutor Details</h4>
+                <p class="name">Tutor Name here [Phd]</p>
+                <p class="Trank">Ranking: ★★★★★</p>
+                <div class="emp">
+
+                </div>
+            </section>
+
+            <section class="review_content">
+                <fieldset>
+                    <legend>Review Content</legend>
+                    <form id='reviewForm' action="{% url 'submitReview' tutorId=0 %}" method='POST'>
+
+                        {% csrf_token %}
+                        <label for="subject">Subject</label>
+                        <input type="text" placeholder="Enter Subject" name='subject' id='subject' required><br><br>
+
+                        <label for="reviewContent">Review Text</label><br>
+                        <textarea name="reviewContent" id="reviewContent" cols="30" rows="10"></textarea><br><br>
+                        <center><input type="submit" value="SUBMIT"></center>
+                    </form>
+                </fieldset>
+            </section>
+        </div>
+    </div>
+
+    <div class="db" style="display: nne">
         <div class="container">
             <div class="sidebar">
                 <div class="personal side">
@@ -85,7 +129,6 @@
                     </div>            
                 </div>
             </div>
-
             <div class="content">
                 <div class="left_pane">
                     <div class="PUpdate">
@@ -108,13 +151,17 @@
                         </div> 
                         <div class="my_tutors">
                             <div class="searchClient">
-                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
+                                <input type="text" name="" id="keywordVal" class="extend" placeholder="Search tutor">
                                 <button class="searchClient_button">Search</button>
                             </div>
-
                         </div>
+                        
+                        <div class="notFound" style='display: none'><p>tutor eithe</p></div>
+
+                        <div class='cover'>
                         {% if tutors %}
-                        {% for tutor in tutors %}                        
+                        {% for tutor, ranking in tutors %} 
+                        
                             <div class="subjects">
                                 <section class="subject_details">
                                     <section class="tutor_info">
@@ -127,7 +174,6 @@
                                                 </div>
                                                 <span class="tutor_name"><b>{{ tutor.target_tutor.first_name }} {{ tutor.target_tutor.last_name}}</b></span>
                                                 <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
-
                                             
                                             </section>
                                             <section 
@@ -138,21 +184,47 @@
                                                 {% endif %}
                                                 >
                                             </section>
-                                        </div>                                        
+                                        </div>
+                                       
+                                        <section class="hideRating" style="display: none">
+                                            <p class='tutorId'>{{ tutor.target_tutor.id }}</p>
+                                            <p class='clientId'>{{ request.user.id }}</p>
+                                        </section>
 
                                         <div class="tutor_toggles">
                                             <button class="remove_tutor even-width">Remove</button>
-                                            <button class="report_abuse even-width">Report Abuse</button>
+                                            <a href=""><button class="report_abuse even-width">Report Abuse</button></a>
                                             <button class="review even-width">Review</button>
 
                                             <button class="rank even-width">
                                                 <div class='rankStar'>
                                                     <p class='rankTutor'>
-                                                        <span>★</span>
-                                                        <span>★</span>
-                                                        <span>★</span>
-                                                        <span>★</span>
-                                                        <span>★</span>
+                                                    
+                                                        {% with rank_number=ranking.rank_number %}
+                                                            {% for i in ""|rjust:rank_number %}
+                                                                <span class="viewColor">★</span>     
+                                                            {% endfor %}
+                                                                
+                                                            {% if rank_number == 1 %}
+                                                                {% for i in ""|rjust:4 %}
+                                                                    <span class='defaultColor'>★</span>                           
+                                                                {% endfor %}
+                                                            {% elif rank_number == 2 %}
+                                                                {% for i in ""|rjust:3 %}
+                                                                    <span class='defaultColor'>★</span>                   
+                                                                {% endfor %}
+                                                            {% elif rank_number == 3 %}
+                                                                {% for i in ""|rjust:2 %}
+                                                                    <span class='defaultColor'>★</span>                                           
+                                                                {% endfor %}
+                                                            {% elif rank_number == 4 %}
+                                                                {% for i in ""|rjust:1 %}
+                                                                    <span class='defaultColor'>★</span>                        
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                                                                               
+                                                        {% endwith %}
+                                                        
                                                     </p>
                                                     <section>
                                                         <p class="rankText">Rank with stars</p>
@@ -181,13 +253,32 @@
                             </div>
                             
                             {% endfor %}
+                            {% comment %} <div class="pagination">
+                                <span class="step-links">
+                                    {% if tutors.has_previous %}
+                                        <a href="?page=1">&laquo; first</a>
+                                        <a href="?page={{ tutors.previous_page_number }}">previous</a>
+                                    {% endif %}
+                        
+                                    <span class="current">
+                                        Page {{ tutors.number }} of {{ tutors.paginator.num_pages }}.
+                                    </span>
+                        
+                                    {% if tutors.has_next %}
+                                        <a href="?page={{ tutors.next_page_number }}">next</a>
+                                        <a href="?page={{ tutors.paginator.num_pages }}">last &raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div> {% endcomment %}
                             {% else %}
                                 <center><h3 style="font-family: 'Roboto', sans-serif;">
                                     No tutor yet, please click view tutor to add some!
                                 </h3></center>
                             {% endif %}
+                            </div>
                     </div>
                 </div>
+                
 
                 <div class="right_pane">
                     <div class="right_content">
@@ -245,7 +336,7 @@
                 <div class="left_pane">
                     <div class="profile_info">
                         <h2 class="fa-solid fa-gear">&nbsp; <span>Settings</span></h2>
-                    </div>
+                    </div><br>
 
                     <div class="update_navbar">
                         <nav class="update_elements">
@@ -437,4 +528,6 @@
         </div>
     </div>
         
+</div>
+
 {% endblock content %}

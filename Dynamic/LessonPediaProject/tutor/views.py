@@ -182,12 +182,11 @@ def tutor_detail(request, tutor_id):
     user = request.user
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
-    reviews = Review.objects.filter(tutor=tutor_id).order_by('-created_at') 
+    reviews = Review.objects.filter(tutor=tutor_id).order_by('-created_at')
+    AvgRank = Ranking().rankAverage(tutor_id)
     tutor = get_object_or_404(Tutor, id=tutor_id)
-    context ={'tutor': tutor, 'user': user, 'subjects': subjects, 'reviews': reviews, 'tutors': tutors}
+    context ={'tutor': tutor, 'user': user, 'subjects': subjects, 'reviews': reviews, 'tutors': tutors, 'rank': AvgRank['avg_rank']}
     return render(request, 'tutor/tutor_detail.html', context=context)
-
-
 
 @login_required(login_url='client_signIn')
 def email_tutor(request, tutor_id):
@@ -216,26 +215,28 @@ def email_tutor(request, tutor_id):
     return redirect('view_tutors')
 
 
-@login_required(login_url='client_signIn')
-def submit_rank(request, tutor_id):
-    if not isinstance(request.user, Client):
-        error_message = 'Are you logged in as a learner?'
-        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-    if request.method == 'POST':
-        tutor = Tutor.objects.get(pk=tutor_id)
-        rank_number = int(request.POST.get('rank'))
-        # Check if the client has already ranked this tutor
-        existing_rank = Ranking.objects.filter(tutor=tutor, client=request.user).first()
-        if existing_rank:
-            existing_rank.rank_number = rank_number
-            existing_rank.save()
-        else:
-            Ranking.objects.create(tutor=tutor, client=request.user, rank_number=rank_number)
+# @login_required(login_url='client_signIn')
+# def submit_rank(request, tutor_id):
+#     if not isinstance(request.user, Client):
+#         error_message = 'Are you logged in as a learner?'
+#         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+#     if request.method == 'POST':
+#         tutor = Tutor.objects.get(pk=tutor_id)
+#         rank_number = int(request.POST.get('rank'))
+#         # Check if the client has already ranked this tutor
+#         existing_rank = Ranking.objects.filter(tutor=tutor, client=request.user).first()
+#         if existing_rank:
+#             existing_rank.rank_number = rank_number
+#             existing_rank.save()
+#         else:
+#             Ranking.objects.create(tutor=tutor, client=request.user, rank_number=rank_number)
 
-        # Update the tutor's average rank
-        tutor.update_rank(rank_number)
+#         # Update the tutor's average rank
+#         tutor.update_rank(rank_number)
+#     tutor = get_object_or_404(Tutor, username=request.user)
+#     tutotRank = get_object_or_404(Ranking, tutor=tutor)
 
-    return redirect('tutor_detail', tutor_id=tutor_id)
+#     return redirect('tutor_detail', tutor_id=tutor_id)
 
 
 @login_required(login_url='client_signIn')
@@ -339,4 +340,4 @@ def suspend_tutor(request, tutor_id):
 def tutor_logout(request):
     logout(request)
     messages.success(request, "You're Logged Out")
-    return redirect('tutor_login') 
+    return redirect('tutor_login')

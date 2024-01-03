@@ -1,12 +1,14 @@
 from django.contrib.auth import login, logout, update_session_auth_hash
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .backends import EmailClientBackend as ClientBackend
 from django.contrib import messages
 from .form import UserProfileRegistrationForm
-from .models import Client, Cart, Tutor, Ranking
+from .models import Client, Cart, Tutor, Ranking, Review
 from django.http import HttpResponse, JsonResponse
 import re
 
@@ -72,19 +74,50 @@ def user_profile_registration(request):
         return render(request, 'client/profilePageUpdate.html', {"form": form, "activeUser": request.user})
 
 @login_required(login_url='client_signIn')
-def render_dashboard(request, whoami):
+def render_dashboard(request, whoami, tutorId=None):
     """validate user and render dashboard
     or redirect user to register profile page"""
 
     user = Client.objects.get(username=whoami)
     address = user.residential_address
-    
+
     if address:
         getAllTutors = Cart.objects.filter(client_id=request.user.id).all()
-        countTutors = getAllTutors.count()
-        return render(request, 'client/client_dashboard.html', {'tutors': getAllTutors, 'totalTutors': countTutors})
+        countTutors = getAllTutors.filter(client_id=request.user.id).count()
+        getRanking = Ranking.objects.filter(client_id=request.user.id).all()
+
+        # Pagination
+        # page = request.GET.get('page', 1)
+        # paginator = Paginator(getAllTutors, 3) 
+        # try:
+        #     tutors = paginator.page(page)
+        # except PageNotAnInteger:
+        #     tutors = paginator.page(1)
+        # except EmptyPage:
+        #     tutors = paginator.page(paginator.num_pages)
+
+
+        zip_object = zip(getAllTutors, getRanking)
+        return render(request, 'client/client_dashboard.html', {'tutors': zip_object, 'totalTutors': countTutors})
     else:
         return redirect('user_profile')
+
+
+@login_required(login_url="client_signIn")
+def search_algorithm(request, keyword):
+    """Return all tutors that matches the keyword"""
+    user = Client.objects.get(username=request.user)
+    address = user.residential_address
+    if address:
+        filtered_keyword = Cart.objects.filter(Q(target_tutor__first_name__icontains=keyword) | Q(target_tutor__last_name__icontains=keyword), client=request.user).all()
+        getAllTutors = Cart.objects.filter(client_id=request.user.id).all()
+        countTutors = getAllTutors.filter(client_id=request.user.id).count()
+        getRanking = Ranking.objects.filter(client_id=request.user.id).all()
+        if getRanking:
+            zip_object = zip(filtered_keyword, getRanking)
+            return render(request, 'client/client_dashboard.html', {'tutors': zip_object, 'totalTutors': countTutors})
+  
+    return redirect('validate_user', whoami=request.user)
 
 @login_required(login_url='/landing_page/')
 def ClientProfileUpdate(request):
@@ -195,13 +228,14 @@ def removeTutorFromCart(request, tutorId):
     messages.error(request, "Tutor not found in cart")
     return redirect('validate_user', whoami=request.user)
 
+@login_required(login_url="client_signIn")
 def tutors_ranking(request, tutorId, rankValue):
     """Rank tutor based on their performance and client satisfaction"""
     getTutor = get_object_or_404(Tutor, id=tutorId)
     queryRanks = Ranking.objects.filter(tutor=getTutor, client=request.user).first()
     if queryRanks:
         queryRanks.rank_number = rankValue
-        #queryRanks.save()
+        queryRanks.save()
         messages.success(request, "Ranking successfully updated")
         return redirect('validate_user', whoami=request.user)
     rank = Ranking(
@@ -210,8 +244,41 @@ def tutors_ranking(request, tutorId, rankValue):
         client=request.user,
     )
     try:
-        #rank.save()
+        rank.save()
         messages.success(request, "Ranking added successfully")
+        print(tutorId, rankValue)
         return redirect('validate_user', whoami=request.user)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+def review_tutor_ajax(request, tutorId):
+    """Review active tutor"""
+    queryTutor = Tutor.objects.get(pk=tutorId)
+    data = {
+        'Temail': queryTutor.email,
+        'TfirstName': queryTutor.first_name,
+        'TlastName': queryTutor.last_name,
+        'Tqualification': queryTutor.highest_qualification,
+        'Trank': queryTutor.rank,
+        'dp': queryTutor.profile_picture.url,
+        'id': tutorId
+    }
+    return JsonResponse({'Rtutor': data})
+
+def submit_review(request, tutorId):
+    """Submit Review based on active user"""
+    tutor = get_object_or_404(Tutor, pk=tutorId)
+    client = request.user
+    if request.method == "POST":
+        subject = request.POST.get('subject')
+        body = request.POST.get('reviewContent')
+        print(subject, body)
+        storage = Review(
+            review_subject=subject,
+            review_text=body,
+            client=client,
+            tutor=tutor
+        )
+        storage.save()
+        messages.success(request, "Review was successfull")
+    return redirect('validate_user', whoami=request.user)

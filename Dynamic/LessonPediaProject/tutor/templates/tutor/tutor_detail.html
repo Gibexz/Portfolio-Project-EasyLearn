@@ -104,14 +104,14 @@
                         <p class="ratings">Rating:
                             <span>
                                 <span class="ranks">
-                                    {% if tutor.rank %}
-                                            {% if tutor.rank > 4 %}
+                                    {% if rank %}
+                                            {% if rank > 4 %}
                                             <span class="rank_5" id="my_rank">★★★★★</span>
-                                            {% elif tutor.rank > 3 %}
+                                            {% elif rank > 3 %}
                                                 <span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>
-                                            {% elif tutor.rank > 2 %}
+                                            {% elif rank > 2 %}
                                                 <span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>
-                                            {% elif tutor.rank > 1 %}
+                                            {% elif rank > 1 %}
                                                 <span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>
                                             {% else  %}
                                                 <span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>
@@ -124,7 +124,7 @@
                                 </span>
                             </span>
                         </p>
-                        <section class="rankTutor">
+                        {% comment %} <section class="rankTutor">
                             <button class="rankTutorDisplay">Rate this Tutor</button>
                             <form method="post" id="rankForm" action="{% url 'submit_rank' tutor.id %}">
                                 {% csrf_token %}
@@ -139,7 +139,7 @@
                                 <input type="hidden" name="rank" id="rank" value="1"> <!-- Default value -->
                                 <button id="submitRankBtn" type="submit">Submit</button>
                               </form>
-                        </section>
+                        </section> {% endcomment %}
                     </section>
                 </div>
                 <div class="dpLinks">
@@ -272,14 +272,14 @@
                 </section>
 
                 <section class="addTutor">
-                    <button class="addbutton">Add Tutor</button>
+                    <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a>
                 </section>
             </section>
             
             <h3 class="similarHead">Similar Tutors Profile</h3>
             <div class="similarTutors">
                 <section class="addTutor">
-                    <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a>
+                    {% comment %} <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a> {% endcomment %}
             </section>
             </div>
             <div class="pagination">
