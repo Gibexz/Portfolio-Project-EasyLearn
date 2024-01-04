@@ -84,8 +84,7 @@ def render_dashboard(request, whoami, tutorId=None):
     if address:
         getAllTutors = Cart.objects.filter(client_id=request.user.id).all()
         countTutors = getAllTutors.filter(client_id=request.user.id).count()
-        getRanking = Ranking.objects.filter(client_id=request.user.id).all()
-
+        
         # Pagination
         # page = request.GET.get('page', 1)
         # paginator = Paginator(getAllTutors, 3) 
@@ -96,9 +95,16 @@ def render_dashboard(request, whoami, tutorId=None):
         # except EmptyPage:
         #     tutors = paginator.page(paginator.num_pages)
 
+        # Hangle ajax data
+        get_ajax_data = request.GET.get('tutorId')
+        if get_ajax_data:
+            """return object of selected tutor"""
+            rank = Ranking.objects.filter(tutor_id=get_ajax_data, client=request.user).first()
+            rankByUser = rank.rank_number if rank else 0
+            print(rankByUser)
+            return JsonResponse({'rank': rankByUser})
 
-        zip_object = zip(getAllTutors, getRanking)
-        return render(request, 'client/client_dashboard.html', {'tutors': zip_object, 'totalTutors': countTutors})
+        return render(request, 'client/client_dashboard.html', {'tutors': getAllTutors, 'totalTutors': countTutors})
     else:
         return redirect('user_profile')
 
@@ -246,7 +252,6 @@ def tutors_ranking(request, tutorId, rankValue):
     try:
         rank.save()
         messages.success(request, "Ranking added successfully")
-        print(tutorId, rankValue)
         return redirect('validate_user', whoami=request.user)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
@@ -254,12 +259,13 @@ def tutors_ranking(request, tutorId, rankValue):
 def review_tutor_ajax(request, tutorId):
     """Review active tutor"""
     queryTutor = Tutor.objects.get(pk=tutorId)
+    AvgRank = Ranking().rankAverage(tutorId)
     data = {
         'Temail': queryTutor.email,
         'TfirstName': queryTutor.first_name,
         'TlastName': queryTutor.last_name,
         'Tqualification': queryTutor.highest_qualification,
-        'Trank': queryTutor.rank,
+        'Trank': AvgRank['avg_rank'],
         'dp': queryTutor.profile_picture.url,
         'id': tutorId
     }
@@ -272,7 +278,6 @@ def submit_review(request, tutorId):
     if request.method == "POST":
         subject = request.POST.get('subject')
         body = request.POST.get('reviewContent')
-        print(subject, body)
         storage = Review(
             review_subject=subject,
             review_text=body,

@@ -699,7 +699,7 @@ label{
 }
 
 .rankStar{
-    position: absolute;
+    position: relative;
     text-align: center;
     margin-left: 10px;
     display: block;

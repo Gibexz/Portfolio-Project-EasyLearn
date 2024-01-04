@@ -16,6 +16,7 @@
 {% endblock signup_button %}
 
 {% block content %}
+<p id="test" style="display: none;">{{ tutorRank }}</p>
 
 <div class="check">
     <!-- deavtivate account -->
@@ -71,7 +72,10 @@
             <section class="review_tutor_details">
                 <h4>Tutor Details</h4>
                 <p class="name">Tutor Name here [Phd]</p>
-                <p class="Trank">Ranking: ★★★★★</p>
+                <p class="Trank">Ranking: 
+                    <span class="viewColor rankGotten"></span>
+                    <span class="defaultColor lostRank"></span>
+                </p>
                 <div class="emp">
 
                 </div>
@@ -159,8 +163,9 @@
                         <div class="notFound" style='display: none'><p>tutor eithe</p></div>
 
                         <div class='cover'>
+
                         {% if tutors %}
-                        {% for tutor, ranking in tutors %} 
+                        {% for tutor in tutors %} 
                         
                             <div class="subjects">
                                 <section class="subject_details">
@@ -195,42 +200,23 @@
                                             <button class="remove_tutor even-width">Remove</button>
                                             <a href=""><button class="report_abuse even-width">Report Abuse</button></a>
                                             <button class="review even-width">Review</button>
-
+                                            
                                             <button class="rank even-width">
                                                 <div class='rankStar'>
                                                     <p class='rankTutor'>
-                                                    
-                                                        {% with rank_number=ranking.rank_number %}
-                                                            {% for i in ""|rjust:rank_number %}
-                                                                <span class="viewColor">★</span>     
-                                                            {% endfor %}
-                                                                
-                                                            {% if rank_number == 1 %}
-                                                                {% for i in ""|rjust:4 %}
-                                                                    <span class='defaultColor'>★</span>                           
-                                                                {% endfor %}
-                                                            {% elif rank_number == 2 %}
-                                                                {% for i in ""|rjust:3 %}
-                                                                    <span class='defaultColor'>★</span>                   
-                                                                {% endfor %}
-                                                            {% elif rank_number == 3 %}
-                                                                {% for i in ""|rjust:2 %}
-                                                                    <span class='defaultColor'>★</span>                                           
-                                                                {% endfor %}
-                                                            {% elif rank_number == 4 %}
-                                                                {% for i in ""|rjust:1 %}
-                                                                    <span class='defaultColor'>★</span>                        
-                                                                {% endfor %}
-                                                            {% endif %}
-                                                                                                               
-                                                        {% endwith %}
+                                                        
+                                                        <span class='defaultColor'></span> 
                                                         
                                                     </p>
+                                                    
                                                     <section>
                                                         <p class="rankText">Rank with stars</p>
                                                     </section>
                                                 </div>
-                                                Rank <span class="getID" style="display: none;">{{ tutor.target_tutor.id }}</span></button>                                  
+                                                Rank <span class="getID" style="display: none;">{{ tutor.target_tutor.id }}</span>
+                                                <span style="display: none;" class='client_username'>{{ request.user.username }}</span>                                 
+                                            
+                                            </button>
                                             <section class="status_icon"></section>
                                         </div>
                                                                                 
