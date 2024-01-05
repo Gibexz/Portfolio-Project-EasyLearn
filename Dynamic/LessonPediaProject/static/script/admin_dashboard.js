@@ -1045,49 +1045,118 @@ $(document).ready(function() {
     const api_url = 'http://127.0.0.1:8000/appAdmin/api/'
 
     // Tutor report logic ==========================================================
-    function populataTutorReportTable() {
-    
-        const url = `${api_url}get_tutors_reports/`;
 
+    function populataTutorReportTable() {
+        const url = `${api_url}get_tutors_reports/`;
+    
         $.ajax({
             method: 'GET',
             url: url,
-            success: function(response) {
+            success: function (response) {
                 const reports = response.tutors_reports;
                 tutorReportsData = reports;
-                // console.log(reports);
-                // console.log(response);
-                // console.log(reports.length);
-
-                //clear existing table data
-                $('#tutor_reports tbody').empty();
-
-                //loop through the reports and append to the table\
-                // $.each(reports, function(index, report) {
-                //     $('#tutor_reports tbody').append(`
-                reports.forEach(function(report) {
-                $('.tutor_reports tbody').append(`
+    
+                // Clear existing table data
+                $('.tutor_reports tbody').empty();
+    
+                reports.forEach(function (report) {
+                    const tableRow = $(`
                         <tr>
                             <td>${report.id}</td>
                             <td>${report.tutor}</td>
                             <td>${report.target_client_id}</td>
-                            <td>${report.subject}</td>
-                            <td>${report.message}</td>
+                            <td class="t_subject">${report.subject}</td>
+                            <td class="t_message">${report.message}</td>
                             <td>${new Date(report.created_at).toLocaleString()}</td>
-                            <td><button class="resolve_tutor">${report.resolve_by_admin}</button></td>
+                            <td><button class="t_resolve_tutor">${report.resolved_by_admin}</button></td>
+                            <td>${report.resolved_at ? new Date(report.resolved_at).toLocaleString() : "Unresolved"}</td>
+                            <td><button class="t_report_view">View report</button></td>
                         </tr>
                     `);
-                });// <td><button class="your-button-class">Your Button Text</button></td>
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.log('Error fetching reports: ' + errorThrown.message);
-            }
-        });
+                    let tCheckStatus = false;
+                    if (report.resolved_by_admin === true || report.resolved_by_admin == 'True') {
+                        tableRow.css({'background-color': 'lightgreen', 'border': '1px solid white'});
+                        tCheckStatus = false;
+                        $('.t_report_check').css('display', 'none');
+                        $('#set_tutor_report').attr('data-t_report_check', tCheckStatus);
 
+                    } else {
+                        tableRow.css({'background-color': ' rgba(235, 20, 20, 0.3)', 'border': '1px solid white', 'color': 'black'});
+                        tCheckStatus = true;
+                        $('.t_report_check').css('display', 'inline-block');
+                        $('#set_tutor_report').attr('data-t_report_check', tCheckStatus);
+                    }
+                    const messageCell = tableRow.find('.t_message');
+                    const subjectCell = tableRow.find('.t_subject');
+    
+                    // Hover event to show full subject in a dropdown div
+                    subjectCell.hover(function () {
+                        const fullMessage = report.subject;
+                        const dropdownDivSubject = $('<div class="subject-dropdown"></div>').text(fullMessage);
+    
+                        dropdownDivSubject.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '200px',
+                            // height: auto,
+                            whiteSpace: 'normal',
+                        });
+    
+                        $(this).append(dropdownDivSubject);
+    
+                        // Remove the dropdown div on mouse leave
+                        $(this).mouseleave(function () {
+                            dropdownDivSubject.remove();
+                        });
+                    }, function () {
+                        // Ensure the dropdown div is removed on mouse out
+                        $('.subject-dropdown').remove();
+                    });
+
+                    messageCell.hover(function () {
+                        const fullMessage = report.message;
+                        const dropdownDivMessage = $('<div class="message-dropdown"></div>').text(fullMessage);
+    
+                        dropdownDivMessage.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '300px',
+                            // height: auto,
+                            whiteSpace: 'normal',
+                        });
+    
+                        $(this).append(dropdownDivMessage);
+    
+                        // Remove the dropdown div on mouse leave
+                        $(this).mouseleave(function () {
+                            dropdownDivMessage.remove();
+                        });
+                    }, function () {
+                        // Ensure the dropdown div is removed on mouse out
+                        $('.message-dropdown').remove();
+                    });
+    
+                    $('.tutor_reports tbody').append(tableRow);
+                });
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error fetching reports: ' + errorThrown.message);
+            },
+        });
     }
     populataTutorReportTable();
-
+    setInterval(function () {
+        populataTutorReportTable();
+    }, 3600000); // Set interval to 1 hour for dynamic update of the reports table
     
+    
+
 
     // Client report logic ==========================================================
     function populataClientReportTable() {
@@ -1105,21 +1174,79 @@ $(document).ready(function() {
                 // console.log(reports.length);
 
                 //clear existing table data
-                $('#client_reports tbody').empty();
-
-                reports.forEach(function(report) {
-                $('.client_reports tbody').append(`
+                $('.client_reports tbody').empty();
+                reports.forEach(function (report) {
+                    const tableRow = $(`
                         <tr>
                             <td>${report.id}</td>
                             <td>${report.client}</td>
                             <td>${report.target_tutor}</td>
-                            <td>${report.subject}</td>
-                            <td>${report.message}</td>
-                            <td>${ new Date(report.created_at).toLocaleString()}</td>
-                            <td><button class="resolve_client">${report.resolved_by_admin}</button></td>
+                            <td class="c_subject">${report.subject}</td>
+                            <td class="c_message">${report.message}</td>
+                            <td>${new Date(report.created_at).toLocaleString()}</td>
+                            <td><button class="c_resolve_client">${report.resolved_by_admin}</button></td>
+                            <td>${report.resolved_at ? new Date(report.resolved_at).toLocaleString() : "Unresolved"}</td>
+                            <td><button class="c_report_view">View report</button></td>
                         </tr>
                     `);
-                });// <td><button class="your-button-class">Your Button Text</button></td>
+                    let cCheckStatus = false;
+                    if (report.resolved_by_admin === true || report.resolved_by_admin == 'True') {
+                        tableRow.css({'background-color': 'lightgreen', 'border': '1px solid white'});
+                        cCheckStatus = false; 
+                        $('#set_client_report').attr('data-c_report_check', cCheckStatus);
+                        $('.c_report_check').css('display', 'none');
+                    } else {
+                        tableRow.css({'background-color': ' rgba(235, 20, 20, 0.3)', 'border': '1px solid white', 'color': 'black'});
+                        cCheckStatus = true;
+                        $('#set_client_report').attr('data-c_report_check', cCheckStatus);
+                        $('.c_report_check').css('display', 'inline-block');
+                    }
+                
+                    const messageCell = tableRow.find('.c_message');
+                    const subjectCell = tableRow.find('.c_subject');
+                
+                    subjectCell.hover(function () {
+                        const fullSubject = report.subject;
+                        const dropdownDivSubject = $('<div class="subject-dropdown_c"></div>').text(fullSubject);
+                
+                        dropdownDivSubject.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '200px',
+                            whiteSpace: 'normal',
+                        });
+                
+                        $(this).append(dropdownDivSubject);
+                    }, function () {
+                        $(this).find('.subject-dropdown_c').remove();
+                    });
+                
+                    messageCell.hover(function () {
+                        const fullMessage = report.message;
+                        const dropdownDivMessage = $('<div class="message-dropdown_c"></div>').text(fullMessage);
+                
+                        dropdownDivMessage.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '300px',
+                            whiteSpace: 'normal',
+                        });
+                
+                        $(this).append(dropdownDivMessage);
+                    }, function () {
+                        $(this).find('.message-dropdown_c').remove();
+                    });
+                
+                    $('.client_reports tbody').append(tableRow); // Updated selector to target the tbody of the client_reports table
+                });
+                
+            
             },
             error: function(xhr, textStatus, errorThrown) {
                 console.log('Error fetching reports: ' + errorThrown.message);
@@ -1128,6 +1255,23 @@ $(document).ready(function() {
 
     }
     populataClientReportTable();
+    setInterval(function () {
+        populataClientReportTable();
+        
+        let tCheck = $('#set_tutor_report').attr('data-t_report_check');
+        let cCheck = $('#set_client_report').attr('data-c_report_check');
+        console.log(tCheck);
+        console.log(cCheck);
+        if (tCheck == true || tCheck == 'True' || cCheck == true || cCheck == 'True') {
+            $('.report_check').css('display', 'inline-block');
+        } else {
+            $('.report_check').css('display', 'none');
+        }
+    }, 3600000); // Set interval to 1 hour for dynamic update of the reports table
+
+
+
+
 });
 
 
@@ -1179,20 +1323,18 @@ function populateClientDataByID(client_id) {
     }
 }
 
-
+// Report view logic for tutors and clients on take action dialogue ============================================
 $(document).ready(function() {
     $('#activate_report').on('click', function() {
         const tutor_id = $('.set_report_details').attr('data-tutor-id_report');
 
-        console.log(tutor_id);
+        // console.log(tutor_id);
         populateTutorDataByID(tutor_id);
     })
 
     $('#activate_report_client').on('click', function() {
         const client_id = $('.set_report_details_client').attr('data-client-id_report');
 
-        console.log('clicked');
-        console.log(client_id);
         populateClientDataByID(client_id);
     })
 })

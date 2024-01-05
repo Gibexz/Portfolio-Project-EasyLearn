@@ -300,18 +300,18 @@ table {
     /* Set a fixed width for the report.message column */
     max-width: 300px;
     min-width: 300px;
-    /* overflow: hidden; */
+    overflow: hidden;
     text-overflow: ellipsis;
-    /* white-space: nowrap; */
+    white-space: nowrap;
 }
 
 .tutor_reports tbody td:nth-child(4), .client_reports tbody td:nth-child(4) {
     /* Set a fixed width for the report.subject column */
     max-width: 150px;
     min-width: 150px;
-    /* overflow: hidden; */
+    overflow: hidden;
     text-overflow: ellipsis;
-    /* white-space: nowrap; */
+    white-space: nowrap;
 }
 
 .tutor_reports tbody td, .client_reports tbody td {
@@ -923,3 +923,44 @@ table {
 .dropdownReports:hover .dropdown-contentReports {
   display: block;
 }
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 5;
+    bottom: 125%; /* Place the tooltip text above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip text */
+    margin-top: 5px; /* Add some top margin */
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    display: in
+}
+
+/* .message-dropdown{
+    position: 'absolute';
+    background-color: '#f9f9f9';
+    border: '1px solid #ccc';
+    padding: '10px';
+    z-index: '1000';
+    width: '300px';
+} */

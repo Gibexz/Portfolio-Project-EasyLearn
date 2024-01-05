@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.contrib.auth.models import Group, Permission
+# from client.models import Client
+
 
 class Tutor(AbstractUser):
     """Tutors database"""
@@ -168,7 +170,9 @@ class TutorReportAbuse(models.Model):
     message = models.TextField()
     subject = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    tutor = models.ForeignKey(Tutor, related_name='reported_client', on_delete=models.CASCADE)
+    tutor = models.ForeignKey(Tutor, related_name='abuse_reports', on_delete=models.CASCADE)
+    resolved_by_admin = models.BooleanField(default=False, null=True)
+    resolved_at = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.subject

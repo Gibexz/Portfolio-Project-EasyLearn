@@ -604,10 +604,10 @@
                 <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
                 <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
                 <div class="dropdownReports">
-                    <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list">&nbsp; &nbsp; Reports</span></p>
+                    <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list"><span class="report_check fa-solid fa-envelope" style="display: none; color: red;"></span>&nbsp; &nbsp;  Reports</span></p>
                     <ol class="dropdown-contentReports">
-                        <li class="" id="set_tutor_report">Tutor Reports</li>
-                        <li class="" id="set_client_report">Client Reports</li>  
+                        <li class="" id="set_tutor_report" data-t_report_check="" ><span class="fa-solid fa-envelope t_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Tutor Reports</li>
+                        <li class="" id="set_client_report" data-c_report_check=""><span class="fa-solid fa-envelope c_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Client Reports</li>  
                     </ol>
                 </div><br><br>
                 <p class="fa-solid fa-money-bill-transfer"><span class="dashboard_list" id="set_transactions">&nbsp; &nbsp; Transactions</span></p><br><br>
@@ -958,6 +958,8 @@
                                     <th class="t_report_message" data-column="4">Message</th>
                                     <th class="t_report_created" data-column="5">Created_at</th>
                                     <th class="t_report_resolve" data-column="6">Resolve Status</th>
+                                    <th class="t_report_date_resolved" data-column="7">Date Resolved</th>
+                                    <th class="t_report_view" data-column="8">View</th>
                                 </tr>
                             </thead>
                             <tbody>   
@@ -1009,6 +1011,8 @@
                                     <th class="c_report_message" data-column="4">Message</th>
                                     <th class="c_report_created" data-column="5">Created_at</th>
                                     <th class="c_report_resolve" data-column="6">Resolve Status</th>
+                                    <th class="c_report_date_resolved" data-column="7">Date Resolved</th>
+                                    <th class="c_report_view" data-column="8">View</th>
                                 </tr>
                             </thead>
                             <tbody>  
