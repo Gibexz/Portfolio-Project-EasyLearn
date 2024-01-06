@@ -522,6 +522,16 @@ body{
     text-decoration: none;
 }
 
+.signOut_btn a{
+    margin-left: 40%;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, #690106, #ff5a5a);
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .dropdown .login_btn{
     cursor: pointer;
     text-align: center;
@@ -551,4 +561,9 @@ body{
     font-family: 'Saira', sans-serif;
     font-size: small;
     font-weight: 500;
+}
+
+.all_review:hover{
+    color: gray;
+    cursor: pointer;
 }

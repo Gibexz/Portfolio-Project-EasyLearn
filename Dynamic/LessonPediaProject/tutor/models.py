@@ -104,11 +104,11 @@ class Tutor(AbstractUser):
     suspension_reason_admin = models.TextField(null=True, blank=True)
     block_reason_admin = models.TextField(null=True, blank=True)
 
-    def update_rank(self, new_rank):
-        self.total_ratings += 1
-        self.accumulated_rating += new_rank
-        self.rank = self.accumulated_rating / self.total_ratings
-        self.save()
+    # def update_rank(self, new_rank):
+    #     self.total_ratings += 1
+    #     self.accumulated_rating += new_rank
+    #     self.rank = self.accumulated_rating / self.total_ratings
+    #     self.save()
 
     def to_dict(self):
         return {

@@ -99,6 +99,69 @@
         </div>
     </div>
 
+    {% comment %} All Reviews {% endcomment %}
+    
+    <div class='allReviews' style="display: none">
+        <div class="allReview_container">
+            <div class="allReview_content">
+                <section class="review_top">
+                    <div class="closeReview">
+                        x
+                    </div>
+                    <center><h2 class="review_heading">Your Reviews</h2></center>
+                </section><hr>
+
+                {% if reviews %}
+
+                {% for review in reviews %}
+                    <section class="image">
+                        <img src="{{ review.tutor.profile_picture.url }}" alt=""> 
+                    </section>
+
+                    <section class="headContent">
+                        <h3>{{ review.tutor.first_name }} {{ review.tutor.last_name }} <span> [{{ review.tutor.area_of_specialization }}]</span></h3>
+                        <p class="rank_validate">Ranking: <span>
+                            {% if review.tutor.rank > 4 %}
+                                <span class="viewColor" style="color: gold">★★★★★</span>
+                            {% elif review.tutor.rank > 3 %}
+                                <span class="viewColor" style="color: gold">★★★★</span>
+                                <span class="defaultColor" style="color: gray">★</span>
+                            {% elif review.tutor.rank > 2 %}
+                                <span class="viewColor" style="color: gold">★★★</span>
+                                <span class="defaultColor" style="color: gray">★★</span>
+                            {% elif review.tutor.rank > 2 %}
+                                <span class="viewColor" style="color: gold">★★</span>
+                                <span class="defaultColor" style="color: gray">★★★</span>
+                            {% elif review.tutor.rank > 1 %}
+                                <span class="viewColor" style="color: gold">★</span>
+                                <span class="defaultColor" style="color: gray">★★★★</span>
+                            {% else %}
+                                <span class="defaultColor" style="color: gray">★★★★★</span>
+                            {% endif %}
+                            
+                        </span></p>
+                    </section>
+
+                    <section class="message">
+                        <button class="editReview">Edit</button>
+                        <p class="TRsubject">Subject: <span>{{ review.review_subject }}</span></p>
+                        <div class="message_content">
+                            {{ review.review_text }} 
+                        </div>
+                    </section><hr>
+                {% endfor %}
+
+                {% else %}    
+                    <section class="headContent">
+                        <center><h3>You have no Review yet, please click review on your dashboard</h3></center>
+                    </section>
+                {% endif %}
+            </div>
+        </div>
+    </div>  
+
+   
+
     <div class="db" style="display: nne">
         <div class="container">
             <div class="sidebar">
@@ -129,7 +192,7 @@
                         <a href="{% url 'view_tutors' %}" class="exploreTutors">View Tutors</a>
                     </div><br>
                     <div class="logout side logout_activation">
-                        <a href="#">Logout</a> 
+                        <a href="#" style="color: red">Logout</a> 
                     </div>            
                 </div>
             </div>
@@ -444,7 +507,7 @@
                         <a href="{% url 'view_tutors' %}" class="exploreTutors">View Tutors</a>
                     </div><br>                  
                     <div class="logout side logout_activation">
-                        <a href="#">Logout</a> 
+                        <a href="#" style="color: red">Logout</a> 
                     </div>            
                 </div>
             </div>

@@ -143,6 +143,10 @@ def view_tutors(request):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
+    for x in tutors: 
+        ranks = Ranking().rankAverage(x.id)['avg_rank']
+        x.rank = ranks
+        x.save()
     user = request.user
     return render(request, 'tutor/view_tutors.html', context={'tutors': tutors, 'subjects': subjects, 'user': user})
 
@@ -164,7 +168,6 @@ def search_tutors(request):
         print(tutor_list)
         subjects = Subject.objects.filter(subject_name__icontains=query)
         subject_list = [{'subject_name': subject.subject_name} for subject in subjects]
-        print(subject_list)
 
         response_data = {'tutors': tutor_list, 'query': query, 'subjects': subject_list}
         return JsonResponse(response_data)
@@ -215,30 +218,6 @@ def email_tutor(request, tutor_id):
     return redirect('view_tutors')
 
 
-# @login_required(login_url='client_signIn')
-# def submit_rank(request, tutor_id):
-#     if not isinstance(request.user, Client):
-#         error_message = 'Are you logged in as a learner?'
-#         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-#     if request.method == 'POST':
-#         tutor = Tutor.objects.get(pk=tutor_id)
-#         rank_number = int(request.POST.get('rank'))
-#         # Check if the client has already ranked this tutor
-#         existing_rank = Ranking.objects.filter(tutor=tutor, client=request.user).first()
-#         if existing_rank:
-#             existing_rank.rank_number = rank_number
-#             existing_rank.save()
-#         else:
-#             Ranking.objects.create(tutor=tutor, client=request.user, rank_number=rank_number)
-
-#         # Update the tutor's average rank
-#         tutor.update_rank(rank_number)
-#     tutor = get_object_or_404(Tutor, username=request.user)
-#     tutotRank = get_object_or_404(Ranking, tutor=tutor)
-
-#     return redirect('tutor_detail', tutor_id=tutor_id)
-
-
 @login_required(login_url='client_signIn')
 def submit_review(request, tutor_id):
     if not isinstance(request.user, Client):
@@ -256,8 +235,6 @@ def submit_review(request, tutor_id):
             Review.objects.create(tutor=tutor, client=request.user, review_text=review_text)
 
     return redirect('tutor_detail', tutor_id=tutor_id)
-
-
 
 @login_required(login_url='tutor_login')
 def quiz_guide(request):

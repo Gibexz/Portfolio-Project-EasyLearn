@@ -84,6 +84,7 @@ $(document).ready(function(){
     $('.logout_activation').click(function(){
         $(".logout_btn").show()
         $("body, html").css("overflow", "hidden")
+        $(".db").hide()
         window.scrollTo({
             top: 0,
             behavior: "smooth",
@@ -93,6 +94,7 @@ $(document).ready(function(){
     $(".cancel_logout").click(function() {
         $(".logout_btn").css("display", "none")
         $("body, html").css("overflow", "auto")
+        $(".db").show()
     })
 
     // Ajax load
@@ -305,6 +307,7 @@ $(".db").on("click", ".review", function () {
         success: function (response) {
             var data = response.Rtutor
             $('.reviews').show()
+            $(".db").hide()
             window.scrollTo({
                 top: 0,
                 behavior: "smooth",
@@ -333,6 +336,16 @@ $(".db").on("click", ".review", function () {
 
 $(".closeReview").click(function(){
     $('.reviews').hide()
+    $(".allReviews").hide()
+    $(".db").show()
 })
+
+// All_Review logic
+$('.all_review').click(function(){
+    $('.allReviews').show()
+    $("body, html").css("overflow-y", "hidden !important")
+    $(".db").hide()
+})
+
 
 })

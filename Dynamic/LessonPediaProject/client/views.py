@@ -84,7 +84,8 @@ def render_dashboard(request, whoami, tutorId=None):
     if address:
         getAllTutors = Cart.objects.filter(client_id=request.user.id).all()
         countTutors = getAllTutors.filter(client_id=request.user.id).count()
-        
+        allReviews = Review.objects.filter(client=request.user.id).all()
+       
         # Pagination
         # page = request.GET.get('page', 1)
         # paginator = Paginator(getAllTutors, 3) 
@@ -101,10 +102,9 @@ def render_dashboard(request, whoami, tutorId=None):
             """return object of selected tutor"""
             rank = Ranking.objects.filter(tutor_id=get_ajax_data, client=request.user).first()
             rankByUser = rank.rank_number if rank else 0
-            print(rankByUser)
             return JsonResponse({'rank': rankByUser})
 
-        return render(request, 'client/client_dashboard.html', {'tutors': getAllTutors, 'totalTutors': countTutors})
+        return render(request, 'client/client_dashboard.html', {'tutors': getAllTutors, 'totalTutors': countTutors, 'reviews': allReviews})
     else:
         return redirect('user_profile')
 
@@ -118,10 +118,8 @@ def search_algorithm(request, keyword):
         filtered_keyword = Cart.objects.filter(Q(target_tutor__first_name__icontains=keyword) | Q(target_tutor__last_name__icontains=keyword), client=request.user).all()
         getAllTutors = Cart.objects.filter(client_id=request.user.id).all()
         countTutors = getAllTutors.filter(client_id=request.user.id).count()
-        getRanking = Ranking.objects.filter(client_id=request.user.id).all()
-        if getRanking:
-            zip_object = zip(filtered_keyword, getRanking)
-            return render(request, 'client/client_dashboard.html', {'tutors': zip_object, 'totalTutors': countTutors})
+        
+        return render(request, 'client/client_dashboard.html', {'tutors': filtered_keyword, 'totalTutors': countTutors})
   
     return redirect('validate_user', whoami=request.user)
 
@@ -255,7 +253,8 @@ def tutors_ranking(request, tutorId, rankValue):
         return redirect('validate_user', whoami=request.user)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-    
+
+@login_required(login_url="client_signIn")    
 def review_tutor_ajax(request, tutorId):
     """Review active tutor"""
     queryTutor = Tutor.objects.get(pk=tutorId)
@@ -271,6 +270,7 @@ def review_tutor_ajax(request, tutorId):
     }
     return JsonResponse({'Rtutor': data})
 
+@login_required(login_url="client_signIn")
 def submit_review(request, tutorId):
     """Submit Review based on active user"""
     tutor = get_object_or_404(Tutor, pk=tutorId)
