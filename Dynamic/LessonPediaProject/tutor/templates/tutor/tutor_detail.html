@@ -124,22 +124,7 @@
                                 </span>
                             </span>
                         </p>
-                        <section class="rankTutor">
-                            <button class="rankTutorDisplay">Rate this Tutor</button>
-                            <form method="post" id="rankForm" action="{% url 'submit_rank' tutor.id %}">
-                                {% csrf_token %}
-                                <label for="rank"></label>
-                                <div class="stars">
-                                  <span class="star" data-value="1">★</span>
-                                  <span class="star" data-value="2">★</span>
-                                  <span class="star" data-value="3">★</span>
-                                  <span class="star" data-value="4">★</span>
-                                  <span class="star" data-value="5">★</span>
-                                </div>
-                                <input type="hidden" name="rank" id="rank" value="1"> <!-- Default value -->
-                                <button id="submitRankBtn" type="submit">Submit</button>
-                              </form>
-                        </section>
+
                     </section>
                 </div>
                 <div class="dpLinks">
@@ -270,22 +255,18 @@
                     <p class="fluent">English</p> 
                     <p class="fluent">French</p>                    
                 </section>
-
-                <section class="addTutor">
-                    <button class="addbutton">Add Tutor</button>
-                </section>
             </section>
+            <div class="pagination">
+                <button id="prevPage">Previous</button>
+                <div id="pageButtons"></div>
+                <button id="nextPage">Next</button>
+            </div>
             
             <h3 class="similarHead">Similar Tutors Profile</h3>
             <div class="similarTutors">
                 <section class="addTutor">
                     <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a>
             </section>
-            </div>
-            <div class="pagination">
-                <button id="prevPage">Previous</button>
-                <div id="pageButtons"></div>
-                <button id="nextPage">Next</button>
             </div>
             
         </div>

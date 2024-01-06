@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Admin Support</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <style>
 
         body {
@@ -13,6 +15,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
             height: 100vh;
             margin: 0;
         }
@@ -20,9 +23,11 @@
         form {
             text-align: center;
             background-color: #ffffff;
-            padding: 20px;
+            padding: 10px;
+            margin: 10px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
         }
 
         label {
@@ -49,18 +54,216 @@
         button:hover {
             background-color: #0056b3;
         }
+        h1 {
+           color: green;
+        }
+        .instructions {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: #ffffff;
+            padding: 10px;
+            width: 50%;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .instruction {
+            line-height: 1.4;
+        }
+        P b{
+            color: red;
+        }
+        span {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding:0 5px;
+            border: none;
+            border-radius: 4px;
+        }
+        form input, textarea {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form input:focus, textarea:focus {
+            outline: none;
+            border: 1px solid #007bff;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-content a {
+            color: #333;
+            text-decoration: none;
+        }
+        .modal-content a:hover {
+            text-decoration: none;
+        }
+        .error-message {
+            color: red;
+        }
+
+        .back-to-home {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 100px;
+        }
+        .modal-content .continue {
+            background-color: #ddd;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            margin: 0 5px;
+            padding: 2% 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+            display: inline-block;
+            height: 55px;
+            font-weight: bold;
+        }
+        
+        
+        /* CSS for modal button copied */
+        .modal-content .continue {
+          background-color: #c2fbd7;
+          border-radius: 100px;
+          box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+          color: green;
+          cursor: pointer;
+          display: inline-block;
+          font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+          padding: 7px 20px;
+          text-align: center;
+          text-decoration: none;
+          transition: all 250ms;
+          border: 0;
+          font-size: 16px;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+        
+        .modal-content .continue:hover {
+          box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+          transform: scale(1.05) rotate(-1deg);
+        }
+        .closeModal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+
+        .modal-content .moreTutors {
+          background-color: #0078d0;
+          border: 0;
+          border-radius: 56px;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+          font-size: 18px;
+          font-weight: 600;
+          outline: 0;
+          padding: 16px 21px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          transition: all .3s;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+        
+        .modal-content .moreTutors:before {
+          background-color: initial;
+          background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+          border-radius: 125px;
+          content: "";
+          height: 50%;
+          left: 4%;
+          opacity: .5;
+          position: absolute;
+          top: 0;
+          transition: all .3s;
+          width: 92%;
+        }
+        
+        .modal-content .moreTutors:hover {
+          box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+          transform: scale(1.05);
+        }
+        .closeModal{
+            background: red;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .closeModal:hover {
+            background: whitesmoke ;
+        }
+        .closeModal:hover a {
+            color: red !important;
+        }
     </style> 
 </head>
 <body>
-    <h1>Contact Admin Support</h1>
+    <div class="instructions">
+            <h1>Contact Admin Support</h1>
     <div class="instruction">
-        <p>Send a message to the admin support team.</p>
         <p>Admin support will respond to your message as soon as possible.</p>
         <p>Your message body must contain your account <b>username</b> and <b>email address</b></p>
-        <p>Enter a subject and message and click the "Send Email" button.</p>
+        <p>Enter a subject, detailed message body will all neccessary information and then click the <span>Send Email</span>  button.</p>
+        <p>Thank you.</p>
+    </div>
+    </div>
+    <!-- email_sent_modal.html -->
+    <div id="emailSentModal" class="modal">
+        <div class="modal-content">
+            <span class="closeModal"><a style="text-decoration: none; color: white;" href="{% url 'landing_page'%}">&times;</a></span>
+            <h1>Email Sent Successfully!</h1>
+            <center><p class="success-message">Your email has been sent successfully. Thank you for using our service.</p></center>
+            <div class="back-to-home">
+                <a href="{% url 'landing_page' %}"><button class="moreTutors">Back to Homepage</button></a>
+                <a href="{% url 'tutor_login' %}"><button class="continue">Continue</button></a>
+            </div>
+        </div>
     </div>
 
-    <form method="post" action="{% url 'email_admin_support' %}">
+    <!-- email_error_modal.html -->
+    <div id="emailErrorModal" class="modal">
+        <div class="modal-content">
+            <span class="closeModal"><a href="{%url 'landing_page' %}">&times;</a></span>
+            <h1 class="error-message">Error Sending Email</h1>
+            <p >There was an issue sending the email. Please try again later.</p>
+            {% comment %} <a href="#" class="back-link">Go back</a> {% endcomment %}
+        </div>
+    </div>
+
+    <form id="emailForm" method="post" action="{% url 'admin_support' %}">
         {% csrf_token %}
         <label for="subject">Subject:</label>
         <input type="text" id="subject" name="subject" required>
@@ -70,5 +273,50 @@
 
         <button type="submit">Send Email</button>
     </form>
+
+    <script>
+        $("#emailForm").submit(function (e) {
+            e.preventDefault();
+            const form = $(this);
+            form.toggle();
+    
+            // Disable the form to prevent multiple submissions
+            form.prop('disabled', true);
+            
+            $.ajax({
+                type: "POST",
+                url: `/tutor/adminSupport/`,
+                data: form.serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        $('#emailSentModal').show();
+                        $('.closeModal, .continue').click(function () {
+                            $('#emailSentModal, #emailErrorModal').hide();
+                        });
+                    } else {
+                        $('#emailErrorModal').show();
+                        // Close modal when elements are clicked
+                        $('.closeModal').click(function () {
+                            $('#emailSentModal, #emailErrorModal').hide();
+                            form.prop('disabled', false);
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                    form.prop('disabled', false);
+                },
+                complete: function () {
+                    // Re-enable the form after the request is complete
+                    form.prop('disabled', false);
+                },
+            });
+        });
+    
+        $(".cancelEmail").click(function () {
+            $(".email-form").hide();
+        });
+    
+    </script>
 </body>
 </html>

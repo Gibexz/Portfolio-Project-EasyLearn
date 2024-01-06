@@ -1,5 +1,22 @@
-$(document).ready(function() {
-
+  // Function to get CSRF token from cookie
+  
+  $(document).ready(function() {
+    
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
     // DashBoard Navigation Links 
     // start
     $('.nav_links').on("click", function(e) {
@@ -8,9 +25,12 @@ $(document).ready(function() {
         $('.nav_links').removeClass('active');
         $(this).addClass('active');
 
-        var targetDiv = $(this).attr('class').split(' ')[1];
+        let targetDiv = $(this).attr('class').split(' ')[1];
         $('.content_divs').hide();
         $('.' + targetDiv + '_contents').show()
+        if (targetDiv !== 'dashboard') {
+            $('.stats').css('cursor', 'not-allowed');
+        }
     });
 
     // set dashboard as active by default by triggering a click
@@ -26,6 +46,7 @@ $(document).ready(function() {
             "border": "none",
             "border-bottom": "1px solid black",
             "color": "black",
+            "font-weight": "normal",
             "box-shadow": "none"
         });
 
@@ -39,9 +60,24 @@ $(document).ready(function() {
             "border": "1px solid black",
             "border-bottom": "1px solid transparent",
             "color": "rgb(3, 120, 3)",
+            "font-weight": "bold",
             "box-shadow": "2px 2px 10px 2px rgb(201, 199, 199)"
         });
     });
+    $(".test2").click(function() {
+      $('.test2').css({
+        color: 'black',
+        fontWeight: 'normal',
+        boxShadow: 'none',
+      })
+      // Add active class and apply styles to the clicked td element
+      $(this).css({
+          "color": "rgb(3, 120, 3)",
+          "font-weight": "bold",
+          "box-shadow": "2px 2px 10px 2px rgb(201, 199, 199)"
+  
+  });
+    })
 
 
     // toggling navigation for programs
@@ -70,22 +106,7 @@ $(document).ready(function() {
         $(".subject_remove_display").css("display", "block")
     })
 
-
-
-    // logic and alert for subject addtion to the database
-    $('#subjectForm').submit(function(event) {
-        event.preventDefault();
-        const subjectName = $('#subjectName').val();
-        const proficiency = $('#proficiency').val();
-        const teachingExperience = $('#teachingExperience').val();
-  
-        // For demonstration purposes, alert the submitted values
-        alert(`Subject Name: ${subjectName}\nProficiency: ${proficiency}\nTeaching Experience: ${teachingExperience}\n\n Successfully Added`);
-  
-        // You can replace the alert with code to save this information to a database or perform other operations
-      });
-
-    
+      
 
     // toggling nav dialog display for settings
     $("#change_password").click(function(){
@@ -117,6 +138,7 @@ $(document).ready(function() {
 
     $("#deactivate_account").click(function(){
         $(".deactivate_account_control_display").css("display", "block")
+        $(".deactivate_account_blank").css("display", "block")
     })
     
     $(".mistake").click(function(){
@@ -138,46 +160,6 @@ $(document).ready(function() {
     })
     // stop
     
-
-    // update profile js
-    $('#profile_update_save_btn').on('click', function(event) {
-        event.preventDefault();
-        alert("Password successfully changed");
-        // implementation of database interaction codes
-    });
-
-    // update password js
-    $('#password_update_save_btn').on('click', function(event) {
-        event.preventDefault();
-        alert("Password successfully changed");
-        // implementation of database interaction codes
-    });
-
-   // update schedule js
-    $('#day_save_btn').on('click', function(event) {
-        event.preventDefault();
-        
-        const selectedDays = $('input[name="workingDay"]:checked').map(function() {
-            return this.value;
-        }).get();
-        
-        alert("Selected Working Days: " + selectedDays.join(", "));
-        // Here you can perform further actions like sending the selected days to a server or saving them in a database
-    });
-
-    
-    $('#hour_save_btn').on('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const selectedHours = $('input[name="workingHour"]:checked').map(function() {
-            return this.value;
-        }).get();
-
-        alert("Selected Working Hours: " + selectedHours.join(", "));
-        // Here you can perform further actions like sending the selected hours to a server or saving them in a database
-    });
-
-
     // logout_activation
     // start
     $('.logout_activation').click(function(){
@@ -219,7 +201,28 @@ $(document).ready(function() {
     })
     // stop
 
-    //  review pop up link
+    // pending client pop up
+    $('#pending_clients').click(function(){
+      $(".pending_clients_activation").css("display", "block")
+    })
+
+    $(".close_pending_clients").click(function() {
+      $(".pending_clients_activation").css("display", "none")
+    })
+    // stop
+
+    // settled client pop up
+        // pending client pop up
+        $('#settled_clients').click(function(){
+          $(".settled_clients_activation").css("display", "block")
+        })
+    
+        $(".close_settled_clients").click(function() {
+          $(".settled_clients_activation").css("display", "none")
+        })
+        // stop
+
+    //  reports pop up link
     $('.view_reports').click(function(){
         $(".reports_view_popup_activation").css("display", "block")
     })
@@ -229,12 +232,7 @@ $(document).ready(function() {
     })
     // stop
 
-});
 
-
-
-// sort algorithm for tutors review pop up
-$(document).ready(function() {
     $('.sortReview').on('click', function() {
       const column = $(this).data('column');
       const $tbody = $('#reviewTable tbody');
@@ -262,10 +260,7 @@ $(document).ready(function() {
         $tbody.append(row);
       });
     });
-  });
 
-  // sort algorithm for tutors report pop up
-$(document).ready(function() {
     $('.sortReport').on('click', function() {
       const column = $(this).data('column');
       const $tbody = $('#reportTable tbody');
@@ -293,11 +288,11 @@ $(document).ready(function() {
         $tbody.append(row);
       });
     });
-});
+
 //client_list_table_active
 
 // sort js algorithm for Active Clients table
-$(document).ready(function() {
+
     $('.client_list_table_active th').on('click', function() {
       const column = $(this).data('column');
       const $tbody = $('.client_list_table_active tbody');
@@ -324,12 +319,10 @@ $(document).ready(function() {
         $tbody.append(row);
       });
     });
-});
-
 
 
 // sort js algorithm for client history table
-$(document).ready(function() {
+
     $('.client_list_table_history th').on('click', function() {
       const column = $(this).data('column');
       const $tbody = $('.client_list_table_history tbody');
@@ -356,12 +349,69 @@ $(document).ready(function() {
         $tbody.append(row);
       });
     });
+
+
+// sort js algorithm for client pending table
+
+$('.sortPendingClients').on('click', function() {
+  const column = $(this).data('column');
+  const $tbody = $('#pendingClientTable tbody');
+  const $header = $(this);
+  const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
+
+  // Remove arrow indicator from all headers
+  $('.sortPendingClients').data('direction', '');
+
+  $header.data('direction', direction);
+
+  const rows = $tbody.find('tr').get();
+  rows.sort(function(rowA, rowB) {
+    const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+    const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+    if (direction === 'ascending') {
+      return cellA.localeCompare(cellB);
+    } else {
+      return cellB.localeCompare(cellA);
+    }
+  });
+
+  $.each(rows, function(index, row) {
+    $tbody.append(row);
+  });
 });
 
+// sort Settled
+$('.sortSettledContracts').on('click', function() {
+  const column = $(this).data('column');
+  const $tbody = $('#settledClientTable tbody');
+  const $header = $(this);
+  const direction = $header.data('direction') === 'ascending' ? 'descending' : 'ascending';
 
+  // Remove arrow indicator from all headers
+  $('.sortPendingContracts').data('direction', '');
+
+  $header.data('direction', direction);
+
+  const rows = $tbody.find('tr').get();
+  rows.sort(function(rowA, rowB) {
+    const cellA = $(rowA).children('td').eq(column).text().trim().toLowerCase();
+    const cellB = $(rowB).children('td').eq(column).text().trim().toLowerCase();
+
+    if (direction === 'ascending') {
+      return cellA.localeCompare(cellB);
+    } else {
+      return cellB.localeCompare(cellA);
+    }
+  });
+
+  $.each(rows, function(index, row) {
+    $tbody.append(row);
+  });
+});
 
 // sort js algorithm for income table
-$(document).ready(function() {
+
     $('.client_list_table_income th').on('click', function() {
       const column = $(this).data('column');
       const $tbody = $('.client_list_table_income tbody');
@@ -388,98 +438,551 @@ $(document).ready(function() {
         $tbody.append(row);
       });
     });
-});
+
+// js for tutor availability
+
+  $('#reset_btn').click(function () {
+    $('#updateScheduleForm').trigger('reset');
+  });
 
 
+function isOverlap(fromTime, toTime, storedFromTime, storedToTime) {
+  if (fromTime === toTime || storedFromTime === storedToTime) {
+ 
 
-// Dynamic saving of work days and hours selected to the html form. CHAT GPT I HAIL
-// update schedule js
-$(document).ready(function() {
-    function populateSavedData() {
-      const savedDays = localStorage.getItem('savedDays');
-      const savedHours = localStorage.getItem('savedHours');
+    return true;
+  }
 
-      if (savedDays) {
-        $('#subjectDays tbody').html(savedDays);
+  const [fromHour, fromMinute] = fromTime.split(':').map(Number);
+  const [toHour, toMinute] = toTime.split(':').map(Number);
+  const [storedFromHour, storedFromMinute] = storedFromTime.split(':').map(Number);
+  const [storedToHour, storedToMinute] = storedToTime.split(':').map(Number);
+  
+  if ( storedFromTime.length < 1 || storedToTime.length < 1 || storedFromTime === undefined || storedToTime === undefined || storedFromTime === '' || storedToTime === '') {
+    if (fromHour > toHour) {
+      return true;
+    }
+  }
+  // Check for empty ranges
+
+  if ((fromHour === storedFromHour)) {
+    return true;
+  }
+  if ((toHour === storedToHour)) {
+    return true;
+  }
+  if (fromHour === storedFromHour || toHour === storedToHour) {
+    return true;
+  }
+  if (fromHour > toHour) {
+    return true;
+  }
+  if (fromHour < storedFromHour && toHour >= storedFromHour) {
+    return true;
+  }
+
+
+  // No overlap found
+  return false;
+}
+
+  const form = $('.updateEngagements');
+
+  form.submit(function (e) {
+    e.preventDefault();
+    // Serialize the form data as an array
+    let selectedDay = form.find('select[name="day"] option:selected').text();
+    let newStartTime = form.find('select[name="from_hour"] option:selected').text();
+    let newEndTime = form.find('select[name="to_hour"] option:selected').text();
+    let existingTimeSlots = [];
+
+    // Iterate over each row in the subjectDays table
+    $('#subjectDays tbody tr').each(function (index) {
+      let existingDay = $(this).find('td').text().trim();
+      if (selectedDay === existingDay) {
+        // If matched, find the corresponding time slot in subjectHours table
+        let existingTimeRange = $('#subjectHours tbody tr:eq(' + index + ') td').text().split(' - ');
+        let existingStartTime = existingTimeRange[0].trim();
+        let existingEndTime = existingTimeRange[1].trim();
+        existingTimeSlots.push({ startTime: existingStartTime, endTime: existingEndTime });
       }
+    });
+    let overlap = false;
+    if (newStartTime ===  newEndTime){
+      overlap = true;
+    }
+    const [toHour, toMinute] = newStartTime.split(':').map(Number);
+    const [fromHour, fromMinute] = newEndTime.split(':').map(Number);
+    if (toHour >= fromHour) {
+      overlap = true;
+    }
 
-      if (savedHours) {
-        $('#subjectHours tbody').html(savedHours);
+    // Check for overlap with existing time slots
+    for (let i = 0; i < existingTimeSlots.length; i++) {
+      if (isOverlap(newStartTime, newEndTime, existingTimeSlots[i].startTime, existingTimeSlots[i].endTime)) {
+        overlap = true;
+        break;
       }
     }
 
-    populateSavedData(); // Load saved data on page load
-
-    $('#save_btn').on('click', function() {
-      const daysChecked = $('#workDays input[type="checkbox"]:checked');
-      const hoursChecked = $('#workHours input[type="checkbox"]:checked');
-
-      $('#subjectDays tbody').empty();
-      $('#subjectHours tbody').empty();
-
-      daysChecked.each(function() {
-        $('#subjectDays tbody').append('<tr><td>' + $(this).val() + '</td></tr>');
+    if (overlap) {
+      $('#overlap').show();
+      $('#closeOverlapModal').click(function () {
+        $('#overlap').hide();
       });
+      return;
+    }
 
-      hoursChecked.each(function() {
-        $('#subjectHours tbody').append('<tr><td>' + $(this).val() + '</td></tr>');
-      });
+    // No overlap, proceed with form submission
+    let formDataArray = form.serializeArray();
+    $.ajax({
+      type: 'POST',
+      url: '/tutor/dashboard/',
+      data: formDataArray,
+      success: function (data) {
+        form.trigger('reset');
+        if (data && data.schedule_data) {
+          updateScheduleTables(data.schedule_data);
+        }
+      },
+      error: function (data) {
+        console.error('Error:', data);
+      },
+    });
+  });
 
-      // Store data to Local Storage
-      localStorage.setItem('savedDays', $('#subjectDays tbody').html());
-      localStorage.setItem('savedHours', $('#subjectHours tbody').html());
+function updateScheduleTables(data) {
+  // Update the Days table
+  let daysTable = document.getElementById('subjectDays');
+  daysTable.innerHTML = '<thead><tr><th>Days</th></tr></thead><tbody>';
+  data.forEach(function (schedule) {
+    daysTable.innerHTML += '<tr><td>' + schedule.day + '</td></tr>';
+  });
+  daysTable.innerHTML += '</tbody>';
+  
+    // Update the Hours table
+    let hoursTable = document.getElementById('subjectHours');
+    hoursTable.innerHTML = '<thead><tr><th>Hours</th></tr></thead><tbody>';
+    data.forEach(function (schedule) {
+      hoursTable.innerHTML += '<tr><td>' + schedule.from_hour + ' - ' + schedule.to_hour + '</td></tr>';
+    });
+    hoursTable.innerHTML += '</tbody>';
 
-      //ajax code implementation
-              // Simulate sending data to the database
-        // $.ajax({
-        // type: 'POST',
-        // url: '/your-backend-endpoint', // Replace with your backend API endpoint
-        // data: {
-        //     days: $('#subjectDays tbody').html(),
-        //     hours: $('#subjectHours tbody').html()
-        // },
-        // success: function(response) {
-        //     console.log('Data saved to database:', response);
-        // },
-        // error: function(error) {
-        //     console.error('Error saving data:', error);
+}
+  
+
+  // Refresh the page
+  $('.refreshPage').click(function () {
+    location.reload();
+  });
+  
+
+$('.fa-circle-xmark').click(function (e) {
+  e.preventDefault();
+  let clickedElement = $(this);
+  let scheduleId = clickedElement.data('schedule-id');
+  let hoursTable = $('#subjectHours'); // Selector for the hours table
+  let hours = hoursTable.find('tr[data-schedule-id="' + scheduleId + '"]')
+  console.log('hours', hours)
+  
+  // Show the confirmation modal
+  $('#confirmationModal').show();
+
+  // Handle the confirm action
+  $('#confirmAction').click(function () {
+    // Perform the delete operation
+    $.ajax({
+      url: '/tutor/deleteSchedule/' + scheduleId + '/',
+      method: 'POST',
+      data: {
+        csrfmiddlewaretoken: getCookie('csrftoken')
+      },
+      success: function (data) {
+        if (data.status === 'success') {
+          // Use the success modal for a successful deletion
+
+          clickedElement.closest('tr').remove();
+          hours.remove();
+          $('#successModal').show();
+        }
+        //  else {
+        //   // Use the error modal for errors
+        //   $('#errorModal').show();
         // }
-        // });
-
-      $(this).addClass('inactive');
-      $('#workDays')[0].reset();
-      $('#workHours')[0].reset();
+      },
+      // error: function (error) {
+      //   // Use the error modal for errors
+      //   $('#errorModal').show();
+      //   console.error('Error:', error);
+      // },
     });
 
-    $('#reset_btn').on('click', function() {
-      $('#workDays')[0].reset();
-      $('#workHours')[0].reset();
-      $('#subjectDays tbody').empty();
-      $('#subjectHours tbody').empty();
-      $('#save_btn').addClass('inactive');
+    // Hide the confirmation modal
+    $('#confirmationModal').hide();
+  });
 
-      // Clear Local Storage data
-      localStorage.removeItem('savedDays');
-      localStorage.removeItem('savedHours');
-    });
+  // Handle the cancel action
+  $('#closeConfirmationModal').click(function () {
+    // Hide the confirmation modal
+    $('#confirmationModal').hide();
+  });
 
-    $('.work_options input[type="checkbox"]').on('change', function() {
-      const daysChecked = $('#workDays input[type="checkbox"]:checked');
-      const hoursChecked = $('#workHours input[type="checkbox"]:checked');
+  // Prevent default form submission
+  return false;
+});
 
-      if (daysChecked.length > 0 && hoursChecked.length > 0) {
-        $('#save_btn').removeClass('inactive');
-      } else {
-        $('#save_btn').addClass('inactive');
+// Handle closing the success modal
+$('#closeSuccessModal').click(function () {
+  // Hide the success modal
+  $('#successModal').hide();
+});
+
+// Handle closing the error modal
+$('#refreshPage',).click(function () {
+  // Refresh the page
+  location.reload();
+});
+
+
+
+// Handle closing the success modal
+$('#closeSuccessModal').click(function () {
+  // Hide the success modal
+  $('#successModal').hide();
+});
+  });
+
+$(document).ready(function() {
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      let cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let cookie = jQuery.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
       }
+    }
+    return cookieValue;
+  }
+$('.upload-doc-form').submit(function (e) {
+  e.preventDefault();
+
+  // Check if any file inputs have files selected
+  let hasFiles = false;
+  $(this).find('input[type="file"]').each(function () {
+      if ($(this)[0].files.length > 0) {
+          hasFiles = true;
+          return false;
+      }
+  });
+
+  if (!hasFiles) {
+      return;
+  }
+
+  let form = $(this);
+  let formData = new FormData(form[0]);
+  formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+
+  console.log('Form Data:', formData);
+
+  $.ajax({
+    type: 'POST',
+    url: '/tutor/uploadDocs/',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (data) {
+        console.log('Success Response:', data);
+
+        if (data.status === 'success') {
+          $('#done').show();
+          form.trigger('reset');
+        } else {
+          $('#errorModal').show();
+            console.log('Inside error block');
+        }
+    },
+    error: function (error) {
+        console.log('Error Response:', error);
+        console.log('Inside error block');
+        $('#errorModal').show(); // Show the error modal
+    },
+});
+$('#closeDone, #refreshPage').click(function () {
+  $('.modal').hide();
+});
+});
+
+// suspend tutor account
+$('.confirm_remove').on('click', function() {
+  $(this).hide(); 
+$('#passwordInputContainer').toggle();
+$('.cancel_suspend').hide();
+});
+
+// password match
+    const newPasswordInput = $('#newPassword');
+    const confirmPasswordInput = $('#confirmPassword');
+    const submitButton = $('#password_update_save_btn');
+
+    confirmPasswordInput.on('input', function () {
+        const passwordsMatch = newPasswordInput.val() === confirmPasswordInput.val();
+        if (passwordsMatch) {
+            submitButton.removeClass('inactive')
+            submitButton.addClass('active_pwd')
+        }
+        else{
+            submitButton.removeClass('active_pwd')
+            submitButton.addClass('inactive')
+        }
     });
+  })
+
+  // Tutors Add Subject AJAX
+$(document).ready(function() {
+  // Tutors Add Subject AJAX
+  $('.refreshPage').click(function () {
+    location.reload();
+  });
+  $('#subjectForm').submit(function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    
+    const csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+    $.ajax({
+        type: 'POST',
+        url: '/tutor/addSubject/',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          if (data.status === 'success') {
+            $('#subjectForm').trigger('reset');
+            $('#successModal4').show();
+            $('.closeModal').click(function () {
+              $('.modal2').hide();
+            });
+            updateSubjectTable(data, $('#subjectUpdateName'));
+          }
+          else {
+            $('#errorModal4').show();
+            $('.closeModal').click(function () {
+              $('.modal2').hide();
+              });
+
+          }
+        },
+        error: function(error) {
+            $('#errorModal4').show();
+            $('.closeModal').click(function () {
+              $('.modal2').hide();
+            });
+            console.error('Error:', error);
+        }
+    });
+  })
+
+  function updateSubjectTable(data, selectElement) {
+    console.log('data in updateSubject', data);
+    $('.subject_table tbody').empty();
+
+    // Add the primary subject
+    const tutorPrimarySubject = `<tr><td>${data.primary_subject}</td></tr>`;
+    $('.subject_table tbody').append(tutorPrimarySubject);
+
+    // Update the options in the select dropdown
+    if (selectElement) {
+        selectElement.empty();
+        selectElement.append('<option value="" disabled selected>-- select one --</option>');
+
+        if (data.tutor_subjects) {
+            if (Array.isArray(data.tutor_subjects)) {
+                data.tutor_subjects.forEach(function (subject) {
+                    const option = `<option data-subjectId="${subject.id}" value="${subject[0]}">${subject[0]}</option>`;
+                    selectElement.append(option);
+                });
+            } else {
+                const option = `<option data-subjectId="${data.tutor_subjects.id}" value="${data.tutor_subjects.subject_name}">${data.tutor_subjects.subject_name}</option>`;
+                selectElement.append(option);
+            }
+        }
+    }
+
+    // Add the other subjects to the table
+    if (data.tutor_subjects) {
+        if (Array.isArray(data.tutor_subjects)) {
+            data.tutor_subjects.forEach(function (subject) {
+                const subjectRow = `<tr><td>${subject[0]} - <span style="font-size: small;">${subject[1]}</span></td></tr>`;
+                $('.subject_table tbody').append(subjectRow);
+            });
+        } else {
+            const subjectRow = `<tr><td>${data.tutor_subjects.subject_name} - <span style="font-size: small;">${data.tutor_subjects.proficiency}</span></td></tr>`;
+            $('.subject_table tbody').append(subjectRow);
+        }
+    }
+}
+});
+
+// update and delete subject
+$(document).ready(function () {
+  $('.refreshPage').click(function () {
+    location.reload();
+  });
+
+  $('#subjectUpdateForm').submit(function (event) {
+    event.preventDefault();
+
+    const selectedSubjectId = $('#subjectUpdateName option:selected').data('subjectid');
+
+    // Check if the selectedSubjectId is undefined or null
+    if (!selectedSubjectId) {
+        $('#errorModal2').show();
+        return;
+    }
+
+    const formData = new FormData(this);
+    formData.append('csrfmiddlewaretoken', $('[name="csrfmiddlewaretoken"]').val());
+
+    $.ajax({
+        type: 'POST',
+        url: `/tutor/updateSubject/${selectedSubjectId}/`,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if (data.status === 'success') {
+                updateSubjectTable(data, $('#subjectUpdateName'), $('#subjectDeleteName'));
+                $('#subjectUpdateForm').trigger('reset');
+                $('#successModal3').show();
+                $('.closeModal').click(function () {
+                  $('.modal2').hide();                });
+
+            } else {
+                $('#errorModal3').show();
+                $('.closeModal').click(function () {
+                  $('.modal2').hide();                });
+                console.error('Error Updating Subject: ' + data.message);
+            }
+        },
+        error: function (error) {
+          $('#errorModal3').show();
+          $('.closeModal').click(function () {
+            $('.modal2').hide();
+            });
+
+            console.error('Error Occurred: ' + error.statusText);
+        }
+    });
+});
 
 
-    // suspend tutor account
-    $('.confirm_remove').on('click', function() {
-      $(this).hide(); 
-    $('#passwordInputContainer').toggle();
-    $('.cancel_suspend').hide();
+// populate subject update form 
+  function updateSubjectTable(data, selectElement, updateDelete) {
+    console.log('data in updateSubject', data);
+    $('.subject_table tbody').empty();
+
+    // Add the primary subject
+    const tutorPrimarySubject = `<tr><td>${data.primary_subject}</td></tr>`;
+    $('.subject_table tbody').append(tutorPrimarySubject);
+
+    // Update the options in the select dropdown
+    if (selectElement) {
+        selectElement.empty();
+        selectElement.append('<option value="" disabled selected>-- select one --</option>');
+
+        if (data.tutor_subjects) {
+            if (Array.isArray(data.tutor_subjects)) {
+                data.tutor_subjects.forEach(function (subject) {
+                    const option = `<option data-subjectId="${subject.id}" value="${subject[0]}">${subject[0]}</option>`;
+                    selectElement.append(option);
+                });
+            } else {
+                const option = `<option data-subjectId="${data.tutor_subjects.id}" value="${data.tutor_subjects.subject_name}">${data.tutor_subjects.subject_name}</option>`;
+                selectElement.append(option);
+            }
+        }
+    }
+    if (updateDelete) {
+      updateDelete.empty();
+      updateDelete.append('<option value="" disabled selected>-- select one --</option>');
+
+      if (data.tutor_subjects) {
+          if (Array.isArray(data.tutor_subjects)) {
+              data.tutor_subjects.forEach(function (subject) {
+                  const option = `<option data-subjectId="${subject.id}" value="${subject[0]}">${subject[0]}</option>`;
+                  updateDelete.append(option);
+              });
+          } else {
+              const option = `<option data-subjectId="${data.tutor_subjects.id}" value="${data.tutor_subjects.subject_name}">${data.tutor_subjects.subject_name}</option>`;
+              updateDelete.append(option);
+          }
+      }
+  }
+
+    // Add the other subjects to the table
+    if (data.tutor_subjects) {
+        if (Array.isArray(data.tutor_subjects)) {
+            data.tutor_subjects.forEach(function (subject) {
+                const subjectRow = `<tr><td>${subject[0]} - <span style="font-size: small;">${subject[1]}</span></td></tr>`;
+                $('.subject_table tbody').append(subjectRow);
+            });
+        } else {
+            const subjectRow = `<tr><td>${data.tutor_subjects.subject_name} - <span style="font-size: small;">${data.tutor_subjects.proficiency}</span></td></tr>`;
+            $('.subject_table tbody').append(subjectRow);
+        }
+    }
+}
+
+// Delete Subject
+
+  $('#subjectDeleteForm').submit(function (event) {
+      event.preventDefault();
+      const selectedSubjectId = $('#subjectDeleteName option:selected').data('subjectid');
+      if (!selectedSubjectId) {
+          alert('Please select a subject.');
+          return;
+      }
+      const csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+
+      $.ajax({
+          type: 'POST',
+          url: `/tutor/deleteSubject/${selectedSubjectId}/`,
+          data: {
+              csrfmiddlewaretoken: csrfToken
+          },
+          success: function (data) {
+              if (data.status === 'success') {
+                  updateSubjectTable(data, $('#subjectUpdateName'), $('#subjectDeleteName'));
+                  $('#subjectDeleteForm').trigger('reset');
+                  $('#successModal2').show();
+                  $('.closeModal').click(function () {
+                    $('.modal2').hide();                  });
+              } else {
+                  $('#errorModal2').show();
+                  $('.closeModal').click(function () {
+                    $('.modal2').hide();
+                    });
+                  console.error('Error Removing Subject: ' + data.message);
+              }
+          },
+          error: function (error) {
+              console.error('Error Occurred: ', error);
+              $('#errorModal2').show();
+              $('.closeModal').click(function () {
+                $('.modal2').hide();
+                });
+
+          }
+      });
   });
 
 });
+

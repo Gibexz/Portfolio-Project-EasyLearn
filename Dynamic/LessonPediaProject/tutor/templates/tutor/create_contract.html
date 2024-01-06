@@ -1,0 +1,108 @@
+<!-- create_contract.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Contract</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<form method="post" action="{% url 'create_contract' tutor.id %}">
+    {% csrf_token %}
+
+    <h1>Create Contract</h1>
+    <p>Client: {{ client.get_full_name }}</p>
+    <p>Tutor: {{ tutor.get_full_name }}</p>
+
+    <div>
+        <label for="subject_id">Select Subject:</label>
+        <select name="subject_id" required>
+            {% for subject in subjects %}
+                <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="pay_rate">Pay Rate:</label>
+        <input type="number" name="pay_rate" required>
+    </div>
+
+    <div>
+        <label for="contract_length">Contract Length (in days):</label>
+        <input type="number" name="contract_length" required>
+    </div>
+
+    <div>
+        <label for="week_days">Days:</label>
+        <input type="text" name="week_days" maxlength="20" required placeholder="e.g Mon, Wed, Sat">
+    </div>
+
+    <div>
+        <label for="start_date">Start Date:</label>
+        <input type="date" name="start_date" required>
+    </div>
+    <button type="submit">Create Contract</button>
+</form>
+
+</body>
+</html>

@@ -47,27 +47,28 @@ class Client (AbstractUser):
         return False
 
 class Review(models.Model):
+    review_subject = models.CharField(max_length=100, null=True)
     review_text = models.TextField(max_length=500)
     tutor = models.ForeignKey(Tutor,  related_name='reviews', null=True, on_delete=models.SET_NULL)
     client = models.ForeignKey(Client, related_name='reviews', null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ranking(models.Model):
-    RANK = [
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5')
-    ]
-    rank_number = models.IntegerField(choices=RANK, null=True)
+    rank_number = models.IntegerField(null=True)
     tutor = models.ForeignKey(Tutor, null=True, on_delete=models.SET_NULL, related_name='rankings')
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name='rankings')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def rankAverage(self, tutorId):
+        """Return the average Ranks for each tutor"""
+        averageRank = Ranking.objects.filter(tutor_id=tutorId).aggregate(avg_rank=models.Avg('rank_number'))
+        return averageRank
+
+
 class ClientReportAbuse(models.Model):
     target_tutor = models.ForeignKey(Tutor, related_name="reported_tutor", null=True, on_delete=models.SET_NULL)
     message = models.TextField(max_length=400)
+    resolved_by_admin = models.BooleanField(default=False, null=True)
     subject = models.CharField(max_length=100)
     client = models.ForeignKey(Client, related_name='abuse_reports', null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -88,3 +89,4 @@ class PaymentReceipt(models.Model):
     receipt_id = models.CharField(null=True, max_length=200)
     payment_time = models.DateTimeField(default=timezone.now)
     client = models.ForeignKey(Client, related_name='payment_receipts', null=True, on_delete=models.SET_NULL)
+

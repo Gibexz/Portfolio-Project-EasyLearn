@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Saira&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
 
+
 body{
     margin:0px;
-  
+ 
 }
+
 
 .nav_container{
     height: 100px;
     background-color:white;
     width: 100%;
 }
+
 
 .nav_elements{
     display:flex;
@@ -19,6 +22,7 @@ body{
     font-family: 'Hedvig Letters Sans', sans-serif;
     font-weight: bold;
 }
+
 
 .nav_left img{
     width: 80px;
@@ -29,23 +33,28 @@ body{
     padding-left: 12%;
 }
 
+
 .lessonpedia {
     text-decoration: none;
     color: black;
 }
 
+
 .lessonpedia:hover{
     color: rgba(0, 0, 0, 0.598);
 }
+
 
 .nav_center{
     width:480px;
 }
 
+
 .nav_center ol{
     list-style-type: none;
     margin: 0px;
 }
+
 
 .nav_center ol li{
     display: inline-block;
@@ -58,11 +67,13 @@ body{
     color: rgba(0, 0, 0, 0.598);
 }
 
-    
+
+   
 .spaceMe{
     padding-left: 5%;
     text-decoration: none;
 }
+
 
 .nav_left img{
     border-radius: 50%;
@@ -72,7 +83,10 @@ body{
 }
 
 
+
+
 /* The below section covers the design with the blue background */
+
 
 .upper_section{
     height: 909px;
@@ -82,12 +96,14 @@ body{
     display:flex;
 }
 
+
 .pics_background{
     background-image: url("../images/backgrounds/pics_background.png");
     background-repeat: no-repeat;
     background-position: top right;
     width: 100%;
 }
+
 
 .left_label{
     margin-top: 100px;
@@ -97,10 +113,12 @@ body{
     font-size: 18px;
 }
 
+
 .left_label .top{
     color:rgb(233, 219, 219);
     font-family: 'Saira', sans-serif;
 }
+
 
 .left_label .mid span, .left_label .mid h3{
     font-family: 'Rowdies', sans-serif;
@@ -108,18 +126,22 @@ body{
     font-size: 60px;
 }
 
+
 .left_label .mid span{
     color: #4BE5CA;
 }
+
 
 .second_level_mid button, .second_level_mid p{
     display: inline;
     font-family: 'Saira', sans-serif;
 }
 
+
 .second_level_mid a{
     text-decoration: none;
 }
+
 
 .second_level_mid button{
     padding: 70px;
@@ -134,6 +156,7 @@ body{
     cursor: pointer;
 }
 
+
 .second_level_mid button:hover{
     background-color: rgba(245, 245, 245, 0.1);
     font-weight: 600;
@@ -141,9 +164,11 @@ body{
     color:#4BE5CA;
 }
 
+
 .second_level_mid p{
     padding: 40px;
 }
+
 
 .validate_signin{
     color: rgb(254, 241, 169);
@@ -154,6 +179,7 @@ body{
     display: none;
 }
 
+
 .last{
     width: 500px;
     height: 56px;
@@ -161,6 +187,7 @@ body{
     margin-top: 5%;
     border-radius: 10px;
 }
+
 
 .last input{
     font-size: 14px;
@@ -173,17 +200,21 @@ body{
     margin-left: 3%;
 }
 
+
 .last input:focus{
     outline: none;
 }
+
 
 .last input, .last .search{
     display: inline;
 }
 
+
 .search{
     margin-left: 2%;
 }
+
 
 .search span{
     padding-left: 10px;
@@ -191,11 +222,13 @@ body{
     font-family: 'Saira', sans-serif;
 }
 
+
 .search{
     background: linear-gradient(0deg, #013669, #5AABFF);
     padding: 10px;
     border-radius: 10px;
 }
+
 
 /* mid division */
 .mid_div{
@@ -207,6 +240,7 @@ body{
     justify-content: center;
 }
 
+
 .moving_text{
     width: 50%;
     align-items: center;
@@ -217,16 +251,21 @@ body{
 }
 
 
+
+
 /* Tutors section CSS */
+
 
 .tutor_header{
     margin-bottom: 5%;
 }
 
+
 .tutor_section{
     background: linear-gradient(0deg, #dce1e6, #F0F3FF, #c9ddf1);
     margin-top: 0px;
 }
+
 
 .tutor_header h2{
     font-family: 'Rowdies', sans-serif;
@@ -235,11 +274,13 @@ body{
     margin:0px;
 }
 
+
 .all_tutors{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+
 
 .tutors_display{
     height: 450px;
@@ -252,6 +293,7 @@ body{
     margin-bottom: 5%;
 }
 
+
 .tutor_image img{
     width: 300px;
     height: 300px;
@@ -262,18 +304,22 @@ body{
     margin: auto auto;
 }
 
+
 .tutor_details{
     padding-left: 5%;
 }
+
 
 .tutor_details h3{
     margin-bottom: 0px;
 }
 
+
 .tutor_details p{
     margin-top: 8px;
     margin-bottom: 0px;
 }
+
 
 .tutor_details button{
     padding:10px;
@@ -289,9 +335,11 @@ body{
     margin-top: 3%;
 }
 
+
 .rank{
     color:gold;
 }
+
 
 .empty{
     background: linear-gradient(0deg, #013769ce, #5aaaff8a);
@@ -300,7 +348,10 @@ body{
 }
 
 
+
+
 /* Frequent questions */
+
 
 .questions{
     height: 650px;
@@ -310,17 +361,20 @@ body{
     background: linear-gradient(-8deg, rgba(136, 148, 152, 0.467) 40%, rgb(166, 173, 181) 0%);
 }
 
+
 .questionContent{
     overflow-y: scroll;
     height: 650px;
-    
+   
 }
+
 
 .questionsh3{
     font-size: 56px !important;
     padding-top: 0%;
     text-align: center;
 }
+
 
 .freq_questions{
     height: 441px;
@@ -329,15 +383,18 @@ body{
     margin-top: 10px;
 }
 
+
 .freq_questions .content{
     padding-top: 10px;
 }
+
 
 .freq_questions .content h3{
     font-family: 'Montserrat', sans-serif;
     font-size: 32px;
     padding: 2%;
 }
+
 
 .rightArrow{
     float: right;
@@ -346,23 +403,24 @@ body{
     cursor: pointer;
 }
 
+
 .freq_questions .content p{
     font-size: 24px;
     padding: 20px;
     display: none;
 }
 
+
 .freq_questions .content{
     border-bottom: 2px solid #FFB661;
 }
-
-
 
 
 /* footer section */
 .footer{
     background-color: white;
 }
+
 
 .top_footer{
     display: flex;
@@ -372,6 +430,7 @@ body{
     padding-top: 2%;
 }
 
+
 .top_footer .about_Us{
     width: 350px;
     font-family: 'Saira', sans-serif;
@@ -380,6 +439,7 @@ body{
     text-align: justify;
 }
 
+
 .about_Us img{
     width: 80px;
     height: 70px;
@@ -387,18 +447,22 @@ body{
     margin: auto auto;
 }
 
+
 .top_footer .links{
     padding: 5px 40px 5px 40px;
 }
+
 
 .links li {
     list-style-type: none;
     line-height: 30px;
 }
 
+
 .links ul{
     padding-inline-start: 0px;
 }
+
 
 .links li a {
     text-decoration: none;
@@ -406,15 +470,18 @@ body{
     font-family: 'Saira', sans-serif;
 }
 
+
 .top_footer .contactUs{
     padding: 5px 40px 40px 40px;
 }
+
 
 .top_footer .chatBot{
     padding: 5px 40px 40px 40px;
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 
 .chatBot img {
     border-radius: 10px;
@@ -423,18 +490,22 @@ body{
     margin-top: 25%;
 }
 
+
 .linkHeaders{
     font-family: Rowdies, sans-serif;
     font-weight: 400;
 }
 
+
 .linkWriteUp {
     font-family: 'Saira', sans-serif;
 }
 
+
 .contactUs p {
     font-family: 'Saira', sans-serif;
 }
+
 
 .buttom_footer{
     background:linear-gradient(90deg, rgba(8, 5, 5, 0.757) 40%, rgba(12, 12, 12, 0.789) 60%);
@@ -445,27 +516,32 @@ body{
     align-items: center;
 }
 
+
 .buttom_footer p{
     margin-top: 12px;
     width: 380px;
     font-family: 'Saira', sans-serif;
 }
 
+
 .buttom_footer .social_medias{
     padding-left: 40%;
     width: 200px;
 }
+
 
 .buttom_footer .social_medias img{
     padding-right: 10%;
 }
 /* Path: static/styles/landingpage.css */
 
+
 /* Login Dropdown content */
 .dropdown {
     position: relative;
     display: inline-block;
 }
+
 
 .dropdown-content {
     display: none;
@@ -478,6 +554,7 @@ body{
     border-radius: 10px;
 }
 
+
 .dropdown-content a {
     color: white;
     padding: 12px 16px;
@@ -486,31 +563,38 @@ body{
     border-radius: 3px;
 }
 
+
 .dropdown-content a:hover {
     background-color: #e0dbdb;
     color: black;
 }
 
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 
 /* hover for login and signup */
 .signup_button{
     display: flex;
 }
 
+
 .signup_button .login_btn:hover{
     color: rgba(0, 0, 0, 0.598);
 }
+
 
 .signup_button span:hover{
     background: #e0dbdb;
 }
 
+
 .signup_button span:hover a{
     color: black;
 }
+
 
 .signUp_btn a{
     margin-left: 40%;
@@ -522,20 +606,35 @@ body{
     text-decoration: none;
 }
 
+
+.signOut_btn a{
+    margin-left: 40%;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, #690106, #ff5a5a);
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
 .dropdown .login_btn{
     cursor: pointer;
     text-align: center;
     margin-bottom: 35%;
 }
 
+
 .welcome span{
     font-size: x-large;
     font-weight: 600;
 }
 
+
 .left_label .top p{
     margin: 0px;
 }
+
 
 .intruder{
     position: absolute;
@@ -551,4 +650,10 @@ body{
     font-family: 'Saira', sans-serif;
     font-size: small;
     font-weight: 500;
+}
+
+
+.all_review:hover{
+    color: gray;
+    cursor: pointer;
 }
