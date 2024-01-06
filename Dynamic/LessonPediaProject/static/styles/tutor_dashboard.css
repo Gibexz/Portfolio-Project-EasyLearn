@@ -832,49 +832,14 @@ input[type="submit"]:hover,
     border-color: rgba(128, 128, 128, 0.385);
 }
 
-/* Update profile form */
-/* start */
-
-
-.updateMore {
-    display: table;
-    width: 100%;
-    line-height: 22px;
-    border-collapse: collapse;
-}
-
-.updateMore .table-row {
-    display: table-row !important;
-}
-.updateMore .table-row .table-cell {
-    display: table-cell;
-    padding: 8px;
-    /* border: 1px solid black; */
-}
-
-
 .negotiable {
     width: 90%;
     padding: 5px;
 }
-.form-table .table-cell {
-   /*  display: table-cell;
-    padding: 8px;
-    border: 1px solid black; */
-}
-
-/* .form-table .table-cell:nth-child(odd) {
-    width: 30%;
-}
-
-.form-table .table-cell:nth-child(even) {
-    width: 30%;
-} */
-
-
 input[type='text'],
 input[type='tel'],
-input[type='date'] {
+input[type='date'],
+input[type='number'] {
     font-size: medium;
     width: 90%;
     padding: 8px;
@@ -889,9 +854,7 @@ select{
     height: 38px;
     margin-bottom: 5px;
 }
-.statement{
-    width: 200px;
-}
+
 .statement textarea {
     width: 93%;
     font-size: medium;
@@ -903,11 +866,49 @@ select{
 }
 
 
+.form-table {
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.flex_row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.flex_in {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.flex_row.bio,
+.flex_row.profile_update_btn {
+    flex-basis: 100%;
+}
+
+.flex_row label {
+    margin-bottom: 5px;
+}
+.bio textarea {
+	width: 95%;
+	height: 80px;
+	border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    .flex_in {
+        flex-basis: 100%;
+        margin-right: 0;
+    }
+}
 /* stop */
+
 
 /* Update Schedule form */
 /* Start */
+
 .working_schedule{
     display: none;
 }

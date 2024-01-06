@@ -897,23 +897,41 @@
                                         <!-- Update Schedule Section -->
                                         <form action="{% url 'more_update'%}" method="post" class="form-table updateMore">
                                             {% csrf_token %}
-                                            <div class="table-row">
-                                                <div class="table-cell">
+                                            <div class="flex_row">
+                                                <div class="flex_in">
                                                     <label for="phone_number">Phone Number:</label>
                                                     <input type="tel" id="phone_number" name="phone_number" required value="{{ tutor.phone_number}}" placeholder="Phone Number">
+                                                </div>
+                                                <div class="flex_in">
+
                                                     <label for="lga_resident">LGA of Residence:</label>
                                                     <input type="text" id="lga_resident" name="lga_resident" required value="{{ tutor.lga_resident }}" placeholder="LGA of Residence">
+                                                </div>
+                                            </div>
+
+                                            <div class="flex_row">
+                                                <div class="flex_in">
                                                     <label for="residential_address">Residential Address:</label>
                                                     <input type="text" id="residential_address"  required name="residential_address" value="{{ tutor.residential_address }}" placeholder="Residential Address">
+                                                </div>
+                                                <div class="flex_in">
                                                     <label for="state">State of Origin:</label>
                                                     <input type="text" value="{{ tutor.state_of_origin }}" name="state_of_origin" placeholder="Enter State ">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex_row">
+                                                <div class="flex_in">
                                                     <label for="stateOfResidence">State of Residence:</label>
                                                     <input type="text" id="stateOfResidence" name="state_of_residence" value="{{ tutor.state_of_residence }}" required  placeholder="State of Residence">
+                                                </div>
+                                                <div class="flex_in">
                                                     <label for="primary_subject">Primary Subject:</label>
                                                     <input type="text" id="primary_subject"  required  name="primary_subject" value="{{ tutor.primary_subject }}" placeholder="Enter Core Subject">
                                                 </div>
-                                                <div class="table-cell">
-                                                    <label for="highest_qualification">Highest Qualification:</label>
+                                            </div>
+                                            <div class="flex_row">
+                                                <div class="flex_in">
                                                     <select id="highest_qualification" required  name="highest_qualification">
                                                         <option value="" selected disabled >-- select one --</option>
                                                         <option value="Phd"{%if tutor.highest_qualification == 'Phd' %}selected{% endif %}>Phd</option>
@@ -926,14 +944,18 @@
                                                         <option value="SSCE"{%if tutor.highest_qualification == 'SSCE' %}selected{% endif %}>SSCE</option>
                                                         <option value="Others"{%if tutor.highest_qualification == 'Others' %}selected{% endif %}>Others</option>
                                                     </select>
-                                                    <label for="availability">Availability</label>
+                                                </div>
+                                                <div class="flex_in">
                                                     <select id="availability" required  name="availability">
                                                         <option value=""selected disabled>-- select one --</option>
                                                         <option value="Remote"{%if tutor.availability == 'Remote' %}selected{% endif %}>Online(Remote)</option>
                                                         <option value="In-Person"{%if tutor.availability == 'In-Person' %}selected{% endif %}>In-Person</option>
                                                         <option value="Hybrid"{%if tutor.availability == 'Hybrid' %}selected{% endif %}>Hybrid</option>
                                                     </select>
-                                                        <label for="average_session_duration">Average Class Duration</label>
+                                                </div>
+                                            </div>
+                                            <div class="flex_row">
+                                                <div class="flex_in">
                                                         <select required id="averageDuration" name="average_session_duration">
                                                             <option value="" selected disabled>-- select one --</option>
                                                             <option value="Flexible"{%if tutor.average_session_duration == 'Flexible' %}selected{% endif %}>Flexible</option>
@@ -942,34 +964,39 @@
                                                             <option value="2 Hours"{%if tutor.average_session_duration == '2 Hours' %}selected{% endif %}>2 Hours</option>
                                                             <option value="Greater than 2 Hours"{%if tutor.average_session_duration == 'More than 2 Hours' %}selected{% endif %}>More than 2 Hours</option>
                                                         </select>
-                                                        
-                                                    <label for="open_to_work">Current Status</label>
+                                                </div>
+                                                <div class="flex_in">
                                                     <select name="open_to_work" required id="open_to_work">
                                                         <option value="" selected disabled>-- select one --</option>
                                                         <option value="Open"{%if tutor.open_to_work == 'Open' %}selected{% endif %}>Open to work</option>
                                                         <option value="Not open to work"{%if tutor.open_to_work == 'Not open to work' %}selected{% endif %}>Not open to work</option>
                                                         <option value="Engaged"{%if tutor.open_to_work == 'Engaged' %}selected{% endif %}>Engaged</option>
                                                     </select>
+                                                </div>
+                                                        
 
-                                                    <label for="price_per_hour">Price Per Hour (₦)</label>
+                                            </div>
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                       <label for="price_per_hour">Price Per Hour (₦)</label> <br>
                                                     <input type="number" name="price_per_hour" required max="10000" min="500" value="{{ tutor.price_per_hour }}" placeholder="Enter Amount">
-                                                    <br>
+                                                </div>
+                                                <div class="flex_in">
                                                     <label for="negotiable">Negotiable</label>
                                                     <select name="negotiable" required id="negotiable">
                                                         <option value="" selected disabled>-- select one --</option>
                                                         <option value="True"{%if tutor.negotiable == 'True' %}selected{% endif %}>Yes</option>
                                                         <option value="False"{%if tutor.negotiable == 'False' %}selected{% endif %}>No</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="table-row">
-                                                <div class="statement table-cell" colspan="">
-                                                    <label for="bio">Bio</label>
-                                                    <textarea name="bio" required placeholder="Profile Statement" id="text_area">{% if tutor.bio %} {{ tutor.bio }} {% endif %}</textarea>
-                                                    <br>
-                                                    <div class="profile_update_btn">
-                                                        <button class="save_button" id="profile_update_save_btn" type="submit" >Save</button>
-                                                    </div>
-                                                </div>
+                                            <div class="flex_row bio">
+                                                {% comment %} <label for="bio">Bio</label> <br> {% endcomment %}
+                                                <textarea name="bio" required placeholder="Profile Statement" id="text_area">{% if tutor.bio %} {{ tutor.bio }} {% endif %}</textarea>
+                                            </div>
+                                            
+                                            <div class="flex_row profile_update_btn">
+                                                <button class="save_button" id="profile_update_save_btn" type="submit" >Save</button>
                                             </div>
                                         </form>
                                         
