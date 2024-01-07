@@ -1042,7 +1042,7 @@ let tutorReportsData = null;
 let clientReportsData = null;
 // Report logic for tutors and clients ============================================
 $(document).ready(function() {
-    const api_url = 'http://127.0.0.1:8000/appAdmin/api/'
+    const api_url = 'http://127.0.0.1:8000/api/'
 
     // Tutor report logic ==========================================================
 

@@ -164,18 +164,18 @@ class Subject(models.Model):
     def __str__(self):
         return self.subject_name
 
-class TutorReportAbuse(models.Model):
-    """Tutors report abuse models"""
-    target_client_id = models.IntegerField()
-    message = models.TextField()
-    subject = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    tutor = models.ForeignKey(Tutor, related_name='abuse_reports', on_delete=models.CASCADE)
-    resolved_by_admin = models.BooleanField(default=False, null=True)
-    resolved_at = models.DateTimeField(null=True)
+# class TutorReportAbuse(models.Model):
+#     """Tutors report abuse models"""
+#     target_client_id = models.IntegerField()
+#     message = models.TextField()
+#     subject = models.CharField(max_length=100)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     tutor = models.ForeignKey(Tutor, related_name='abuse_reports', on_delete=models.CASCADE)
+#     resolved_by_admin = models.BooleanField(default=False, null=True)
+#     resolved_at = models.DateTimeField(null=True)
 
-    def __str__(self):
-        return self.subject
+#     def __str__(self):
+#         return self.subject
 
 
 class ProCourse(models.Model):

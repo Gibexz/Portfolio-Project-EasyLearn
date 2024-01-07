@@ -7,10 +7,13 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse, Http404
 from django.utils import timezone
 from .models import AppAdmin
-from client.models import Client, ClientReportAbuse
-from tutor.models import Tutor, TutorReportAbuse
+from client.models import Client
+# , ClientReportAbuse
+from tutor.models import Tutor
+# , TutorReportAbuse
 from .backends import AppAdminAuthBackend
-from .serializers import ClientSerializer, TutorSerializer, ClientReportAbuseSerializer, TutorReportAbuseSerializer
+from .serializers import ClientSerializer, TutorSerializer
+# , ClientReportAbuseSerializer, TutorReportAbuseSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -141,38 +144,38 @@ def get_tutors_data(request):
     
 
 
-# Tutors report abuse logics
-@api_view(['GET'])
-@login_required(login_url='app_admin_sign_up')
-def get_tutors_reports(request):
-    """ get tutor reports data api using django rest framwork"""
-    if request.method == 'GET':
-        tutors_reports = TutorReportAbuse.objects.all()
+# # Tutors report abuse logics
+# @api_view(['GET'])
+# @login_required(login_url='app_admin_sign_up')
+# def get_tutors_reports(request):
+#     """ get tutor reports data api using django rest framwork"""
+#     if request.method == 'GET':
+#         tutors_reports = TutorReportAbuse.objects.all()
         
-        tutors_reports_serialized = TutorReportAbuseSerializer(tutors_reports, many=True)
+#         tutors_reports_serialized = TutorReportAbuseSerializer(tutors_reports, many=True)
         
-        return Response({
-            'tutors_reports': tutors_reports_serialized.data  # Serialized tutor data
-        }, status=status.HTTP_200_OK)
-    else:
-        return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+#         return Response({
+#             'tutors_reports': tutors_reports_serialized.data  # Serialized tutor data
+#         }, status=status.HTTP_200_OK)
+#     else:
+#         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
 
 
-@api_view(['GET'])
-@login_required(login_url='app_admin_sign_up')
-def get_clients_reports(request):
-    """ get client reports data api using django rest framwork"""
-    if request.method == 'GET':
-        clients_reports = ClientReportAbuse.objects.all()
+# @api_view(['GET'])
+# @login_required(login_url='app_admin_sign_up')
+# def get_clients_reports(request):
+#     """ get client reports data api using django rest framwork"""
+#     if request.method == 'GET':
+#         clients_reports = ClientReportAbuse.objects.all()
         
-        clients_reports_serialized = ClientReportAbuseSerializer(clients_reports, many=True)
+#         clients_reports_serialized = ClientReportAbuseSerializer(clients_reports, many=True)
         
-        return Response({
-            'clients_reports': clients_reports_serialized.data  # Serialized tutor data
-        }, status=status.HTTP_200_OK)
-    else:
-        return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+#         return Response({
+#             'clients_reports': clients_reports_serialized.data  # Serialized tutor data
+#         }, status=status.HTTP_200_OK)
+#     else:
+#         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 # Tutor Logics

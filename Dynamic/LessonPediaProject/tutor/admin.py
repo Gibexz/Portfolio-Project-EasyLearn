@@ -1,6 +1,7 @@
 from django.contrib import admin
 from lessonpedia.admin import lessonPedia_admin_site
-from .models import Tutor, Subject, TutorReportAbuse, ProCourse
+from .models import Tutor, Subject,  ProCourse
+# 
 
 class TutorAdmin(admin.ModelAdmin):
     """Associates Tutor model to admin site"""
@@ -13,12 +14,12 @@ class SubjectAdmin(admin.ModelAdmin):
 
 admin.site.register(Tutor, TutorAdmin)
 admin.site.register(Subject, SubjectAdmin)
-admin.site.register(TutorReportAbuse)
+# admin.site.register(TutorReportAbuse)
 admin.site.register(ProCourse)
 
 
 # registering other models in our lessonpedia site
 lessonPedia_admin_site.register(Tutor, TutorAdmin)
 lessonPedia_admin_site.register(Subject, SubjectAdmin)
-lessonPedia_admin_site.register(TutorReportAbuse)
+# lessonPedia_admin_site.register(TutorReportAbuse)
 lessonPedia_admin_site.register(ProCourse)
