@@ -41,6 +41,7 @@ class Contract(models.Model):
     end_date = models.DateField()
     days_remaining = models.IntegerField()
     contract_status = models.CharField(max_length=20, choices=CONTRACT_STATUS_CHOICES, default='Pending')
+    remark = models.TextField(blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     objects = ContractManager()
@@ -52,10 +53,20 @@ class Contract(models.Model):
         self.contract_amount = self.pay_rate * self.contract_length
         self.payment_remaining = max(self.contract_amount - self.payment_made, 0)
         self.days_remaining = max((self.end_date - timezone.now().date()).days, 0)
-        # if self.start_date >= timezone.now().date():
-        #     self.contract_status = 'Active'
         if self.days_remaining == 0:
             self.contract_status = 'Settled'
         elif self.payment_remaining == 0:
             self.contract_status = 'Settled'
         super().save(*args, **kwargs)
+
+
+class ReportAbuse(models.Model):
+    tutor = models.ForeignKey(Tutor, related_name="abuse_reports", null=True, on_delete=models.SET_NULL)
+    message = models.TextField(max_length=400)
+    resolved_by_admin = models.BooleanField(default=False, null=True)
+    subject = models.CharField(max_length=100)
+    client = models.ForeignKey(Client, related_name='abuse_reports', null=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.subject

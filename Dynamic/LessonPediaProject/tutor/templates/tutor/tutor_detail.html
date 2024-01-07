@@ -84,7 +84,7 @@
                       <i class="fa-regular fa-sharp fa-bell"></i>
                     </div> {% endcomment %}
                     <section><img class="tiny_images"src="{{ user.profile_picture.url }}" alt="user_photo"></section>
-                    <span class="username">{{ user.username }}</span> <span class="fa fa-chevron-circle-down" aria-hidden="true"></span>
+                    <span class="username">{{ user.username }}</span> <span class="fa dashboardBtn fa-chevron-circle-down" aria-hidden="true"></span>
                 </div>
             </div>
             <div class="popover-container">
@@ -92,11 +92,49 @@
                     <!-- Search results content will be loaded here -->
                 </div>
             </div>
-            
+            <div class="dropdownContainerTop">
+                    <div class="dropdown-item"><a href="{% url 'validate_user' user.username %}">Dashboard</a></div>
+                    <div class="dropdown-item"><a href="{% url 'view_tutors' %}">More Tutors</a></div>
+                    <div class="dropdown-item"><a href="{% url 'logoutUser' %}">Logout</a></div>
+                </div>
             <div class="dpDisplay">
                 <div class="dpContent">
                     <section class="dpImage">
-                        <img class='tutordp' src="{{ tutor.profile_picture.url}}" alt="">
+                        <img class='tutordp' src="{{ tutor.profile_picture.url}}" alt=""> <br>
+                        <section class="goRight">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            <div class="email-form">
+                                <form id="emailForm" method="post" action="{%url 'email_tutor' tutor.id %}">
+                                    {% csrf_token %}
+                                    <label for="sender">From:</label> <span><input type="text" id="sender" name="sender" required readonly value="{{ user.email }}"></span>
+                                    <br>
+                                    <label for="recipient">To:</label> <span> <input type="text" id="recipient" name="recipient" required readonly value="{{ tutor.email }}"></span>
+                                    <br>
+                                    <label for="subject">Subject:</label> <span> <input type="text" id="subject" name="subject" required value="Interested in Tutoring Session"></span>
+                                    <br>
+                                    <input type="hidden" id="lessonPedia" name="senderInfo" value="Client: {{ user.get_full_name }} - {{ user.email }}">
+                                    <label for="message">Message:</label><br>
+                                    <textarea id="message" name="message" rows="5" required></textarea><br>
+                                    
+                                    <button type="submit" class="sendEmail">Send</button>
+                                    <button class="cancelEmail" type="button">Cancel</button>
+                                </form>
+                            </div>
+                            <div id="loadingMessage" style="display: none;">
+                                <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                            </div>
+                            <!-- email_sent_modal.html -->
+    
+                            <div class="dropdownContainer">
+                                <div class="dropdown-item allScheduleBtn">All Schedules</div>
+                                <div class="dropdown-item all-subjects-btn"id="allSubjectsBtn">All Subjects</div>
+                            </div>
+                        </section>
+                            <section class="addTutor">
+                                <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton1">Engage Tutor</button></a>
+                            </section>
                     </section>
                     <section class="UserBioData">
                         <h3>{{ tutor.get_full_name }}</h3>
@@ -124,43 +162,80 @@
                                 </span>
                             </span>
                         </p>
+                        <section class="preference">
+                            <p class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ tutor.state_of_residence }}, {{ tutor.nationality }}</p>
+                            <p class="availability"><i class="fa fa-calendar" aria-hidden="true"></i> {{ tutor.availability }}</p>
+                            <p class="price"><i class="fa fa-money" aria-hidden="true"></i> ₦{{ tutor.price_per_hour }} / hr</p><br>
+                            <p>Negotiable: <span class="negotiable"><i class="fa fa-clock-o" aria-hidden="true"></i> {% if tutor.negotiable %}Yes{% else %}No{% endif %}</span>
+                        </section>
 
                     </section>
                 </div>
                 <div class="dpLinks">
-                    <section class="goRight">
-                        <i class="fa fa-heart" aria-hidden="true"></i>
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                        <div class="email-form">
-                            <form id="emailForm" method="post" action="{%url 'email_tutor' tutor.id %}">
-                                {% csrf_token %}
-                                <label for="sender">From:</label> <span><input type="text" id="sender" name="sender" required readonly value="{{ user.email }}"></span>
-                                <br>
-                                <label for="recipient">To:</label> <span> <input type="text" id="recipient" name="recipient" required readonly value="{{ tutor.email }}"></span>
-                                <br>
-                                <label for="subject">Subject:</label> <span> <input type="text" id="subject" name="subject" required value="Interested in Tutoring Session"></span>
-                                <br>
-                                <input type="hidden" id="lessonPedia" name="senderInfo" value="Client: {{ user.get_full_name }} - {{ user.email }}">
-                                <label for="message">Message:</label><br>
-                                <textarea id="message" name="message" rows="5" required></textarea><br>
-                                
-                                <button type="submit" class="sendEmail">Send</button>
-                                <button class="cancelEmail" type="button">Cancel</button>
-                            </form>
+                    <div class="tutor_preference">
+                        <h3>Preferred Days</h3>
+                        <div class="schedule_item">
+                            <ul class="schedule_list">
+                            {% for schedule in tutor.schedules.all|slice:"4" %}
+                                <li class="schedule_day">{{ schedule.day }}&nbsp; <span class="schedule_time">{{ schedule.from_hour }} - {{ schedule.to_hour }}</span></li>
+                                {% endfor %}
+                            </ul>
                         </div>
-                        <div id="loadingMessage" style="display: none;">
-                            <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        <div class="tutor_subjects">
+                            {% if tutor.subjects.all %}
+                                <h3>Other Subjects</h3>
+                                <div class="subject_item">
+                                    <ul class="subject_lists">
+                                    {% for subject in tutor.subjects.all|slice:"4" %}
+                                            <li class="subject_name">{{ subject.subject_name }}</li>
+                                            {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
                         </div>
-                        <!-- email_sent_modal.html -->
+                    </div>
 
-                        <div class="dropdownContainer">
-                            <div class="dropdown-item engage-tutor">Engage tutor</div>
-                            <div class="dropdown-item see-reviews-btn"id="seeReviewsBtn">See reviews</div>
-                        </div>
-                    </section>
                 </div>
             </div>
+            {% comment %} All tutor Subjects {% endcomment %}
+            <div id="allSubjectsView" class="modal">
+                <div class="modal-content">
+                    <span class="closeModal">&times;</span>
+                    <h1>{{tutor.first_name}}'s Subjects</h1>
+                    {% if tutor.subjects.all %}
+                            {% for subject in tutor.subjects.all %}
+                                <p>{{forloop.counter}}. &nbsp; {{ subject.subject_name}}</p>
+                            {% endfor %}
+                        {% else %}
+                        <center><h3>No Additional Subjects</h3></center>
+                    {% endif %}
+                    <div class="back-to-home">
+                        <a href="{% url 'view_tutors' %}"><button class="moreTutors">More Tutors</button></a>
+                        <a><button class="continue">Back</button></a>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} all tutor schedules {% endcomment %}
+            <div id="allScheduleView" class="modal">
+                <div class="modal-content">
+                    <span class="closeModal">&times;</span>
+                    <h1>{{ tutor.first_name}}'s Schedule</h1>
+                    <div class="schedule_item">
+                        <ul class="schedule_list">
+                        {% for schedule in tutor.schedules.all %}
+                            <li class="schedule_day">{{ schedule.day }}&nbsp; <span class="schedule_time">{{ schedule.from_hour }} - {{ schedule.to_hour }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="back-to-home">
+                        <a href="{% url 'view_tutors' %}"><button class="moreTutors">More Tutors</button></a>
+                        <a><button class="continue">Back</button></a>
+                    </div>
+                </div>
+            </div>
+            
+            {% comment %} Email sent modal {% endcomment %}
                 <div id="emailSentModal" class="modal">
                     <div class="modal-content">
                         <span class="closeModal">&times;</span>
@@ -173,7 +248,8 @@
                     </div>
                 </div>
 
-                <!-- email_error_modal.html -->
+
+                <!-- email_error_modal -->
                 <div id="emailErrorModal" class="modal">
                     <div class="modal-content">
                         <span class="closeModal">&times;</span>
@@ -209,7 +285,8 @@
                     <div class="review_item">
                         <section class="space_content meta_client_info">
                             <section class="reviewer_icon"><img class="tiny_images"src="{{ review.client.profile_picture.url }}" alt="reviewer's icon"></section>
-                            <section class="review_time">{{ review.created_at }}</section>
+                            <section class="review_subject">{{ review.review_subject }}</section>
+                            <section class="review_time">{{ review.created_at|date:"d-m-y" }}</section>
                         </section>
                         <section class="review_text">{{ review.review_text }}</section>
                         <div class="hrtop"><hr class="no_height"></div>
@@ -256,11 +333,13 @@
                     <p class="fluent">French</p>                    
                 </section>
             </section>
+            {% if tutors_count > 4 %}
             <div class="pagination">
                 <button id="prevPage">Previous</button>
                 <div id="pageButtons"></div>
                 <button id="nextPage">Next</button>
             </div>
+            {% endif %}
             
             <h3 class="similarHead">Similar Tutors Profile</h3>
             <div class="similarTutors">

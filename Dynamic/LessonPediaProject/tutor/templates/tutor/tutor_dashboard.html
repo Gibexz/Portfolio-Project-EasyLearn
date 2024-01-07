@@ -83,22 +83,41 @@
         <div class="report_btn_account">
             <div class="report_display">
                 <div>
-                <center><h4>Please note, all reports would be reviewed</h4></center>
-                    <form action="" id="report_form">
-                        <label for="reason_reason">Reason for report</label>
-                        <select name="report_reason" id="">
-                            <option value="" disabled selected>-- Select one --</option>
-                            <option value="A problem or issue">A problem or issue</option>
-                            <option value="Intimedation">Intimidation</option>
-                            <option value="Phyiscal Abuse">Physical Abuse</option>
-                            <option value="Sexual Abuse">Sexual Abuse</option>
+                    <center><h4 class="report_title">Please note, all reports would be reviewed<br> 
+                        Take a look at related contract policies <a href="#">here</a></h4></center>
+                    <form action="{% url 'report_abuse' %}" method="post" id="report_form">
+                        {% csrf_token %}
+                        <label for="report_subject">Subject:</label>
+                        <select name="report_subject" id="" required>
+                            <option value="" selected style="color: gray;">--select or type--</option>
+                            <option value="Inappropriate behavior">Inappropriate Behavior</option>
+                            <option value="Intimidation">Intimidation</option>
+                            <option value="Physical Abuse">Physical Abuse</option>
+                            <option value="Sexual Harassment">Sexual Harassment</option>
                             <option value="Verbal Abuse">Verbal Abuse</option>
-                            <option value="Other">Other reasons</option>
+                            <option value="Cheating or Academic Dishonesty">Cheating or Academic Dishonesty</option>
+                            <option value="Unprofessional Conduct">Unprofessional Conduct</option>
+                            <option value="Discrimination or Harassment">Discrimination or Harassment</option>
+                            <option value="Failure to Provide Adequate Instruction">Failure to Provide Adequate Instruction</option>
+                            <option value="Breach of Privacy">Breach of Privacy</option>
+                            <option value="Failure to Address Concerns or Issues">Failure to Address Concerns or Issues</option>
+                            <option value="Others">Others</option>
                         </select>
-                        <textarea name="" placeholder="Write your reports here"></textarea>
+
+                        <label for="others">If Others:</label>
+                        <input type="text" name="subject" id="others"  placeholder="Enter Report Subject"><br>
+                        <label for="client">Client:</label>
+                        <select name="client_id" id="client">
+                            {% if clients %}
+                                {% for client in clients %}
+                                    <option value="{{ client.id }}">{{ client.get_full_name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <textarea name="message" placeholder="Write your reports here"></textarea>
                         <div class="report_buttons">
-                            <button type="submit" class="submit_report">Submit</button>
                             <button type="button" class="cancel_report">Cancel</button>
+                            <button type="submit" class="submit_report">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -111,23 +130,30 @@
         <div class="contract_btn_account">
             <div class="report_display">
                 <div>
-                    <center><h4>Please note, all request would be reviewed first <br> 
+                    <center><h4 class="report_title">Please note that terminating a contract cannot be undone<br> 
                     Take a look at related contract policies <a href="#">here</a></h4></center>
-                    <form action="" id="report_form">
-                        <label for="reason_reason">Reason for report</label>
-                        <select name="report_reason" id="">
+                    <form action="{% url 'terminate_contract'%}" id="report_form" method="post">
+                        {% csrf_token %}
+                        <label for="contract_code"> Enter Contract ID:</label>
+                        <input type="text" name="contract_code" id="contract_code" required placeholder="Enter Target Contract ID e.g 123456ABC"><br>
+                        <label for="terminationReasons">Select a reason for termination:</label>
+                        <select id="terminationReasons" name="remark" required>
                             <option value="" disabled selected>-- Select one --</option>
-                            <option value="A problem or issue">A problem or issue</option>
-                            <option value="Intimedation">Intemedation</option>
-                            <option value="Phyiscal Abuse">Phyiscal Abuse</option>
-                            <option value="Sexual Abuse">Sexual Abuse</option>
-                            <option value="Verbal Abuse">Verbal Abuse</option>
-                            <option value="Other">Other reasons</option>
-                        </select>
-                        <textarea name="" placeholder="Write your reports here"></textarea>
+                            <option value="mismatchedLearningStyle">Mismatched Learning Style</option>
+                            <option value="lackOfProgress">Lack of Progress</option>
+                            <option value="schedulingConflicts">Scheduling Conflicts</option>
+                            <option value="personalityClash">Personality Clash</option>
+                            <option value="qualityOfInstruction">Quality of Instruction</option>
+                            <option value="externalCommitments">External Commitments</option>
+                            <option value="financialConstraints">Financial Constraints</option>
+                            <option value="achievementOfGoals">Achievement of Goals</option>
+                            <option value="communicationBreakdown">Communication Breakdown</option>
+                            <option value="unexpectedCircumstances">Unexpected Circumstances</option>
+                        </select> 
+                        <textarea name="statement" placeholder="You can write here"></textarea>
                         <div class="report_buttons">
+                            <button type="button" class="cancel_btn cancel_report">Cancel</button>
                             <button type="submit" class="submit_report">Submit</button>
-                            <button type="button" class="cancel_report">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -141,7 +167,7 @@
             <div class="review_display">
                 <div> 
                     <h3 class="close_review" style="margin-bottom: 0px;"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</h3>
-                    <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Your Reviews </h4></center>
+                    <center><h3 style="margin-top: 0px; border-bottom: 2px solid blue;">MY REVIEWS</h3></center>
                     
                     <div class="review_table">
                         <table id="reviewTable">
@@ -155,63 +181,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>Excellent service!</td>
-                                    <td>5</td>
-                                    <td>Customer Support</td>
-                                    <td>2023-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>Very satisfied with the product.</td>
-                                    <td>4</td>
-                                    <td>Product Quality</td>
-                                    <td>2023-03-10</td>
-                                </tr>
-                                <tr>
-                                    <td>sohn Doe</td>
-                                    <td>Excellent service!</td>
-                                    <td>5</td>
-                                    <td>bustomer Support</td>
-                                    <td>2021-05-15</td>
-                                </tr>
-                                <tr>
-                                    <td>cane Smith</td>
-                                    <td>nery satisfied with the product.</td>
-                                    <td>2</td>
-                                    <td>aroduct Quality</td>
-                                    <td>2024-02-20</td>
-                                </tr>
-                                <tr>
-                                    <td>Doe</td>
-                                    <td>xcellent service!</td>
-                                    <td>5</td>
-                                    <td>Customer Support</td>
-                                    <td>2023-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>Very satisfied with the product.</td>
-                                    <td>4</td>
-                                    <td>Product Quality</td>
-                                    <td>2023-02-20</td>
-                                </tr>
-                                <tr>
-                                    <td>sohn Doe</td>
-                                    <td>Excellent service!</td>
-                                    <td>2</td>
-                                    <td>bustomer Support</td>
-                                    <td>2023-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>ne Smith</td>
-                                    <td>ry satisfied with the product.</td>
-                                    <td>3</td>
-                                    <td>oduct Quality</td>
-                                    <td>2019-02-20</td>
-                                </tr>
-                                
+                                {% for review in tutor.reviews.all %}
+                                    <tr>
+                                        <td>{{ review.client.get_full_name }}</td>
+                                        <td>{{ review.review_text }}</td>
+                                        {% for rank in review.client.rankings.all%}
+                                            {% if rank.tutor.id == tutor.id %}
+                                                <td>{{ rank.rank_number }}</td>
+                                             {% endif %}                                        
+                                        {% endfor %}
+                                        <td>{{ review.review_subject }}</td>
+                                        <td>{{ review.created_at|date:"d-m-y" }}</td>
+                                    </tr>
+                                {% endfor %}
+
                               <!-- Add more rows with data as needed -->
                             </tbody>
                         </table>
@@ -228,7 +211,7 @@
 
             <div class="report_display"> 
                 <h3 class="close_review" style="margin-bottom: 0px;"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</h3>
-                <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Your Sent Reports </h4></center>
+                <center><h3 style="margin-top: 0px; border-bottom: 2px solid blue;"> MY SENT REPORTS</h3></center>
                 
                 <div class="review_table">
                     <table id="reportTable">
@@ -242,63 +225,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>Excellent service!</td>
-                                <td>5fjhslfj;sjf;sojg;osjg;lsj;sj;lsgk;l</td>
-                                <td>Customer Support</td>
-                                <td>2023-01-15</td>
-                            </tr>
-                            <tr>
-                                <td>Jane Smith</td>
-                                <td>Very satisfied with the product.</td>
-                                <td>4</td>
-                                <td>Product Quality</td>
-                                <td>2023-03-10</td>
-                            </tr>
-                            <tr>
-                                <td>sohn Doe</td>
-                                <td>Excellent service!</td>
-                                <td>5</td>
-                                <td>bustomer Support</td>
-                                <td>2021-05-15</td>
-                            </tr>
-                            <tr>
-                                <td>cane Smith</td>
-                                <td>nery satisfied with the product.</td>
-                                <td>2</td>
-                                <td>aroduct Quality</td>
-                                <td>2024-02-20</td>
-                            </tr>
-                            <tr>
-                                <td>Doe</td>
-                                <td>xcellent service!</td>
-                                <td>5</td>
-                                <td>Customer Support</td>
-                                <td>2023-01-15</td>
-                            </tr>
-                            <tr>
-                                <td>Jane Smith</td>
-                                <td>Very satisfied with the product.</td>
-                                <td>4</td>
-                                <td>Product Quality</td>
-                                <td>2023-02-20</td>
-                            </tr>
-                            <tr>
-                                <td>sohn Doe</td>
-                                <td>Excellent service!</td>
-                                <td>2</td>
-                                <td>bustomer Support</td>
-                                <td>2023-01-15</td>
-                            </tr>
-                            <tr>
-                                <td>ne Smith</td>
-                                <td>ry satisfied with the product.</td>
-                                <td>3</td>
-                                <td>oduct Quality</td>
-                                <td>2019-02-20</td>
-                            </tr>
-                            
+                            {% for report in reports %}
+                                <tr>
+                                    <td>{{ report.client.get_full_name }}</td>
+                                    <td>{{ report.message }}</td>
+                                    <td>{{ report.subject }}</td>
+                                    <td>{{ report.subject }}</td>
+                                    <td>{{ report.created_at|date:"d-m-y" }}</td>
+                                </tr>
+                            {% endfor %}
                             <!-- Add more rows with data as needed -->
                         </tbody>
                     </table>
@@ -333,29 +268,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                                {% for contract in pending_contracts %}
-                                            <td>{{ forloop.counter}}</td>
-                                            <td>{{ contract.client.get_full_name }}</td>
-                                            <td>{{ contract.subject.subject_name }}</td>
-                                            <td>{{ contract.week_days }}</td>
-                                            <td>{{ contract.contract_length }} Days</td>
-                                            <td>&#x20A6; {{ contract.pay_rate }}</td>
-                                            <td>{{ contract.start_date|date:"d-m-y" }}</td>
-                                            <form method="post" data-contractcode="{{contract.contract_code}}" action="{% url 'update_contract_status' contract.contract_code %}">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="status" value="Accept">
-                                                <td class="accept_contract_btn"><button type="submit">Accept</button></td>
-                                            </form>
-                                            <form method="post" data-contractcode="{{contract.contract_code}}" action="{% url 'update_contract_status' contract.contract_code %}">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="status" value="Decline">
-                                                <td class="decline_contract_btn"><button type="submit">Decline</button></td>
-                                            </form>
-                                        </tr>
-                                {% endfor %}
+                            {% for contract in pending_contracts %}
+                            <tr id="contractRow{{ forloop.counter }}">
+                                <td>{{ forloop.counter}}</td>
+                                <td>{{ contract.client.get_full_name }}</td>
+                                <td>{{ contract.subject.subject_name }}</td>
+                                <td>{{ contract.week_days }}</td>
+                                <td>{{ contract.contract_length }} Days</td>
+                                <td>&#x20A6; {{ contract.pay_rate }}</td>
+                                <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                <form class="contractForm" data-rowid="{{ forloop.counter }}">
+                                    {% csrf_token %}
+                                    <input type="hidden" class="contractCode" value="{{ contract.contract_code }}">
+                                    <input type="hidden" class="status" name="status" value="">
+                                    <td class="accept_contract_btn"><button type="button" class="submitBtnPending" data-action="Accept">Accept</button></td>
+                                    <td class="decline_contract_btn"><button type="button" class="submitBtnPending" data-action="Decline">Decline</button></td>
+                                </form>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                
             
             </div>
                 
@@ -406,6 +340,19 @@
         </div>
         </div>
     </div>
+    {% comment %} Modals {% endcomment %}
+    <!-- Modal for successful update -->
+    <div id="successModal" class="modal">
+        <h3 style="text-decoration: none;">Update Successful!</h3>
+        <p>Your operation was successful.</p>
+        <button class="closeModal" id="closeSuccessModal">Close</button>
+    </div>
+    <!-- Modal for error -->
+    <div id="errorModal" class="modal">
+        <h3 style="text-decoration: none;" > Error!</h3>
+        <p>Refresh page to continue</p>
+        <button class="closeModal" id="refreshPage">Refresh</button>
+    </div>
 
     <!-- main dasboard starts here -->
 <!-- ============================================================================================================================================= -->
@@ -420,7 +367,7 @@
                             {% if tutor.profile_picture %}
                             <img src="{{ tutor.profile_picture.url }}" alt="{{ tutor.username }}'s Profile Picture">
                             {% else %}
-                            <p>No profile picture available</p>
+                            <p><img src="{% static 'images/user/default_user_icon.png'%}" alt="user image"> </p>
                             {% endif %}
 
                         <p>{{ tutor.username }}</p>
@@ -456,10 +403,10 @@
                     <!-- Dashboard -->
                     <div class="dashboard_contents content_divs">
                         <section class="stats">
-                            <div class="stats_details active_contracts"><p>Active Contracts</p><h3>{{ tutor.active_contract_count }}</h3></div>
-                            <div class="stats_details pending_contracts" style="cursor: pointer;" id="pending_clients"><p>Pending Contracts</p><h3>{{ tutor.pending_contract_count }}</h3></div>
-                            <div class="stats_details settled_contracts" style="cursor: pointer;" id="settled_clients"><p>Settled Contracts</p><h3>{{ tutor.settled_contract_count }}</h3></div>
-                            <div class="stats_details"><p class="total_earnings">Total Earnings</p><h3 class="payments">₦&nbsp;{{ tutor.received_payments }}</h3></div>
+                            <div class="stats_details active_contracts"><p>Active Contracts</p><h3 id="activeContractsH3">{{ tutor.active_contract_count }}</h3></div>
+                            <div class="stats_details pending_contracts" style="cursor: pointer;" id="pending_clients"><p>Pending Contracts</p><h3 id="pendingContractsH3" >{{ tutor.pending_contract_count }}</h3></div>
+                            <div class="stats_details settled_contracts" style="cursor: pointer;" id="settled_clients"><p>Settled Contracts</p><h3 id="settledContractsH3">{{ tutor.settled_contract_count }}</h3></div>
+                            <div class="stats_details"><p class="total_earnings">Total Earnings</p><h3 class="payments" id="totalEarningsH3">₦&nbsp;{{ tutor.received_payments }}</h3></div>
                         </section>
                         <section class="myclient">
                             <div>
@@ -607,7 +554,7 @@
                                     <!-- subjects list display -->
                                     <div class="subject_view_display">
                                         <div class="subject_list">
-                                            <h2>Your Subjects, Courses, and Programs</h2>
+                                            <h2>My Subjects, Courses, and Programs</h2>
                                             <table class="subject_table">
                                                 <thead>
                                                     <tr>
@@ -973,8 +920,6 @@
                                                         <option value="Engaged"{%if tutor.open_to_work == 'Engaged' %}selected{% endif %}>Engaged</option>
                                                     </select>
                                                 </div>
-                                                        
-
                                             </div>
                                             <div class="flex_row">
                                                 <div class="flex_in">
@@ -1202,7 +1147,7 @@
                         <li class="review_link"><i class="fa-solid fa-arrow-trend-up"></i>&nbsp; My reviews</li><br>
                         <li class="report_btn"><i class="fa-solid fa-circle-exclamation"></i>&nbsp; Report an issue</li><br>
                         <li class="view_reports"><i class="fa-solid fa-file-import dropbtnReports"></i>&nbsp; My reports</li><br>
-                        <li><a href="#"><i class="fa-solid fa-print"></i>&nbsp; Print profile</a></li><br>
+                        <li><a href="#" id="printProfileBtn"><i class="fa-solid fa-print"></i>&nbsp; Print profile</a></li><br>
                     </ol>
                 </div>
             </div>

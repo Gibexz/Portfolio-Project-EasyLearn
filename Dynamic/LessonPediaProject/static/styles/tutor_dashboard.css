@@ -249,12 +249,12 @@ a .fa-sign-out{
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-    /* background-color: rgba(255, 255, 255, 0.556); */
     height: 430px;
-    /* width: 900px; */
     border-radius: 10px;
     padding: 15px;
     font-family: 'Diphylleia', 'dosis', 'el messiri', 'Inika', serif;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .client_list_n_search {
@@ -458,6 +458,7 @@ input[type="submit"]:hover,
     margin-bottom: 10px;
     color: rgba(0, 17, 128);
     cursor: pointer;
+    transition: font-weight 0.4s ease;
 }
 
 .qlinks a {
@@ -466,10 +467,11 @@ input[type="submit"]:hover,
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 300;
     color: rgba(0, 17, 128);;
+    transition: font-weight 0.4s ease;
 }
 
-.qlinks a:hover {
-    color: #FF5722;
+.qlinks li:hover, .qlinks li a:hover {
+    font-weight: bold;
 }
 
 /* Programs start */
@@ -689,7 +691,7 @@ input[type="submit"]:hover,
     margin-left: 5px;
     transition: transform 0.5s ease-in-out;
 }
-.modal {
+.modal, .disengage {
     display: none;
     position: fixed;
     top: 60%;
@@ -702,6 +704,15 @@ input[type="submit"]:hover,
     padding: 20px;
     text-align: center;
 }
+/* .disengage{
+    display: none;
+    backdrop-filter: brightness(0.1);
+    bottom: 0;
+    top: 0;
+    width: 100vw;
+    height: 200vh;
+    position: fixed;
+} */
 .modal2 {
     display: none;
     position: fixed;
@@ -715,6 +726,49 @@ input[type="submit"]:hover,
     padding: 20px;
     text-align: center;
 }
+/* for contract termination */
+
+.disengage h3  {
+    margin-bottom: 20px;
+}
+
+.disengage label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.disengage select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.term_btn {
+    display: flex;
+    justify-content: center;
+    gap: 20%;
+}
+
+.disengage button {
+    padding: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.disengage #terminate {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+#closeSuccessModal {
+    background-color: #ccc;
+    color: #000;
+}
+
+/* stop contract termination */
 
 #confirmationModal  {
     color: #ff6600;
@@ -1065,14 +1119,6 @@ select{
     color: darkblue;
 }
 .active_pwd{
-    padding: 10px 20px;
-    background-color: #4CAF50 !important; 
-    color: #fff !important;
-    font-weight: bold;
-    border: none;
-    margin: auto auto !important;
-    border-radius: 5px;
-    cursor: pointer;
     opacity: 1;
 }
 
@@ -1175,6 +1221,16 @@ select{
 .settled_clients_window {
     min-width: 400px;
 }
+.contract_btn_account, .report_btn_account {
+    height: 470px;
+}
+.report_btn_account {
+    height: 600px;
+}
+
+.reviews_window {
+    height: 470px;
+}
 
 .warning {
     margin-top: 20px;
@@ -1221,6 +1277,16 @@ select{
     margin-top: 50px;
 }
 
+.report_buttons {
+    margin-top: 25px;
+}
+.report_title {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(0, 5, 93);
+    margin-bottom: 10px;
+    font-size: 'Diphylleia', 'dosis', 'el messiri', 'Inika', serif;
+}
 .selections button{
     padding: 20px 80px 20px 80px;
     border-radius: 20px;
@@ -1252,15 +1318,30 @@ select{
     font-weight: bold;
 }
 
-.selections .confirm_remove, .selections .confirm_logout{
+.selections .confirm_remove, .selections .confirm_logout, .cancel_btn{
     background-color: red;
 }
 
-.selections .mistake, .selections .cancel_logout, .submit_report, .cancel_report{
+.selections .mistake, .selections .cancel_logout, .submit_report{
     background-color: blue;
+    opacity: 0.7;
 }
 
-.report_display select {
+.selections .mistake:hover, .selections .cancel_logout:hover, .submit_report:hover {
+    background-color: blue;
+    opacity: 1;
+}
+
+.cancel_report, .cancel_contract_btn button {
+    background-color: rgb(238, 74, 74);
+}
+
+.cancel_report:hover, .cancel_contract_btn button:hover {
+    background-color: rgb(166, 13, 13);
+    box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
+}
+
+.report_display select,.report_display input[type="text"] {
     width: 100%;
     border-radius: 5px;
     outline-color: rgba(0, 17, 128, 0.323);
@@ -1270,6 +1351,7 @@ select{
     width: 100%;
     min-height: 150px;
     outline-color: rgba(0, 17, 128, 0.323);
+    border-radius: 5px;
 }
 
 /* deactivate account blank */
@@ -1348,8 +1430,13 @@ select{
     padding: 25px;
     overflow-y: auto;
     height: 400px;
-    margin: 30px;
-    font-size: 0.92em;
+    /* margin: 30px; */
+    font-size: 0.95em;
+}
+.report_display{
+    overflow: hidden;
+    margin-top: 10px;
+    height: auto;
 }
 
 .close_review,
@@ -1396,6 +1483,7 @@ select{
 .review_table th:hover, .pending_clients_table th:hover,
 .settled_clients_table th:hover {
     background-color: #ddd;
+    color: #022750e7;
 }
 
 #pending_clients:hover, #settled_clients:hover {

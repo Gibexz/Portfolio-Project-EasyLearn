@@ -65,16 +65,8 @@ class Ranking(models.Model):
         return averageRank
 
 
-class ClientReportAbuse(models.Model):
-    target_tutor = models.ForeignKey(Tutor, related_name="reported_tutor", null=True, on_delete=models.SET_NULL)
-    message = models.TextField(max_length=400)
-    resolved_by_admin = models.BooleanField(default=False, null=True)
-    subject = models.CharField(max_length=100)
-    client = models.ForeignKey(Client, related_name='abuse_reports', null=True, on_delete=models.SET_NULL)
-    created_at = models.DateTimeField(auto_now_add=True)
-
 class Cart(models.Model):
-    target_tutor = models.ForeignKey(Tutor, related_name="selling_tutor", null=True, on_delete=models.SET_NULL)
+    target_tutor = models.ForeignKey(Tutor, related_name="carts", null=True, on_delete=models.SET_NULL)
     contract_validity = models.DateTimeField(null=True)
     contract_validated_start_date = models.DateTimeField(null=True)
     contract_validity_end_date = models.DateTimeField(null=True)

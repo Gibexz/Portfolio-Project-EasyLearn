@@ -11,18 +11,45 @@ from django_countries import countries
 import json
 from django.db.models import Q
 from django.http import JsonResponse
-from client.models import Ranking, Review
+from client.models import Client, Ranking, Review
 from django.core.mail import send_mail
-from client.models import Client
+from client.models import Client, Review
 from app_admin.models import AppAdmin
 from .forms import TutorScheduleForm
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.http import require_POST
-from generic_apps.models import Contract
+from generic_apps.models import Contract, ReportAbuse
 from django.utils import timezone
 from datetime import timedelta
 import random, string
 
+
+# Tutor reports
+@login_required(login_url='tutor_login')
+def report_abuse(request):
+    if request.method == 'POST':
+        tutor = get_object_or_404(Tutor, id=request.user.id)
+        report_subject = request.POST.get('report_subject')
+        client_id = request.POST.get('client_id')
+        message = request.POST.get('message')
+
+        if report_subject == 'Others':
+            subject = request.POST.get('subject')
+        else:
+            subject = report_subject
+
+        client = get_object_or_404(Client, pk=client_id)
+        report = ReportAbuse.objects.create(
+            tutor=tutor,
+            client=client,
+            subject=subject,
+            message=message,
+        )
+        report.save()
+
+        messages.success(request, 'Report submitted successfully.')
+        return redirect('tutor_dashboard')
+    return redirect('tutor_dashboard')
 
 # validate payment
 @login_required(login_url='tutor_login')
@@ -65,6 +92,37 @@ def parse_date(date_str):
         return None
 """Helper functions ends here"""
 
+# Terminate contract
+@require_POST
+@login_required(login_url='tutor_login')
+def terminate_contract(request):
+    """Terminate a contract from tutor dashboard"""
+    if not isinstance(request.user, Tutor):
+        error_message = "Are you a tutor?"
+        return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+    contract_code = request.POST.get('contract_code')
+    statement = request.POST.get('statement')
+    reason = request.POST.get('remark')
+    remark = f"{reason} \n\n {statement}"
+    contract = get_object_or_404(Contract, contract_code=contract_code)
+    if contract is not None:
+        if contract.contract_status == 'Terminated':
+            messages.error(request, 'Contract already terminated.')
+            return redirect('tutor_dashboard')
+        if len(remark) < 10:#HTML should handle this but just in case
+            messages.error(request, 'Please enter a remark of at least 10 characters.')
+            return redirect('tutor_dashboard')
+        contract.remark = remark
+        contract.contract_status = 'Terminated'
+        contract.save()
+        messages.success(request, 'Contract terminated successfully.')
+        return redirect('tutor_dashboard')
+    else:
+        messages.error(request, 'Contract termination failed.')
+        return redirect('tutor_dashboard')
+
+
+
 # Create contract
 @login_required(login_url='client_login')
 def create_contract(request, tutor_id):
@@ -97,25 +155,90 @@ def create_contract(request, tutor_id):
 # accept or decline contract
 def update_contract_status(request, contract_code):
     contract = get_object_or_404(Contract, contract_code=contract_code)
+    if not isinstance(request.user, Tutor):
+        return JsonResponse({'status': 'error', 'message': 'You are not authorized to perform this action'}, status=403)
+
     if not contract:
         messages.error(request, 'Contract not found')
         return JsonResponse({'status': 'error', 'message': 'Contract not found'}, status=404)
+
+    
     if request.method == 'POST':
+        def get_data():
+
+            tutor = get_object_or_404(Tutor, id=request.user.id)
+            tutor.active_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Active').count()
+            tutor.settled_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Settled').count()
+            tutor.pending_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Pending').count()
+            tutor.declined_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Declined').count()
+            tutor.terminated_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Terminated').count()
+            tutor.received_payments = sum([contract.payment_made for contract in tutor.contracts.all()])
+            tutor.total_payment = sum([contract.contract_amount for contract in tutor.contracts.all()])
+            tutor.save()
+
+            pending_contracts = Contract.objects.filter(tutor=tutor, contract_status='Pending').order_by('created_at')
+            settled_contracts = Contract.objects.filter(tutor=tutor, contract_status='Settled').order_by('created_at')
+            active_contracts = Contract.objects.filter(tutor=tutor, contract_status='Active').order_by('created_at')
+            contract_history = Contract.objects.filter(
+                tutor=tutor,
+                contract_status__in=['Settled', 'Active', 'Terminated'],
+            ).order_by('-created_at')
+            return {
+
+                'status': 'success',
+                'pending_contracts_count': tutor.pending_contract_count,
+                'active_contract_count': tutor.active_contract_count,
+                'settled_contracts_count': tutor.settled_contract_count,
+                'pending_contracts': [{'client_name': contract.client.get_full_name(),
+                                        'subject_name': contract.subject.subject_name,
+                                        'week_days': contract.week_days,
+                                        'contract_length': contract.contract_length,
+                                        'pay_rate': contract.pay_rate,
+                                        'start_date': contract.start_date.strftime("%d-%m-%Y")} for contract in pending_contracts],
+                                        'contract_code': contract.contract_code,
+                'settled_contracts': [{'client_name': contract.client.get_full_name(),
+                                        'subject_name': contract.subject.subject_name,
+                                        'contract_length': contract.contract_length,
+                                        'pay_rate': contract.pay_rate,
+                                        'contract_code': contract.contract_code,
+                                        'start_date': contract.start_date.strftime("%d-%m-%Y"),
+                                        'end_date': contract.end_date.strftime("%d-%m-%Y")} for contract in settled_contracts], 
+                'active_contracts': [{'contract_code': contract.contract_code,
+                                        'client_name': contract.client.get_full_name(),
+                                        'subject_name': contract.subject.subject_name,
+                                        'start_date': contract.start_date.strftime("%d-%m-%Y"),
+                                        'end_date': contract.end_date.strftime("%d-%m-%Y"),
+                                        'week_days': contract.week_days} for contract in active_contracts],
+                'contract_history': [{'client_name': contract.client.get_full_name(),
+                                        'subject_name': contract.subject.subject_name,
+                                        'start_date': contract.start_date.strftime("%d-%m-%Y"),
+                                        'end_date': contract.end_date.strftime("%d-%m-%Y"),
+                                        'contract_code': contract.contract_code,
+                                        'week_days': contract.week_days} for contract in contract_history],
+                'received_payments': tutor.received_payments,
+                'pending_contract_count': tutor.pending_contract_count,
+                'settled_contract_count': tutor.settled_contract_count,
+                'active_contract_count': tutor.active_contract_count,
+            }
+    
+
         contract_status = request.POST.get('status')
         if contract_status == 'Accept':
             contract.contract_status = 'Active'
             contract.save()
+
             messages.success(request, 'Contract accepted successfully.')
-            return JsonResponse({'status': 'success', 'message': 'Contract accepted successfully'})
+            return JsonResponse(get_data())
         elif contract_status == 'Decline':
             contract.contract_status = 'Declined'
             contract.save()
             messages.success(request, 'Contract declined successfully.')
-            return JsonResponse({'status': 'success', 'message': 'Contract declined successfully'})
+            return JsonResponse(get_data())
+
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid contract status'})
+    
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
-
 
 # Tutor Create and Update Subjects
 @login_required(login_url='tutor_login')
@@ -354,7 +477,11 @@ def tutor_dashboard(request):
         error_message = 'Are you a tutor?'
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     
-    tutor = Tutor.objects.filter(username=request.user.username).first()
+    tutor = Tutor.objects.get(id=request.user.id)
+    reports = ReportAbuse.objects.filter(tutor=tutor).order_by('-created_at')
+    contracts = Contract.objects.filter(tutor=tutor).order_by('-created_at')
+    clients = set(contract.client for contract in contracts)
+
     subject_categories = SubjectCategory.objects.all()
     tutor_subjects = tutor.subjects.all()
 
@@ -404,7 +531,8 @@ def tutor_dashboard(request):
                    context={'tutor': tutor, 'form': form, 'tutor_schedule': tutor_schedule,
                             'subject_categories': subject_categories, 'tutor_subjects': tutor_subjects,
                             'pending_contracts': pending_contracts, 'contract_history': contract_history,
-                            'active_contracts': active_contracts, 'settled_contracts': settled_contracts})
+                            'active_contracts': active_contracts, 'settled_contracts': settled_contracts,
+                            'reports': reports, 'clients': clients})
 
 # Tutor Login
 def tutor_login(request):
@@ -565,13 +693,14 @@ def tutor_detail(request, tutor_id):
     if not isinstance(request.user, Client):
         error_message = 'Are you logged in as a learner?'
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
+    tutors_count = Tutor.objects.all().count()
     user = request.user
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
     reviews = Review.objects.filter(tutor=tutor_id).order_by('-created_at')
     AvgRank = Ranking().rankAverage(tutor_id)
     tutor = get_object_or_404(Tutor, id=tutor_id)
-    context ={'tutor': tutor, 'user': user, 'subjects': subjects, 'reviews': reviews, 'tutors': tutors, 'rank': AvgRank['avg_rank']}
+    context ={'tutor': tutor, 'user': user, 'subjects': subjects, 'reviews': reviews, 'tutor_count': tutors_count, 'tutors': tutors, 'rank': AvgRank['avg_rank']}
     return render(request, 'tutor/tutor_detail.html', context=context)
 
 

@@ -191,15 +191,22 @@
     })
     // stop
 
-    //  review pop up link
-    $('.review_link').click(function(){
-        $(".review_link_popup_activation").css("display", "block")
+    //  cancel contract pop up link
+    $('.cancel_contract_btn button').click(function(){
+        $(".disengage").css("display", "block")
     })
 
-    $(".close_review").click(function() {
-        $(".review_link_popup_activation").css("display", "none")
+    $(".closeModal").click(function() {
+        $(".disengage").css("display", "none")
     })
     // stop
+    $('.review_link').click(function(){
+      $(".review_link_popup_activation").css("display", "block")
+  })
+
+  $(".close_review").click(function() {
+      $(".review_link_popup_activation").css("display", "none")
+  })
 
     // pending client pop up
     $('#pending_clients').click(function(){
@@ -753,40 +760,38 @@ $(document).ready(function() {
     event.preventDefault();
 
     const formData = new FormData(this);
-    
+
     const csrfToken = $('[name="csrfmiddlewaretoken"]').val();
-    formData.append('csrfmiddlewaretoken', csrfToken);
+    formData.append("csrfmiddlewaretoken", csrfToken);
 
     $.ajax({
-        type: 'POST',
-        url: '/tutor/addSubject/',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-          if (data.status === 'success') {
-            $('#subjectForm').trigger('reset');
-            $('#successModal4').show();
-            $('.closeModal').click(function () {
-              $('.modal2').hide();
-            });
-            updateSubjectTable(data, $('#subjectUpdateName'));
-          }
-          else {
-            $('#errorModal4').show();
-            $('.closeModal').click(function () {
-              $('.modal2').hide();
-              });
-
-          }
-        },
-        error: function(error) {
-            $('#errorModal4').show();
-            $('.closeModal').click(function () {
-              $('.modal2').hide();
-            });
-            console.error('Error:', error);
+      type: "POST",
+      url: "/tutor/addSubject/",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        if (data.status === "success") {
+          $("#subjectForm").trigger("reset");
+          $("#successModal4").show();
+          $(".closeModal").click(function () {
+            $(".modal2").hide();
+          });
+          updateSubjectTable(data, $("#subjectUpdateName"));
+        } else {
+          $("#errorModal4").show();
+          $(".closeModal").click(function () {
+            $(".modal2").hide();
+          });
         }
+      },
+      error: function (error) {
+        $("#errorModal4").show();
+        $(".closeModal").click(function () {
+          $(".modal2").hide();
+        });
+        console.error("Error:", error);
+      },
     });
   })
 
@@ -986,3 +991,107 @@ $(document).ready(function () {
 
 });
 
+
+$(document).ready(function () {
+  $(".submitBtnPending").on("click", function () {
+    console.log("URL:", $(this).closest('form').attr('action'));
+    console.log("Row ID:", $(this).closest('tr').attr('id'));
+    console.log("Contract Code:", $('#' + $(this).closest('tr').attr('id') + ' .contractCode').val());
+      let rowId = $(this).closest('tr').attr('id');
+      let contractCode = $('#' + rowId + ' .contractCode').val();
+      let status = $(this).data('action');
+      const csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+      alert(status)
+      alert($('#pendingContractsH3').text())
+      if (status !== 'undefined' && status !== null && status !== '') {
+      $.ajax({
+          url: `/tutor/updateContractStatus/${contractCode}/`,
+          type: 'POST',
+          data: {
+              csrfmiddlewaretoken: csrfToken,
+              status: status
+          },
+          success: function (response) {
+              // $('#' + rowId).remove();
+              // $(this).closest('form')[0].reset(); 
+              // $('#' + rowId + ' .contractCode').val('');
+              // console.log(response);
+              // if (response.status === 'success') {
+                $('#activeContractsH3').text(response.active_contracts_count);
+                $('#pendingContractsH3').text(response.pending_contracts_count);
+                $('#settledContractsH3').text(response.settled_contracts_count);
+                $('#totalEarningsH3').text(response.received_payments);
+                alert($('#pendingContractsH3').text())
+                alert('Done updating counts')
+  
+                  // Clear existing table rows
+                $('#pendingClientTable tbody').empty();
+                alert('Emptied table body')
+  
+                  // Iterate over each contract in the response and append to the table
+                  for (let i = 0; i < response.pending_contracts.length; i++) {
+                      let contract = response.pending_contracts[i];
+  
+                      // Construct HTML for the current contract
+                      let contractHTML = '<tr>';
+                      contractHTML += '<td>' + (i + 1) + '</td>'; // Assuming you want to display the index
+                      contractHTML += '<td>' + contract.client_name + '</td>'; // Replace 'client_name' with the actual field name in your contract object
+                      contractHTML += '<td>' + contract.subject_name + '</td>'; // Replace 'subject_name' with the actual field name in your contract object
+                      contractHTML += '<td>' + contract.week_days + '</td>';
+                      contractHTML += '<td>' + contract.contract_length + '</td>';
+                      contractHTML += '<td>' + contract.pay_rate + '</td>';
+                      contractHTML += '<td>' + contract.start_date + '</td>';
+                      // Construct the accept button
+                      contractHTML += `<td class="accept_contract_btn"><form method="post" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
+                      contractHTML += '<input type="hidden" name="csrfmiddlewaretoken" value="' + csrfToken + '">';                      
+                      contractHTML += '<input type="hidden"  value="' + contract.contract_code +'">';
+                      contractHTML += '<input type="hidden" name="status" value="Accept">';
+                      contractHTML += '<button type="submit">Accept</button>';
+                      contractHTML += '</form></td>';
+  
+                      // Construct the decline button
+                      contractHTML += `<td class="decline_contract_btn"><form method="post" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
+                      contractHTML += '<input type="hidden" name="csrfmiddlewaretoken" value="' + csrfToken + '">';                      
+                      contractHTML += '<input type="hidden"  value="' + contract.contract_code +'">';
+                      contractHTML += '<input type="hidden" name="status" value="Decline">';
+                      contractHTML += '<button type="submit">Decline</button>';
+                      contractHTML += '</form></td>';
+  
+                      contractHTML += '</tr>';
+  
+                      // Append the HTML for the current contract to the tbody
+                      $('#pendingClientTable tbody').append(contractHTML);
+                  // }
+
+              }
+          },
+          error: function (error) {
+              console.error(error);
+          }
+      });
+    }
+  });
+
+});
+
+
+// print user profile
+$(document).ready(function () {
+  $('#printProfileBtn').on('click', function () {
+    alert('Work in progress')
+      let profileContent = $('.profile_update');
+
+      if (profileContent.length > 0) {
+          let printWindow = window.open('', '_blank');
+          printWindow.document.write('<html><head><title>Client Profile</title></head><body>');
+          printWindow.document.write('<h1>Client Profile</h1>');
+          printWindow.document.write(profileContent.html());
+          printWindow.document.write('</body></html>');
+
+          printWindow.document.close();
+          printWindow.print();
+      } else {
+          console.error('Profile content not found');
+      }
+  });
+});

@@ -25,4 +25,6 @@ urlpatterns = [
     path('deleteSubject/<int:subject_id>/', views.delete_subject, name='delete_subject'),
     path('createContract/<int:tutor_id>/', views.create_contract, name='create_contract'),
     path('updateContractStatus/<contract_code>/', views.update_contract_status, name='update_contract_status'),
+    path('terminate_contract', views.terminate_contract, name='terminate_contract'),
+    path('reportAbuse/', views.report_abuse, name='report_abuse'),
 ]

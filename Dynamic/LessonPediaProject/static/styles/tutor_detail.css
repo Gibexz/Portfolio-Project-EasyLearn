@@ -65,6 +65,7 @@ body{
     font-family:'Sora', Arial, Helvetica, sans-serif;
     font-size: 18px;
     font-weight: 400;
+    margin-right: 10px;
 }
 
 .list_item a{
@@ -199,7 +200,9 @@ body{
     display: flex;
     position: relative;
 }
-
+.tutordp {
+    margin-bottom: 25px;
+}
 .dpDisplay .tutordp{
     width: 203px;
     height: 218px;
@@ -212,35 +215,40 @@ body{
 .UserBioData{
     padding-top: 1px;
     line-height: 5px;
+    padding-left: 5%;
+    font-size: 0.9em;
 }
 .goRight{
-    margin: 10% auto;
+    margin: auto;
     border: 1px solid rgb(227, 227, 230);
     height: 35px;
     overflow: hidden;
-    width: 30%;
+    width: 80%;
+    margin-left: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     border-radius: 10px;
     box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
 }
-/* Email and dropdown */
-.email-form,
-.dropdownContainer {
-    position: absolute;
-    top: 42%;
-    font-size: 12px;
-    /* margin: auto   auto; */
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 10px;
-    display: none;
-    box-shadow: 1.5px 1.5px 1px black;
+
+.email-form, .dropdownContainer {
+	position: absolute;
+	top: 42%;
+	font-size: 12px;
+	background-color: white;
+	border: 1px solid #ccc;
+	padding: 5px;
+	border-radius: 10px;
+	display: none;
+	box-shadow: 1.5px 1.5px 1px black;
+	left: 40%;
+	z-index: 1;
 }
 .dropdownContainer{
-    margin-left: 30%;
+   top: 70%;
+   left: 37.5%;
+   font-size: 0.8em;
 }
 
 .email-form input[type='text'] {
@@ -270,12 +278,6 @@ body{
     font-size: 16px;
     font-weight: bold;
     width: 75px;
-}
-.rankTutor button{
-    margin-top: 15px !important;
-    width: 150px;
-    font-weight: normal;
-    color: darkblue;
 }
 
 .sendEmail{
@@ -336,8 +338,8 @@ body{
     display: none;
 }
 
-.UserBioData h2{
-    margin-bottom: 0px;
+.UserBioData h3{
+    font-size: 1.2em;
 }
 
 .UserBioData p{
@@ -347,6 +349,36 @@ body{
 
 .UserBioData span{
     color: rgb(167, 0, 89);
+}
+
+.dropdownContainerTop{
+    display: none;
+    position: absolute;
+	font-size: 12px;
+	background-color: white;
+	border: 1px solid #ccc;
+	padding: 5px;
+	border-radius: 10px;
+	box-shadow: 1.5px 1.5px 1px black;
+	z-index: 1;
+    top: 27%;
+    left: 90%;
+    width: 100px;
+}
+.dropdownContainerTop .dropdown-item:hover {
+    background-color: #eee;
+    box-shadow: 2% 2% 2% gray;
+}
+
+.dropdownContainerTop a {
+    text-decoration: none;
+    color: darkblue;
+    font-weight: bold;
+}
+
+
+.dropdownContainerTop .dropdown-item:hover a {
+    color: rgb(139, 0, 37);
 }
 
 .BackToTutors{
@@ -504,9 +536,10 @@ body{
 
 .addTutor{
     text-align: center;
+    cursor: pointer;
 }
 
-.addbutton{
+.addbutton, .addbutton1{
     margin-top: 20px;
     padding: 5px 40px 5px 40px;
     color: white;
@@ -520,7 +553,17 @@ body{
     cursor: pointer;
 }
 
-.addbutton:hover{
+.addbutton1 {
+	margin-top: 10px;
+	font-size: medium;
+    font-weight: 500;
+    padding: 2% 10%;
+	width: 65%;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.addbutton:hover, .addbutton1:hover{
     background-color: #1168ffdc;
     border-bottom: 3px solid rgb(144, 113, 113);
 }
@@ -551,7 +594,8 @@ hr {
     margin: 1% 10% ;
     border-radius: 10px;
     box-shadow: 3px 3px 1px 1px  rgba(115, 116, 115, 0.7);
-    background-color: #f8f8f8;
+    background-color: #fff;
+    max-height: 600px;
     overflow-y:auto;
     overflow-x: visible;
 }
@@ -563,8 +607,13 @@ hr {
     width: 100%;
     margin-bottom: 20px;
     flex-direction: column;
+    box-shadow: 0px 0px 10px black;
+    border-bottom: 2px solid gray;
+    border-top: 2px solid gray;
 }
-
+.review_body .review_item:last-child {
+    margin-bottom: 0px;
+}
 .review_item .space_content {
     display: flex;
     justify-content: space-between;
@@ -573,10 +622,11 @@ hr {
 }
 
 .review_item .review_text{
-    width: 60%;    
+    width: 90%;    
     margin: 0 auto;
     text-align: justify;
     font-style: italic;
+    font-size: 0.9em;
 }
 
 .no_height {
@@ -591,35 +641,26 @@ hr {
     height: 20px;
 }
 
-.reviewer {
+.reviewer, .review_time {
     font-family: 'saira', sans-serif;
     font-weight: bold;
-    font-size: 0.8em;
+    font-size: 0.9em;
     color: rgba(13, 13, 13, 0.59);
     height: 20px;
     text-align: right;
-    padding-right: 20%;
-
+    padding-right: 1%;
 }
-/* Rank Tutor Temporarily */
-.stars {
-    display: flex;
-    cursor: pointer;
-  }
-
-  .star {
-    font-size: 20px;
-    margin-right: 5px;
-    color: gray !important;
-  }
-
-  .gold {
-    color: gold !important;
-  }
-
-  #rankForm {
-    display: none;
-  }
+.review_time{
+    font-size: 0.8em;
+}
+.review_subject {
+	color: black;
+	font-size: bold;
+	font-weight: bold;
+	font-size: 0.8em;
+	font-family: 'inika', sans-serif;
+	color: rgb(132, 129, 129);
+}
   .tutor_row {
     display: flex;
     align-items: start;
@@ -703,7 +744,30 @@ hr {
     color: gray !important;
 }
 
+.dpLinks h3 {
+    color: rgb(167, 0, 89);
+    transition: color 0.3s ease-in-out;
+    margin: 0;
+    font-size: 0.9em;
+}
 
+.dpLinks h3:hover {
+    color: rgb(139, 0, 37)
+}
+.dpLinks ul {
+    margin-top: 0;
+}
+.dpLinks ul li {
+    list-style:square;
+    padding: 5px;
+    font-size: 0.9em;
+    transition: color 0.3s ease-in-out;
+    line-height: 1;
+}
+.schedule_time{
+    color: rgb(69, 61, 61);
+    font-size: medium;
+}
 #logout_btn_top {
     cursor: pointer; 
     padding: 10px 20px;
@@ -787,6 +851,7 @@ hr {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
 }
 
 .modal-content {
@@ -798,6 +863,10 @@ hr {
     max-width: 600px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#allSubjectsView .modal-content {
+    margin: 5% auto;
 }
 
 .modal-content a {
@@ -900,6 +969,23 @@ hr {
   box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
   transform: scale(1.05);
 }
+
+@media (max-width: 1060px) {
+    .UserBioData {
+        padding-top: 1px;
+        line-height: 20px;
+    }
+    .body{
+        font-size: 0.95em;
+    }
+    .ul .list_item {
+        line-height: 1.5;
+        font-family: 'Sora', Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        margin-right: 15px;
+    }
+}
+
 
 @media (min-width: 768px) {
   .modal-content .moreTutors {

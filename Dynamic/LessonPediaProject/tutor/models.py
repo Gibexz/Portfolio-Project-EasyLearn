@@ -115,15 +115,11 @@ class Tutor(AbstractUser):
     highest_qualification_cert = models.FileField(upload_to='certs/highest_qualification/', null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
     residential_address = models.CharField(max_length=255, null=True)
-    # active_clients = models.IntegerField(default=0, null=True)
-    # total_clients = models.IntegerField(default=0, null=True)
-    # rejected_clients = models.IntegerField(default=0, null=True)
     reviews_id = models.IntegerField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     others = models.CharField(max_length=100, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     # work schedule
-    available_time_slots = models.ManyToManyField('TimeSlot', related_name='timeslot', blank=True)
     average_class_duration = models.IntegerField(default=0, null=True)
     price_per_hour = models.IntegerField(default=0, null=True)
     negotiable = models.BooleanField(default=True, null=True)
@@ -202,7 +198,7 @@ class Day(models.Model):
         return self.name
 
 class TimeSlot(models.Model):
-    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='schedules')
     day = models.ForeignKey(Day, on_delete=models.CASCADE)
     from_hour = models.ForeignKey(Hours, on_delete=models.CASCADE, related_name='from_hour')
     to_hour = models.ForeignKey(Hours, on_delete=models.CASCADE, related_name='to_hour')
@@ -283,20 +279,6 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.subject_name
-
-class TutorReportAbuse(models.Model):
-    """Tutors report abuse models"""
-
-    target_client_id = models.IntegerField(null=True)
-    message = models.TextField()
-    subject = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    tutor = models.ForeignKey(Tutor, related_name='reported_client', on_delete=models.CASCADE)
-    resolved_by_admin = models.BooleanField(default=False, null=True)
-
-    def __str__(self):
-        return self.subject
-
 
 class ProCourse(models.Model):
     """Tutors ProCourses Model"""
