@@ -1,32 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Saira&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Hedvig+Letters+Sans&family=Inika:wght@400;700&family=Marko+One&family=Rowdies&family=Saira&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Cookie&family=Diphylleia&family=Domine&family=Dosis:wght@400;500&family=El+Messiri&family=Montserrat:wght@600&family=Roboto+Flex:opsz@8..144&family=Sora:wght@200;400;600&display=swap');
 .background {
-    background-image: url(/lessonpedia/static/images/backgrounds/tutorsDashB.png);
+    background-image: url('../images/backgrounds/darkbgr.png');
     background-repeat: no-repeat;
     background-size:cover;
     /* position: fixed; */
 
 }
 .bg {
-    background-color: rgba(246, 246, 246, 0.584);
-
+    /* background-color: rgba(246, 246, 246, 0.584);
+ */
     height: 720px;
     border-radius: 3px;
     /* position: fixed; */
 }
 #logout_btn_top {
-    /* background: #eee;
-    border: none;
     padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 16px;
-    color: black;
-    cursor: pointer; */
-    padding: 10px 20px;
-    background: #dc3545; /* Bootstrap's danger color */
+    background: #dc3545; 
     color: #fff;
     text-decoration: none;
     font-weight: bold;
@@ -34,58 +23,58 @@
     transition: background-color 0.3s ease-in-out;
 }
 #logout_btn_top:hover {
-    background: #c82333;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background: #b41626;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .tutor_dasboard {
     display: flex;
-    flex-direction:row;
     height: 100%;
-    /* vertical-align: middle; */
-    align-items: center;
-    /*  */
+    align-items: center;    /*  */
+}
 
+.left_section, .mid_section, .right_section {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0px;
+    margin-top: 5px;
+    padding: 1%;
+    height: 680px;
+    font-family: 'Hedvig Letters Sans', sans-serif;
+    overflow: hidden;
 }
 
 .left_section{
-    display: flex;
-    flex-direction: column;
-    /* border: 1px solid black; */
-    box-shadow: 1px 1px 10px 1px rgba(53, 51, 51, 0.539);
-    height: 680px;
-    min-width: 220px;
+    flex: 1;
+    min-width: 150px;
     background-color: rgba(252, 252, 252, 0.922);
-    margin: 10px 0px 10px 10px;
-    border-radius: 10px 0 0 10px;
-    padding: 2px 10px 10px 20px;
-    /* position: fixed; */
+    padding: 1%;
+    font-family: 'Rowdies', sans-serif;
     color: rgb(0, 0, 100);
 }
 
 .mid_section {
-    display: flex;
-    flex-direction: column;
-    /* border: 1px solid black; */
-    height: 680px;
-    width: 950px;
-    background-color: rgba(210, 232, 251, 0.926);
-    margin-right: 0px;
-    /* border-radius: 2px 10px 10px 2px; */
-    padding: 2px 30px 10px 30px;
-    font-family: 'Hedvig Letters Sans', sans-serif;
+    flex: 4;
+    background: radial-gradient(white 50%, rgb(225, 238, 249));
+    color: #181818;
+    margin-left: 10px;
+
 }
 
 .right_section {
-    display: flex;
-    flex-direction: column;
-    /* border: 1px solid black; */
-    height: 680px;
-    min-width: 180px;
+    flex: 0.7;
+    margin-top: 0px;
+    margin-left: 10px;
     background-color: rgba(252, 252, 252, 0.922);
-    margin-right: 10px;
-    border-radius: 2px 10px 10px 2px;
-    padding: 2px 30px 10px 30px;
-    font-family: 'Hedvig Letters Sans', sans-serif;
+    box-sizing: border-box;
+    border-radius: 0%;
+    line-height: 2.0;
+    margin-right: 0px;
+    height: 100%;
+}
+.right_section li a:hover {
+    font-weight: bold;
 }
 
 /* left_section */
@@ -98,6 +87,8 @@
 
 .user_details{
     display: inline-block;
+    font-family: 'el messiri', 'Saira', sans-serif;
+    font-size: 14px;
     line-height: 0px;
     margin-bottom: 0px;
     /* font-size: medium; */
@@ -115,10 +106,13 @@
  /* border: 1px solid rgb(8, 8, 25); */
     padding: 0px;
     width: 100%;
-    height: 300px;
+    font-family: 'Saira', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
     background-color: rgba(255, 255, 255, 0.742);
     border-radius: 10px 0 0 10px;
     box-shadow: 1px 1px 10px 1px rgba(128, 128, 128, 0.539);
+    overflow-y: auto;
     
 }
 
@@ -127,24 +121,20 @@
     padding: 18px;  
 }
 
-.nav_links a{
+.nav_links span{
     text-decoration: none;
     display: inline-block;
     /* height: 10px; */
     color: rgb(0, 0, 100);
     width: 90%;
-    padding-top: 10px;
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.539);
     font-size: larger;
 }
 
 /* logic for nav links */
-.active a{
-    border-bottom: 2px solid greenyellow;
-    border-right: 2px solid greenyellow;
-    box-shadow: 5px 0 10px -5px rgba(172, 255, 47, 0.573),/* Right shadow */
-                0 5px 5px -5px rgba(172, 255, 47, 0.577); /* bottom shadow */
+.active span{
+    color: #FF5722;
     font-weight: bolder;
 }
 
@@ -169,12 +159,23 @@
     font-size:large;
     cursor: pointer;
 }
-/* right_section */
-
-.username_size i{
-    font-weight: 700;
-    font-size: x-large;
+a .fa-sign-out{
     color: rgb(0, 0, 100);
+
+}
+/* right_section */
+.greeting h3{
+    font-family: 'el messiri', 'Inika', serif;
+    color: rgb(0, 0, 100);
+    letter-spacing: 1px;
+    margin: 0px;
+    margin-bottom: 10px;
+    padding-left: 5%;
+
+}
+.username_size {
+    color: #FF5722;
+    font-size:larger;
 }
 
 .stats {
@@ -184,48 +185,76 @@
     /* border: 1px solid black; */
     justify-content: space-evenly;
     height: 130px;
-    width: 930px;
-    padding: 15px;
+    /* width: 930px; */
+    font-family: 'dosis', 'Diphylleia', 'el messiri', 'Inika', serif;
+    padding: 0px;
     box-sizing: border-box;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.556);
-    border-radius: 10px;
+    /* background-color: rgba(255, 255, 255, 0.556); */
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 2px solid rgba(58, 38, 38, 0.316);
 }
 
 .stats .stats_details {
     box-sizing: border-box;
     /* border: 1px solid black; */
-    width: 200px;
-    height: 100px;
-    padding: 10px;
+    width: 23%;
+    height: 70px;
+    padding: 1%;
     border-radius: 5px;
-    background-color: white;
-    box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 10px 1px rgba(128, 128, 128, 0.539);
 }
 
 .stats_details p{
     font-weight: 700;
     font-size: medium;
-    margin-top: 10px;
+    margin: 0;
     padding-left: 20px;
     font-family: 'Hedvig Letters Sans', sans-serif;
-    
 }
 
 .stats_details h3 {
     text-align: right;
     padding-right: 20px;
+    margin: 0;
 }
+.stats_details p.total_earnings {
+    text-align: center;
+    padding: 0%;
+}
+.stats_details h3.payments{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: green;
+    padding:0%;
+    text-align: center;
+}
+
+.active_contracts{
+    color: darkblue;
+}
+
+.pending_contracts{
+    color: #d5a209;
+
+}
+.settled_contracts{
+    color: #4CAF50;
+}
+
 
 .myclient{
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.556);
     height: 430px;
-    width: 900px;
     border-radius: 10px;
     padding: 15px;
+    font-family: 'Diphylleia', 'dosis', 'el messiri', 'Inika', serif;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .client_list_n_search {
@@ -242,11 +271,11 @@
 
 .client_list_n_search h3{
     padding-left: 20px;
-    font-weight:900;
+    font-weight:600;
     font-size: x-large;
 }
 
-.search{
+/* .search{
     display: flex;
     align-items: center;
 }
@@ -261,6 +290,40 @@
 
 .search input:focus{
     outline-color: rgba(0, 17, 128, 0.323);
+} */
+.searchTutor{
+    height: 30px;
+    border: 1px solid red;
+    box-shadow: 1px 1px 5px 1px rgba(128, 128, 128, 0.83);
+    border-radius: 20px;
+    border: 1px solid grey;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
+.searchTutor input[type="text"]{
+    height: 20px;
+    margin-top: 3px;
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 2px;
+    padding-left: 5px;
+    border: none;
+    width:auto !important;
+}
+
+.searchTutor input[type="text"]:focus{
+    outline: none;
+}
+
+.searchTutor .searchTutor_button{
+    height: 30px;
+    border-radius: 0px 20px 20px 0px;
+    background-color: rgba(2, 7, 80, 0.811);
+    color: white;
+    cursor: pointer;
+    border: none;
+    transform: translateY(-7%);
 }
 
 .client_list_table{
@@ -316,7 +379,9 @@
 .working_schedule_contents button,
 .profileUpdate button,
 .report_btn button,
-.cancel_contract_btn button{
+.cancel_contract_btn button,
+.accept_contract_btn button,
+.decline_contract_btn button{
     padding-left: 1px;
     padding-right: 1px;
     cursor: pointer;
@@ -328,11 +393,22 @@
     border: none;
     width: 60px;
 }
+.subject_view_display {
+    overflow: hidden;
+    overflow-y: auto;
+}
 
 .subject_add_container button{
     width: 200px;
+    margin-bottom: 10px;
 }
-
+.m-with {
+    width: 100% !important;
+    outline-color: rgba(0, 17, 128);
+}
+.m-with:focus {
+    outline-color: rgba(0, 17, 128, 0.323) !important;
+}
 .cancel_btn button:hover {
     background-color: rgb(166, 13, 13);
     color: white;
@@ -359,12 +435,19 @@ input[type="submit"]:hover,
 .report_btn_activation, 
 .cancel_contract_btn_activation,
 .review_link_popup_activation,
-.reports_view_popup_activation {
+.reports_view_popup_activation,
+.pending_clients_activation,
+.settled_clients_activation {
     display: none;
 }
 
 /* quick links */
 
+.quicK_links{
+    font-family: 'Inika', serif;
+    color: #FF5722;
+    letter-spacing: 1px;
+}
 .qlinks {
     list-style-type:  none;
     text-align: left;
@@ -375,6 +458,7 @@ input[type="submit"]:hover,
     margin-bottom: 10px;
     color: rgba(0, 17, 128);
     cursor: pointer;
+    transition: font-weight 0.4s ease;
 }
 
 .qlinks a {
@@ -383,10 +467,16 @@ input[type="submit"]:hover,
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 300;
     color: rgba(0, 17, 128);;
+    transition: font-weight 0.4s ease;
+}
+
+.qlinks li:hover, .qlinks li a:hover {
+    font-weight: bold;
 }
 
 /* Programs start */
 .program_pane{
+    flex: 1;
     display: flex;
     flex-direction: column;
     border: 1px solid rgb(201, 199, 199);
@@ -394,8 +484,10 @@ input[type="submit"]:hover,
     border-radius: 10px;
     background: radial-gradient(white 50%, rgb(225, 238, 249));
     margin-top: 10px;
-    height: 460px;
-    width: 930px;
+    height: 500px;
+    overflow: hidden;
+    overflow-y: auto;
+    /* width: 930px; */
     font-family: 'Hedvig Letters Sans', sans-serif;
 }
 
@@ -431,12 +523,18 @@ input[type="submit"]:hover,
     display: flex;
     width: 100%;
     justify-content: center;
+    height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
+    font-size: 0.95em;
 }
 
 .subject_add_container h2, .subject_list h2{
     border-bottom: 1px solid rgba(0, 17, 128);
-    color: rgba(0, 17, 128);
+    font-family: 'dosis', 'Diphylleia', 'el messiri', 'Inika', serif;
+    font-size: 18px;
     margin-bottom: 25px;
+    color: rgba(0, 17, 128);
 }
 .subject_form_group{
     margin-bottom: 15px;
@@ -447,11 +545,12 @@ input[type="submit"]:hover,
 }
 .subject_add_container input[type="text"],
 .subject_add_container select {
-  padding: 8px;
+  padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  outline-color: rgba(0, 17, 128, 0.323);
+  outline-color: rgba(0, 17, 128, 0.323) !important;
+  font-size: 1em;
 }
 
 .subject_add_container select {
@@ -468,7 +567,7 @@ input[type="submit"]:hover,
 /* Settings */
 
 .left_pane {
-    /* flex: 4; */
+    flex: 4;
     display: flex;
     flex-direction: column;
     border: 1px solid rgb(201, 199, 199);
@@ -477,7 +576,8 @@ input[type="submit"]:hover,
     background: radial-gradient(white 50%, rgb(225, 238, 249));
     margin: 15px;
     height: 600px;
-    width: 900px;
+    overflow-y: auto;
+    /* width: 900px; */
 }
 
 .left_pane .profile_info {
@@ -521,32 +621,196 @@ input[type="submit"]:hover,
 /* settings Nav-bar */
 .update_elements{
     display: flex;
-    justify-content: start;
-    padding-right: 10px;
+    justify-content: space-evenly;
+    /* padding-right: 10px; */
 }
 
 .update_elements table{
     border-bottom: 1px solid black;
     border-collapse: collapse;
+    width: 100%;
+}
+.update_elements thead {
+    width: 100%;
 }
 
-.update_elements td{
-    padding: 5px 20px 5px 20px;
-    font-family: 'Inika', serif;
-    cursor: pointer;
-    font-size: medium;
+.update_elements td {
+	font-family: 'Inika', serif;
+	width: 16.6%;
+	cursor: pointer;
+	font-size: medium;
+	padding: 15px 10px;
+	text-align: center;
+}
+.separator{
+    border-bottom: 2px solid rgba(165, 164, 164, 0.864);
+}
+.test2 {
+    border: none !important;
 }
 
 .update_elements #update_profile{
-    border: 1px solid black;
-    border-bottom: 1px solid transparent;
-    color:rgb(3, 120, 3)
-}
+    color:rgb(3, 120, 3);
+    font-weight: bold;
+    box-shadow: 2px 2px 10px 2px rgb(201, 199, 199)
 
+}
+.flexRemove {
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+}
+.fa-circle-xmark {
+    color: darkblue;
+    cursor: pointer;
+}
+.fa-circle-xmark:hover {
+    color: red;
+}
 .update_elements #deactivate_account{
     color: red;
 }
+.refreshPage {
+    background-color: #3498db !important;
+    color: #fff;
+    border: none;
+    margin-top: 20%;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.3s ease-in-out;
+}
+.refreshPage:hover {
+    background-color: rgba(2, 7, 80, 0.979) !important;
+}
 
+.refreshPage:hover .fa-arrows-rotate {
+    transform: rotate(360deg);
+}
+
+.fa-arrows-rotate {
+    margin-left: 5px;
+    transition: transform 0.5s ease-in-out;
+}
+.modal, .disengage {
+    display: none;
+    position: fixed;
+    top: 60%;
+    left: 40%;
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    text-align: center;
+}
+/* .disengage{
+    display: none;
+    backdrop-filter: brightness(0.1);
+    bottom: 0;
+    top: 0;
+    width: 100vw;
+    height: 200vh;
+    position: fixed;
+} */
+.modal2 {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 40%;
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    text-align: center;
+}
+/* for contract termination */
+
+.disengage h3  {
+    margin-bottom: 20px;
+}
+
+.disengage label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.disengage select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.term_btn {
+    display: flex;
+    justify-content: center;
+    gap: 20%;
+}
+
+.disengage button {
+    padding: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.disengage #terminate {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+#closeSuccessModal {
+    background-color: #ccc;
+    color: #000;
+}
+
+/* stop contract termination */
+
+#confirmationModal  {
+    color: #ff6600;
+}
+
+#errorModal h2, #errorModal2 h2, #errorModal3 h2, #errorModal4 h2 {
+    color: red;
+}
+#overlap h2 {
+    color: red;
+}
+.work_options select{
+    outline: none !important;
+    border: none;
+    background: transparent;
+}
+#confirmationModal button {
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#confirmationModal button.cancel {
+    background-color: #ccc;
+}
+#successModal h3, #successModal2 h3, #successModal3 h3, #successModal4 h3 {
+    color: #4CAF50;
+    font-size: 18px;
+}
+
+#successModal button, #successModal2 button, #successModal3 button, #successModal4 button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 /* profile update */
 .profile_control_display{
     display: non;
@@ -558,7 +822,7 @@ input[type="submit"]:hover,
 
 .profile_update_content{
     width: 80%;
-    height: 420px;
+    height: 350px;
     margin: auto auto;
     margin-top: 20px;
     border: 1px solid rgba(140, 139, 132, 0.421);
@@ -585,14 +849,7 @@ input[type="submit"]:hover,
     font-size: small;
     border-bottom: 0px;
 }
-.profile_update_content input{
-    width: 50%;
-    line-height: 20px;
-    padding-left: 10px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    border-color: rgba(128, 128, 128, 0.385);
-}
+
 .profile_update_content select{
     border-radius: 4px;
     border: 2px solid rgba(128, 128, 128, 0.385);;
@@ -602,41 +859,41 @@ input[type="submit"]:hover,
     width: 30%;
 }
 
-
-
-/* Update profile form */
-/* start */
-
-
-.form-table {
-    display: table;
-    width: 100%;
-    line-height: 22px;
-    border-collapse: collapse;
+.profileUpdate .changePassword {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    justify-content: space-evenly;
 }
 
-.form-table .table-row {
-    display: table-row;
+.changePassword center input{
+    width: 70% !important;
+    padding: 5px;
+    margin-bottom: 20px;
+    border-color: rgba(128, 128, 128, 0.385);
+    outline: none !important;
+}
+.changePassword center input:focus, .updateMore input{
+    outline: none !important;
 }
 
-.form-table .table-cell {
-    display: table-cell;
-    padding: 8px;
-    /* border: 1px solid black; */
+.profile_update_content input{
+    width: 50%;
+    line-height: 20px;
+    padding-left: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-color: rgba(128, 128, 128, 0.385);
 }
 
-.form-table .table-cell:nth-child(odd) {
-    width: 30%;
+.negotiable {
+    width: 90%;
+    padding: 5px;
 }
-
-.form-table .table-cell:nth-child(even) {
-    width: 30%;
-}
-
-
 input[type='text'],
 input[type='tel'],
-input[type='date'] {
+input[type='date'],
+input[type='number'] {
     font-size: medium;
     width: 90%;
     padding: 8px;
@@ -651,9 +908,7 @@ select{
     height: 38px;
     margin-bottom: 5px;
 }
-.statement{
-    width: 200%;
-}
+
 .statement textarea {
     width: 93%;
     font-size: medium;
@@ -665,11 +920,49 @@ select{
 }
 
 
+.form-table {
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.flex_row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.flex_in {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.flex_row.bio,
+.flex_row.profile_update_btn {
+    flex-basis: 100%;
+}
+
+.flex_row label {
+    margin-bottom: 5px;
+}
+.bio textarea {
+	width: 95%;
+	height: 80px;
+	border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    .flex_in {
+        flex-basis: 100%;
+        margin-right: 0;
+    }
+}
 /* stop */
+
 
 /* Update Schedule form */
 /* Start */
+
 .working_schedule{
     display: none;
 }
@@ -677,9 +970,10 @@ select{
 .working_schedule_contents{
     display: flex;
     flex-direction: row;
-    padding: 20px 40px 40px 40px;
+    /* padding: 20px 40px 40px 40px; */
     line-height: 30px;
-    justify-content:flex-start;
+    justify-content:center;
+    padding: 1% 0;
 }
 
 .work_options{
@@ -688,9 +982,8 @@ select{
     /* border: 1px solid black; */
     width: 140px;
     padding: 10px;
-    margin-right: 20px;
     border-radius: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
     background-color: rgba(252, 251, 237, 0.748);
     box-shadow: 1px 1px 10px rgba(116, 115, 115, 0.779);
 }
@@ -701,15 +994,48 @@ select{
     
 }
 
+.updateEngagements{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.formContentField {
+    flex: 2;
+    padding: 10px 0px 10px 20px;
+    width: 100% !important;
+
+}
+.saveCancel{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid black; */
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
 .save_button_work {
     padding: 10px;
     margin-top: 10px;
 }
 
+.reset_button, .cancel {
+    margin-top: 20px;
+    background-color: rgb(224, 65, 65) !important;
+    color: white;
+    box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
+}
+.reset_button:hover, .cancel:hover {
+    background-color: rgb(120, 18, 18);
+    opacity: 1;
+    box-shadow: 1px 2px 2px wheat;
+}
 .schedule_display{
     display: flex;
     border: 1px solid rgba(196, 196, 196, 0.642);
-    height: 410px;
+    height: 400px;
+    border-radius: 10px;
     width: 460px;
     overflow-y: auto;
     background-color: rgba(252, 251, 237, 0.748);
@@ -737,14 +1063,17 @@ select{
 /* Uploads  start*/
 
 .doc_uploads{
-    font-family: 'Hedvig Letters Sans', sans-serif;
+    /* font-family: 'Diphylleia', 'dosis', 'el messiri', 'Inika', serif;    font-size: 14px; */
     display: none;
     margin: 15px 10px;
     padding: 10px;
-    height: 600px;
+    height: 500px;
     width: 94.5%;
+    overflow: hidden;
+    overflow-y: auto !important;
     border-radius: 5px;
     line-height: 15px;
+    font-size: 0.8em;
     /* border: 1px solid black; */
     box-shadow: 1px 1px 10px rgba(116, 115, 115, 0.779);
 
@@ -752,21 +1081,26 @@ select{
 
 .doc_uploads_flex{
     display: inline-block;
-    width: 100%;
-    padding: 0px 30px;
+    line-height: 0.9;
+    /* width: 100%; */
+    /* padding: 0px 30px; */
     /* height: 40px; */
 }
 
 .doc_uploads_flex .docs{
+    position: relative;
     display: flex;
 }
 
 .doc_uploads input{
     box-shadow: 1px 1px 10px rgba(116, 115, 115, 0.779);
+    padding: 2px;
+    margin: 5px 0px;
+    border-radius: 4px;
 }
 
 .doc_uploads h3{
-    font-family: 'Hedvig Letters Sans', sans-serif;
+    /* font-family: 'Hedvig Letters Sans', sans-serif; */
     font-weight: 900;
 }
 
@@ -779,7 +1113,19 @@ select{
     border-bottom: 2px solid rgba(245, 222, 179, 0.475);
     font-size: small;
     height: 25px;
-    width: 150px;
+    width: 200px;
+}
+#done h2 {
+    color: darkblue;
+}
+.active_pwd{
+    opacity: 1;
+}
+
+
+.fa-circle-check {
+    font-size: 70px;
+    color: green;
 }
 /* upload stop */
 
@@ -789,6 +1135,7 @@ select{
 
 .profile_update_content .save_button{
     margin: auto auto;
+    margin-bottom: 10px;
     display: block;
     width: 80%;
     height: 40px;
@@ -835,11 +1182,15 @@ select{
 .report_btn_activation, 
 .cancel_contract_btn_activation,
 .review_link_popup_activation,
-.reports_view_popup_activation {
+.reports_view_popup_activation,
+.pending_clients_activation,
+.settled_clients_activation {
     position: absolute;
     backdrop-filter: brightness(0.1);
+    bottom: 0;
+    top: 0;
     width: 100vw;
-    height: 100vh;
+    height: 200vh;
 }
 
 .deactivateAccount,
@@ -847,7 +1198,9 @@ select{
 .report_btn_account,
 .contract_btn_account,
 .reviews_window,
-.reports_window {
+.reports_window,
+.pending_clients_window,
+.settled_clients_window {
     width: 50%;
     height: 410px;
     margin: auto auto;
@@ -864,8 +1217,19 @@ select{
 .report_btn_account,
 .contract_btn_account,
 .reviews_window,
-.reports_window {
+.pending_clients_window,
+.settled_clients_window {
     min-width: 400px;
+}
+.contract_btn_account, .report_btn_account {
+    height: 470px;
+}
+.report_btn_account {
+    height: 600px;
+}
+
+.reviews_window {
+    height: 470px;
 }
 
 .warning {
@@ -901,7 +1265,9 @@ select{
     border-bottom: 2px solid rgb(203, 194, 194);
 }
 
-.report_display {
+.report_display,
+.pending_clients_display,
+.settled_clients_display {
     padding: 10px;
 }
 
@@ -911,6 +1277,16 @@ select{
     margin-top: 50px;
 }
 
+.report_buttons {
+    margin-top: 25px;
+}
+.report_title {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(0, 5, 93);
+    margin-bottom: 10px;
+    font-size: 'Diphylleia', 'dosis', 'el messiri', 'Inika', serif;
+}
 .selections button{
     padding: 20px 80px 20px 80px;
     border-radius: 20px;
@@ -931,16 +1307,41 @@ select{
     border: 1px solid whitesmoke;
     cursor: pointer;
 }
+.accept_contract_btn button {
+    background-color: rgb(4, 139, 27);
+    font-size: 13px;
+    font-weight: bold;
+}
+.decline_contract_btn button {
+    background-color: rgba(224, 65, 65, 0.882);
+    font-size: 13px;
+    font-weight: bold;
+}
 
-.selections .confirm_remove, .selections .confirm_logout{
+.selections .confirm_remove, .selections .confirm_logout, .cancel_btn{
     background-color: red;
 }
 
-.selections .mistake, .selections .cancel_logout, .submit_report, .cancel_report{
+.selections .mistake, .selections .cancel_logout, .submit_report{
     background-color: blue;
+    opacity: 0.7;
 }
 
-.report_display select {
+.selections .mistake:hover, .selections .cancel_logout:hover, .submit_report:hover {
+    background-color: blue;
+    opacity: 1;
+}
+
+.cancel_report, .cancel_contract_btn button {
+    background-color: rgb(238, 74, 74);
+}
+
+.cancel_report:hover, .cancel_contract_btn button:hover {
+    background-color: rgb(166, 13, 13);
+    box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
+}
+
+.report_display select,.report_display input[type="text"] {
     width: 100%;
     border-radius: 5px;
     outline-color: rgba(0, 17, 128, 0.323);
@@ -950,7 +1351,17 @@ select{
     width: 100%;
     min-height: 150px;
     outline-color: rgba(0, 17, 128, 0.323);
+    border-radius: 5px;
 }
+
+/* deactivate account blank */
+.deactivate_account_blank {
+    display: none;
+    width: 94.5%;
+    height: 500px;
+
+}
+
 
 /* Table sorting css */
 /* <div class="sort_tables">
@@ -963,6 +1374,7 @@ select{
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
     font-size: small;
 }
+
   
 .sort_tables label {
     font-weight: bold;
@@ -997,52 +1409,95 @@ select{
 }
 
 /* review popUp css */
-.reviews_window, .reports_window {
+.reviews_window,
+.reports_window,
+.pending_clients_window,
+.settled_clients_window {
     width: 70%; /* overides a previous css group width */
     height: 500px;
     margin-top: 100px;
 }
+.pending_clients_window {
+    width: 80%;
+    height: 500px;
+    margin-top: 100px;
+}
 
-.review_display, .report_display {
+.review_display,
+.report_display,
+.pending_clients_display,
+.settled_clients_display {
     padding: 25px;
     overflow-y: auto;
     height: 400px;
-    margin: 30px;
+    /* margin: 30px; */
+    font-size: 0.95em;
+}
+.report_display{
+    overflow: hidden;
+    margin-top: 10px;
+    height: auto;
 }
 
-.close_review{
+.close_review,
+.close_pending_clients,
+.close_settled_clients{
     display: block;
     cursor: pointer;
+    color: rgb(4, 65, 130);
 }
 .review_table .clientName, .report_table .reportReason {
     width: 180px;
 }
-.review_table .rating, .review_table .reviewDate, .report_table .reportDate {
+.pending_clients_table .clientName, .settled_clients_table .clientName {
+    width: 180px;
+}
+/* .review_table .rating, .review_table .reviewDate, .report_table .reportDate {
     width: 100px;
 }
 
 .review_table .reviewStatement,
 .report_table .reportStatement{
     min-width: 300px;
-}
+} */
 
-.review_table table {
+.review_table table,
+.pending_clients_table table,
+.settled_clients_table table {
     border-collapse: collapse;
     width: 100%;
 }
-.review_table th, .review_table td {
+.review_table th, .review_table td, 
+.pending_clients_table th, .pending_clients_table td,
+.settled_clients_table th, .settled_clients_table td {
     border: 1px solid #dddddd;
     padding: 8px;
     text-align: left;
 }
-.review_table th {
+.review_table th, .pending_clients_table th,
+.settled_clients_table th {
     background-color: rgba(0, 17, 128, 0.326);
     cursor: pointer;
+    color:#070232;
 }
-.review_table th:hover {
+.review_table th:hover, .pending_clients_table th:hover,
+.settled_clients_table th:hover {
     background-color: #ddd;
+    color: #022750e7;
 }
 
+#pending_clients:hover, #settled_clients:hover {
+    background-color: #ccc;
+    color: #008000;
+}
+#pending_clients:hover{
+    color: rgba(13, 13, 13, 0.716);
+}
+
+.active_contracts:hover {
+    cursor:not-allowed;
+    user-select: none;
+}
 
 /* update schedule css extras */
 .inactive {
@@ -1050,10 +1505,6 @@ select{
     pointer-events: none;
 }
 
-.scheduleButton {
-    margin-top: -50px;
-    margin-left: 50px;
-}
 
 .scheduleButton button{
     height: 30px;
@@ -1072,6 +1523,8 @@ select{
 th {
     cursor: pointer;
 }
+
+
 
 /* tutor confirm  suspend */
 .confirmSuspend{

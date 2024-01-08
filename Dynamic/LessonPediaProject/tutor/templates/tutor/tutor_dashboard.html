@@ -7,10 +7,15 @@
 
 
 {% block head %}
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> {% endcomment %}
     <link rel="stylesheet" href="{% static "styles/tutor_dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "styles/tutor_messages.css" %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static "script/tutor_dashboard.js" %}"></script>
+    <script src="{% static "script/tutor_messages.js" %}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% endblock head %}
 
 {% block signup_button %}     
@@ -20,9 +25,21 @@
 {% endblock signup_button %} 
 {% block content %}
 <body class="background">
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
         <!-- Pop ups -->
     <!-- ================================================================================================================================= -->
-     <!-- deavtivate account -->
+     <!-- deactivate account -->
      <div class="deactivate_account_control_display">
         <div class="deactivateAccount">
             <div class="warning">
@@ -59,7 +76,6 @@
             </div>
         </div>
     </div>
-
     <!-- logout -->
     <div class="logout_btn">
         <div class="logout_btn_account">
@@ -82,22 +98,41 @@
         <div class="report_btn_account">
             <div class="report_display">
                 <div>
-                <center><h4>Please note, all reports would be reviewed</h4></center>
-                    <form action="" id="report_form">
-                        <label for="reason_reason">Reason for report</label>
-                        <select name="report_reason" id="">
-                            <option value="" disabled selected>-- Select one --</option>
-                            <option value="A problem or issue">A problem or issue</option>
-                            <option value="Intimedation">Intemedation</option>
-                            <option value="Phyiscal Abuse">Phyiscal Abuse</option>
-                            <option value="Sexual Abuse">Sexual Abuse</option>
+                    <center><h4 class="report_title">Please note, all reports would be reviewed<br> 
+                        Take a look at related contract policies <a href="#">here</a></h4></center>
+                    <form action="{% url 'report_abuse' %}" method="post" id="report_form">
+                        {% csrf_token %}
+                        <label for="report_subject">Subject:</label>
+                        <select name="report_subject" id="" required>
+                            <option value="" selected style="color: gray;">--select or type--</option>
+                            <option value="Inappropriate behavior">Inappropriate Behavior</option>
+                            <option value="Intimidation">Intimidation</option>
+                            <option value="Physical Abuse">Physical Abuse</option>
+                            <option value="Sexual Harassment">Sexual Harassment</option>
                             <option value="Verbal Abuse">Verbal Abuse</option>
-                            <option value="Other">Other reasons</option>
+                            <option value="Cheating or Academic Dishonesty">Cheating or Academic Dishonesty</option>
+                            <option value="Unprofessional Conduct">Unprofessional Conduct</option>
+                            <option value="Discrimination or Harassment">Discrimination or Harassment</option>
+                            <option value="Failure to Provide Adequate Instruction">Failure to Provide Adequate Instruction</option>
+                            <option value="Breach of Privacy">Breach of Privacy</option>
+                            <option value="Failure to Address Concerns or Issues">Failure to Address Concerns or Issues</option>
+                            <option value="Others">Others</option>
                         </select>
-                        <textarea name="" placeholder="Write your reports here"></textarea>
+
+                        <label for="others">If Others:</label>
+                        <input type="text" name="subject" id="others"  placeholder="Enter Report Subject"><br>
+                        <label for="client">Client:</label>
+                        <select name="client_id" id="client">
+                            {% if clients %}
+                                {% for client in clients %}
+                                    <option value="{{ client.id }}">{{ client.get_full_name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <textarea name="message" placeholder="Write your reports here"></textarea>
                         <div class="report_buttons">
-                            <button type="submit" class="submit_report">Submit</button>
                             <button type="button" class="cancel_report">Cancel</button>
+                            <button type="submit" class="submit_report">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -110,23 +145,30 @@
         <div class="contract_btn_account">
             <div class="report_display">
                 <div>
-                    <center><h4>Please note, all request would be reviewed first <br> 
+                    <center><h4 class="report_title">Please note that terminating a contract cannot be undone<br> 
                     Take a look at related contract policies <a href="#">here</a></h4></center>
-                    <form action="" id="report_form">
-                        <label for="reason_reason">Reason for report</label>
-                        <select name="report_reason" id="">
+                    <form action="{% url 'terminate_contract'%}" id="report_form" method="post">
+                        {% csrf_token %}
+                        <label for="contract_code"> Enter Contract ID:</label>
+                        <input type="text" name="contract_code" id="contract_code" required placeholder="Enter Target Contract ID e.g 123456ABC"><br>
+                        <label for="terminationReasons">Select a reason for termination:</label>
+                        <select id="terminationReasons" name="remark" required>
                             <option value="" disabled selected>-- Select one --</option>
-                            <option value="A problem or issue">A problem or issue</option>
-                            <option value="Intimedation">Intemedation</option>
-                            <option value="Phyiscal Abuse">Phyiscal Abuse</option>
-                            <option value="Sexual Abuse">Sexual Abuse</option>
-                            <option value="Verbal Abuse">Verbal Abuse</option>
-                            <option value="Other">Other reasons</option>
-                        </select>
-                        <textarea name="" placeholder="Write your reports here"></textarea>
+                            <option value="mismatchedLearningStyle">Mismatched Learning Style</option>
+                            <option value="lackOfProgress">Lack of Progress</option>
+                            <option value="schedulingConflicts">Scheduling Conflicts</option>
+                            <option value="personalityClash">Personality Clash</option>
+                            <option value="qualityOfInstruction">Quality of Instruction</option>
+                            <option value="externalCommitments">External Commitments</option>
+                            <option value="financialConstraints">Financial Constraints</option>
+                            <option value="achievementOfGoals">Achievement of Goals</option>
+                            <option value="communicationBreakdown">Communication Breakdown</option>
+                            <option value="unexpectedCircumstances">Unexpected Circumstances</option>
+                        </select> 
+                        <textarea name="statement" placeholder="You can write here"></textarea>
                         <div class="report_buttons">
+                            <button type="button" class="cancel_btn cancel_report">Cancel</button>
                             <button type="submit" class="submit_report">Submit</button>
-                            <button type="button" class="cancel_report">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -140,7 +182,7 @@
             <div class="review_display">
                 <div> 
                     <h3 class="close_review" style="margin-bottom: 0px;"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</h3>
-                    <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Your Reviews </h4></center>
+                    <center><h3 style="margin-top: 0px; border-bottom: 2px solid blue;">MY REVIEWS</h3></center>
                     
                     <div class="review_table">
                         <table id="reviewTable">
@@ -154,63 +196,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>Excellent service!</td>
-                                    <td>5</td>
-                                    <td>Customer Support</td>
-                                    <td>2023-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>Very satisfied with the product.</td>
-                                    <td>4</td>
-                                    <td>Product Quality</td>
-                                    <td>2023-03-10</td>
-                                </tr>
-                                <tr>
-                                    <td>sohn Doe</td>
-                                    <td>Excellent service!</td>
-                                    <td>5</td>
-                                    <td>bustomer Support</td>
-                                    <td>2021-05-15</td>
-                                </tr>
-                                <tr>
-                                    <td>cane Smith</td>
-                                    <td>nery satisfied with the product.</td>
-                                    <td>2</td>
-                                    <td>aroduct Quality</td>
-                                    <td>2024-02-20</td>
-                                </tr>
-                                <tr>
-                                    <td>Doe</td>
-                                    <td>xcellent service!</td>
-                                    <td>5</td>
-                                    <td>Customer Support</td>
-                                    <td>2023-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>Very satisfied with the product.</td>
-                                    <td>4</td>
-                                    <td>Product Quality</td>
-                                    <td>2023-02-20</td>
-                                </tr>
-                                <tr>
-                                    <td>sohn Doe</td>
-                                    <td>Excellent service!</td>
-                                    <td>2</td>
-                                    <td>bustomer Support</td>
-                                    <td>2023-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>ne Smith</td>
-                                    <td>ry satisfied with the product.</td>
-                                    <td>3</td>
-                                    <td>oduct Quality</td>
-                                    <td>2019-02-20</td>
-                                </tr>
-                                
+                                {% for review in tutor.reviews.all %}
+                                    <tr>
+                                        <td>{{ review.client.get_full_name }}</td>
+                                        <td>{{ review.review_text }}</td>
+                                        {% for rank in review.client.rankings.all%}
+                                            {% if rank.tutor.id == tutor.id %}
+                                                <td>{{ rank.rank_number }}</td>
+                                             {% endif %}                                        
+                                        {% endfor %}
+                                        <td>{{ review.review_subject }}</td>
+                                        <td>{{ review.created_at|date:"d-m-y" }}</td>
+                                    </tr>
+                                {% endfor %}
+
                               <!-- Add more rows with data as needed -->
                             </tbody>
                         </table>
@@ -227,7 +226,7 @@
 
             <div class="report_display"> 
                 <h3 class="close_review" style="margin-bottom: 0px;"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</h3>
-                <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Your Sent Reports </h4></center>
+                <center><h3 style="margin-top: 0px; border-bottom: 2px solid blue;"> MY SENT REPORTS</h3></center>
                 
                 <div class="review_table">
                     <table id="reportTable">
@@ -241,63 +240,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>Excellent service!</td>
-                                <td>5fjhslfj;sjf;sojg;osjg;lsj;sj;lsgk;l</td>
-                                <td>Customer Support</td>
-                                <td>2023-01-15</td>
-                            </tr>
-                            <tr>
-                                <td>Jane Smith</td>
-                                <td>Very satisfied with the product.</td>
-                                <td>4</td>
-                                <td>Product Quality</td>
-                                <td>2023-03-10</td>
-                            </tr>
-                            <tr>
-                                <td>sohn Doe</td>
-                                <td>Excellent service!</td>
-                                <td>5</td>
-                                <td>bustomer Support</td>
-                                <td>2021-05-15</td>
-                            </tr>
-                            <tr>
-                                <td>cane Smith</td>
-                                <td>nery satisfied with the product.</td>
-                                <td>2</td>
-                                <td>aroduct Quality</td>
-                                <td>2024-02-20</td>
-                            </tr>
-                            <tr>
-                                <td>Doe</td>
-                                <td>xcellent service!</td>
-                                <td>5</td>
-                                <td>Customer Support</td>
-                                <td>2023-01-15</td>
-                            </tr>
-                            <tr>
-                                <td>Jane Smith</td>
-                                <td>Very satisfied with the product.</td>
-                                <td>4</td>
-                                <td>Product Quality</td>
-                                <td>2023-02-20</td>
-                            </tr>
-                            <tr>
-                                <td>sohn Doe</td>
-                                <td>Excellent service!</td>
-                                <td>2</td>
-                                <td>bustomer Support</td>
-                                <td>2023-01-15</td>
-                            </tr>
-                            <tr>
-                                <td>ne Smith</td>
-                                <td>ry satisfied with the product.</td>
-                                <td>3</td>
-                                <td>oduct Quality</td>
-                                <td>2019-02-20</td>
-                            </tr>
-                            
+                            {% for report in reports %}
+                                <tr>
+                                    <td>{{ report.client.get_full_name }}</td>
+                                    <td>{{ report.message }}</td>
+                                    <td>{{ report.subject }}</td>
+                                    <td>{{ report.subject }}</td>
+                                    <td>{{ report.created_at|date:"d-m-y" }}</td>
+                                </tr>
+                            {% endfor %}
                             <!-- Add more rows with data as needed -->
                         </tbody>
                     </table>
@@ -308,8 +259,115 @@
         </div>
         </div>
     </div>
+    <!-- Pending Client popUp -->
+    <div class="pending_clients_activation">
+        <div class="pending_clients_window">
 
+            <div class="pending_clients_display"> 
+                <h3 class="close_pending_clients" style="margin-bottom: 0px;"><span><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</span></h3>
+                <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Pending Clients </h4></center>
+                
+                <div class="pending_clients_table">
+                    <table id="pendingClientTable">
+                        <thead>
+                            <tr>
+                                <th class="sortPendingClients SN" id="SN" data-column="0">SN</th>
+                                <th class="sortPendingClients clientName" data-column="1">Client name</th>
+                                <th class="sortPendingClients contractSubject" data-column="2">Subject</th>
+                                <th class="sortPendingClients contractDays" data-column="3">Days</th>
+                                <th class="sortPendingClients contractLength" data-column="4">Duration</th>
+                                <th class="sortPendingClients contractPayRate" data-column="5">Pay Rate</th>
+                                <th class="sortPendingClients contractStartDate" data-column="6">Start Date</th>
+                                <th class="sortPendingClients acceptContract" data-column="7"></th>
+                                <th class="sortPendingClients declineContract" data-column="8"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contract in pending_contracts %}
+                            <tr id="contractRow{{ forloop.counter }}">
+                                <td>{{ forloop.counter}}</td>
+                                <td>{{ contract.client.get_full_name }}</td>
+                                <td>{{ contract.subject.subject_name }}</td>
+                                <td>{{ contract.week_days }}</td>
+                                <td>{{ contract.contract_length }} Days</td>
+                                <td>&#x20A6; {{ contract.pay_rate }}</td>
+                                <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                <form class="contractForm" data-rowid="{{ forloop.counter }}">
+                                    {% csrf_token %}
+                                    <input type="hidden" class="contractCode" value="{{ contract.contract_code }}">
+                                    <input type="hidden" class="status" name="status" value="">
+                                    <td class="accept_contract_btn"><button type="button" class="submitBtnPending" data-action="Accept">Accept</button></td>
+                                    <td class="decline_contract_btn"><button type="button" class="submitBtnPending" data-action="Decline">Decline</button></td>
+                                </form>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            
+            </div>
+                
+        </div>
+        </div>
+    </div>
 
+    <!-- Settled Client popUp -->
+    <div class="settled_clients_activation">
+        <div class="settled_clients_window">
+
+            <div class="settled_clients_display"> 
+                <h3 class="close_settled_clients" style="margin-bottom: 0px;"><span style="color: red"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</span></h3>
+                <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Settled Clients </h4></center>
+                
+                <div class="settled_clients_table">
+                    <table id="settledClientTable">
+                        <thead>
+                            <tr>
+                                <th class="sortSettledContracts SN" id="SN" data-column="0">SN</th>
+                                <th class="sortSettledContracts clientName" data-column="1">Client name</th>
+                                <th class="sortSettledContracts contractSubject" data-column="2">Subject</th>
+                                <th class="sortSettledContracts contractLength" data-column="3">Duration</th>
+                                <th class="sortSettledContracts contractPayRate" data-column="4">Pay Rate</th>
+                                <th class="sortSettledContracts contractStartDate" data-column="5">Start Date</th>
+                                <th class="sortSettledContracts contractEndDate" data-column="6">End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                {% for contract in settled_contracts %}
+                                        <tr>
+                                            <td>{{ counter }}</td>
+                                            <td>{{ contract.client.get_full_name }}</td>
+                                            <td>{{ contract.subject.subject_name }}</td>
+                                            <td>{{ contract.contract_length }} Days</td>
+                                            <td>&#x20A6; {{ contract.pay_rate }}</td>
+                                            <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                            <td>{{ contract.end_date|date:"d-m-y" }}</td>
+                                        </tr>
+                                {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                </div>
+            
+            </div>
+                
+        </div>
+        </div>
+    </div>
+    {% comment %} Modals {% endcomment %}
+    <!-- Modal for successful update -->
+    <div id="successModal" class="modal">
+        <h3 style="text-decoration: none;">Update Successful!</h3>
+        <p>Your operation was successful.</p>
+        <button class="closeModal" id="closeSuccessModal">Close</button>
+    </div>
+    <!-- Modal for error -->
+    <div id="errorModal" class="modal">
+        <h3 style="text-decoration: none;" > Error!</h3>
+        <p>Refresh page to continue</p>
+        <button class="closeModal" id="refreshPage">Refresh</button>
+    </div>
 
     <!-- main dasboard starts here -->
 <!-- ============================================================================================================================================= -->
@@ -317,17 +375,17 @@
         <!-- left section Navigation links (Dashboard, clients ...) -->
         <div class="tutor_dasboard">
             <div class="left_section">
-                <h4><span class="fa-solid fa-gauge"></span>&nbsp; DashBoard</h4>
+               <center> <h2 class="dashboard_header"><span class="fa-solid fa-gauge"></span> &nbsp;Dashboard</h2></center><br>
                 <center>
                     <section class="user_details">
                         <!-- tutor_dashboard.html -->
                             {% if tutor.profile_picture %}
                             <img src="{{ tutor.profile_picture.url }}" alt="{{ tutor.username }}'s Profile Picture">
                             {% else %}
-                            <p>No profile picture available</p>
+                            <p><img src="{% static 'images/user/default_user_icon.png'%}" alt="user image"> </p>
                             {% endif %}
 
-                        <p>{{ tutor.username}}</p>
+                        <p>{{ tutor.username }}</p>
                         <p>{{ tutor.email }}</p>
                     </section>
                     <div>
@@ -336,16 +394,16 @@
                 </center>
                 <nav class="nav_box">
                     <ol class="nav_li">
-                        <li class="nav_links dashboard active"><a href="#">DashBoard</a></li>
-                        <li class="nav_links clients"><a href="#">Clients</a></li>
-                        <li class="nav_links programs"><a href="#">Programs</a></li>
-                        <li class="nav_links transaction"><a href="#">Income</a></li>
-                        <li class="nav_links setting"><a href="#">Settings</a></li>
+                        <li class="nav_links dashboard active"><span><img src="{% static 'images/icons/dashboard.png' %}" width="20px" alt="">&nbsp;&nbsp; DashBoard</span></li>
+                        <li class="nav_links clients"><span><i class="fa-solid fa-users"></i> &nbsp;Clients</span></li>
+                        <li class="nav_links programs"><span><i class="fa-solid fa-sliders"></i> &nbsp; Programs</span></li>
+                        <li class="nav_links transaction"><span><i class="fa-solid fa-money-bill-transfer"></i> &nbsp;Transactions</span></li>
+                        <li class="nav_links setting"><span><i class="fa-solid fa-wrench fa-rotate-0"></i> &nbsp; Settings</span></li>
                     </ol>
                 </nav>
                 <center>
-                    <div style="display: block; margin-top: 100px; width: 90px; cursor: pointer;">
-                        <p class="logout logout_activation"><a href="{% url 'tutor_logout' %}">Logout</a></p>
+                    <div style="display: block; margin-top: 30%; width: 100px; cursor: pointer;">
+                         <p class="logout logout_activation"> <a href="{% url 'tutor_logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></p>
                     </div>
                 </center>
             </div>
@@ -354,16 +412,16 @@
                 <div>
                     <!-- wellcome greeting -->
                     <section class="greeting">
-                        <h3>hello <span class="username_size"><i>{{ tutor.username }}    </span></i><img style="width: 20px; height: 20px;" src="{% static "images/icons/goodbye.png" %}" alt=""></h3>
+                        <h3>Welcome <span class="username_size">{{ tutor.username }}</span></h3>
                     </section>
 
                     <!-- Dashboard -->
                     <div class="dashboard_contents content_divs">
                         <section class="stats">
-                            <div class="stats_details"><p>Active Contracts</p><h3>2</h3></div>
-                            <div class="stats_details"><p>Pending Contracts</p><h3>1</h3></div>
-                            <div class="stats_details"><p>Total Contracts</p><h3>12</h3></div>
-                            <div class="stats_details"><p>Total Earnings</p><h3>₦&nbsp;413,000</h3></div>
+                            <div class="stats_details active_contracts"><p>Active Contracts</p><h3 id="activeContractsH3">{{ tutor.active_contract_count }}</h3></div>
+                            <div class="stats_details pending_contracts" style="cursor: pointer;" id="pending_clients"><p>Pending Contracts</p><h3 id="pendingContractsH3" >{{ tutor.pending_contract_count }}</h3></div>
+                            <div class="stats_details settled_contracts" style="cursor: pointer;" id="settled_clients"><p>Settled Contracts</p><h3 id="settledContractsH3">{{ tutor.settled_contract_count }}</h3></div>
+                            <div class="stats_details"><p class="total_earnings">Total Earnings</p><h3 class="payments" id="totalEarningsH3">₦&nbsp;{{ tutor.received_payments }}</h3></div>
                         </section>
                         <section class="myclient">
                             <div>
@@ -373,7 +431,7 @@
                                     <div class="sort_tables">
                                         <form id="sortForm">
                                             <label for="sortOptions"></label>
-                                            <select id="sortOptions" name="sortOptions">
+                                            <select  id="sortOptions" name="sortOptions">
                                               <option value="newest">Newest</option>
                                               <option value="oldest">Oldest</option>
                                               <option value="ascending">Ascending Amount</option>
@@ -382,48 +440,39 @@
                                             <input type="submit" value="Sort">
                                           </form>
                                     </div>
-
-                                    <!-- <div class="search">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                        <input class="search-box" type="search" name="" id="" placeholder="Search name or subject">
-                                        <input class="search_button" type="submit" name="" id="">
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="client_table-container">
                                 <table class="client_list_table client_list_table_active">
                                     <thead>
                                         <tr>
-                                            <th class="sortClientNameActive" data-column="0">Client Name</th>
-                                            <th class="sortSubjectActive" data-column="1">Subject</th>
-                                            <th class="sortStartDateActive" data-column="2">Start Date</th>
-                                            <th class="sortTerminationDateActive" data-column="3">Termination Date</th>
-                                            <th class="sortTutoringDaysActive" data-column="4">Tutoring days</th>
-
-                                            <th class="" style="color: transparent;">report</th>
-                                            <th class="" style="color: transparent;">cancel</th>
+                                            <th class="" id="SN" data-column="0">SN</th>
+                                            <th class="" data-column="1">ID</th>
+                                            <th class="sortClientNameActive" data-column="2">Client Name</th>
+                                            <th class="sortSubjectActive" data-column="3">Subject</th>
+                                            <th class="sortStartDateActive" data-column="4">Start Date</th>
+                                            <th class="sortTerminationDateActive" data-column="5">End Date</th>
+                                            <th class="sortTutoringDaysActive" data-column="6"> Days</th>
+                                            <th class="" style="color: transparent;"><!--report--></th>
+                                            <th class="" style="color: transparent;"><!--cancel--></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>lient.name Chidubem</td>
-                                            <td>client.subject</td>
-                                            <td>client.start_date</td>
-                                            <td>client.term_date</td>
-                                            <td>client.days</td>
-                                            <td class="report_btn"><button>report</button></td>
-                                            <td class="cancel_contract_btn"><button>cancel</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>client.name</td>
-                                            <td>lient.subject</td>
-                                            <td>lient.start_date</td>
-                                            <td>lient.term_date</td>
-                                            <td>lient.days</td>
-                                            <td class="report_btn"><button>report</button></td>
-                                            <td class="cancel_contract_btn"><button>cancel</button></td>
-                                        </tr>
-                                    
+                                        {% if tutor.contracts.active_contracts.all %}
+                                        {% for contract in tutor.contracts.active_contracts.all %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ contract.contract_code }}</td>
+                                                <td>{{ contract.client.get_full_name }}</td>
+                                                <td>{{ contract.subject.subject_name }}</td>
+                                                <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                                <td>{{ contract.end_date|date:"d-m-y" }}</td>
+                                                <td>{{ contract.week_days }}</td>
+                                                <td class="report_btn"><button>report</button></td>
+                                                <td class="cancel_contract_btn"><button>cancel</button></td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </div>
@@ -433,14 +482,14 @@
                     <!-- Clients -->
                     <div class="clients_contents content_divs">
                         <section class="stats">
-                            <div class="stats_details"><p>Active Contracts</p><h3>2</h3></div>
-                            <div class="stats_details"><p>Pending Contracts</p><h3>1</h3></div>
-                            <div class="stats_details"><p>Total Contracts</p><h3>12</h3></div>
-                            <div class="stats_details"><p>Total Earnings</p><h3>₦&nbsp;413,000</h3></div>
+                            <div class="stats_details active_contracts"><p>Active Contracts</p><h3>{{ tutor.active_contract_count }}</h3></div>
+                            <div class="stats_details pending_contracts"><p>Pending Contracts</p><h3>{{ tutor.pending_contract_count }}</h3></div>
+                            <div class="stats_details settled_contracts"><p>Settled Contracts</p><h3>{{ tutor.settled_contract_count }}</h3></div>
+                            <div class="stats_details"><p class="total_earnings">Total Earnings</p><h3 class="payments">₦&nbsp;{{ tutor.received_payments }}</h3></div>
                         </section>
                         <section class="myclient">
                             <div>
-                                <div class="client_list_n_search">
+                            <div class="client_list_n_search">
                                     
                                     <h3>Client History</h3>
 
@@ -454,56 +503,50 @@
                                               <option value="descending">Descending Amount</option>
                                             </select>
                                             <input type="submit" value="Sort">
-                                          </form>
+                                        </form>
                                     </div>
-
-                                    <!-- <div class="search">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                        <input class="search-box" type="search" name="" id="" placeholder="Search name or subject">
-                                        <input class="search_button" type="submit" name="" id="">
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="client_table-container">
                                 <table class="client_list_table client_list_table_history">
                                     <thead>
                                         <tr>
-                                            <th class="sortClientNameHistory" data-column="0">Client Name</th>
-                                            <th class="sortSubjectHistory" data-column="1">Subject</th>
-                                            <th class="sortStartDateHistory" data-column="2">Start Date</th>
-                                            <th class="sortEndDateHistory" data-column="3">End Date</th>
-                                            <th class="sortTutoringDaysHistory" data-column="4">Tutoring days</th>
+                                            <th class="" id="SN" data-column="0">SN</th>
+                                            <th class="sortClientNameHistory" data-column="1">Client Name</th>
+                                            <th class="sortSubjectHistory" data-column="2">Subject</th>
+                                            <th class="sortStartDateHistory" data-column="3">Start Date</th>
+                                            <th class="sortEndDateHistory" data-column="4">End Date</th>
+                                            <th class="sortTutoringDaysHistory" data-column="5">Tutoring days</th>
+                                            <th class="sortEndDateHistory" data-column="6"><!--Report--></th>
+                                            <th class="sortTutoringDaysHistory" data-column="7"><!--Cancel--></th>
                                        </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>alient.name Chidubem</td>
-                                            <td>blient.subject</td>
-                                            <td>client.start_date</td>
-                                            <td>client.term_date</td>
-                                            <td>client.days</td>
-                                        </tr>
-                                        <tr>
-                                            <td>blient.name Chidubem</td>
-                                            <td>alient.subject</td>
-                                            <td>lient.start_date</td>
-                                            <td>lient.term_date</td>
-                                            <td>lient.days</td>
-                                        </tr>
-                                       
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
+                                        <tbody>
+                                            {% for contract in contract_history %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ contract.client.get_full_name }}</td>
+                                                        <td>{{ contract.subject.subject_name }}</td>
+                                                        <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                                        <td>{{ contract.end_date|date:"d-m-y" }}</td>
+                                                        <td>{{ contract.week_days }}</td>
+                                                        <td class="report_btn"><button>report</button></td>
+                                                        <td class="cancel_contract_btn"><button>cancel</button></td>
+                                                    </tr>
+                                                {% endfor %}                                    
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
                     </div>
 
                     <!-- Programs/Subjects table -->
                     <div class="programs_contents content_divs">
                         <section class="stats">
-                            <div class="stats_details"><p>Active Contracts</p><h3>2</h3></div>
-                            <div class="stats_details"><p>Pending Contracts</p><h3>1</h3></div>
-                            <div class="stats_details"><p>Total Contracts</p><h3>12</h3></div>
-                            <div class="stats_details"><p>Total Earnings</p><h3>₦&nbsp;413,000</h3></div>
+                            <div class="stats_details active_contracts"><p>Active Contracts</p><h3>{{ tutor.active_contract_count }}</h3></div>
+                            <div class="stats_details pending_contracts"><p>Pending Contracts</p><h3>{{ tutor.pending_contract_count }}</h3></div>
+                            <div class="stats_details settled_contracts"><p>Settled Contracts</p><h3>{{ tutor.settled_contract_count }}</h3></div>
+                            <div class="stats_details"><p class="total_earnings">Total Earnings</p><h3 class="payments">₦&nbsp;{{ tutor.received_payments }}</h3></div>
                         </section>
                         <section class="myprograms">
                             <div class="content">
@@ -512,12 +555,12 @@
                                         <nav class="update_elements">
                                             <table>
                                                 <thead id="elements_control">
-                                                    <td style="width: 15px; cursor: default;"></td>
+                                                    <td style="cursor: default;"></td>
                                                     <td id="your_subject" class="test">View Subjects</td>
                                                     <td id="add_subject" class="test">Add a Subject</td>
                                                     <td id="update_subject" class="test">Update a Subject</td>
                                                     <td id="remove_subject" class="test">Delete a Subject</td>
-                                                    <td style="width: 210px; border-bottom: 1px solid black;"></td>
+                                                    <td style="border-bottom: 1px solid black;"></td>
                                                 </thead>
                                             </table>
                                         </nav>
@@ -526,7 +569,7 @@
                                     <!-- subjects list display -->
                                     <div class="subject_view_display">
                                         <div class="subject_list">
-                                            <h2>Your Subjects, Courses, and Programs</h2>
+                                            <h2>My Subjects, Courses, and Programs</h2>
                                             <table class="subject_table">
                                                 <thead>
                                                     <tr>
@@ -534,16 +577,17 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <!-- This part will be dynamically generated from the database -->
                                                     <tr>
-                                                        <td>English Language</td>
+                                                        <td>{{ tutor.primary_subject }}</td>
                                                     </tr>
-                                                    <!-- Example of another subject retrieved from the database -->
-                                                    <tr>
-                                                        <td>Mathematics</td>
-                                                    </tr>
-                                                    <!-- Add more rows for additional subjects -->
-                                                </tbody>
+                                                    {% if tutor_subjects %}
+                                                        {% for subject in tutor_subjects %}
+                                                            <tr>
+                                                                <td>{{ subject.subject_name }} - <span style="font-size: small;">{{ subject.proficiency }}</span> </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -554,10 +598,23 @@
                                             <div class="subject_add" >
                                                 <center><h2 style="margin-bottom: 0px;">Add a Subject, Course, or Program </h2><br>
                                                         <h4 style="margin-top: 0px;">Be sure to read our policies regarding proficiency <a href="#">here</a>. We take this seriously.</h4></center>
-                                                <form id="subjectForm">
+                                                <form id="subjectForm" method="post" action="{% url 'add_subject'%}" >
+                                                    {% csrf_token %}
+
                                                     <div class="subject_form_group">
-                                                    <label for="subjectName">Enter the name of the subject:</label>
-                                                    <input type="text" id="subjectName" name="subjectName" required>
+                                                    <label for="subjectName2">Enter the name of the subject:</label>
+                                                    <input type="text" id="subjectName2" name="subjectName" required>
+                                                    </div>
+                                                    <div class="subject_form_group">
+                                                        <label for="category">Subject Category:</label>
+                                                        <select id="category" name="category" required>
+                                                            <option value="" disabled selected>-- select one --</option>
+                                                            {% if subject_categories %}
+                                                                {% for category in subject_categories %}
+                                                                    <option value="{{ category.name }}">{{ category.name }}</option>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </select>
                                                     </div>
                                                     <div class="subject_form_group">
                                                     <label for="proficiency">Select proficiency:</label>
@@ -567,7 +624,6 @@
                                                         <option value="Intermediate">Intermediate</option>
                                                         <option value="Advanced">Advanced</option>
                                                         <option value="Expert">Expert</option>
-                                                        <!-- You can modify/add options as needed -->
                                                     </select>
                                                     </div>
                                                     <div class="subject_form_group">
@@ -585,24 +641,58 @@
                                                     <center><button type="submit"  class="subject_save_btn save_button">Add Subject</button></center>
                                                 </form>
                                             </div>
+                                            <div id="successModal4" class="modal2">
+                                                <h3 style="text-decoration: none;">Subject Added!</h3>
+                                                <p>Your operation was successful.</p>
+                                                <button class="closeModal" id="closeSuccessModal">Close</button>
+                                            </div>
+                                            <div id="errorModal4" class="modal2">
+                                                <h3 style="text-decoration: none;" > Error!</h3>
+                                                <p>Refresh page to continue</p>
+                                                <button class="closeModal" id="refreshPage">Refresh</button>
+                                            </div>
                                         </div>
                                     </div>
                                     
                                     <!-- update selected subjects -->
                                     <div class="subject_update_display">
-                                        <div class="subject_add_container" >
-                                            <div class="subject_add" >
+                                        <div class="subjet_update_box subject_add_container" >
+                                            <div class="update_subject subject_add" >
                                                 <center><h2 style="margin-bottom: 0px;">Update a Subject, Course, or Program</h2> <br>
-                                                    <h4 style="margin-top: 0px;"> <i>Reminder:</i>&nbsp; Be sure to read our policies regarding proficiency <a href="#">here</a>. We take this seriously.</h4></center>
-                                                <form id="subjectForm">
+                                                    <h4 style="margin-top: 0px;"> <i style="color: red;">Reminder:</i>&nbsp; Be sure to read our policies regarding proficiency <a href="#">here</a>. We take this seriously.</h4></center>
+                                                <form id="subjectUpdateForm"  method="post">
+                                                    {% csrf_token %}
                                                     <div class="subject_form_group">
-                                                        <label for="subjectName">Enter the name of the subject:</label>
-                                                        <input type="text" id="subjectName" name="subjectName" required>
+                                                        <label for="subjectUpdateName">Select Subject:</label>
+                                                        <select name="subjectUpdateName" id="subjectUpdateName" required>
+                                                            <option value="" disabled >-- select one --</option>
+                                                            {% if tutor_subjects %}
+                                                                {% for subject in tutor_subjects %}
+                                                                    <option data-subjectId="{{ subject.id }}" value="{{ subject.subject_name }}">{{ subject.subject_name }}</option>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="subject_form_group">
+                                                        <label for="subjectName">New Name:</label>
+                                                        <input type="text" id="subjectName" class="m-with" name="subjectName" placeholder="Enter new name or blank if same">
+                                                        </select>
+                                                    </div>
+                                                    <div class="subject_form_group">
+                                                        <label for="category">Subject Category:</label>
+                                                        <select id="category" name="category" required>
+                                                            <option value="" disabled selected >Select Subject Category</option>
+                                                            {% if subject_categories %}
+                                                                {% for category in subject_categories %}
+                                                                    <option value="{{ category.name }}">{{ category.name }}</option>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </select>
                                                     </div>
                                                     <div class="subject_form_group">
                                                         <label for="proficiency">Select proficiency:</label>
                                                         <select id="proficiency" name="proficiency" required>
-                                                            <option value="" disabled>Select Proficiency</option>
+                                                            <option value="" disabled selected>Select Proficiency</option>
                                                             <option value="Beginner" disabled>Beginner</option>
                                                             <option value="Intermediate">Intermediate</option>
                                                             <option value="Advanced">Advanced</option>
@@ -613,7 +703,7 @@
                                                     <div class="subject_form_group">
                                                         <label for="teachingExperience">Select teaching/tutoring experience:</label>
                                                         <select id="teachingExperience" name="teachingExperience" required>
-                                                            <option value="" disabled>Select Experience</option>
+                                                            <option value="" disabled selected>Select Experience</option>
                                                             <option value="None - New to this">None - New to this</option>
                                                             <option value="Less than a year">Less than a year</option>
                                                             <option value="Less than 3 years">Less than 3 years</option>
@@ -622,42 +712,71 @@
                                                             <!-- You can modify/add options as needed -->
                                                         </select>
                                                     </div>
-                                                    <center><button type="submit"  class="subject_save_btn save_button">Add Subject</button></center>
+                                                    <center><button type="submit" id="updateSubjectBtn" class="subject_save_btn save_button">Update</button></center>
                                                 </form>
+                                            </div>
+                                            <div id="successModal3" class="modal2">
+                                                <h3 style="text-decoration: none;">Updated!</h3>
+                                                <p>Your operation was successful.</p>
+                                                <button class="closeModal" id="closeSuccessModal">Close</button>
+                                            </div>
+                                            <div id="errorModal3" class="modal2">
+                                                <h3 style="text-decoration: none;" > Error!</h3>
+                                                <p>Refresh page to continue</p>
+                                                <button class="closeModal" id="refreshPage">Refresh</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Remove subject -->
                                     <div class="subject_remove_display">
-                                        <div class="subject_add_container" >
-                                            <div class="subject_add" >
+                                        <div class="subject_delete_container subject_add_container" >
+                                            <div class="delete_subject subject_add" >
                                                 <center><h2 style="margin-bottom: 0px;">Delete a Subject, Course, or Program</h2><br>
                                                             <h4>Please note that only a subject with no active contracts can be removed. <br>
                                                             For related policies, click <a href="#">here</a>.</h4></center>
-                                                <form id="subjectForm">
-                                                    <div class="subject_form_group">
-                                                        <label for="subjectName">Enter the name of the subject:</label>
-                                                        <input type="text" id="subjectName" name="subjectName" required>
+                                                            <form id="subjectDeleteForm" method="post">
+                                                                {% csrf_token %}
+                                                                <div class="subject_form_group">
+                                                                    <label for="subjectDeleteName">Select Subject:</label>
+                                                                    <select name="subjectDeleteName" id="subjectDeleteName" required>
+                                                                        <option value="" disabled selected>-- select one --</option>
+                                                                        {% if tutor_subjects %}
+                                                                            {% for subject in tutor_subjects %}
+                                                                                <option data-subjectid="{{ subject.id }}" value="{{ subject.subject_name }}">{{ subject.subject_name }}</option>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    </select>
+                                                                </div>
+                                                                <center><button type="submit" class="subject_save_btn save_button">Remove Subject</button></center>
+                                                            </form>                                                            
                                                     </div>
-                                                    <center><button type="submit"  class="subject_save_btn save_button">Remove Subject</button></center>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                    <div id="successModal2" class="modal2">
+                                                        <h3 style="text-decoration: none;">Deleted!</h3>
+                                                        <p>Your operation was successful.</p>
+                                                        <button class="closeModal" id="closeSuccessModal">Close</button>
+                                                    </div>
+                                                    <div id="errorModal2" class="modal2">
+                                                        <h3 style="text-decoration: none;" > Error!</h3>
+                                                        <p>Refresh page to continue</p>
+                                                        <button class="closeModal" id="refreshPage">Refresh</button>
+                                                    </div>
 
-                                </div>
-                        </section>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                            </section>
                     </div>
 
 
                     <!-- Income / Transaction table -->
                     <div class="transaction_contents content_divs">
                         <section class="stats">
-                            <div class="stats_details"><p>Active Contracts</p><h3>2</h3></div>
-                            <div class="stats_details"><p>Pending Contracts</p><h3>1</h3></div>
-                            <div class="stats_details"><p>Total Contracts</p><h3>12</h3></div>
-                            <div class="stats_details"><p>Total Earnings</p><h3>&#8358; &nbsp;413,000</h3></div>
+                            <div class="stats_details active_contracts"><p>Active Contracts</p><h3>{{ tutor.active_contract_count }}</h3></div>
+                            <div class="stats_details pending_contracts"><p>Pending Contracts</p><h3>{{ tutor.pending_contract_count }}</h3></div>
+                            <div class="stats_details settled_contracts"><p>Settled Contracts</p><h3>{{ tutor.settled_contract_count }}</h3></div>
+                            <div class="stats_details"><p class="total_earnings">Total Earnings</p><h3 class="payments">₦&nbsp;{{ tutor.received_payments }}</h3></div>
                         </section>
                         <section class="myclient">
                             <div>
@@ -665,78 +784,51 @@
                                     <h3>Transaction History</h3>
 
                                     <div class="sort_tables">
-                                    
-                                    <div class="search">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                        <input class="search-box" type="search" name="" id="" placeholder="Search name or subject">
-                                        <input class="search_button" type="submit" name="" id="">
-                                    </div>
+                                </div>
+                                <div class="searchTutor">
+                                    <form action="">
+                                        <span><input type="text" name="" id="" class="extend" placeholder="Search tutor"><button type="button" class="searchTutor_button">Search</button></span>
+                                    </form>
                                 </div>
                             </div>
                             <div class="client_table-containerclient_table-container">
                                 <table class="client_list_table client_list_table_income">
                                   <thead>
                                     <tr>
-                                      <th class="sortClientName" data-column="0">Client Name</th>
-                                      <th class="sortSubject" data-column="1">Subject</th>
-                                      <th class="sortPayRate" data-column="2">Pay Rate (per hour)</th>
-                                      <th class="sortContractAmount" data-column="3">Contract Amount</th>
-                                      <th class="sortPaymentReceived" data-column="4">Payment Received</th>
-                                      <th class="sortPaymentRemaining" data-column="5">Payment Remaining</th>
-                                      <th class="sortContractLength" data-column="6">Contract Length</th>
-                                      <th class="sortStartDate" data-column="7">StartDate</th>
+                                      <th class="" id="SN" data-column="0">SN</th>
+                                      <th class="sortClientName" data-column="1">Client Name</th>
+                                      <th class="sortSubject" data-column="2">Subject</th>
+                                      <th class="sortPayRate" data-column="3">Pay Rate (per hour)</th>
+                                      <th class="sortContractAmount" data-column="4">Contract Amount</th>
+                                      <th class="sortPaymentReceived" data-column="5">Payment Received</th>
+                                      <th class="sortPaymentRemaining" data-column="6">Payment Remaining</th>
+                                      <th class="sortContractLength" data-column="7">Contract Length</th>
+                                      <th class="sortStartDate" data-column="8">StartDate</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <td>John Doe</td>
-                                      <td>Mathematics</td>
-                                      <td>&#8358; 1500</td>
-                                      <td>&#8358; 80000</td>
-                                      <td>&#8358; 32000</td>
-                                      <td>&#8358; 48000</td>
-                                      <td>6 weeks</td>
-                                      <td>2022-09-15</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Jane Smith</td>
-                                      <td>Science</td>
-                                      <td>&#8358; 1800</td>
-                                      <td>&#8358; 95000</td>
-                                      <td>&#8358; 42000</td>
-                                      <td>&#8358; 53000</td>
-                                      <td>7 weeks</td>
-                                      <td>2022-10-02</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Alice Johnson</td>
-                                      <td>English</td>
-                                      <td>&#8358; 2000</td>
-                                      <td>&#8358; 110000</td>
-                                      <td>&#8358; 50000</td>
-                                      <td>&#8358; 60000</td>
-                                      <td>8 weeks</td>
-                                      <td>2022-11-18</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Michael Brown</td>
-                                      <td>History</td>
-                                      <td>&#8358; 1600</td>
-                                      <td>&#8358; 85000</td>
-                                      <td>&#8358; 38000</td>
-                                      <td>&#8358; 47000</td>
-                                      <td>5 weeks</td>
-                                      <td>2022-08-28</td>
-                                    </tr>
-                                    <!-- Existing rows remain -->
+                                    {% for contract in contract_history %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ contract.client.get_full_name }}</td>
+                                            <td>{{ contract.subject.subject_name }}</td>
+                                            <td>&#x20A6; {{ contract.pay_rate }}</td>
+                                            <td>{{ contract.contract_amount }}</td>
+                                            <td>{{ contract.payment_made }}</td>
+                                            <td>{{ contract.payment_remaining }}</td>
+                                            <td>{{ contract.contract_length }} Days</td>
+                                            <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                        </tr>
+                                    {% endfor %}
+              <!-- Existing rows remain -->
                                   </tbody>
                                 </table>
                               </div>
                         </section>
                     </div>
 
-                    <!-- Settings -->
-                    <div class="setting_contents content_divs">
+                <!-- Settings -->
+                <div class="setting_contents content_divs">
                         <div class="content">
                             <div class="left_pane">
                                 <div class="profile_info">
@@ -746,270 +838,314 @@
                                 <div class="update_navbar">
                                     <nav class="update_elements">
                                         <table>
-                                            <thead id="elements_control">
+                                            <thead id="elements_control" class="separator">
                                                 <td style="width: 10px; cursor: default;"></td>
-                                                <td id="update_profile" class="test">Update Profile</td>
-                                                <td id="update_schedule" class="test">Update Work Schedule</td>
-                                                <td id="uploads" class="test">Uploads</td>
-                                                <td id="change_password" class="test">Change Password</td>
-                                                <td id="deactivate_account" class="test">Deactivate Account</td>
+                                                <td id="update_profile" class="test2">Update Profile</td>
+                                                <td id="update_schedule" class="test2">Update Work Schedule</td>
+                                                <td id="uploads" class="test2">Uploads</td>
+                                                <td id="change_password" class="test2">Change Password</td>
+                                                <td id="deactivate_account" class="test2">Deactivate Account</td>
                                             </thead>
                                         </table>
                                     </nav>
                                 </div>
 
-                                <!-- profile update -->
-                                <div class="profile_control_display">
-                                    <div class="profileUpdate">
-                                        <div class="profile_update_content">
-                              
-                                            <!-- <h3><span>Hi,</span> UserName</h3> -->
-                                            
-                                            <form action="" class="form-table">
-                                                <div class="table-row">
-                                                    <div class="table-cell">
-                                                        <label for="firstName">First Name:</label>
-                                                        <input type="text" id="firstName" name="firstName" placeholder="First Name">
-                                                        <label for="phoneNumber">Phone Number:</label>
-                                                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
-                                                        <label for="residentialAddress">Residential Address:</label>
-                                                        <input type="text" id="residentialAddress" name="residentialAddress" placeholder="Residential Address">
-                                                        <label for="state">State of Origin:</label>
-                                                        <select id="state" name="stateOfOrigin">
-                                                            <option value="">-- select one --</option>
-                                                            <option value="Imo">Imo</option>
-                                                            <option value="Enugu">Enugu</option>
-                                                            <option value="Rivers">Rivers</option>
-                                                            <option value="Akwa Ibom">Akwa Ibom</option>
-                                                        </select>
-                                                        <label for="stateOfResidence">State of Residence:</label>
-                                                        <input type="text" id="stateOfResidence" name="stateOfResidence" placeholder="State of Residence">
-                                                        <label for="nationality">Nationality:</label>
-                                                        <input type="text" id="nationality" name="nationality" placeholder="Nationality">
-                                                    </div>
-                                                    <div class="table-cell">
-                                                        <label for="lastName">Last Name:</label>
-                                                        <input type="text" id="lastName" name="lastName" placeholder="Last Name">
-                                                        <label for="qualification">Highest Qualification:</label>
-                                                        <select id="qualification" name="qualification">
-                                                            <option value="">-- select one --</option>
-                                                            <option value="Bachelors">B.SC/B.ENG/B.EDU</option>
-                                                            <option value="Master">M.Sc</option>
-                                                            <option value="phd">PHD</option>
-                                                            <option value="others">others</option>
-                                                        </select>
-                                                        <label for="gender">Gender</label>
-                                                        <select id="Gender" name="gender">
-                                                            <option value="">-- select one --</option>
-                                                            <option value="male">male</option>
-                                                            <option value="female">female</option>
-                                                        </select>
-                                                        <label for="dob">Date of Birth</label>
-                                                        <input type="date" name="" id="dob" placeholder="Date of Birth">
-                                                        <label for="employement">Employment Status</label>
-                                                        <select id="employement" name="employement">
-                                                            <option value="">-- select one --</option>
-                                                            <option value="unemployed">unemployed</option>
-                                                            <option value="part_time">part-time</option>
-                                                            <option value="fulltime">fulltime</option>
-                                                        </select>
-                                                        <label for="avalability">Availability</label>
-                                                        <select id="avalability" name="avalability">
-                                                            <option value="">-- select one --</option>
-                                                            <option value="online">Online</option>
-                                                            <option value="in_person">In-person</option>
-                                                            <option value="hybrid">Hybrid</option>
-                                                        </select>
-                                                    </div>
+                <!-- profile update -->
+                            <div class="profile_control_display">
+                                <div class="profileUpdate">
+                                    <div class="profile_update_content">
+                            
+                                        <!-- <h3><span>Hi,</span> UserName</h3> -->
+                                        <!-- Update Schedule Section -->
+                                        <form action="{% url 'more_update'%}" method="post" class="form-table updateMore">
+                                            {% csrf_token %}
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                    <label for="phone_number">Phone Number:</label>
+                                                    <input type="tel" id="phone_number" name="phone_number" required value="{% if tutor.phone_number %}{{ tutor.phone_number }}{% endif %}" placeholder="Phone Number">
                                                 </div>
-                                                <div class="table-row">
-                                                    <div class="statement" colspan="">
-                                                        <textarea name="profileStatement" placeholder="Profile Statement" id="text_area"></textarea>
-                                                        <br>
-                                                        <div class="profile_update_btn">
-                                                            <button class="save_button" id="profile_update_save_btn" >Save</button>
-                                                        </div>
-                                                    </div>
+                                                <div class="flex_in">
+                                                    <label for="lga_resident">LGA of Residence:</label>
+                                                    <input type="text" id="lga_resident" name="lga_resident" required value="{% if tutor.lga_resident %}{{ tutor.lga_resident }}{% endif %}" placeholder="LGA of Residence">
                                                 </div>
-                                                
-                                            </form>
+                                            </div>
                                             
-                                              
-                                        </div>
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                    <label for="residential_address">Residential Address:</label>
+                                                    <input type="text" id="residential_address" required name="residential_address" value="{% if tutor.residential_address %}{{ tutor.residential_address }}{% endif %}" placeholder="Residential Address">
+                                                </div>
+                                                <div class="flex_in">
+                                                    <label for="state">State of Origin:</label>
+                                                    <input type="text" name="state_of_origin" value="{% if tutor.state_of_origin %}{{ tutor.state_of_origin }}{% endif %}" placeholder="Enter State">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                    <label for="stateOfResidence">State of Residence:</label>
+                                                    <input type="text" id="stateOfResidence" name="state_of_residence" required value="{% if tutor.state_of_residence %}{{ tutor.state_of_residence }}{% endif %}" placeholder="State of Residence">
+                                                </div>
+                                                <div class="flex_in">
+                                                    <label for="primary_subject">Primary Subject:</label>
+                                                    <input type="text" id="primary_subject" required name="primary_subject" value="{% if tutor.primary_subject %}{{ tutor.primary_subject }}{% endif %}" placeholder="Enter Core Subject">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                    <label for="highest_qualification"> Highest Qualification</label>
+                                                    <select id="highest_qualification" required  name="highest_qualification">
+                                                        <option value="" selected disabled >-- select one --</option>
+                                                        <option value="Phd"{%if tutor.highest_qualification == 'Phd' %}selected{% endif %}>Phd</option>
+                                                        <option value="Msc"{%if tutor.highest_qualification == 'Msc' %}selected{% endif %}>Msc</option>
+                                                        <option value="BED"{%if tutor.highest_qualification == 'BED' %}selected{% endif %}>BED</option>
+                                                        <option value="BSC"{%if tutor.highest_qualification == 'BSC' %}selected{% endif %}>BSC</option>
+                                                        <option value="HND"{%if tutor.highest_qualification == 'HND' %}selected{% endif %}>HND</option>
+                                                        <option value="OND"{%if tutor.highest_qualification == 'OND' %}selected{% endif %}>OND</option>
+                                                        <option value="NCE"{%if tutor.highest_qualification == 'NCE' %}selected{% endif %}>NCE</option>
+                                                        <option value="SSCE"{%if tutor.highest_qualification == 'SSCE' %}selected{% endif %}>SSCE</option>
+                                                        <option value="Others"{%if tutor.highest_qualification == 'Others' %}selected{% endif %}>Others</option>
+                                                    </select>
+                                                </div>
+                                                <div class="flex_in">
+                                                    <label for="availability">Availability</label>
+                                                    <select id="availability" required  name="availability">
+                                                        <option value=""selected disabled>-- select one --</option>
+                                                        <option value="Remote"{%if tutor.availability == 'Remote' %}selected{% endif %}>Online(Remote)</option>
+                                                        <option value="In-Person"{%if tutor.availability == 'In-Person' %}selected{% endif %}>In-Person</option>
+                                                        <option value="Hybrid"{%if tutor.availability == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                    <label for="averageDuration">Average Class Duration</label>
+                                                        <select required id="averageDuration" name="average_session_duration">
+                                                            <option value="" selected disabled>-- select one --</option>
+                                                            <option value="Flexible"{%if tutor.average_session_duration == 'Flexible' %}selected{% endif %}>Flexible</option>
+                                                            <option value="Less than 1 Hour"{%if tutor.average_session_duration == '1 Hour or Less' %}selected{% endif %}>1 Hour or Less</option>
+                                                            <option value="1 Hour"{%if tutor.average_session_duration == '1 Hour or More' %}selected{% endif %}>1 Hour or More</option>
+                                                            <option value="2 Hours"{%if tutor.average_session_duration == '2 Hours' %}selected{% endif %}>2 Hours</option>
+                                                            <option value="Greater than 2 Hours"{%if tutor.average_session_duration == 'More than 2 Hours' %}selected{% endif %}>More than 2 Hours</option>
+                                                        </select>
+                                                </div>
+                                                <div class="flex_in">
+                                                    <label for="open_to_work">Open to Work</label>
+                                                    <select name="open_to_work" required id="open_to_work">
+                                                        <option value="" selected disabled>-- select one --</option>
+                                                        <option value="Open"{%if tutor.open_to_work == 'Open' %}selected{% endif %}>Open to work</option>
+                                                        <option value="Not open to work"{%if tutor.open_to_work == 'Not open to work' %}selected{% endif %}>Not open to work</option>
+                                                        <option value="Engaged"{%if tutor.open_to_work == 'Engaged' %}selected{% endif %}>Engaged</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="flex_row">
+                                                <div class="flex_in">
+                                                       <label for="price_per_hour">Price Per Hour (₦)</label> <br>
+                                                    <input type="number" name="price_per_hour" required max="10000" min="500" value="{{ tutor.price_per_hour }}" placeholder="Enter Amount">
+                                                </div>
+                                                <div class="flex_in">
+                                                    <label for="negotiable">Negotiable</label>
+                                                    <select name="negotiable" required id="negotiable">
+                                                        <option value="" selected disabled>-- select one --</option>
+                                                        <option value="True"{%if tutor.negotiable == 'True' %}selected{% endif %}>Yes</option>
+                                                        <option value="False"{%if tutor.negotiable == 'False' %}selected{% endif %}>No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="flex_row bio">
+                                                <label for="bio">Profile Statement</label> 
+                                                <textarea name="bio" required placeholder="Profile Statement" id="text_area">{% if tutor.bio %} {{ tutor.bio }} {% endif %}</textarea>
+                                            </div>
+                                            
+                                            <div class="flex_row profile_update_btn">
+                                                <button class="save_button" id="profile_update_save_btn" type="submit" >Save</button>
+                                            </div>
+                                        </form>
+                                        
+
                                     </div>
                                 </div>
-                                <!-- update schedule -->
-                                <div class="working_schedule">
-                                    <div class="working_schedule_contents">
-                                        <div>
-                                          <form action="" id="workDays">
-                                            <div class="working-days work_options">
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Sunday"> Sunday
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Monday"> Monday
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Tuesday"> Tuesday
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Wednesday"> Wednesday
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Thursday"> Thursday
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Friday"> Friday
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingDay" value="Saturday"> Saturday
-                                              </label>
-                                              
-                                              <!-- ... other days checkboxes ... -->
+                            </div>
+            
+                <!-- Update Schedule Section -->
+                            <div class="working_schedule">
+                                <div class="working_schedule_contents">
+                                    <div class="scheduleBox">
+                                        <form method="post" class="updateEngagements" id="updateScheduleForm">
+                                            {% csrf_token %}
+                                            <div class="formContentField">
+
+                                                <div class="working-days work_options">
+                                                    {{ form.day }}
+                                                </div>
+
+                                                <div class="working-hours work_options">
+                                                    <label for="{{ form.from_hour.id_for_label }}"><b>From</b></label>
+                                                    {{ form.from_hour }}
+                                                </div>
+
+                                                <div class="working-hours work_options">
+                                                    <label for="{{ form.to_hour.id_for_label }}"><b>To</b></label>
+                                                    {{ form.to_hour }}
+                                                </div>
+                                                    
                                             </div>
-                                          </form>
-                                        </div>
-                                        <div>
-                                          <form action="" id="workHours">
-                                            <div class="working-hours work_options">
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="9am - 10am"> 9am - 10am
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="10am - 11am"> 10am - 11am
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="11am - 12pm"> 11am - 12pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="12pm - 1pm"> 12pm - 1pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="1pm - 2pm"> 1pm - 2pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="2pm - 3pm"> 2pm - 3pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="3pm - 4pm"> 3pm - 4pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="4pm - 5pm"> 4pm - 5pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="5pm - 6pm"> 5pm - 6pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="6pm - 7pm"> 6pm - 7pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="7pm - 8pm"> 7pm - 8pm
-                                              </label>
-                                              <label>
-                                                  <input type="checkbox" name="workingHour" value="8pm - 9pm"> 8pm - 9pm
-                                              </label>
-                                              <!-- ... other hours checkboxes ... -->
+                                            <div class="scheduleButton saveCancel">
+
+                                                <button class="save_button_work " id="save_btn" type="submit">Add</button>
+                                                <button class="reset_button cancel_btn" id="reset_btn" type="button">Reset</button>
+                                                <button class="refreshPage" type="button">Save &nbsp; <i class="fa-solid fa-arrows-rotate"></i></button>
+
                                             </div>
-                                          </form>
-                                        </div>
-                                        <div>
-                                          <div class="schedule_display">
+                                        </form>
+                                    </div>
+                                    <div id="successModal" class="modal">
+                                        <h2>Success!</h2>
+                                        <p>Your operation was successful.</p>
+                                        <button id="closeSuccessModal">Close</button>
+                                    </div>
+                                    <div id="confirmationModal" class="modal">
+                                        <h2>Are You Sure?</h2>
+                                        <button id="confirmAction">Yes</button>
+                                        <button class="cancel" id="closeConfirmationModal">Cancel</button>
+                                    </div>
+                                    <div id="errorModal" class="modal">
+                                        <h2>Already Done!</h2>
+                                        <p>Refresh page to continue</p>
+                                        <button id="refreshPage">Refresh</button>
+                                    </div>
+                                    <div id="overlap" class="modal">
+                                        <h2>Oops! There's an overlap</h2>
+                                        <p> Choose a non-overlapping time slots</p>
+                                        <button class="cancel_btn cancel" id="closeOverlapModal">Close</button>
+                                    </div>
+                                    <div>
+                                        <div class="schedule_display">
                                             <div class="tutor_subject">
-                                              <div class="subject_list">
-                                                <h2>Active Days</h2>
-                                                <table class="subject_table" id="subjectDays">
-                                                  <thead>
-                                                    <tr>
-                                                      <th>Days</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    <!-- Table content will be dynamically populated -->
-                                                  </tbody>
-                                                </table>
-                                              </div>
+                                                <div class="subject_list">
+                                                    <h2>Active Days</h2>
+                                                    <table class="subject_table" id="subjectDays">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Days</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for schedule in tutor_schedule %}
+                                                                <tr>
+                                                                    <td class="flexRemove">{{ schedule.day }} &nbsp<i class="fa-solid fa-circle-xmark" data-schedule-id="{{ schedule.id }}"></i>
+                                                                    </td>
+                                                                    <form method="post" action="{% url 'delete_schedule' schedule.id %}">
+                                                                        {% csrf_token %}
+                                                                        <button hidden  type="submit"></button>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                             <div class="tutor_hours">
-                                              <div class="subject_list">
-                                                <h2>Active Hours</h2>
-                                                <table class="subject_table" id="subjectHours">
-                                                  <thead>
-                                                    <tr>
-                                                      <th>Hours</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    <!-- Table content will be dynamically populated -->
-                                                  </tbody>
-                                                </table>
-                                              </div>
+                                                <div class="subject_list">
+                                                    <h2>Active Hours</h2>
+                                                    <table class="subject_table" id="subjectHours">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Hours</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for schedule in tutor_schedule %}
+                                                                <tr data-schedule-id="{{ schedule.id }}">
+                                                                    <td>{{ schedule.from_hour }} - {{ schedule.to_hour }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                          </div>
                                         </div>
                                         
-                                      </div>
-                                      <div class="scheduleButton">
-                                        <button class="save_button inactive" id="save_btn">Save</button>
-                                        <button class="reset_button" id="reset_btn">Reset</button>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Documents upload -->
-                                <div class="doc_uploads">
-                                    <div class="doc_uploads_flex">
-                                        <div class="dp">
-                                            <img src="{% static "images/tutors/pass.jpg" %}" alt="">
-                                        </div> 
-                                        <div class="">
-                                            <h3>Profile Picture Upload</h3>
-                                            <div class="pro_pics">
-                                                <form action="" method="post" enctype="multipart/form-data">
-                                                    <label for="profilePic">Choose Profile Picture:</label>
-                                                    <input type="file" id="profilePic" name="profilePic" accept="image/jpeg, image/png">
-                                                    <br>
-                                                    <input type="submit" value="Upload Profile Picture" class="save_btn">
-                                                </form>
-                                            </div>
+                <!-- Documents upload -->
+                            <div class="doc_uploads">
+                                <div class="doc_uploads_flex">
+                                    <div class="dp">
+                                        <img src="{{ tutor.profile_picture.url }}" alt="">
 
-                                            <hr style="width: 800px; margin-left: 0px;">
-
-                                            <h3>Document Upload</h3>
-                                            <div class="docs">
-                                                <form action="" method="post" enctype="multipart/form-data">
-                                                    <label for="cv">Upload CV:</label>
-                                                    <input type="file" id="cv" name="cv" accept=".doc,.docx">
-                                                    <br><br>
-                                                    <label for="highCert">Upload Highest Academic Certificate:</label>
-                                                    <input type="file" id="highCert" name="highCert" accept=".jpg,.png">
-                                                    <br><br>
-                                                    <label for="otherCerts">Upload Other Certificates:</label>
-                                                    <input type="file" id="otherCerts" name="otherCerts" multiple accept=".jpg,.png">
-                                                    <br><br>
-                                                    <input type="submit" value="Upload Documents" class="save_btn">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- change password -->
-                                <div class="change_password_control_display">
-                                    <div class="profileUpdate">
-                                        <div class="profile_update_content">
-                                            <div class="dp">
-                                                <img src="{% static "images/tutors/pass.jpg" %}" alt="">
-                                            </div>                               
-                                            <h3><span>Hi,</span> { tutor.first_name }</h3>
-                                            
-                                            <form action="">
-                                                <br><br>
-                                                <input type="text" name="" id="" class="extend" placeholder="old password"><br><br>
-                                                <input type="text" name="" id="" class="extend" placeholder="new password"><br><br>
-                                                <input type="text" name="" id="" class="extend" placeholder="confirm new password"><br><br><br>
-                                                <button class="save_button_password extend" id="password_update_save_btn">Save</button>                               
+                                    </div> 
+                                    <div class="">
+                                        <h3>Profile Picture Upload</h3>
+                                        <div class="pro_pics">
+                                            <form action="{%url 'upload_docs' %}" class="upload-doc-form" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <label for="profilePic">Choose Profile Picture:</label><br>
+                                                <input type="file" required id="profilePic" name="profilePic" accept="image/jpeg, image/png, .jpeg, .jpg" placeholder="Only JPEG or PNG">
+                                                <br>
+                                                <input type="submit" value="Upload Profile Picture" class="save_btn">
                                             </form>
                                         </div>
+
+                                        <hr style="width: 800px; margin-left: 0px;">
+
+                                        <h3>Document Upload</h3>
+                                        <div class="docs">
+                                            <form action="{%url 'upload_docs' %}" class="upload-doc-form" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <label for="cv">Upload CV:</label><br>
+                                                <input type="file" id="cv" name="cv" required accept=".doc,.docx,.pdf,.jpeg,.jpg,.png" placeholder="Only .doc,.docx,.pdf,.jpeg,.png ">
+                                                <br><br>
+                                                <label for="highCert">Upload Highest Academic Certificate:</label>  <br>
+                                                <input type="file" id="highCert" required name="highCert" accept=".jpg,.png">
+                                                <br><br>
+                                                <input type="submit" value="Upload Resume" class="save_btn">
+                                            </form>
+                                        </div>
+                                        <hr style="width: 800px; margin-left: 0px;">
+
+                                        <h3>Other Certificates Upload</h3>
+                                        <div class="other_docs">
+                                            <form action="{%url 'upload_docs' %}" class="upload-doc-form" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <label for="other_cert">Choose Other Certs:</label><br>
+                                                <input type="file" id="profilePic" name="profilePic" accept="image/jpeg, image/png">
+                                                <br>
+                                                <label for="certificate_name">Certificate Name</label><br>
+                                                <input required type="text" id="certificate_name" name="certificate_name" placeholder="Certificate Name">
+                                                <label for="issuing_authority">Issuing Authority</label><br>
+                                                <input required type="text" id="issuing_authority" name="issuing_authority" placeholder="Issuing Authority">
+                                                <br>
+                                                <label for="date_of_issue">Date of Issue</label><br>
+                                                <input required type="date" id="date_of_issue" name="date_of_issue" placeholder="Date of Issue">
+                                                <br>
+                                                <input type="submit" value="Upload Document" class="save_btn">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                <!-- change password -->
+                            <div class="change_password_control_display">
+                                <div class="profileUpdate">
+                                    <div class="profile_update_content">
+                                        <div class="dp">
+                                            <img src="{{ tutor.profile_picture.url }}" alt="">
+                                        </div>                               
+                                        <h3 style="font-family: 'Diphylleia', 'dosis', 'el messiri', 'Inika'"><span>Hi,</span> {{ tutor.first_name }}</h3>
+                                        
+                                        <form class="changePassword" method="post" action="{% url 'change_password'%}">
+                                            {% csrf_token %}
+                                            <br><br>
+                                            <center><input type="password" name="password" id="oldPassword" class="extend" placeholder="old password"><br></center>
+                                            <center><input type="password" name="password1" id="newPassword" class="extend" placeholder="new password"><br></center>
+                                            <center><input type="password" name="password2" id="confirmPassword" class="extend" placeholder="confirm new password"><br><br></center>
+                                            <center><button type="submit" class="save_button_password extend inactive" id="password_update_save_btn">Update Password</button></center>                               
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -1017,23 +1153,24 @@
                     </div>
                 </div>
             </div>
-            
+        </div>
+        
             <!-- quick links -->
             <div class="right_section">
-                <div><h4 class="quicK_links">Quicklinks</h4></div>
+                <div><h3 class="quicK_links">Quick Links</h3></div>
                 <div >
                     <ol class="qlinks">
-                        <li><a href="#">Rooms</a></li>
-                        <li><a href="#">Meet the team</a></li>
-                        <li><a href="{% url 'quiz_guide' %}">Take assement</a></li>
-                        <li class="review_link">My reviews</li>
-                        <li class="report_btn">Report an issue</li>
-                        <li class="view_reports">My reports</li>
-                        <li><a href="#">Print profile</a></li>
+                        <li><a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp; Rooms</a></li><br>
+                        <li><a href="#"><i class="fa-solid fa-handshake"></i>&nbsp; Meet the team</a></li><br>
+                        <li><a href="{% url 'quiz_guide' %}"><i class="fa-regular fa-pen-to-square"></i>&nbsp; Take Quiz</a></li><br>
+                        <li class="review_link"><i class="fa-solid fa-arrow-trend-up"></i>&nbsp; My reviews</li><br>
+                        <li class="report_btn"><i class="fa-solid fa-circle-exclamation"></i>&nbsp; Report an issue</li><br>
+                        <li class="view_reports"><i class="fa-solid fa-file-import dropbtnReports"></i>&nbsp; My reports</li><br>
+                        <li><a href="#" id="printProfileBtn"><i class="fa-solid fa-print"></i>&nbsp; Print profile</a></li><br>
                     </ol>
                 </div>
             </div>
-        </div>
+        
     </div>
 </body>
 {% endblock content %}

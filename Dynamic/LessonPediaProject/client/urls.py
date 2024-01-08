@@ -17,4 +17,6 @@ urlpatterns = [
     path("filter/tutor/keyword=/<str:keyword>", views.search_algorithm, name="filter_keyword"),
     path("review/tutorid/<int:tutorId>", views.review_tutor_ajax, name="reviewTutor"),
     path("review/tutor/submit/<int:tutorId>", views.submit_review, name='submitReview'),
+    path("review/tutor/editReview/<int:tutorId>", views.edit_review, name='editReview'),
+    path("api/contractForm", views.contract_information, name="contractInfo"),
 ]

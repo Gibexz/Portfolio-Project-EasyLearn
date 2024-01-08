@@ -3,22 +3,28 @@
 
 {% block head %} 
     <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
 {% endblock head %}
 
 {% block title %}Login{% endblock title %}
 {% block signup_button %}{% endblock signup_button %}
-
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
-
 {% block content %}
 <br>  
+
+<div class="flash-container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+            <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                <p style="font-weight: bold;">{{ message }}</p>
+                <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
 <div class="login_container">
     <div class="login_container_inputs">
         <div class="logo">

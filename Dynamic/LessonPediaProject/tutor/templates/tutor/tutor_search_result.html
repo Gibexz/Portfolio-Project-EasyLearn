@@ -7,12 +7,26 @@
     <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="{% static 'script/jquery.tablesorter.min.js' %}"></script>
     <script src="{% static 'script/tutor_search.js' %}" ></script>
+    <script src="{% static 'script/tutor_messages.js' %}" ></script>
     <link rel="stylesheet" href="{% static 'styles/tutor_search.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
     <title>Search Result</title>
 </head>
 <body>
+    {% comment %} Flash messages {% endcomment %}
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
         <!-- Modal to display the search results -->
     <div class="searchResultContainer">
             <h2>Search Results for "{{ query }}"</h2>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="{% static 'script/tutors_profile_page.js' %}"></script>
+    <script src="{% static 'script/profilePage.js' %}"></script>
     <link rel="stylesheet" href="{% static 'styles/profileUpdate.css' %}">
     <title>Learner's - Profile</title>
 </head>
@@ -69,7 +69,7 @@
                             <label for="firstName">First Name</label><br>
                             {{ form.first_name }}
                             {% comment %} <input required type="text" name="" id="firstName" placeholder="First Name"> {% endcomment %}
-                            <label for="lastName">Last Name <span for="others" id="others_label">Others</span></label><br>
+                            <label for="lastName">Last Name <label for="others" id="others_label">Others</label></label><br>
                             {{ form.last_name }}
                             {% comment %} <input required type="text" name="" id="lastName" placeholder="Last Name"> {% endcomment %}
                             {% comment %} <input required type="text" name="" id="others" placeholder="Others"> {% endcomment %}
@@ -77,15 +77,29 @@
                             <label for="address">Residential Address</label><br>
                             {% comment %} <input required type="text" name="" id="address" placeholder="Address"> {% endcomment %}
                             {{ form.residential_address}}
-                            <label for="state">State of Resident <span for="nationality" id="nationality_label">Nationality</span></label><br>
+                            <label for="state">State of Resident <label for="nationality" id="nationality_label">Nationality</label></label><br>
                             {% comment %} <input required type="text" name="" id="state" placeholder="State of Resident"> {% endcomment %}
                             {{ form.state_of_residence }}
                             {% comment %} <input required type="text" name="" id="nationality" placeholder="Nationlaity"> {% endcomment %}
                             {{ form.nationality }} <br>
-                            <label for="phone_number">Phone Number</label><br>
+                            <label for="phoneNumber">Phone Number <label for="gender" id="gender_label">Gender </label><label for="dob" id="dob_label"> Date of Birth</label></label></label><br>
                             {{ form.phone_number }}
+                            {{ form.gender }}
+                            {{  form.date_of_birth }}
                         
                     </fieldset><br>
+
+                    <fieldset class="profile_form"><legend> Education and Preferences </legend>
+                        <label for="eduLevel">Highest Educational Level <label for="specifics" id="spec_label">Specific Level</label></label><br>
+                        {{ form.educational_level }}
+                        {{ form.specific_educational_level }}
+                        
+                        <label for="channel">Prefered Learning Channel <label for="language" id="language_label">Prefered Language </label> <label for="tutorGender" id="tutorGender_label">Tutor Gender</label></label><br>
+                        {{ form.prefered_channel }}
+                        {{ form.prefered_language }}
+                        {{ form.prefered_tutor_gender }}
+                    
+                </fieldset><br>
 
                    <br><br>
                 <fieldset class="profile_form"><legend> Uploads </legend>

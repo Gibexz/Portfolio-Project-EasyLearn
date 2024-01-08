@@ -347,5 +347,89 @@ $('.all_review').click(function(){
     $(".db").hide()
 })
 
+// Dynamic Selection
+var primarySelection = [
+    "Primary 1",
+    "Primary 2",
+    "Primary 3",
+    "Primary 4",
+    "Primary 5",
+    "Primary 6",
+]
+
+var secondarySelection = [
+    "JSS 1",
+    "JSS 2",
+    "JSS 3",
+    "SSS 1",
+    "SSS 2",
+    "SSS 3",
+]
+
+var tertiarySelection = [
+    "University 100L",
+    "University 200L",
+    "University 300L",
+    "University 400L",
+    "University 500L",
+    "ND 1",
+    "ND 2",
+    "HND 1",
+    "HND 2",
+]
+
+var others = [
+    "PgD",
+    "Masters",
+    "PhD",
+    "Others",
+]
+
+
+// Hangle dynamical dropdown
+$('#eduLevel').change(function() {
+    var selected = $(this).val();
+    var dropdwn = $('#specifics')
+    dropdwn.empty()
+    if (selected == "Primary"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        primarySelection.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else if (selected == "Secondary"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        secondarySelection.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else if (selected == "Tertiary"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        tertiarySelection.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else if (selected == "Others"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        others.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else {
+        dropdwn.append('<option value="">Select Educational Level</option>')
+    }
+});
+
+// edit review logics
+$(".allReview_content").on("click", ".message .editReview", function(e){
+    e.stopPropagation();
+    var parentContainer = $(this).closest('.message');
+    var transitSection = parentContainer.next(".transit");
+    transitSection.show().css("opacity", "1");
+});
+
+$(".cancelEdit").click(function(){
+    var parentContainer = $(this).closest('.transit');
+    parentContainer.hide().css("opacity", "0");
+});
+
+
+
 
 })

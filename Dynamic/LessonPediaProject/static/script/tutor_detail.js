@@ -1,5 +1,30 @@
 $(document).ready(function () {
 
+    // Show all subjects
+    $('#allSubjectsBtn').click(function () {
+    $('#allSubjectsView').show();
+    $('.closeModal, .continue').click(function () {
+        $('#allSubjectsView, #allScheduleView').hide();
+    });
+    });
+    
+
+    // Show all schedule
+    $('.allScheduleBtn').click(function () {
+        $('#allScheduleView').show();
+        $('.closeModal, .continue').click(function () {
+            $('#allSubjectsView, #allScheduleView').hide();
+        });
+        });
+
+    // dashboard dropdown toggling
+    $('.dashboardBtn').click(function (event) {
+        event.stopPropagation(); // Prevent the click event from reaching document
+        $('.dropdownContainerTop').toggle();
+    });
+    $(document).click(function () {
+        $('.dropdownContainerTop').hide();
+    });
 
     // Pagination
     const tutorItems = $('.tutor_row .tutor_overview');
@@ -129,23 +154,11 @@ $(document).ready(function () {
     
 
     // dropdownContainer item click (example: Engage tutor)
-    $(".dropdownContainer").on("click", ".engage-tutor", function () {
+    $(".dropdownContainer").on("click", ".", function () {
         // Add logic for the Engage Tutor action
         console.log("Engage Tutor clicked");
     });
 
-
-    $("#seeReviewsBtn").click(function () {
-        $('.overview_btn').removeClass('active');
-        $('.overview_body').hide();
-        $('.link2social').hide();
-        $('.review_btn').addClass('active');
-        $('.reviews').show();
-
-        $('html, body').animate({
-            scrollTop: $("#reviewsSection").offset().top
-        }, 500);
-        });
 
     // Handle Ajax request for email
         $("#emailForm").submit(function (e) {

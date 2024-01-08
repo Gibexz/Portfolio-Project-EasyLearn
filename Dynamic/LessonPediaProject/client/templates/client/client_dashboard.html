@@ -111,6 +111,7 @@
                     <center><h2 class="review_heading">Your Reviews</h2></center>
                 </section><hr>
 
+                <div class="review_scroll">
                 {% if reviews %}
 
                 {% for review in reviews %}
@@ -148,7 +149,26 @@
                         <div class="message_content">
                             {{ review.review_text }} 
                         </div>
-                    </section><hr>
+                    </section>
+                    
+                    <section class="transit">
+
+                       <fieldset>
+                            <legend style="border-radius: 30px"> Edit Review Content</legend>
+                            <form id='reviewForm' action="{% url 'editReview' tutorId=review.tutor.id %}" method='POST'>
+        
+                                {% csrf_token %}
+                                <label for="subject">Subject</label>
+                                <input type="text" placeholder="Enter Subject" name='subject' value="{{ review.review_subject }}" id='subject' required><br><br>
+        
+                                <label for="reviewContent">Review Text</label><br>
+                                <textarea name="reviewContent" id="reviewContent" cols="30" rows="10">{{ review.review_text }}</textarea><br><br>
+                                <center><input type="submit" value="SUBMIT" class="submitEdit"><span class="cancelEdit">Cancel</span></center>
+                                
+                            </form>
+                        </fieldset>
+                    </section>
+                    <hr>
                 {% endfor %}
 
                 {% else %}    
@@ -156,11 +176,10 @@
                         <center><h3>You have no Review yet, please click review on your dashboard</h3></center>
                     </section>
                 {% endif %}
+                </div>
             </div>
         </div>
     </div>  
-
-   
 
     <div class="db" style="display: nne">
         <div class="container">
@@ -238,19 +257,56 @@
                                             <section class="float_left">
                                                 <div class="subject_table table">
                                                     <span class="tutor_subject tr">{{ tutor.target_tutor.area_of_specialization }}</span>
-                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="time"> 4:00pm - 6:30pm (3hrs)</span>
+                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="engage"> <a href="{% url 'create_contract' tutor_id=tutor.target_tutor.id %}">Connect with Tutor</a></span>
                                                 </div>
+                                                
                                                 <span class="tutor_name"><b>{{ tutor.target_tutor.first_name }} {{ tutor.target_tutor.last_name}}</b></span>
                                                 <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
                                             
                                             </section>
-                                            <section 
+
+                                            <section class="goRight">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                                <div class="email-form">
+                                                    <form id="emailForm" method="post" action="{%url 'email_tutor' tutor.id %}">
+                                                        {% csrf_token %}
+                                                        <label for="sender">From:</label> <span><input type="text" id="sender" name="sender" required readonly value="{{ user.email }}"></span>
+                                                        <br>
+                                                        <label for="recipient">To:</label> <span> <input type="text" id="recipient" name="recipient" required readonly value="{{ tutor.email }}"></span>
+                                                        <br>
+                                                        <label for="subject">Subject:</label> <span> <input type="text" id="subject" name="subject" required value="Interested in Tutoring Session"></span>
+                                                        <br>
+                                                        <input type="hidden" id="lessonPedia" name="senderInfo" value="Client: {{ user.get_full_name }} - {{ user.email }}">
+                                                        <label for="message">Message:</label><br>
+                                                        <textarea id="message" name="message" rows="5" required></textarea><br>
+                                                        
+                                                        <button type="submit" class="sendEmail">Send</button>
+                                                        <button class="cancelEmail" type="button">Cancel</button>
+                                                    </form>
+                                                </div>
+                                                <div id="loadingMessage" style="display: none;">
+                                                    <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                                                </div>
+                                                <!-- email_sent_modal.html -->
+                        
+                                                <div class="dropdownContainer">
+                                                    <div class="dropdown-item allScheduleBtn">All Schedules</div>
+                                                    <div class="dropdown-item all-subjects-btn"id="allSubjectsBtn">All Subjects</div>
+                                                </div>
+                                            </section>
+
+                                            <section>
                                                 {% if tutor.target_tutor.is_active == 1 %}
-                                                    class="status"
+                                                   <div class="requestStatus">
+                                                        <p class="status"></p>
+                                                        <p>status</p>
+                                                   </div>
                                                 {% else %}
                                                     class="redStatus"
                                                 {% endif %}
-                                                >
+                                                
                                             </section>
                                         </div>
                                        
@@ -259,7 +315,7 @@
                                             <p class='clientId'>{{ request.user.id }}</p>
                                         </section>
 
-                                        <div class="tutor_toggles">
+                                        <div class="tutor_toggles selectOptions">
                                             <button class="remove_tutor even-width">Remove</button>
                                             <a href=""><button class="report_abuse even-width">Report Abuse</button></a>
                                             <button class="review even-width">Review</button>
@@ -429,6 +485,54 @@
                                     <input type="text" name="state" id="" class="extend" placeholder="{{ request.user.state_of_residence }}">
                                     <label for="nationality">Nationality</label>
                                     <input type="text" name="nationality" id="" class="extend" placeholder="{{ request.user.nationality }}"> <br>
+                                    <label for="eduLevel">Highest Educational Level <label for="specifics" id="specs">Specifics</label></label>
+                                    <section class="select_option">
+                                        <select name="eduLevel" id="eduLevel" class="allSelect">
+                                            {% if request.user.educational_level %}
+                                                <option value="{{ request.user.educational_level }}" disabled hidden selected>{{ request.user.educational_level }}</option>                              
+                                            {% else %}
+                                                <option value="Highest Educational Level" disabled selected hidden>Highest Educational Level</option>
+                                            {% endif %}
+                                            <option value="Primary">Primary</option>
+                                            <option value="Secondary">Secondary</option>
+                                            <option value="Tertiary">Tertiary</option>
+                                            <option value="Others">Orders</option>                                
+                                        </select><br>
+                                        <select name="specifics" id="specifics" class="allSelect">
+                                            {% if request.user.specific_educational_level %}
+                                                <option value="{{ request.user.specific_educational_level }}" disabled hidden selected>{{ request.user.specific_educational_level }}</option> 
+                                            {% else %}
+                                                <option value="Specific education level" disabled selected hidden>Specific Education Level</option>
+                                            {% endif %}
+                                                                            
+                                        </select>
+                                    </section><br>
+
+                                    <label for="channel">Prefered Learning Channel <label for="tutorGender" id="tutorGen">Tutor Gender</label></label>
+                                    <section class="select_option">
+                                        <select name="channel" id="channel" class="allSelect">
+                                            {% if request.user.prefered_channel %}
+                                                <option value="{{ request.user.prefered_channel }}" disabled hidden selected>{{ request.user.prefered_channel }}</option>                              
+                                            {% else %}
+                                                <option value="Prefered Channel" disabled selected hidden>-- Select one --</option>
+                                            {% endif %}
+                                            <option value="Online">Online</option>
+                                            <option value="Physical">Physical</option>
+                                            <option value="Hybrid">Hybrid</option>                               
+                                        </select><br>
+                                        <select name="tutorGender" id="tutorGender" class="allSelect">
+                                            {% if request.user.prefered_tutor_gender %}
+                                                <option value="{{ request.user.prefered_tutor_gender }}">{{ request.user.prefered_tutor_gender }}</option>
+                                            {% else %}
+                                                <option value="Prefered Gender" disabled selected hidden>-- Select one --</option>
+                                            {% endif %}
+                                            
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Any">Any</option> 
+                                                                            
+                                        </select>
+                                    </section><br>
                                     <button class="save_button">Save</button>                               
                                 </form>
                             </div>

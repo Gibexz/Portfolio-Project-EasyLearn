@@ -9,6 +9,7 @@ from .backends import EmailClientBackend as ClientBackend
 from django.contrib import messages
 from .form import UserProfileRegistrationForm
 from .models import Client, Cart, Tutor, Ranking, Review
+from generic_apps.models import Contract
 from django.http import HttpResponse, JsonResponse
 import re
 
@@ -68,6 +69,7 @@ def user_profile_registration(request):
             form.save()
             return redirect("validate_user", whoami=request.user)
         else:
+            print(form.errors)
             return HttpResponse("Invalid form")
     else:
         form = UserProfileRegistrationForm()
@@ -82,10 +84,10 @@ def render_dashboard(request, whoami, tutorId=None):
     address = user.residential_address
 
     if address:
-        getAllTutors = Cart.objects.filter(client_id=request.user.id).all()
+        getAllTutors = Cart.objects.filter(client_id=request.user).all()
         countTutors = getAllTutors.filter(client_id=request.user.id).count()
         allReviews = Review.objects.filter(client=request.user.id).all()
-       
+
         # Pagination
         # page = request.GET.get('page', 1)
         # paginator = Paginator(getAllTutors, 3) 
@@ -96,7 +98,7 @@ def render_dashboard(request, whoami, tutorId=None):
         # except EmptyPage:
         #     tutors = paginator.page(paginator.num_pages)
 
-        # Hangle ajax data
+        # Hangle ajax dataw54eryt
         get_ajax_data = request.GET.get('tutorId')
         if get_ajax_data:
             """return object of selected tutor"""
@@ -134,6 +136,11 @@ def ClientProfileUpdate(request):
         residentAddress = request.POST.get('address')
         state_Residence = request.POST.get('state')
         national = request.POST.get('nationality')
+        eduLevel = request.POST.get('eduLevel')
+        specifics = request.POST.get('specifics')
+        channel = request.POST.get('channel')
+        tutorGender = request.POST.get('tutorGender')
+        
         if firstName:
             activeUser.first_name = firstName
         if lastName:
@@ -144,7 +151,16 @@ def ClientProfileUpdate(request):
             activeUser.residential_address = state_Residence
         if national:
             activeUser.nationality = national
-        if firstName or lastName or phoneNumbs or residentAddress or national:
+        if eduLevel:
+            activeUser.educational_level = eduLevel
+        if specifics:
+            activeUser.specific_educational_level = specifics
+        if channel:
+            activeUser.prefered_channel = channel
+        if tutorGender:
+            activeUser.prefered_tutor_gender = tutorGender
+
+        if firstName or lastName or phoneNumbs or residentAddress or national or eduLevel or specifics or channel or tutorGender:
             messages.success(request, "User Profile Succesfully Updated")
             activeUser.save()
         else:
@@ -287,3 +303,38 @@ def submit_review(request, tutorId):
         storage.save()
         messages.success(request, "Review was successfull")
     return redirect('validate_user', whoami=request.user)
+
+@login_required(login_url="client_signIn")
+def edit_review(request, tutorId):
+    """Edit Review based on active user"""
+    tutor = get_object_or_404(Tutor, pk=tutorId)
+    checkForUpdate = Review.objects.filter(client=request.user, tutor=tutor).first()
+    client = request.user
+    if request.method == "POST":
+        subject = request.POST.get('subject')
+        body = request.POST.get('reviewContent')
+        if subject == None or body == None or body == checkForUpdate.review_text and subject == checkForUpdate.review_subject:
+            messages.error(request, "No changes was made")
+            return redirect('validate_user', whoami=request.user)
+        storage = Review.objects.filter(client=client, tutor=tutor).first()
+        storage.review_subject = subject
+        storage.review_text = body
+        storage.save()
+        messages.success(request, "Review was successfull")
+    return redirect('validate_user', whoami=request.user)
+
+def contract_information(request):
+    """return an API for contract"""
+    userCart = Cart.objects.filter(client=request.user).all()
+    data = {}
+    for content in userCart:
+        contractData = Contract.objects.filter(tutor=content.target_tutor.id).all()
+        for value in contractData:
+            storage = {
+                value.id : {
+                    "status": value.contract_status
+                }
+            }
+            data.update(storage)
+
+    return JsonResponse(data)

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse, Http404
+from django.utils import timezone
 from .models import AppAdmin
 from client.models import Client
 from tutor.models import Tutor
@@ -237,7 +238,7 @@ def get_nos_inactive_clients(request):
 #     except Exception as e:
 #         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Tutor suspension/blocking/reactivation/deleting  logics
 class TutorViewSet(ModelViewSet):
     """Tutor viewset"""
     permission_classes = [IsAuthenticated] # Sets the permission class for the viewset
@@ -247,12 +248,13 @@ class TutorViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def deactivate_tutor(self, request, pk=None):
-        """block_tutor method"""
+        """Deactivate (block) tutor method"""
         try:
             tutor = Tutor.objects.get(pk=pk)
             tutor.is_active = False
             tutor.is_blocked_admin = True
-            tutor.is_suspended_admin = True
+            tutor.blocked_at_admin = timezone.now()
+            tutor.block_reason_admin = request.data['block_reason']
             tutor.save()
             return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
         except Http404:
@@ -263,7 +265,7 @@ class TutorViewSet(ModelViewSet):
     
     @action(detail=True, methods=['POST'])
     def activate_tutor(self, request, pk=None):
-        """Activate tutor method"""
+        """Reactivate tutor method"""
         try:
             tutor = Tutor.objects.get(pk=pk) #works
             # tutor = self.get_object() # works too
@@ -273,15 +275,61 @@ class TutorViewSet(ModelViewSet):
             tutor.suspension_duration_admin = None
             tutor.suspension_reason_admin = None
             tutor.block_reason_admin = None
+            tutor.suspended_at_admin = None
+            tutor.blocked_at_admin = None
+            tutor.is_suspended = False
+            tutor.is_blocked = False
             tutor.save()
             return Response({'message': 'Tutor activated successfully'}, status=status.HTTP_200_OK)
         except Http404:
             return Response({'message': 'Tutor not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)                                                                                                                                                    
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)  
 
 
-# # Client suspension logics
+
+    @action(detail=True, methods=['POST'])
+    def suspend_tutor(self, request, pk=None):
+        """suspend tutor method"""
+        try:
+            tutor = Tutor.objects.get(pk=pk)
+            # tutor = self.get_object()
+            tutor.is_active = False
+            tutor.is_suspended_admin = True
+            tutor.suspended_at_admin = timezone.now()
+            tutor.suspension_duration_admin = request.data['suspension_duration']
+            tutor.suspension_reason_admin = request.data['suspension_reason']
+            tutor.save()
+            return Response({'message': 'Tutor suspended successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Tutor not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)                                                                                                                                                 
+
+
+    @action(detail=True, methods=['DELETE'])
+    def delete_tutor(self, request, pk=None):
+        """delete tutor method"""
+        try:
+            tutor = Tutor.objects.get(pk=pk)
+            # tutor = self.get_object()
+            confirmation = request.data['confirmation']
+            if confirmation == 'CONFIRM DELETE':
+                tutor.delete()
+                return Response({'message': 'Tutor deleted successfully'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'Tutor not deleted, please type in the right confirmation text'}, status=status.HTTP_400_BAD_REQUEST)
+        except Http404:
+            return Response({'message': 'Tutor not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+# # Client suspension/blocking/reactivation/deleting logics
 class ClientViewSet(ModelViewSet):
     """Client viewset"""
     permission_classes = [IsAuthenticated] # Sets the permission class for the viewset
@@ -290,14 +338,17 @@ class ClientViewSet(ModelViewSet):
     serializer_class = ClientSerializer
 
     @action(detail=True, methods=['POST'])
-    def suspend_client(self, request, pk=None):
-        """Suspend_client method"""
+    def deactivate_client(self, request, pk=None):
+        """Deactivate (block) client method"""
         try:
             # client = Client.objects.get(pk=pk)
             client = self.get_object()
             client.is_active = False
+            client.is_blocked_admin = True
+            client.block_reason_admin = request.data['block_reason']
+            client.blocked_at_admin = timezone.now()
             client.save()
-            return Response({'message': 'Client suspended successfully'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Client account deactivated (blocked) successfully'}, status=status.HTTP_200_OK)
         except Http404:
             return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
@@ -307,13 +358,58 @@ class ClientViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def activate_client(self, request, pk=None):
-        """Activate client method"""
+        """Reactivate client method"""
         try:
             # client = Client.objects.get(pk=pk)
             client = self.get_object()
+
             client.is_active = True
+            client.deactivateByClient = True
+            client.is_blocked_admin = False
+            client.is_suspended_admin = False
+            client.suspension_duration_admin = None
+            client.suspension_reason_admin = None
+            client.block_reason_admin = None
+            client.suspended_at_admin = None
+            client.blocked_at_admin = None
             client.save()
             return Response({'message': 'Client activated successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['POST'])
+    def suspend_client(self, request, pk=None):
+        """delete client method"""
+        try:
+            # client = Client.objects.get(pk=pk)
+            client = self.get_object()
+            client.is_active = False
+            client.is_suspended_admin = True
+            client.suspended_at_admin = timezone.now()
+            client.suspension_duration_admin = request.data['suspension_duration']
+            client.suspension_reason_admin = request.data['suspension_reason']
+            client.save()
+            return Response({'message': 'Client suspended successfully'}, status=status.HTTP_200_OK)
+        except Http404:
+            return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    @action(detail=True, methods=['DELETE'])
+    def delete_client(self, request, pk=None):
+        """delete client method"""
+        try:
+            # client = Client.objects.get(pk=pk)
+            client = self.get_object()
+            confirmation = request.data['confirmation']
+            if confirmation == 'CONFIRM DELETE':
+                client.delete()
+                return Response({'message': 'Client deleted successfully'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'Client not deleted, please type in the right confirmation text'}, status=status.HTTP_400_BAD_REQUEST)
         except Http404:
             return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:

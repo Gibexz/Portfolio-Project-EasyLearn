@@ -1,0 +1,68 @@
+<!-- create_contract.html -->
+{% extends 'tutor/base.html'%}
+{% load static %}
+
+{% block title %}Create Contract{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/create_contract.css' %}">
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
+{% endblock head %}
+
+{% block signup_button %}{% endblock signup_button %}
+
+{% block content %}
+<div class="container">
+<div class="flash-container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+            <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                <p style="font-weight: bold;">{{ message }}</p>
+                <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<form method="post" action="{% url 'create_contract' tutor.id %}">
+    {% csrf_token %}
+
+    <h1>Request Contract</h1>
+    <p>Client: <span>{{ client.get_full_name }}</span></p>
+    <p>Tutor: <span>{{ tutor.get_full_name }}</span></p>
+
+    <div class="row">
+        <div>
+            <label for="subject_id">Select Subject:</label>
+            <select name="subject_id" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <div>
+            <label for="pay_rate">Pay Rate (₦):</label>
+            <input type="number" name="pay_rate" min="500" required value="{{tutor.pay_rate}}" >
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <label for="contract_length">Contract Length (in days):</label>
+            <input type="number" name="contract_length"  min="1" max="365" required>
+        </div>
+
+        <div>
+            <label for="week_days">Contact Days:</label>
+            <input type="text" name="week_days" maxlength="20"  required placeholder="e.g Mon, Wed, Sat">
+        </div>
+    </div>
+    <div>
+        <label for="start_date">Start Date:</label>
+        <input type="date" name="start_date" required>
+    </div>
+    <button type="submit">Request Contract</button>
+</form>
+</div>
+{% endblock content %}
