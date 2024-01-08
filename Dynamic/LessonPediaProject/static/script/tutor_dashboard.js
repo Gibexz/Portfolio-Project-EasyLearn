@@ -1020,7 +1020,7 @@ $(document).ready(function () {
                 $('#settledContractsH3').text(response.settled_contracts_count);
                 $('#totalEarningsH3').text(response.received_payments);
   
-                  // Clear existing table rows
+                  // Clear existing table rows before updating
                 $('#pendingClientTable tbody').empty();
   
                   // Iterate over each contract in the response and append to the table
