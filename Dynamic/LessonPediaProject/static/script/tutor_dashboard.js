@@ -1010,11 +1010,11 @@ $(document).ready(function () {
               status: status
           },
           success: function (response) {
-              // $('#' + rowId).remove();
-              // $(this).closest('form')[0].reset(); 
-              // $('#' + rowId + ' .contractCode').val('');
-              // console.log(response);
-              // if (response.status === 'success') {
+              $('#' + rowId).remove();
+              $(this).closest('form')[0].reset(); 
+              $('#' + rowId + ' .contractCode').val('');
+              console.log(response);
+              if (response.status === 'success') {
                 $('#activeContractsH3').text(response.active_contracts_count);
                 $('#pendingContractsH3').text(response.pending_contracts_count);
                 $('#settledContractsH3').text(response.settled_contracts_count);
@@ -1025,6 +1025,8 @@ $(document).ready(function () {
   
                   // Iterate over each contract in the response and append to the table
                   for (let i = 0; i < response.pending_contracts.length; i++) {
+                      // Get the current contract
+                      console.log(response.pending_contracts[i]);
                       let contract = response.pending_contracts[i];
   
                       // Construct HTML for the current contract
@@ -1039,7 +1041,7 @@ $(document).ready(function () {
                       // Construct the accept button
                       contractHTML += `<td class="accept_contract_btn"><form method="post" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
                       contractHTML += '<input type="hidden" name="csrfmiddlewaretoken" value="' + csrfToken + '">';                      
-                      contractHTML += '<input type="hidden"  value="' + contract.contract_code +'">';
+                      contractHTML += `<input type="hidden" class="contractCode"  value="${contract.contract_code}">`;
                       contractHTML += '<input type="hidden" name="status" value="Accept">';
                       contractHTML += '<button type="submit">Accept</button>';
                       contractHTML += '</form></td>';
@@ -1059,6 +1061,7 @@ $(document).ready(function () {
                   // }
 
               }
+            }
           },
           error: function (error) {
               console.error(error);
