@@ -10,9 +10,12 @@
     {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> {% endcomment %}
     <link rel="stylesheet" href="{% static "styles/tutor_dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "styles/tutor_messages.css" %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static "script/tutor_dashboard.js" %}"></script>
+    <script src="{% static "script/tutor_messages.js" %}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% endblock head %}
 
 {% block signup_button %}     
@@ -22,6 +25,18 @@
 {% endblock signup_button %} 
 {% block content %}
 <body class="background">
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
         <!-- Pop ups -->
     <!-- ================================================================================================================================= -->
      <!-- deactivate account -->
@@ -847,38 +862,39 @@
                                             <div class="flex_row">
                                                 <div class="flex_in">
                                                     <label for="phone_number">Phone Number:</label>
-                                                    <input type="tel" id="phone_number" name="phone_number" required value="{{ tutor.phone_number}}" placeholder="Phone Number">
+                                                    <input type="tel" id="phone_number" name="phone_number" required value="{% if tutor.phone_number %}{{ tutor.phone_number }}{% endif %}" placeholder="Phone Number">
                                                 </div>
                                                 <div class="flex_in">
-
                                                     <label for="lga_resident">LGA of Residence:</label>
-                                                    <input type="text" id="lga_resident" name="lga_resident" required value="{{ tutor.lga_resident }}" placeholder="LGA of Residence">
+                                                    <input type="text" id="lga_resident" name="lga_resident" required value="{% if tutor.lga_resident %}{{ tutor.lga_resident }}{% endif %}" placeholder="LGA of Residence">
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="flex_row">
                                                 <div class="flex_in">
                                                     <label for="residential_address">Residential Address:</label>
-                                                    <input type="text" id="residential_address"  required name="residential_address" value="{{ tutor.residential_address }}" placeholder="Residential Address">
+                                                    <input type="text" id="residential_address" required name="residential_address" value="{% if tutor.residential_address %}{{ tutor.residential_address }}{% endif %}" placeholder="Residential Address">
                                                 </div>
                                                 <div class="flex_in">
                                                     <label for="state">State of Origin:</label>
-                                                    <input type="text" value="{{ tutor.state_of_origin }}" name="state_of_origin" placeholder="Enter State ">
+                                                    <input type="text" name="state_of_origin" value="{% if tutor.state_of_origin %}{{ tutor.state_of_origin }}{% endif %}" placeholder="Enter State">
                                                 </div>
                                             </div>
                                             
                                             <div class="flex_row">
                                                 <div class="flex_in">
                                                     <label for="stateOfResidence">State of Residence:</label>
-                                                    <input type="text" id="stateOfResidence" name="state_of_residence" value="{{ tutor.state_of_residence }}" required  placeholder="State of Residence">
+                                                    <input type="text" id="stateOfResidence" name="state_of_residence" required value="{% if tutor.state_of_residence %}{{ tutor.state_of_residence }}{% endif %}" placeholder="State of Residence">
                                                 </div>
                                                 <div class="flex_in">
                                                     <label for="primary_subject">Primary Subject:</label>
-                                                    <input type="text" id="primary_subject"  required  name="primary_subject" value="{{ tutor.primary_subject }}" placeholder="Enter Core Subject">
+                                                    <input type="text" id="primary_subject" required name="primary_subject" value="{% if tutor.primary_subject %}{{ tutor.primary_subject }}{% endif %}" placeholder="Enter Core Subject">
                                                 </div>
                                             </div>
+                                            
                                             <div class="flex_row">
                                                 <div class="flex_in">
+                                                    <label for="highest_qualification"> Highest Qualification</label>
                                                     <select id="highest_qualification" required  name="highest_qualification">
                                                         <option value="" selected disabled >-- select one --</option>
                                                         <option value="Phd"{%if tutor.highest_qualification == 'Phd' %}selected{% endif %}>Phd</option>
@@ -893,6 +909,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="flex_in">
+                                                    <label for="availability">Availability</label>
                                                     <select id="availability" required  name="availability">
                                                         <option value=""selected disabled>-- select one --</option>
                                                         <option value="Remote"{%if tutor.availability == 'Remote' %}selected{% endif %}>Online(Remote)</option>
@@ -903,6 +920,7 @@
                                             </div>
                                             <div class="flex_row">
                                                 <div class="flex_in">
+                                                    <label for="averageDuration">Average Class Duration</label>
                                                         <select required id="averageDuration" name="average_session_duration">
                                                             <option value="" selected disabled>-- select one --</option>
                                                             <option value="Flexible"{%if tutor.average_session_duration == 'Flexible' %}selected{% endif %}>Flexible</option>
@@ -913,6 +931,7 @@
                                                         </select>
                                                 </div>
                                                 <div class="flex_in">
+                                                    <label for="open_to_work">Open to Work</label>
                                                     <select name="open_to_work" required id="open_to_work">
                                                         <option value="" selected disabled>-- select one --</option>
                                                         <option value="Open"{%if tutor.open_to_work == 'Open' %}selected{% endif %}>Open to work</option>
@@ -936,7 +955,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex_row bio">
-                                                {% comment %} <label for="bio">Bio</label> <br> {% endcomment %}
+                                                <label for="bio">Profile Statement</label> 
                                                 <textarea name="bio" required placeholder="Profile Statement" id="text_area">{% if tutor.bio %} {{ tutor.bio }} {% endif %}</textarea>
                                             </div>
                                             

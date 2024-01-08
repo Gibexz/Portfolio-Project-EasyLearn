@@ -18,7 +18,7 @@ from app_admin.models import AppAdmin
 from .forms import TutorScheduleForm
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.http import require_POST
-from generic_apps.models import Contract, ReportAbuse
+from generic_apps.models import Contract, TutorReportAbuse
 from django.utils import timezone
 from datetime import timedelta
 import random, string
@@ -39,9 +39,9 @@ def report_abuse(request):
             subject = report_subject
 
         client = get_object_or_404(Client, pk=client_id)
-        report = ReportAbuse.objects.create(
+        report = TutorReportAbuse.objects.create(
             tutor=tutor,
-            client=client,
+            target_client_id=client,
             subject=subject,
             message=message,
         )
@@ -478,7 +478,7 @@ def tutor_dashboard(request):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     
     tutor = Tutor.objects.get(id=request.user.id)
-    reports = ReportAbuse.objects.filter(tutor=tutor).order_by('-created_at')
+    reports = TutorReportAbuse.objects.filter(tutor=tutor).order_by('-created_at')
     contracts = Contract.objects.filter(tutor=tutor).order_by('-created_at')
     clients = set(contract.client for contract in contracts)
 
@@ -559,7 +559,7 @@ def tutor_login(request):
             else:
                 tutor_exists = Tutor.objects.filter(username=request.user.username).exists()
                 if tutor_exists:
-                    messages.error(request, 'Incorrect Password')
+                    messages.error(request, 'Incorrect Password, Please try again')
                 else:
                     messages.error(request, 'User Not Found')
                 return render(request, 'tutor/tutor_login.html', context={'username_or_email': request.user.username})

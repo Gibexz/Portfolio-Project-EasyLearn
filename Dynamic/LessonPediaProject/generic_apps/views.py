@@ -5,6 +5,12 @@ from app_admin.models import AppAdmin
 from tutor.models import Tutor
 from client.models import Client
 from django.contrib.auth.models import AnonymousUser
+from .serializers import ClientReportAbuseSerializer, TutorReportAbuseSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from .models import ClientReportAbuse, TutorReportAbuse
+from django.contrib.auth.decorators import login_required
 
 
 def landing_page(request):
@@ -88,3 +94,36 @@ def app_admin_sign_up(request):
         form = AppAdminRegisterForm()
         context = {'form': form}
         return render(request, 'generic_apps/app_admin_sign_up.html', context=context)
+
+# Tutors report abuse logics for appAdmin
+@api_view(['GET'])
+@login_required(login_url='app_admin_sign_up')
+def get_tutors_reports(request):
+    """ get tutor reports data api using django rest framwork"""
+    if request.method == 'GET':
+        tutors_reports = TutorReportAbuse.objects.all().order_by('-created_at')
+        
+        tutors_reports_serialized = TutorReportAbuseSerializer(tutors_reports, many=True)
+        
+        return Response({
+            'tutors_reports': tutors_reports_serialized.data  # Serialized tutor data
+        }, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+
+# Clients report abuse logics for appAdmin
+@api_view(['GET'])
+@login_required(login_url='app_admin_sign_up')
+def get_clients_reports(request):
+    """ get client reports data api using django rest framwork"""
+    if request.method == 'GET':
+        clients_reports = ClientReportAbuse.objects.all().order_by('-created_at')
+        
+        clients_reports_serialized = ClientReportAbuseSerializer(clients_reports, many=True)
+        
+        return Response({
+            'clients_reports': clients_reports_serialized.data  # Serialized tutor data
+        }, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

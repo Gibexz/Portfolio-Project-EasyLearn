@@ -1,108 +1,70 @@
 <!-- create_contract.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Contract</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
+{% extends 'tutor/base.html'%}
+{% load static %}
 
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            box-sizing: border-box;
-        }
+{% block title %}Create Contract{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/create_contract.css' %}">
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
+    <script src="{% static 'script/jQuery.js' %}"></script>
+{% endblock head %}
 
-        h1 {
-            text-align: center;
-            color: #007bff;
-        }
+{% block signup_button %}{% endblock signup_button %}
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
+{% block content %}
+<div class="container">
+<div class="flash-container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+            <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                <p style="font-weight: bold;">{{ message }}</p>
+                <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
 <form method="post" action="{% url 'create_contract' tutor.id %}">
     {% csrf_token %}
 
-    <h1>Create Contract</h1>
-    <p>Client: {{ client.get_full_name }}</p>
-    <p>Tutor: {{ tutor.get_full_name }}</p>
+    <h1>Request Contract</h1>
+    <p>Client: <span>{{ client.get_full_name }}</span></p>
+    <p>Tutor: <span>{{ tutor.get_full_name }}</span></p>
 
-    <div>
-        <label for="subject_id">Select Subject:</label>
-        <select name="subject_id" required>
-            {% for subject in subjects %}
-                <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
-            {% endfor %}
-        </select>
+    <div class="row">
+        <div>
+            <label for="subject_id">Select Subject:</label>
+            <select name="subject_id" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <div>
+            <label for="pay_rate">Pay Rate (₦):</label>
+            <input type="number" name="pay_rate" min="500" required value="{{tutor.pay_rate}}" >
+        </div>
     </div>
+    <div class="row">
+        <div>
+            <label for="contract_length">Contract Length (in days):</label>
+            <input type="number" name="contract_length"  min="1" max="365" required>
+        </div>
 
-    <div>
-        <label for="pay_rate">Pay Rate:</label>
-        <input type="number" name="pay_rate" required>
+        <div>
+            <label for="week_days">Contact Days:</label>
+            <input type="text" name="week_days" maxlength="20"  required placeholder="e.g Mon, Wed, Sat">
+        </div>
     </div>
-
-    <div>
-        <label for="contract_length">Contract Length (in days):</label>
-        <input type="number" name="contract_length" required>
-    </div>
-
-    <div>
-        <label for="week_days">Days:</label>
-        <input type="text" name="week_days" maxlength="20" required placeholder="e.g Mon, Wed, Sat">
-    </div>
-
     <div>
         <label for="start_date">Start Date:</label>
         <input type="date" name="start_date" required>
     </div>
-    <button type="submit">Create Contract</button>
+    <button type="submit">Request Contract</button>
 </form>
+</div>
+{% endblock content %}
 
-</body>
-</html>

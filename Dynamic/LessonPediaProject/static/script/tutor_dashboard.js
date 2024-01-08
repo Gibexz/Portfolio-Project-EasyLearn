@@ -579,7 +579,7 @@ function updateScheduleTables(data) {
   
 
   // Refresh the page
-  $('.refreshPage').click(function () {
+  $('.refreshPage, #refreshPage').click(function () {
     location.reload();
   });
   
@@ -753,7 +753,7 @@ $('.cancel_suspend').hide();
   // Tutors Add Subject AJAX
 $(document).ready(function() {
   // Tutors Add Subject AJAX
-  $('.refreshPage').click(function () {
+  $('.refreshPage, #refreshPage').click(function () {
     location.reload();
   });
   $('#subjectForm').submit(function(event) {
@@ -838,7 +838,7 @@ $(document).ready(function() {
 
 // update and delete subject
 $(document).ready(function () {
-  $('.refreshPage').click(function () {
+  $('.refreshPage, #refreshPage').click(function () {
     location.reload();
   });
 
@@ -1001,8 +1001,6 @@ $(document).ready(function () {
       let contractCode = $('#' + rowId + ' .contractCode').val();
       let status = $(this).data('action');
       const csrfToken = $('[name="csrfmiddlewaretoken"]').val();
-      alert(status)
-      alert($('#pendingContractsH3').text())
       if (status !== 'undefined' && status !== null && status !== '') {
       $.ajax({
           url: `/tutor/updateContractStatus/${contractCode}/`,
@@ -1021,12 +1019,9 @@ $(document).ready(function () {
                 $('#pendingContractsH3').text(response.pending_contracts_count);
                 $('#settledContractsH3').text(response.settled_contracts_count);
                 $('#totalEarningsH3').text(response.received_payments);
-                alert($('#pendingContractsH3').text())
-                alert('Done updating counts')
   
                   // Clear existing table rows
                 $('#pendingClientTable tbody').empty();
-                alert('Emptied table body')
   
                   // Iterate over each contract in the response and append to the table
                   for (let i = 0; i < response.pending_contracts.length; i++) {

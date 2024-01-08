@@ -36,8 +36,14 @@
                         <p class="disable_action">You are about to indefinitely suspend this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_remove_tutor" data-tutor-id="">Blocked</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="blocking">
+                            <label for="reason_for_blocking">Reason for Deactivation</label>
+                            <textarea id="reason_for_blocking_tutor" name="reason_for_blocking" rows="4" cols="60"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_remove_tutor" data-tutor-id="">Blocked</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -60,19 +66,23 @@
                         <p class="disable_action">You are about to suspend this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <label for="suspension_duration">suspension duration</label>
-                        <input type="number" id="suspension_duration" name="suspension_duration" min="1">
-                        <label for="reason_for_suspension">Reason for Suspension</label>
-                        <input type="text" id="reason_for_suspension" name="reason_for_suspension">
-                        <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Blocked</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="suspending">
+                            <label for="suspension_duration">suspension duration</label>
+                            <input type="number" id="suspension_duration_tutor" name="suspension_duration" min="1">
+                            <label for="reason_for_suspension">Reason for Suspension</label>
+                            <textarea id="reason_for_suspension_tutor" name="reason_for_suspension" rows="2" cols="50"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Suspend</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
         </div>
     </div>
 
-    <!--block account client-->
+    <!--block acctutor-->
     <div class="set_disable_account_client">
         <div class="disable_account">
             <div class="disable_account_content">
@@ -88,8 +98,47 @@
                         <p class="disable_action">You are about to indefinitely suspend this learner's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_remove_client" data-client-id="">Suspend</button>
-                        <button class="mistake_client">Cancel</button>
+                        <div class="blocking">
+                            <label for="reason_for_blocking">Reason for Deactivation</label>
+                            <textarea id="reason_for_blocking_client" name="reason_for_blocking" rows="4" cols="60"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_remove_client" data-client-id="">Block</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+
+    <!--suspend account client-->
+    <div class="set_suspend_account_client">
+        <div class="disable_account" id="disable_account_dialog">
+            <div class="disable_account_content">
+                <p class="disable_close_client" title="close">
+                    x
+                </p>
+                <div class="disable_warning">
+                    <section>
+                        <img src="{% static 'images/icons/warning.png' %}" alt="">
+                    </section>
+                    <div class="disable_warning_box">
+                        <p class="confirm_dialog">Warning!</p>
+                        <p class="disable_action">You are about to suspend this client's acccount, Proceed?</p>
+                    </div>
+                    <div class="selections">
+                        <div class="suspending">
+                            <label for="suspension_duration">suspension duration</label>
+                            <input type="number" id="suspension_duration_client" name="suspension_duration" min="1">
+                            <label for="reason_for_suspension">Reason for Suspension</label>
+                            <textarea id="reason_for_suspension_client" name="reason_for_suspension" rows="2" cols="50"></textarea>
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_suspend_client" data-client-id_suspend="">Suspend</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -113,8 +162,10 @@
                         <p class="disable_action">You are about to reactivate this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_activate_tutor" data-tutor-id_activate="">Reactivate</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="confirm_buttons">
+                            <button class="confirm_activate_tutor" data-tutor-id_activate="">Reactivate</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -139,8 +190,10 @@
                         <p class="disable_action">You are about to reactivate this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_activate_client" data-client-id_activate="">Reactivate</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="confirm_buttons">
+                            <button class="confirm_activate_client" data-client-id_activate="">Reactivate</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
                     </div>
                 </div>           
             </div>
@@ -165,8 +218,15 @@
                         <p class="disable_action">You are about to permanently delete this tutor's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_delete_tutor" data-client-id="">Delete</button>
-                        <button class="mistake">Cancel</button>
+                        <div class="deleting">
+                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" below to delete</label>
+                            <input type="text" id="confirm_delete_tutor" name="confirm_delete" autocomplete="off">
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_delete_tutor" data-tutor-id_delete="">Delete</button>
+                            <button class="mistake">Cancel</button>
+                        </div>
+                        <!-- <center><h3>Temporarily disabled</h3></center> -->
                     </div>
                 </div>           
             </div>
@@ -189,8 +249,15 @@
                         <p class="disable_action">You are about to permanently delete this client's acccount, Proceed?</p>
                     </div>
                     <div class="selections">
-                        <button class="confirm_delete_client" data-client-id="">Delete</button>
-                        <button class="mistake_client">Cancel</button>
+                        <div class="deleting">
+                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" below to delete</label>
+                            <input type="text" id="confirm_delete_client" name="confirm_delete" autocomplete="off">
+                        </div>
+                        <div class="confirm_buttons">
+                            <button class="confirm_delete_client" data-client-id_delete="">Delete</button>
+                            <button class="mistake_client">Cancel</button>
+                        </div>
+                        <!-- <center><h3>Temporarily disabled</h3></center> -->
                     </div>
                 </div>           
             </div>
@@ -220,7 +287,7 @@
                             <p class="fa-solid fa-street-view"><span class="action_list" id="activate_views">Views</span></p><br>
                             <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend_tutor">Suspend Account</span></p>
                             <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block">Block Account</span></p>
-                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="reactivate_account_tutor">Reactivate Account</span></p>
+                            <p class="fa-solid fa-user"><span class="action_list" id="reactivate_account_tutor">Reactivate Account</span></p>
                             <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_tutor">Delete Account</span></p>
                             <footer class="pedia">
                                 @lessonpedia 
@@ -306,14 +373,52 @@
                                 <!-- Review page -->
                                 <div class="set_review_details">
                                     <section class="other_details">
-                                        <center>Review Service in Progress</center>                                          
+                                        <center>Review Service in Progress</center>
+
+                                                                                  
                                     </section>
                                 </div>
 
                                 <!-- Report page -->
-                                <div class="set_report_details">
+                                <div class="set_report_details set_report_details22" data-tutor-id_report="">
                                     <section class="other_details">
-                                        <center>Report Service in Progress</center>                                          
+                                        <!-- <center>Report Service in Progress</center> -->
+                                        <div class="report_indivdual">
+                                            <div class="tutors_list_content">
+                                                <section class="top">
+                                                    <div class="search">
+                                                        <input type="text" name="" id="" class="extend i_tutor_reports" placeholder="Search report">
+                                                        <button class="search_button">Search</button>
+                                                    </div>
+                                                    <h5 class="allTutors" style="margin: 4px; padding: 2px;">Tutor's Abuse Reports
+                                                    </h5>   
+                                                </section>
+                                            </div>
+                        
+                                            <div class="report_data">
+                                                <table class="tutor_reports_table_list tutor_reports_in">
+                                                    <thead class="table_header">
+                                                        <tr>
+                                                            <th class="t_report_tutor_i" data-column="0">Report ID</th>
+                                                            <th class="t_report_tutor_i" data-column="1">Tutor</th>
+                                                            <th class="t_report_client_i" data-column="2">Target Client ID</th>
+                                                            <th class="t_report_subject_i" data-column="3">Subject</th>
+                                                            <th class="t_report_message_i" data-column="4">Message</th>
+                                                            <th class="t_report_created_i" data-column="5">Created_at</th>
+                                                            <th class="t_report_resolve_i" data-column="6">Resolve Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- Pagination tutor reports-->
+                                        <center>
+                                            <div class="pagination" id="pagination">
+                        
+                                            </div>
+                                        </center>                                                                                 
                                     </section>
                                 </div>
                             </div>
@@ -349,8 +454,8 @@
                             <p class="fa-solid fa-street-view"><span class="action_list" id="activate_views">Views</span></p><br>
                             <p class="fa-solid fa-user-minus"><span class="action_list" id="activate_suspend_client">Suspend Account</span></p>
                             <p class="fa-solid fa-user-xmark"><span class="action_list" id="activate_block_client">Block Account</span></p>
-                            <p class="fa-solid fa-user-xmark"><span class="action_list" id="reactivate_account_client">Reactivate Account</span></p>
-                            <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_client">_client Account</span></p>
+                            <p class="fa-solid fa-user"><span class="action_list" id="reactivate_account_client">Reactivate Account</span></p>
+                            <p class="fa-solid fa-xmark"><span class="action_list" id="delete_account_client">Delete Account</span></p>
                             <footer class="pedia">
                                 @lessonpedia 
                             </footer>
@@ -439,10 +544,47 @@
                                 </div>
 
                                 <!-- Report page -->
-                                <div class="set_report_details_client">
+                                <div class="set_report_details_client" data-client-id_report="">
                                     <section class="other_details">
-                                        <center>Report Service in Progress</center>                                          
+                                        <!-- <center>Report Service in Progress</center> -->
+                                        <div class="report_indivdual">
+                                            <div class="clients_list_content">
+                                                <section class="top">
+                                                    <div class="search">
+                                                        <input type="text" name="" id="" class="extend i_client_reports" placeholder="Search report">
+                                                        <button class="search_button">Search</button>
+                                                    </div>
+                                                    <h5 class="allTutors" style="margin: 4px; padding: 2px;">Client's Abuse Reports
+                                                    </h5>   
+                                                </section>
+                                            </div>
+                        
+                                            <div class="report_data">
+                                                <table class="client_reports_table_list client_reports_in">
+                                                    <thead class="table_header">
+                                                        <tr>
+                                                            <th class="c_report_id" data-column="0">Report ID</th>
+                                                            <th class="c_report_client" data-column="1">Client</th>
+                                                            <th class="c_report_tutor" data-column="2">Target Tutor ID</th>
+                                                            <th class="c_report_subject" data-column="3">Subject</th>
+                                                            <th class="c_report_message" data-column="4">Message</th>
+                                                            <th class="c_report_created" data-column="5">Created_at</th>
+                                                            <th class="c_report_resolve" data-column="6">Resolve Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- Pagination tutor reports-->
+                                        <center>
+                                            <div class="pagination" id="pagination">
+                        
+                                            </div>
+                                        </center>                                                                                 
                                     </section>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -462,10 +604,10 @@
                 <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
                 <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
                 <div class="dropdownReports">
-                    <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list">&nbsp; &nbsp; Reports</span></p>
+                    <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list"><span class="report_check fa-solid fa-envelope" style="display: none; color: red;"></span>&nbsp; &nbsp;  Reports</span></p>
                     <ol class="dropdown-contentReports">
-                        <li class="" id="set_tutor_report">Tutor Reports</li>
-                        <li class="" id="set_client_report">Client Reports</li>  
+                        <li class="" id="set_tutor_report" data-t_report_check="" ><span class="fa-solid fa-envelope t_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Tutor Reports</li>
+                        <li class="" id="set_client_report" data-c_report_check=""><span class="fa-solid fa-envelope c_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Client Reports</li>  
                     </ol>
                 </div><br><br>
                 <p class="fa-solid fa-money-bill-transfer"><span class="dashboard_list" id="set_transactions">&nbsp; &nbsp; Transactions</span></p><br><br>
@@ -477,17 +619,12 @@
             </div>
         </div>
         
-        <!-- Tutors logic -->
+        <!-- Tutors display -->
         <div class="activate_tutors">
             <div class="admin_right">
                 <h4 class="hello_admin">  
                     Hello, <span class="admin_username" id="admin_username">Admin1
-                        <!-- {% if request.session.username %}
-                            {{ request.session.username }}
-                        {% else %}
-                            {{ admin }}
-                        {% endif %} -->
-                        
+
                     </span>
                     <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
                 </h4>
@@ -522,8 +659,8 @@
                     <div class="tutors_list_content">
                         <section class="top">
                             <div class="search">
-                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
-                                <button class="search_button">Search</button>
+                                <input type="text" name="" id="" class="extend tutor_search" placeholder="Search tutor">
+                                <button class="search_button search_button_tutor">Search</button>
                             </div>
                             <h3 class="allTutors">All Tutors 
                                 <!-- <span class="sort">Sort by:
@@ -545,22 +682,24 @@
                         <table class="tutor_table_list" >
                             <thead class="table_header">
                                 <tr>
-                                    <th class="sortUserName" data-column="0">UserName</th>
-                                    <th class="sortEmail" data-column="1">Email</th>
+                                    <th class="sortUserID" data-column="0">ID</th>
+                                    <th class="sortUserName" data-column="1">UserName</th>
                                     <th class="sortEmail" data-column="2">Email</th>
-                                    <th class="sortEngagement" data-column="3">No of engagement</th>
-                                    <th class="sortQualification" data-column="4">Qualification</th>
-                                    <th class="sortStatus" data-column="5">Status</th>
-                                    <th class="sortJoinDate" data-column="6">Join Date</th>
-                                    <th class="sortAdminAction" data-column="7">Admin Action</th>
+                                    <th class="sortEmail" data-column="3">Accessment Score</th>
+                                    <th class="sortEngagement" data-column="4">No of engagement</th>
+                                    <th class="sortQualification" data-column="5">Qualification</th>
+                                    <th class="sortStatus" data-column="6">Status</th>
+                                    <th class="sortJoinDate" data-column="7">Join Date</th>
+                                    <th class="sortAdminAction" data-column="8">Admin Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for tutor in tutors %}
                                 <tr>
+                                    <td class="user_ID">{{ tutor.id }}</td>
                                     <td class="user_name">{{ tutor.username }}</td>
                                     <td class="user_email">{{ tutor.email }}</td>
-                                    <td>82%</td>
+                                    <td>{{ tutor.quiz_result }}</td>
                                     <td>{{ tutor.active_clients }}</td>
                                     <td>{{ tutor.highest_qualification }}</td>
                                     <td><button class="check_status" data-active="{{ tutor.is_active }}">{{ tutor.is_active }}</button></td>
@@ -603,6 +742,22 @@
                                                 "total_clients": "{{ tutor.total_clients|default:"null" }}",
                                                 "rejected_clients": "{{ tutor.rejected_clients|default:"null" }}",
                                                 "reviews_id": "{{ tutor.reviews_id|default:"null" }}",
+                                                "is_suspended": "{{ tutor.is_suspended }}",
+                                                "is_blocked": "{{ tutor.is_blocked }}",
+                                                "rank": "{{ tutor.rank|default:"null" }}",
+                                                "total_ratings": "{{ tutor.total_ratings|default:"null" }}",
+                                                "accumulated_rating": "{{ tutor.accumulated_rating|default:"null" }}",
+                                                "is_suspended_admin": "{{ tutor.is_suspended_admin }}",
+                                                "is_blocked_admin": "{{ tutor.is_blocked_admin }}",
+                                                "suspended_at_admin": "{{ tutor.suspended_at_admin|default:"null" }}",
+                                                "blocked_at_admin": "{{ tutor.blocked_at_admin|default:"null" }}",
+                                                "suspension_duration_admin": "{{ tutor.suspension_duration_admin|default:"null" }}",
+                                                "suspension_reason_admin": "{{ tutor.suspension_reason_admin|default:"null" }}",
+                                                "block_reason_admin": "{{ tutor.block_reason_admin|default:"null" }}",
+                                                "quiz_result": "{{ tutor.quiz_result|default:"null" }}",
+                                                "quiz_count": "{{ tutor.quiz_count|default:"null" }}",
+                                                "certificate": "{{ tutor.certificate|default:"null" }}",
+
                                                 "updated_at": "{{ tutor.updated_at }}",
                                                 "groups": "{{ tutor.groups|default:"[]" }}"
                                             }'>Take action
@@ -669,8 +824,8 @@
                     <div class="tutors_list_content">
                         <section class="top">
                             <div class="search">
-                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
-                                <button class="search_button">Search</button>
+                                <input type="text" name="" id="" class="extend client_search" placeholder="Search tutor">
+                                <button class="search_button search_button_client">Search</button>
                             </div>
                             <h3 class="allTutors">All Learners 
                                 <!-- <span class="sort">Sort by:
@@ -692,18 +847,20 @@
                         <table class="learner_table_list">
                             <thead class="table_header_learner">
                                 <tr>
-                                    <th class="sortUserNameL" data-column="0">UserName</th>
-                                    <th class="sortEmailL" data-column="1">Email</th>
-                                    <th class="sortEmailL" data-column="2">Gender</th>
-                                    <th class="sortEngagementL" data-column="3">Educational_level</th>
-                                    <th class="sortQualificationL" data-column="4">Status</th>
-                                    <th class="sortStatusL" data-column="5">Last login</th>
-                                    <th class="sortJoinDateL" data-column="6">Date joined</th>
-                                    <th class="sortAdminActionL" data-column="7">Admin Action</th>
+                                    <th class="sortUserIDL" data-column="0">ID</th>
+                                    <th class="sortUserNameL" data-column="1">UserName</th>
+                                    <th class="sortEmailL" data-column="2">Email</th>
+                                    <th class="sortEmailL" data-column="3">Gender</th>
+                                    <th class="sortEngagementL" data-column="4">Educational_level</th>
+                                    <th class="sortQualificationL" data-column="5">Status</th>
+                                    <th class="sortStatusL" data-column="6">Last login</th>
+                                    <th class="sortJoinDateL" data-column="7">Date joined</th>
+                                    <th class="sortAdminActionL" data-column="8">Admin Action</th>
                                 </tr>
                             </thead>
                             {% for client in clients %}
                                 <tr>
+                                    <td class="user_ID">{{ client.id }}</td>
                                     <td class="user_name">{{ client.username }}</td>
                                     <td class="user_email">{{ client.email }}</td>
                                     <td>{{ client.gender }}</td>
@@ -731,6 +888,13 @@
                                                 "residential_address": "{{ client.residential_address|default:"null" }}",
                                                 "educational_level": "{{ client.educational_level|default:"null" }}",
                                                 "updated_at": "{{ client.updated_at }}",
+                                                "is_suspended_admin": "{{ tutor.is_suspended_admin }}",
+                                                "is_blocked_admin": "{{ tutor.is_blocked_admin }}",
+                                                "suspended_at_admin": "{{ tutor.suspended_at_admin|default:"null" }}",
+                                                "blocked_at_admin": "{{ tutor.blocked_at_admin|default:"null" }}",
+                                                "suspension_duration_admin": "{{ tutor.suspension_duration_admin|default:"null" }}",
+                                                "suspension_reason_admin": "{{ tutor.suspension_reason_admin|default:"null" }}",
+                                                "block_reason_admin": "{{ tutor.block_reason_admin|default:"null" }}",
                                                 "tutor": "{{ tutor.tutor|default:"[]" }}",
                                                 "groups": "{{ tutor.groups|default:"[]" }}"
                                             }'>Take action
@@ -769,8 +933,6 @@
 
                     <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
                 </h4>
-                <div class="admin_right_top">
-                </div>
                 <br>
 
                 <div class="tutors_list">
@@ -780,43 +942,32 @@
                                 <input type="text" name="" id="" class="extend" placeholder="Search tutor">
                                 <button class="search_button">Search</button>
                             </div>
-                            <h3 class="allTutors">Tutors Reports
+                            <h3 class="allTutors">Tutors Abuse Reports
                             </h3>   
                         </section>
                     </div>
 
                     <div class="all_data">
-                        <table class="learner_table_list">
-                            <thead class="table_header_learner">
+                        <table class="tutor_reports_table_list tutor_reports">
+                            <thead class="table_header">
                                 <tr>
-                                    <th class="sortUserNameL" data-column="0">UserName</th>
-                                    <th class="sortEmailL" data-column="1">Email</th>
-                                    <th class="sortEmailL" data-column="2">Gender</th>
-                                    <th class="sortEngagementL" data-column="3">Educational_level</th>
-                                    <th class="sortQualificationL" data-column="4">Status</th>
-                                    <th class="sortStatusL" data-column="5">Last login</th>
+                                    <th class="t_report_tutor" data-column="0">Report ID</th>
+                                    <th class="t_report_tutor" data-column="1">Tutor</th>
+                                    <th class="t_report_client" data-column="2">Target Client ID</th>
+                                    <th class="t_report_subject" data-column="3">Subject</th>
+                                    <th class="t_report_message" data-column="4">Message</th>
+                                    <th class="t_report_created" data-column="5">Created_at</th>
+                                    <th class="t_report_resolve" data-column="6">Resolve Status</th>
+                                    <th class="t_report_date_resolved" data-column="7">Date Resolved</th>
+                                    <th class="t_report_view" data-column="8">View</th>
                                 </tr>
                             </thead>
-                            <!-- {% for client in clients %} -->
-                                <tr>
-                                    <td class="user_name">{{ client.username }}</td>
-                                    <td class="user_email">{{ client.email }}</td>
-                                    <td>{{ client.gender }}</td>
-                                    <td>{{ client.educational_level }}</td>
-                                    <td><button class="check_status_client" data-active_client="{{ client.is_active }}">{{ client.is_active }}</button></td>
-                                    <td>
-                                        <button class="action_client">Take action
-                                        </button>
-                                    </td>
-                                    
-                                </tr>
-                                <!-- {% endfor %} -->
-
+                            <tbody>   
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!-- Pagination client -->
+                <!-- Pagination tutor reports-->
                 <center>
                     <div class="pagination" id="pagination">
 
@@ -828,7 +979,55 @@
 
         <!-- client reports -->
         <div class="client_report">
-            <center><h4 style="color: white; font-size: larger; margin-top: 200px;">Active development in progress</h4></center>
+            <!-- <center><h4 style="color: white; font-size: larger; margin-top: 200px;">Active development in progress</h4></center> -->
+            <div class="admin_right">
+                <h4 class="hello_admin">  
+                    Hello, <span class="admin_username">{{ request.user.username }}</span>
+
+                    <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
+                </h4>
+                <br>
+
+                <div class="tutors_list">
+                    <div class="tutors_list_content">
+                        <section class="top">
+                            <div class="search">
+                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
+                                <button class="search_button">Search</button>
+                            </div>
+                            <h3 class="allTutors">Clients Abuse Reports
+                            </h3>   
+                        </section>
+                    </div>
+
+                    <div class="all_data">
+                        <table class="client_reports_table_list client_reports">
+                            <thead class="table_header_learner">
+                                <tr>
+                                    <th class="c_report_id" data-column="0">Report ID</th>
+                                    <th class="c_report_client" data-column="1">Client</th>
+                                    <th class="c_report_tutor" data-column="2">Target Tutor ID</th>
+                                    <th class="c_report_subject" data-column="3">Subject</th>
+                                    <th class="c_report_message" data-column="4">Message</th>
+                                    <th class="c_report_created" data-column="5">Created_at</th>
+                                    <th class="c_report_resolve" data-column="6">Resolve Status</th>
+                                    <th class="c_report_date_resolved" data-column="7">Date Resolved</th>
+                                    <th class="c_report_view" data-column="8">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>  
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Pagination client reports -->
+                <center>
+                    <div class="pagination" id="pagination">
+
+                    </div>
+                </center>
+                
+            </div>
         </div>
     </div>
 </body>

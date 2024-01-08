@@ -5,9 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'static/styles/quiz_instruction.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
+    <script src="{% static 'script/jQuery.js' %}"></script>
     <title>Instruction</title>
 </head>
 <body>
+  <div class="flash-container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+            <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                <p style="font-weight: bold;">{{ message }}</p>
+                <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
     
     <div class="ins_container">
         <div class="back">

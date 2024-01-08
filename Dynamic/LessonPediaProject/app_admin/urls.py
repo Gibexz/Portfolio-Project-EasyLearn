@@ -23,6 +23,7 @@ urlpatterns = [
     path("api/get_tutor_count/", views.get_tutor_count, name="get_tutor_count"),
     path("api/get_nos_active_tutors/", views.get_nos_active_tutors, name="get_nos_active_tutors"),
     path("api/get_nos_inactive_tutors/", views.get_nos_inactive_tutors, name="get_nos_inactive_tutors"),
+    
     # path("api/tutors/suspend_tutor/<int:tutor_id>/", views.suspend_tutor, name="suspend_tutor"),
     
 
@@ -30,6 +31,5 @@ urlpatterns = [
     path("api/get_clients_data/", views.get_clients_data, name="get_clients_data"),
     path("api/get_client_count/", views.get_client_count, name="get_client_count"),
     path("api/get_nos_active_clients/", views.get_nos_active_clients, name="get_nos_active_clients"),
-    path("api/get_nos_inactive_clients/", views.get_nos_inactive_clients, name="get_nos_inactive_clients"),
-    
+    path("api/get_nos_inactive_clients/", views.get_nos_inactive_clients, name="get_nos_inactive_clients"),    
 ]

@@ -1,14 +1,15 @@
 {% extends "tutor/base.html" %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'styles/tutor_search.css' %}">
-<link rel="stylesheet" href="{% static 'styles/tutor_detail.css' %}">
-
+    <link rel="stylesheet" href="{% static 'styles/tutor_search.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/view_tutors.js' %}"></script>
     <script src="{% static 'script/tutor_search.js' %}"></script>
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
     <script src="{% static 'script/tutor_detail.js' %}"></script>
-    {% endblock head %}
+{% endblock head %}
     
     {% block title %}
         Views - Tutor
@@ -16,6 +17,18 @@
 
 {% block content %}
     <hr>
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
     <div id="main_content">
         <div class="subject_pane">
             <section class="BackToTutors">
@@ -333,20 +346,23 @@
                     <p class="fluent">French</p>                    
                 </section>
             </section>
+                        
+            
+            <div class="similarTutors">
+                <section class="addTutor">
+                    <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a>
+            </section>
+            </div>
             {% if tutors_count > 4 %}
+            <h3 class="similarHead">Similar Tutors Profile</h3>
             <div class="pagination">
                 <button id="prevPage">Previous</button>
                 <div id="pageButtons"></div>
                 <button id="nextPage">Next</button>
             </div>
             {% endif %}
-            
-            <h3 class="similarHead">Similar Tutors Profile</h3>
-            <div class="similarTutors">
-                <section class="addTutor">
-                    <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a>
-            </section>
-            </div>
+
+
             
         </div>
     </div>

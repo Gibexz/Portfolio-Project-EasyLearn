@@ -2,7 +2,7 @@ from django.contrib import admin
 from lessonpedia.admin import lessonPedia_admin_site
 from .models import Tutor, Subject, ProCourse, Day, TimeSlot, Hours, Certificate
 from .models import SubjectCategory
-from generic_apps.models import Contract, ReportAbuse
+from generic_apps.models import Contract
 class TutorAdmin(admin.ModelAdmin):
     """Associates Tutor model to admin site"""
     list_display = ('id', 'username', 'first_name', 'email', 'created_at', 'updated_at')

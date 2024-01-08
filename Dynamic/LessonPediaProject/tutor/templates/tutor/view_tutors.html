@@ -9,8 +9,10 @@
     <script src="{% static 'script/jquery.tablesorter.min.js' %}"></script>
     <script src="{% static 'script/tutor_search.js' %}" ></script>
     <script src="{% static "script/view_tutors.js" %}"></script>
+    <script src="{% static "script/tutor_messages.js" %}"></script>
     <link rel="stylesheet" href="{% static 'styles/tutor_search.css' %}">
     <link rel="stylesheet" href="{% static "styles/view_tutors.css" %}">
+    <link rel="stylesheet" href="{% static "styles/tutor_messages.css" %}">
 {% endblock head %}
 {% block signup_button %}     
     <section class="signup_button">
@@ -21,7 +23,19 @@
 {% block content %}
 <hr>
 <body>
-    <div id="main_content">
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+        <div id="main_content">
         <div class="subject_pane">
             <div class="subject_list">
                     <h3>Subjects <span class="fa fa-chevron-circle-down" aria-hidden="true"></span></h3>

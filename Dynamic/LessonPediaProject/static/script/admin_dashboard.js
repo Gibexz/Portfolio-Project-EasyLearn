@@ -50,6 +50,10 @@ $(document).ready(function(){
         // // Associate the tutor ID with the suspension dialogue
         $('.confirm_remove_tutor').attr('data-tutor-id', tutorId);
         $('.confirm_activate_tutor').attr('data-tutor-id_activate', tutorId);
+        $('.confirm_suspend_tutor').attr('data-tutor-id_suspend', tutorId);
+        $('.confirm_delete_tutor').attr('data-tutor-id_delete', tutorId);
+        $('.set_report_details').attr('data-tutor-id_report', tutorId);
+
 
         // console.log(tutorData); // Check the entire tutorData object
         
@@ -90,6 +94,21 @@ $(document).ready(function(){
         $('.others_tutor').text(tutorData.others);
         $('.working_hours_tutor').text(tutorData.working_hours);
         $('.cv_id_tutor').text(tutorData.cv_id);
+        $('.is_suspended_tutor').text(tutorData.is_suspended);
+        $('.is_blocked_tutor').text(tutorData.is_blocked);
+        $('.rank_tutor').text(tutorData.rank);
+        $('.total_ratings_tutor').text(tutorData.total_ratings);
+        $('.accumulated_rating_tutor').text(tutorData.accumulated_rating);
+        $('.is_suspended_admin_tutor').text(tutorData.is_suspended_admin);
+        $('.is_blocked_admin_tutor').text(tutorData.is_blocked_admin);
+        $('.suspended_at_admin_tutor').text(tutorData.suspended_at_admin);
+        $('.blocked_at_admin_tutor').text(tutorData.blocked_at_admin);
+        $('.suspension_duration_tutor').text(tutorData.suspension_duration);
+        $('.suspension_reason_tutor').text(tutorData.suspension_reason);
+        $('.block_reason_tutor').text(tutorData.block_reason);
+        $('.quiz_result_tutor').text(tutorData.quiz_result);
+        $('.quiz_count_tutor').text(tutorData.quiz_count);
+        $('.certificate_tutor').text(tutorData.certificate);
         $('.updated_at_tutor').text(tutorData.updated_at);
         $('.groups_tutor').text(tutorData.groups);
 
@@ -122,6 +141,9 @@ $(document).ready(function(){
         // // Associate the tutor ID with the suspension dialogue
         $('.confirm_remove_client').attr('data-client-id', clientId);
         $('.confirm_activate_client').attr('data-client-id_activate', clientId);
+        $('.confirm_suspend_client').attr('data-client-id_suspend', clientId);
+        $('.confirm_delete_client').attr('data-client-id_delete', clientId);
+        $('.set_report_details_client').attr('data-client-id_report', clientId);
     
         // console.log(clientData); // Check the entire clientData object
         
@@ -146,6 +168,13 @@ $(document).ready(function(){
         $('.updated_at_client').text(clientData.updated_at);
         $('.tutor_client').text(clientData.tutor);
         $('.groups_client').text(clientData.groups);
+        $('.is_suspended_admin_client').text(clientData.is_suspended_admin);
+        $('.is_blocked_admin_client').text(clientData.is_blocked_admin);
+        $('.suspended_at_admin_client').text(clientData.suspended_at_admin);
+        $('.blocked_at_admin_client').text(clientData.blocked_at_admin);
+        $('.suspension_duration_client').text(clientData.suspension_duration);
+        $('.suspension_reason_client').text(clientData.suspension_reason);
+        $('.block_reason_client').text(clientData.block_reason);
         
 
         $('.active_admin').text(adminName);
@@ -203,12 +232,9 @@ $(document).ready(function(){
 
     // account suspending dialogue display for tutor  ==============================
     $('#activate_suspend_tutor').click(function(){
-        const tutor_id = $(this).data('tutor')
-
         $('.set_action_tutor').hide()
         $('.set_suspend_account_tutor').show()
     })
-
     $('.disable_close, .mistake').click(function(){
         $('.set_action_tutor').show()
         $('.set_suspend_account_tutor').hide()
@@ -217,22 +243,17 @@ $(document).ready(function(){
 
     // account suspending dialogue display for client  ==============================
     $('#activate_suspend_client').click(function(){
-        const client_id = $(this).data('client')
-
         $('.set_action_client').hide()
         $('.set_suspend_account_client').show()
     })
-
-    $('.disable_close, .mistake').click(function(){
+    $('.disable_close_client, .mistake_client').click(function(){
         $('.set_action_client').show()
         $('.set_suspend_account_client').hide()
     })
 
     
-    // account blocking dialogue display for tutor  ==============================
+    // account activating dialogue display for tutor  ==============================
     $('#activate_block').click(function(){
-        const tutor_id = $(this).data('tutor')
-
         $('.set_action_tutor').hide()
         $('.set_disable_account').show()
     })
@@ -243,7 +264,7 @@ $(document).ready(function(){
     })
 
 
-    // account suspending dialogue display for client  ==============================
+    // account activating dialogue display for client  ==============================
     $('#activate_block_client').click(function(){
         $('.set_action_client').hide()
         $('.set_disable_account_client').show()
@@ -320,13 +341,15 @@ $(document).ready(function() {
 
 
 
-    // logic to disable a tutor's account  ==========================================
+    // logic to disable (blocking) a tutor's account  ==========================================
     $('.confirm_remove_tutor').click(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let tutor_id = $(this).data('tutor-id'); 
-        console.log(tutor_id);
+        let tutor_id = $(this).attr('data-tutor-id');
+        // console.log(tutor_id);
+
+        let blockingReason = $('#reason_for_blocking_tutor').val();
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -336,14 +359,17 @@ $(document).ready(function() {
             // url: `${api_url}/api/tutors_action_api/deactivate_tutor/${tutor_id}/`, // works too
             url: `${api_url}/api/tutors_action_api/${tutor_id}/deactivate_tutor/`,
 
+            data: {
+                'block_reason': blockingReason
+            },
             beforeSend: function(xhr) { 
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Tutor deactivated (blocked) successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error suspending tutor: ' + errorThrown);
+                displayMessageError('Error deactivating tutor: ' + errorThrown.message);
             }
         });
         $('.set_action_tutor').show()
@@ -352,30 +378,35 @@ $(document).ready(function() {
 
 
 
-    // logic to disable a client's account  =====================================
+    // logic to disable (blocking) a client's account  =====================================
     $('.confirm_remove_client').click(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let client_id = $(this).data('client-id'); 
+        let client_id = $(this).attr('data-client-id');
         // console.log(client_id);
+
+        let blockingReason = $('#reason_for_blocking_client').val();
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         $.ajax({
             method: 'POST',
-            // url: `${api_url}/api/clients_action_api/suspend_client/${client_id}/`, // works too
-            url: `${api_url}/api/clients_action_api/${client_id}/suspend_client/`,
+            // url: `${api_url}/api/clients_action_api/deactivate_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/deactivate_client/`,
 
+            data: {
+                'block_reason': blockingReason
+            },
             beforeSend: function(xhr) { 
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Client suspended successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error suspending client: ' + errorThrown);
+                displayMessageError('Error deactivating client: ' + errorThrown.message);
             }
         });
         $('.set_action_client').show()
@@ -389,8 +420,8 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let tutor_id = $(this).data('tutor-id_activate'); 
-        console.log(tutor_id);
+        let tutor_id = $(this).attr('data-tutor-id_activate');
+        // console.log(tutor_id);
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -404,10 +435,10 @@ $(document).ready(function() {
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('Tutor profile reactivated successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error reactivating tutor profile: ' + errorThrown);
+                displayMessageError('Error reactivating tutor profile: ' + errorThrown.message);
             }
         });
         $('.set_action_tutor').show()
@@ -421,8 +452,8 @@ $(document).ready(function() {
 
         const api_url = 'http://127.0.0.1:8000/appAdmin'
 
-        let client_id = $(this).data('client-id_activate'); 
-        console.log(client_id);
+        let client_id = $(this).attr('data-client-id_activate'); 
+        // console.log(client_id);
         
         // collect the csrf token and store it in a variable
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -436,19 +467,182 @@ $(document).ready(function() {
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
             },
             success: function(response) {
-                displayMessageSuccess('client profile reactivated successfully');
+                displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error reactivating client profile: ' + errorThrown);
+                displayMessageError('Error reactivating client profile: ' + errorThrown.message);
             }
         });
         $('.set_action_client').show()
         $('.set_reactivate_account_client').hide()
     });
 
+    
+    // logic to reactivate a tutor's account  ==========================================
+    $('.confirm_suspend_tutor').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let tutor_id = $(this).attr('data-tutor-id_suspend'); 
+        // console.log(tutor_id);
+
+        let suspensionDuration = $('#suspension_duration_tutor').val();
+        // console.log(suspensionDuration);
+        let suspensionReason = $('#reason_for_suspension_tutor').val();
+        // console.log(suspensionReason);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/tutors_action_api/suspend_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/suspend_tutor/`,
+
+            data: {
+                'suspension_duration': suspensionDuration,
+                'suspension_reason': suspensionReason
+            },
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error Suspending tutor profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_tutor').show()
+        $('.set_suspend_account_tutor').hide()
+    });
+
+
+    // logic to reactivate a client's account  ==========================================
+    $('.confirm_suspend_client').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let client_id = $(this).attr('data-client-id_suspend'); 
+        // console.log(client_id);
+
+        let suspensionDuration = $('#suspension_duration_client').val();
+        // console.log(suspensionDuration);
+        let suspensionReason = $('#reason_for_suspension_client').val();
+        // console.log(suspensionReason);
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'POST',
+            // url: `${api_url}/api/clients_action_api/suspend_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/suspend_client/`,
+
+            data: {
+                'suspension_duration': suspensionDuration,
+                'suspension_reason': suspensionReason
+            },
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating client profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_client').show()
+        $('.set_suspend_account_client').hide()
+    });
 
 
 
+    // logic to delete a clients's account  ==========================================
+    $('.confirm_delete_client').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let client_id = $(this).attr('data-client-id_delete'); 
+        // console.log(client_id);
+
+        let confirmation = $('#confirm_delete_client').val()
+
+        if (confirmation !== 'CONFIRM DELETE') {
+            displayMessageError('Error: Please type CONFIRM DELETE in the confirmation box');
+            return; // Prevent futher execution of the codes below
+        }
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'DELETE',
+            // url: `${api_url}/api/clients_action_api/activate_client/${client_id}/`, // works too
+            url: `${api_url}/api/clients_action_api/${client_id}/delete_client/`,
+            
+            data: {
+                'confirmation': confirmation,
+            },
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating client profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_client').show()
+        $('.set_delete_account_client').hide()
+    });
+
+
+    // logic to delete a tutor's account  ==========================================
+    $('.confirm_delete_tutor').click(function() {
+
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+
+        let tutor_id = $(this).attr('data-tutor-id_delete'); 
+        // console.log(tutor_id);
+
+        let confirmation = $('#confirm_delete_tutor').val()
+
+        if (confirmation !== 'CONFIRM DELETE') {
+            displayMessageError('Error: Please type CONFIRM DELETE in the confirmation box');
+            return; // Prevent futher execution of the codes below
+        }
+        
+        // collect the csrf token and store it in a variable
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        $.ajax({
+            method: 'DELETE',
+            // url: `${api_url}/api/tutors_action_api/activate_tutor/${tutor_id}/`, // works too
+            url: `${api_url}/api/tutors_action_api/${tutor_id}/delete_tutor/`,
+            
+            data: {
+                'confirmation': confirmation,
+            },
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            
+            success: function(response) {
+                displayMessageSuccess('Success: ' + response.message);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError('Error reactivating tutor profile: ' + errorThrown.message);
+            }
+        });
+        $('.set_action_tutor').show()
+        $('.set_delete_account_tutor').hide()
+    });
 
 })
 
@@ -838,5 +1032,328 @@ $(document).ready(function() {
             $('#clientShowAll').text('All');
             clientPaginatedView = true;
         }
+    });
+});
+
+
+
+// Reports =======================================================================
+let tutorReportsData = null;
+let clientReportsData = null;
+// Report logic for tutors and clients ============================================
+$(document).ready(function() {
+    const api_url = 'http://127.0.0.1:8000/api/'
+
+    // Tutor report logic ==========================================================
+
+    function populataTutorReportTable() {
+        const url = `${api_url}get_tutors_reports/`;
+    
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function (response) {
+                const reports = response.tutors_reports;
+                tutorReportsData = reports;
+    
+                // Clear existing table data
+                $('.tutor_reports tbody').empty();
+    
+                reports.forEach(function (report) {
+                    const tableRow = $(`
+                        <tr>
+                            <td>${report.id}</td>
+                            <td>${report.tutor}</td>
+                            <td>${report.target_client_id}</td>
+                            <td class="t_subject">${report.subject}</td>
+                            <td class="t_message">${report.message}</td>
+                            <td>${new Date(report.created_at).toLocaleString()}</td>
+                            <td><button class="t_resolve_tutor">${report.resolved_by_admin}</button></td>
+                            <td>${report.resolved_at ? new Date(report.resolved_at).toLocaleString() : "Unresolved"}</td>
+                            <td><button class="t_report_view">View report</button></td>
+                        </tr>
+                    `);
+                    let tCheckStatus = false;
+                    if (report.resolved_by_admin === true || report.resolved_by_admin == 'True') {
+                        tableRow.css({'background-color': 'lightgreen', 'border': '1px solid white'});
+                        tCheckStatus = false;
+                        $('.t_report_check').css('display', 'none');
+                        $('#set_tutor_report').attr('data-t_report_check', tCheckStatus);
+
+                    } else {
+                        tableRow.css({'background-color': ' rgba(235, 20, 20, 0.3)', 'border': '1px solid white', 'color': 'black'});
+                        tCheckStatus = true;
+                        $('.t_report_check').css('display', 'inline-block');
+                        $('#set_tutor_report').attr('data-t_report_check', tCheckStatus);
+                    }
+                    const messageCell = tableRow.find('.t_message');
+                    const subjectCell = tableRow.find('.t_subject');
+    
+                    // Hover event to show full subject in a dropdown div
+                    subjectCell.hover(function () {
+                        const fullMessage = report.subject;
+                        const dropdownDivSubject = $('<div class="subject-dropdown"></div>').text(fullMessage);
+    
+                        dropdownDivSubject.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '200px',
+                            // height: auto,
+                            whiteSpace: 'normal',
+                        });
+    
+                        $(this).append(dropdownDivSubject);
+    
+                        // Remove the dropdown div on mouse leave
+                        $(this).mouseleave(function () {
+                            dropdownDivSubject.remove();
+                        });
+                    }, function () {
+                        // Ensure the dropdown div is removed on mouse out
+                        $('.subject-dropdown').remove();
+                    });
+
+                    messageCell.hover(function () {
+                        const fullMessage = report.message;
+                        const dropdownDivMessage = $('<div class="message-dropdown"></div>').text(fullMessage);
+    
+                        dropdownDivMessage.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '300px',
+                            // height: auto,
+                            whiteSpace: 'normal',
+                        });
+    
+                        $(this).append(dropdownDivMessage);
+    
+                        // Remove the dropdown div on mouse leave
+                        $(this).mouseleave(function () {
+                            dropdownDivMessage.remove();
+                        });
+                    }, function () {
+                        // Ensure the dropdown div is removed on mouse out
+                        $('.message-dropdown').remove();
+                    });
+    
+                    $('.tutor_reports tbody').append(tableRow);
+                });
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error fetching reports: ' + errorThrown.message);
+            },
+        });
+    }
+    populataTutorReportTable();
+    setInterval(function () {
+        populataTutorReportTable();
+    }, 3600000); // Set interval to 1 hour for dynamic update of the reports table
+    
+    
+
+
+    // Client report logic ==========================================================
+    function populataClientReportTable() {
+    
+        const url = `${api_url}get_clients_reports/`;
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                const reports = response.clients_reports;
+                clientReportsData = reports;
+                // console.log(reports);
+                // console.log(response);
+                // console.log(reports.length);
+
+                //clear existing table data
+                $('.client_reports tbody').empty();
+                reports.forEach(function (report) {
+                    const tableRow = $(`
+                        <tr>
+                            <td>${report.id}</td>
+                            <td>${report.client}</td>
+                            <td>${report.target_tutor}</td>
+                            <td class="c_subject">${report.subject}</td>
+                            <td class="c_message">${report.message}</td>
+                            <td>${new Date(report.created_at).toLocaleString()}</td>
+                            <td><button class="c_resolve_client">${report.resolved_by_admin}</button></td>
+                            <td>${report.resolved_at ? new Date(report.resolved_at).toLocaleString() : "Unresolved"}</td>
+                            <td><button class="c_report_view">View report</button></td>
+                        </tr>
+                    `);
+                    let cCheckStatus = false;
+                    if (report.resolved_by_admin === true || report.resolved_by_admin == 'True') {
+                        tableRow.css({'background-color': 'lightgreen', 'border': '1px solid white'});
+                        cCheckStatus = false; 
+                        $('#set_client_report').attr('data-c_report_check', cCheckStatus);
+                        $('.c_report_check').css('display', 'none');
+                    } else {
+                        tableRow.css({'background-color': ' rgba(235, 20, 20, 0.3)', 'border': '1px solid white', 'color': 'black'});
+                        cCheckStatus = true;
+                        $('#set_client_report').attr('data-c_report_check', cCheckStatus);
+                        $('.c_report_check').css('display', 'inline-block');
+                    }
+                
+                    const messageCell = tableRow.find('.c_message');
+                    const subjectCell = tableRow.find('.c_subject');
+                
+                    subjectCell.hover(function () {
+                        const fullSubject = report.subject;
+                        const dropdownDivSubject = $('<div class="subject-dropdown_c"></div>').text(fullSubject);
+                
+                        dropdownDivSubject.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '200px',
+                            whiteSpace: 'normal',
+                        });
+                
+                        $(this).append(dropdownDivSubject);
+                    }, function () {
+                        $(this).find('.subject-dropdown_c').remove();
+                    });
+                
+                    messageCell.hover(function () {
+                        const fullMessage = report.message;
+                        const dropdownDivMessage = $('<div class="message-dropdown_c"></div>').text(fullMessage);
+                
+                        dropdownDivMessage.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '300px',
+                            whiteSpace: 'normal',
+                        });
+                
+                        $(this).append(dropdownDivMessage);
+                    }, function () {
+                        $(this).find('.message-dropdown_c').remove();
+                    });
+                
+                    $('.client_reports tbody').append(tableRow); // Updated selector to target the tbody of the client_reports table
+                });
+                
+            
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching reports: ' + errorThrown.message);
+            }
+        });
+
+    }
+    populataClientReportTable();
+    setInterval(function () {
+        populataClientReportTable();
+        
+        let tCheck = $('#set_tutor_report').attr('data-t_report_check');
+        let cCheck = $('#set_client_report').attr('data-c_report_check');
+        console.log(tCheck);
+        console.log(cCheck);
+        if (tCheck == true || tCheck == 'True' || cCheck == true || cCheck == 'True') {
+            $('.report_check').css('display', 'inline-block');
+        } else {
+            $('.report_check').css('display', 'none');
+        }
+    }, 3600000); // Set interval to 1 hour for dynamic update of the reports table
+
+
+
+
+});
+
+
+function populateTutorDataByID(tutor_id) {
+    const tableBody = $('.tutor_reports_in tbody');
+
+    tableBody.empty();
+
+    if (tutorReportsData !== null) {
+        tutorReportsData.forEach(function(report) {
+            if (report.tutor == tutor_id) {
+                tableBody.append(`
+                    <tr>
+                        <td>${report.id}</td>
+                        <td>${report.tutor}</td>
+                        <td>${report.target_client_id}</td>
+                        <td>${report.subject}</td>
+                        <td>${report.message}</td>
+                        <td>${new Date(report.created_at).toLocaleString()}</td>
+                        <td><button class="resolve_tutor">${report.resolve_by_admin}</button></td>
+                    </tr>
+                `);
+            }
+        });
+    }
+}
+
+function populateClientDataByID(client_id) {
+    const tableBody = $('.client_reports_in tbody');
+
+    tableBody.empty();
+
+    if (clientReportsData !== null) {
+        clientReportsData.forEach(function(report) {
+            if (report.client == client_id) {
+                tableBody.append(`
+                    <tr>
+                        <td>${report.id}</td>
+                        <td>${report.client}</td>
+                        <td>${report.target_tutor}</td>
+                        <td>${report.subject}</td>
+                        <td>${report.message}</td>
+                        <td>${ new Date(report.created_at).toLocaleString()}</td>
+                        <td><button class="resolve_client">${report.resolved_by_admin}</button></td>
+                    </tr>
+                `);
+            }
+        });
+    }
+}
+
+// Report view logic for tutors and clients on take action dialogue ============================================
+$(document).ready(function() {
+    $('#activate_report').on('click', function() {
+        const tutor_id = $('.set_report_details').attr('data-tutor-id_report');
+
+        // console.log(tutor_id);
+        populateTutorDataByID(tutor_id);
+    })
+
+    $('#activate_report_client').on('click', function() {
+        const client_id = $('.set_report_details_client').attr('data-client-id_report');
+
+        populateClientDataByID(client_id);
+    })
+})
+
+
+
+// seach logic for tutor and client tables ================================================
+$(document).ready(function() {
+    $('.search_button_tutor').on('click', function() {
+        var searchText = $('.tutor_search').val().toLowerCase();
+        $('.tutor_table_list tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
+    });
+
+    $('.search_button_client').on('click', function() {
+        var searchText = $('.client_search').val().toLowerCase();
+        $('.learner_table_list tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
     });
 });

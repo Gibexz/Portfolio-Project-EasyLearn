@@ -4,8 +4,10 @@
 {% comment %} Head block {% endcomment %}
 {% block head %}
   <link rel="stylesheet" href="{% static 'styles/tutors_profile.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="{% static 'script/tutor_profile.js' %}"></script>
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
 {% endblock head %}
 
 {% block signup_button %}
@@ -20,6 +22,18 @@
 
 {% block content %}
 <body>
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
     <!-- display cert -->
     <div class="set_cert_display">
         <div class="cert_display">

@@ -1452,14 +1452,14 @@ select{
 .pending_clients_table .clientName, .settled_clients_table .clientName {
     width: 180px;
 }
-.review_table .rating, .review_table .reviewDate, .report_table .reportDate {
+/* .review_table .rating, .review_table .reviewDate, .report_table .reportDate {
     width: 100px;
 }
 
 .review_table .reviewStatement,
 .report_table .reportStatement{
     min-width: 300px;
-}
+} */
 
 .review_table table,
 .pending_clients_table table,

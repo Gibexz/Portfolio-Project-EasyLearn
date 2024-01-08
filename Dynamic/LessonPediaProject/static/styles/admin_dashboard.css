@@ -196,7 +196,7 @@ body{
 }
 
 /* Tutors list logic */
-.tutors_list{
+.tutors_list{ /* used for all tables */
     margin-top: 0px;
     width: 1000px;
     height: 480px;
@@ -205,7 +205,7 @@ body{
     overflow-x: hidden;
 }
 
-.tutors_list .allTutors{
+.tutors_list .allTutors{ /* used for all tables */
     font-family: 'Roboto', sans-serif;
     padding: 20px;
     font-size: 20px;
@@ -213,7 +213,7 @@ body{
     margin-bottom: 0px;
 }
 
-.tutors_list_content {
+.tutors_list_content { /* used for all tables */
     position: sticky;
     top: 0;
     background-color: white;
@@ -292,6 +292,73 @@ table {
     color: white;
     cursor: pointer;
 }
+
+
+/* Tutor and Client reports css */
+
+.tutor_reports tbody td:nth-child(5), .client_reports tbody td:nth-child(5) {
+    /* Set a fixed width for the report.message column */
+    max-width: 300px;
+    min-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tutor_reports tbody td:nth-child(4), .client_reports tbody td:nth-child(4) {
+    /* Set a fixed width for the report.subject column */
+    max-width: 150px;
+    min-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tutor_reports tbody td, .client_reports tbody td {
+    padding: 4px;
+    margin: 4px;
+    text-align: center;
+    background-color: rgba(235, 254, 235, 0.293);
+}
+
+
+
+/* Individual client and tutors reviews and report table styling */ 
+.report_indivdual{
+    margin-top: 0px;
+    width: 100%;
+    height: 480px;
+    background-color: white;
+    border-radius: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.report_data table{
+    border-bottom: 1px solid gray;
+    border-collapse: collapse;
+    margin-left: 2px;
+    margin-right: 2px;
+    max-width: 1050px;
+    margin: auto auto;
+}
+
+
+.report_data td, th{
+    border-bottom: 1px solid gray;
+    padding: 20px 15px 15px 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: small;
+}
+
+.all_data thead th{
+    font-weight: bold;
+    color: gray;
+    font-size: x-small;
+    padding: 2px 10px, 2px 10px;
+    cursor: pointer;
+}
+
 
 
 /* Action dialog */
@@ -475,6 +542,10 @@ table {
     font-family: 'DM Sans', sans-serif;
     overflow-y: auto;
     padding-bottom: 10px;
+}
+
+.profile_view .set_report_details {
+    overflow-y: visible;
 }
 
 .details img{
@@ -675,8 +746,8 @@ table {
 
 .selections{
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
-    margin-top: 50px;
 }
 
 .selections button{
@@ -688,6 +759,52 @@ table {
     color: white;
     border: 1px solid wheat;
     cursor: pointer;
+}
+
+.selections .suspending {
+    /* margin: 10px 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2% 8%;
+}
+
+.selections .blocking, .selections .deleting{
+    margin: 2% 8%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.selections .blocking textarea, .selections .suspending textarea {
+    border-radius: 10px;
+    font-size: 400;
+    font-family: 'Inika', serif;
+    background-color: rgba(221, 221, 255, 0.311);
+}
+
+.selections .suspending input {
+    border-radius: 4px;
+    font-size: 400;
+    width: 80px;
+    font-family: 'Inika', serif;
+    background-color: rgba(221, 221, 255, 0.311);
+}
+
+.selections .deleting input {
+    border-radius: 4px;
+    font-size: 500;
+    width: 120px;
+    padding: 4px;
+    font-family: 'Inika', serif;
+    background-color: rgba(221, 221, 255, 0.311);
+}
+
+.selections .confirm_buttons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .selections .mistake, .selections .mistake_client{
@@ -806,3 +923,44 @@ table {
 .dropdownReports:hover .dropdown-contentReports {
   display: block;
 }
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 5;
+    bottom: 125%; /* Place the tooltip text above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip text */
+    margin-top: 5px; /* Add some top margin */
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    display: in
+}
+
+/* .message-dropdown{
+    position: 'absolute';
+    background-color: '#f9f9f9';
+    border: '1px solid #ccc';
+    padding: '10px';
+    z-index: '1000';
+    width: '300px';
+} */
