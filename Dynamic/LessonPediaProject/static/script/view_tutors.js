@@ -30,4 +30,26 @@
         $(document).click(function () {
             notificationBox.slideUp();
         });
+
+        $('.dashboardBtn').click(function (event) {
+            event.stopPropagation();
+            $('.dropdownContainerTop').toggle();
+        });
+        $(document).click(function () {
+            $('.dropdownContainerTop').hide();
+        });
+
+
+        // Function to show/hide the open to work status
+        $('.fa-circle').hover(
+            function() {
+                // Mouse enter
+                let statusText = $(this).parent('.show_block').data('status-text');
+                $(this).parent('.show_block').append('<div class="status-text">' + statusText + '</div>');
+            },
+            function() {
+                // Mouse leave
+                $(this).parent('.show_block').find('.status-text').remove();
+            }
+        );
     });

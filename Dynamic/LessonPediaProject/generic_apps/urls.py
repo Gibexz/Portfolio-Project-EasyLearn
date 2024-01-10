@@ -3,9 +3,11 @@ from . import views as general_views
 
 urlpatterns = [
     path("", general_views.landing_page, name="landing_page"),
+    path("reviews/", general_views.reviews, name="reviews"),
     path('tutor_sign_up/', general_views.tutor_sign_up, name='tutor_sign_up'),
     path('client_sign_up/', general_views.client_sign_up, name='client_sign_up'),
     path('app_admin_sign_up/', general_views.app_admin_sign_up, name='app_admin_sign_up'),
+    path("about_us/developers/", general_views.about_us, name="aboutUs"),
 
 
     path("api/get_tutors_reports/", general_views.get_tutors_reports, name="get_tutors_reports"),

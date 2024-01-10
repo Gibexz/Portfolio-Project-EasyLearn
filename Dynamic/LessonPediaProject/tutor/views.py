@@ -7,8 +7,6 @@ from django.urls import reverse
 from .backends import TutorAuthBackend
 from .forms import TutorUpdateForm
 from .models import Tutor, Subject, TimeSlot, Certificate, SubjectCategory
-from django_countries import countries
-import json
 from django.db.models import Q
 from django.http import JsonResponse
 from client.models import Client, Ranking, Review
@@ -16,12 +14,16 @@ from django.core.mail import send_mail
 from client.models import Client, Review
 from app_admin.models import AppAdmin
 from .forms import TutorScheduleForm
-from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.http import require_POST
 from generic_apps.models import Contract, TutorReportAbuse
 from django.utils import timezone
 from datetime import timedelta
 import random, string
+from django.db import IntegrityError, transaction
+
+
+
+
 
 
 # Tutor reports
@@ -127,6 +129,8 @@ def terminate_contract(request):
 @login_required(login_url='client_login')
 def create_contract(request, tutor_id):
     tutor = get_object_or_404(Tutor, pk=tutor_id)
+    subjects = list(tutor.subjects.all())
+
     client = get_object_or_404(Client, username=request.user.username)
     if request.method == 'POST':
 
@@ -146,10 +150,10 @@ def create_contract(request, tutor_id):
             end_date=timezone.now().date() + timedelta(days=contract_length),
             payment_remaining=pay_rate * contract_length,
         )
-        return JsonResponse({'status': 'success', 'message': 'Contract created successfully',
-                            'contract_id': contract.contract_code})
+        return redirect('validate_user', whoami=request.user)
 
-    subjects = [tutor.primary_subject] + list(tutor.subjects.all())
+        # return JsonResponse({'status': 'success', 'message': 'Contract created successfully',
+        #                     'contract_id': contract.contract_code})
     return render(request, 'tutor/create_contract.html', {'tutor': tutor, 'subjects': subjects, 'client': client})
 
 # accept or decline contract
@@ -167,8 +171,8 @@ def update_contract_status(request, contract_code):
         def get_data():
 
             tutor = get_object_or_404(Tutor, id=request.user.id)
-            tutor.active_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Active').count()
-            tutor.settled_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Settled').count()
+            tutor.active_contracts_count = Contract.objects.filter(tutor=tutor, contract_status='Active').count()
+            tutor.settled_contracts_count = Contract.objects.filter(tutor=tutor, contract_status='Settled').count()
             tutor.pending_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Pending').count()
             tutor.declined_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Declined').count()
             tutor.terminated_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Terminated').count()
@@ -187,15 +191,16 @@ def update_contract_status(request, contract_code):
 
                 'status': 'success',
                 'pending_contracts_count': tutor.pending_contract_count,
-                'active_contract_count': tutor.active_contract_count,
-                'settled_contracts_count': tutor.settled_contract_count,
+                'active_contracts_count': tutor.active_contracts_count,
+                'settled_contracts_count': tutor.settled_contracts_count,
                 'pending_contracts': [{'client_name': contract.client.get_full_name(),
                                         'subject_name': contract.subject.subject_name,
                                         'week_days': contract.week_days,
                                         'contract_length': contract.contract_length,
                                         'pay_rate': contract.pay_rate,
-                                        'start_date': contract.start_date.strftime("%d-%m-%Y")} for contract in pending_contracts],
+                                        'start_date': contract.start_date.strftime("%d-%m-%Y"),
                                         'contract_code': contract.contract_code,
+                                        'contract_status': contract.contract_status} for contract in pending_contracts],
                 'settled_contracts': [{'client_name': contract.client.get_full_name(),
                                         'subject_name': contract.subject.subject_name,
                                         'contract_length': contract.contract_length,
@@ -208,17 +213,16 @@ def update_contract_status(request, contract_code):
                                         'subject_name': contract.subject.subject_name,
                                         'start_date': contract.start_date.strftime("%d-%m-%Y"),
                                         'end_date': contract.end_date.strftime("%d-%m-%Y"),
-                                        'week_days': contract.week_days} for contract in active_contracts],
+                                        'week_days': contract.week_days,
+                                        'contract_status': contract.contract_status} for contract in active_contracts],
                 'contract_history': [{'client_name': contract.client.get_full_name(),
                                         'subject_name': contract.subject.subject_name,
                                         'start_date': contract.start_date.strftime("%d-%m-%Y"),
                                         'end_date': contract.end_date.strftime("%d-%m-%Y"),
                                         'contract_code': contract.contract_code,
-                                        'week_days': contract.week_days} for contract in contract_history],
+                                        'week_days': contract.week_days,
+                                        'contract_status': contract.contract_status} for contract in contract_history],
                 'received_payments': tutor.received_payments,
-                'pending_contract_count': tutor.pending_contract_count,
-                'settled_contract_count': tutor.settled_contract_count,
-                'active_contract_count': tutor.active_contract_count,
             }
     
 
@@ -240,9 +244,11 @@ def update_contract_status(request, contract_code):
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
+
 # Tutor Create and Update Subjects
 @login_required(login_url='tutor_login')
 def add_subject(request):
+    """Add a subject to the tutor's profile"""
     try:
         tutor = Tutor.objects.get(username=request.user.username)
         all_tutor_subjects = tutor.subjects.all()
@@ -256,26 +262,33 @@ def add_subject(request):
         teaching_experience = request.POST.get('teachingExperience')
 
         subject_category = SubjectCategory.objects.filter(name=category).first()
-        subject_exists = tutor.subjects.filter(subject_name=subject_name).exists()
+        subject_exists = Subject.objects.filter(subject_name=subject_name).exists()
 
         if subject_name and category and proficiency and teaching_experience:
-            if subject_exists:
-                messages.error(request, 'Subject already exists')
-                return JsonResponse({'status': 'error', 'info': 'Subject already exists'})
-            else:
-                tutor.subjects.create(
-                    subject_name=subject_name,
-                    category=subject_category,
-                    proficiency=proficiency,
-                    teaching_experience=teaching_experience,
-                )
-                tutor.save()
-                Subject.update_tutor_count()
-                messages.success(request, 'Subject added successfully.')
+            try:
+                with transaction.atomic():
+                    if subject_exists:
+                        # Subject already exists, associate it with the tutor
+                        existing_subject = Subject.objects.get(subject_name=subject_name)
+                        tutor.subjects.add(existing_subject)
+                        tutor.save()
+                    else:
+                        # Subject does not exist, create it and associate it with the tutor
+                        new_subject = tutor.subjects.create(
+                            subject_name=subject_name,
+                            category=subject_category,
+                            proficiency=proficiency,
+                            teaching_experience=teaching_experience,
+                        )
+                        tutor.save()
+                        Subject.update_tutor_count()
+
+                all_tutor_subjects = tutor.subjects.all()
                 tutor_subjects = [
-                    [subject.subject_name, subject.proficiency] for subject in all_tutor_subjects
+                    [subject.id, subject.subject_name, subject.proficiency] for subject in all_tutor_subjects
                 ]
 
+                messages.success(request, 'Subject added successfully.')
                 return JsonResponse(
                     {
                         'status': 'success',
@@ -283,12 +296,19 @@ def add_subject(request):
                         'primary_subject': tutor.primary_subject,
                     }
                 )
+            except IntegrityError:
+                # Handle IntegrityError if needed, currently no specific handling for it
+                print('IntegrityError occurred')
+                messages.error(request, 'An error occurred while processing your request.')
+                return JsonResponse({'status': 'error', 'info': 'An error occurred'})
         else:
             messages.error(request, 'Please fill all fields')
             return JsonResponse({'status': 'error', 'info': 'Invalid form'})
 
     return JsonResponse({'status': 'error', 'redirect_url': reverse('tutor_dashboard')})
 
+
+# Update Tutor Subjects
 @require_POST
 @login_required(login_url='tutor_login')
 def update_subject(request, subject_id):
@@ -297,7 +317,7 @@ def update_subject(request, subject_id):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
 
     tutor = get_object_or_404(Tutor, username=request.user.username)
-    subject = get_object_or_404(tutor.subjects, pk=subject_id)
+    subject = get_object_or_404(tutor.subjects, pk=subject_id) or tutor.primary_subject
     if subject is None:
         return JsonResponse({'status': 'error', 'message': 'Subject not found'}, status=404)
     if tutor.primary_subject == subject:
@@ -313,11 +333,9 @@ def update_subject(request, subject_id):
     try:
         subject.save()
         Subject.update_tutor_count()
-        print('subject saved')
-        print('subject name', subject.subject_name)
         all_tutor_subjects = tutor.subjects.all()
-        tutor_subjects = [
-                    [subject.subject_name, subject.proficiency] for subject in all_tutor_subjects
+        tutor_subjects = [ tutor.primary_subject ] + [
+                    [subject.id, subject.subject_name, subject.proficiency] for subject in all_tutor_subjects
                 ]
         return JsonResponse({'status': 'success', 'tutor_subjects': tutor_subjects, 'primary_subject': tutor.primary_subject})
     except Exception as e:
@@ -326,6 +344,7 @@ def update_subject(request, subject_id):
             {'status': 'error', 'error': f'Error updating subject: {str(e)}'},
             status=500,
         )
+
 
 # Delete Tutor Subjects
 @login_required(login_url='tutor_login')
@@ -337,14 +356,18 @@ def delete_subject(request, subject_id):
 
     tutor = get_object_or_404(Tutor, username=request.user.username)
     subject = get_object_or_404(Subject, pk=subject_id)
-    all_tutor_subjects = tutor.subjects.all()
 
 
     if subject is not None:
         tutor.subjects.remove(subject)
         messages.success(request, 'Subject deleted successfully.')
+        
+        
+        all_tutor_subjects = tutor.subjects.all()
+        Subject.update_tutor_count()
+
         tutor_subjects = [
-                    [subject.subject_name, subject.proficiency] for subject in all_tutor_subjects
+                    [subject.id, subject.subject_name, subject.proficiency] for subject in all_tutor_subjects
                 ]
         return JsonResponse({'status': 'success', 'tutor_subjects': tutor_subjects,
                               'primary_subject': tutor.primary_subject})
@@ -382,6 +405,8 @@ def more_update(request):
         return redirect('tutor_dashboard')
     return redirect ('tutor_dashboard')
 
+
+# change password
 @login_required(login_url='tutor_login')
 def change_password(request):
     """update tutor password"""
@@ -409,6 +434,7 @@ def change_password(request):
         messages.success(request, 'Password changed successfully.')
         return redirect('tutor_dashboard')
     return redirect('tutor_dashboard')
+
 
 # Tutors documents upload
 @login_required(login_url='tutor_login')
@@ -471,6 +497,8 @@ def delete_schedule(request, schedule_id):
         messages.error(request, 'Schedule Deletion Failed')
         return JsonResponse({'status': 'error'})
 
+
+# Tutor Dashboard
 @login_required(login_url='tutor_login')
 def tutor_dashboard(request):
     if not isinstance(request.user, Tutor):
@@ -483,7 +511,7 @@ def tutor_dashboard(request):
     clients = set(contract.client for contract in contracts)
 
     subject_categories = SubjectCategory.objects.all()
-    tutor_subjects = tutor.subjects.all()
+    tutor_subjects = tutor.subjects.all().order_by('subject_name')
 
     tutor.active_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Active').count()
     tutor.settled_contract_count = Contract.objects.filter(tutor=tutor, contract_status='Settled').count()
@@ -516,6 +544,7 @@ def tutor_dashboard(request):
                     'day': schedule.day.name,
                     'from_hour': schedule.from_hour.name,
                     'to_hour': schedule.to_hour.name,
+                    'id': schedule.id
                 }
                 for schedule in tutor_schedule
             ]
@@ -533,6 +562,7 @@ def tutor_dashboard(request):
                             'pending_contracts': pending_contracts, 'contract_history': contract_history,
                             'active_contracts': active_contracts, 'settled_contracts': settled_contracts,
                             'reports': reports, 'clients': clients})
+
 
 # Tutor Login
 def tutor_login(request):
@@ -618,15 +648,61 @@ def tutor_profile(request):
     if not isinstance(request.user, Tutor):
         error_message = "Are you a tutor?"
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-    tutor = Tutor.objects.get(username=request.user.username)
     
-    country_list = [('Select Country', 'Select Country'), ('NG', 'Nigeria')]
-    others = [(code, name) for code, name in countries]
-    country_list.extend(others)
-    country_list_json = json.dumps(country_list)
-
+    tutor = Tutor.objects.get(username=request.user.username)
+    categories = SubjectCategory.objects.all()
+    
     if tutor is not None:
         if request.method == 'POST':
+            subject_name = request.POST.get('subjectName').strip()
+            category = request.POST.get('category')
+            proficiency = request.POST.get('proficiency')
+            teaching_experience = request.POST.get('teachingExperience')
+            subject_category = SubjectCategory.objects.filter(name=category).first()
+
+            if subject_name and category and proficiency and teaching_experience:
+                try:
+                    with transaction.atomic():
+                        subject, created = Subject.objects.get_or_create(
+                            subject_name=subject_name,
+                            defaults={
+                                'category': subject_category,
+                                'proficiency': proficiency,
+                                'teaching_experience': teaching_experience,
+                            }
+                        )
+
+                        if not created:
+                            # Subject with the same name already exists, associate it with the tutor
+                            try:
+
+                                existing_subject = tutor.subjects.get(subject_name=subject_name)
+                                existing_subject.category = subject_category
+                                existing_subject.proficiency = proficiency
+                                existing_subject.teaching_experience = teaching_experience
+                                existing_subject.save()
+
+                                # Update tutor count
+                                Subject.update_tutor_count()
+                            except Subject.DoesNotExist:
+                                tutor.subjects.add(subject)
+                                tutor.primary_subject = subject_name
+                                tutor.save()
+                                Subject.update_tutor_count()
+
+                        else:
+                            # Subject does not exist, create it and associate it with the tutor
+                            tutor.subjects.add(subject)
+                            tutor.primary_subject = subject_name
+                            tutor.save()
+                            Subject.update_tutor_count()
+                except IntegrityError:
+                    messages.error(request, 'Subject with the same name already exists')
+                    return render(request, 'tutor/tutor_profile.html', context={'tutor': tutor, 'categories': categories})
+            else:
+                messages.error(request, 'Please fill all fields')
+                return render(request, 'tutor/tutor_profile.html', context={'tutor': tutor, 'categories': categories})
+
             form = TutorUpdateForm(request.POST, request.FILES, instance=tutor)
             if form.is_valid():
                 form.save()
@@ -634,17 +710,15 @@ def tutor_profile(request):
                 return redirect('tutor_dashboard')
             else:
                 messages.error(request, 'Profile Update Failed')
-                return render(request, 'tutor/tutor_profile.html', context={'form': form, 'tutor': tutor, 'country_list': country_list_json, 'form_errors': form.errors})
+                return render(request, 'tutor/tutor_profile.html', context={'form': form, 'tutor': tutor, 'categories': categories})
         else:
             form = TutorUpdateForm(instance=tutor)
-            return render(request, 'tutor/tutor_profile.html',  context={'form': form, 'tutor': tutor, 'country_list': country_list_json, 'form_errors': form.errors})
+            return render(request, 'tutor/tutor_profile.html', context={'form': form, 'tutor': tutor, 'categories': categories})
     else:
         messages.error(request, 'Tutor not found for the given username')
         return redirect('tutor_login')
 
 
-
-@login_required(login_url='client_signIn')
 @login_required(login_url='client_signIn')
 def view_tutors(request):
     """Displays all tutors"""
@@ -668,10 +742,9 @@ def search_tutors(request):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     
     query = request.GET.get('query', None)
-    print('query', query)
     if query is not None:
         tutors = Tutor.objects.filter(
-            Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(subjects__subject_name__icontains=query)
+            Q(first_name__icontains=query) | Q(last_name__icontains=query) |Q(primary_subject__icontains=query) |  Q(subjects__subject_name__icontains=query)
         ).distinct()
         tutor_list = [ tutor.to_dict() for tutor in tutors]
         print(tutor_list)
@@ -686,7 +759,6 @@ def search_tutors(request):
 
 
 # Tutor public profile
-@login_required(login_url='client_signIn')
 @login_required(login_url='client_signIn')
 def tutor_detail(request, tutor_id):
     """Displays Tutor Public Profile"""

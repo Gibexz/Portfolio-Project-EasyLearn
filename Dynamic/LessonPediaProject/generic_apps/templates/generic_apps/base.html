@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
         <link rel="stylesheet" href="{% static 'styles/landingpage.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/landing_page.css' %}">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="{% static 'script/landing_page.js' %}"></script>
     
@@ -42,7 +43,7 @@
                         <li class="spaceMe"><a href="{% url 'landing_page' %}">Pricing</a></li>
                     {% endblock pricing %}                    
                     <li class="spaceMe"><a href="{% url 'landing_page' %}">Take a fun test</a></li>
-                    <li class="spaceMe"><a href="{% url 'landing_page' %}">About us</a></li>
+                    <li class="spaceMe"><a href="{% url 'aboutUs' %}">About us</a></li>
                     {% block review %}                    
                         <li class="spaceMe all_review">Reviews</li>
                     {% endblock review %}

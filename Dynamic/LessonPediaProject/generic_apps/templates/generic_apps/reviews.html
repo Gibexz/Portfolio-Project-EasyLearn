@@ -1,0 +1,26 @@
+{% extends 'generic_apps/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="review_item">
+                    <section class="space_content meta_client_info">
+                        <section class="reviewer_icon"><img class="tiny_images"src="{{ review.client.profile_picture.url }}" alt="reviewer's icon"></section>
+                        <section class="review_subject">{{ review.review_subject }}</section>
+                        <section class="review_time">{{ review.created_at|date:"d-m-y" }}</section>
+                    </section>
+                    <section class="review_text">{{ review.review_text }}</section>
+                    <div class="hrtop"><hr class="no_height"></div>
+                    <section class="user_signature">
+                        <section class="reviewer">{{ review.client.get_full_name }}</section>
+                    </section>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no_reviews">
+                <h1><center>No reviews yet</center></h1>
+            </div>
+    {% endif %}
+    </div>
+{% endblock content %}

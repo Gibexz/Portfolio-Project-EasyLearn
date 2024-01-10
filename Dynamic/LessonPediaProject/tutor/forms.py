@@ -2,8 +2,6 @@ from django import forms
 from django_countries.fields import countries
 from django_flatpickr.widgets import DatePickerInput
 from .models import Tutor, Day, TimeSlot
-from django.db import models
-from django.forms import BaseInlineFormSet
 
 
 class TutorScheduleForm(forms.ModelForm):
@@ -82,7 +80,6 @@ class TutorUpdateForm(forms.ModelForm):
             ('Others', 'Others')
         ],
         widget=forms.Select(attrs={
-            'class': 'no_outline',
             'id': 'qual',
         })
     )
@@ -140,38 +137,50 @@ class TutorUpdateForm(forms.ModelForm):
     )
 )
 
-
     nationality = forms.CharField(
-        widget=forms.Select(choices=countries),
-        required=True
-    )
-
-
-    
-    state_of_residence = forms.ChoiceField(
-        choices=[
-            ('', '- Select -'),
-            ('Abia', 'Abia'), ('Adamawa', 'Adamawa'), ('AkwaIbom', 'AkwaIbom'),
-            ('Anambra', 'Anambra'), ('Bauchi', 'Bauchi'), ('Bayelsa', 'Bayelsa'),
-            ('Benue', 'Benue'), ('Borno', 'Borno'), ('Cross River', 'Cross River'),
-            ('Delta', 'Delta'), ('Ebonyi', 'Ebonyi'), ('Edo', 'Edo'),
-            ('Ekiti', 'Ekiti'), ('Enugu', 'Enugu'), ('FCT', 'FCT'),
-            ('Gombe', 'Gombe'), ('Imo', 'Imo'), ('Jigawa', 'Jigawa'),
-            ('Kaduna', 'Kaduna'), ('Kano', 'Kano'), ('Katsina', 'Katsina'),
-            ('Kebbi', 'Kebbi'), ('Kogi', 'Kogi'), ('Kwara', 'Kwara'),
-            ('Lagos', 'Lagos'), ('Nasarawa', 'Nasarawa'), ('Niger', 'Niger'),
-            ('Ogun', 'Ogun'), ('Ondo', 'Ondo'), ('Osun', 'Osun'),
-            ('Oyo', 'Oyo'), ('Plateau', 'Plateau'), ('Rivers', 'Rivers'),
-            ('Sokoto', 'Sokoto'), ('Taraba', 'Taraba'), ('Yobe', 'Yobe'),
-            ('Zamfara', 'Zamafara'),
-        ],
-        widget=forms.Select(attrs={
-            'class': 'select-option no_outline',
-            'id': 'state',
-            'onchange': 'toggleLGA(this);',
+        widget=forms.TextInput(attrs={
+            'class': 'nationality',
         })
     )
 
+
+    # nationality = forms.CharField(
+    #     widget=forms.CharField(choices=countries),
+    #     required=True
+    # )
+
+
+    
+    # state_of_residence = forms.ChoiceField(
+    #     choices=[
+    #         ('', '- Select -'),
+    #         ('Abia', 'Abia'), ('Adamawa', 'Adamawa'), ('AkwaIbom', 'AkwaIbom'),
+    #         ('Anambra', 'Anambra'), ('Bauchi', 'Bauchi'), ('Bayelsa', 'Bayelsa'),
+    #         ('Benue', 'Benue'), ('Borno', 'Borno'), ('Cross River', 'Cross River'),
+    #         ('Delta', 'Delta'), ('Ebonyi', 'Ebonyi'), ('Edo', 'Edo'),
+    #         ('Ekiti', 'Ekiti'), ('Enugu', 'Enugu'), ('FCT', 'FCT'),
+    #         ('Gombe', 'Gombe'), ('Imo', 'Imo'), ('Jigawa', 'Jigawa'),
+    #         ('Kaduna', 'Kaduna'), ('Kano', 'Kano'), ('Katsina', 'Katsina'),
+    #         ('Kebbi', 'Kebbi'), ('Kogi', 'Kogi'), ('Kwara', 'Kwara'),
+    #         ('Lagos', 'Lagos'), ('Nasarawa', 'Nasarawa'), ('Niger', 'Niger'),
+    #         ('Ogun', 'Ogun'), ('Ondo', 'Ondo'), ('Osun', 'Osun'),
+    #         ('Oyo', 'Oyo'), ('Plateau', 'Plateau'), ('Rivers', 'Rivers'),
+    #         ('Sokoto', 'Sokoto'), ('Taraba', 'Taraba'), ('Yobe', 'Yobe'),
+    #         ('Zamfara', 'Zamafara'),
+    #     ],
+    #     widget=forms.Select(attrs={
+    #         'class': 'select-option no_outline',
+    #         'id': 'state',
+    #         'onchange': 'toggleLGA(this);',
+    #     })
+    # )
+
+    # state_of_residence = forms.CharField(
+    #     widget=forms.TextInput(attrs={
+    #         'class': 'state_of_residence',
+    #         'id': 'state',
+    #     })
+    # )   
     
     highest_qualification_cert = forms.FileField(
         required=False,
@@ -262,6 +271,12 @@ class TutorUpdateForm(forms.ModelForm):
                 'name': 'residential_address',
                 'placeholder': 'enter residential address',
                 'id': 'residential_address',
+                'autocomplete': 'on',
+            }),
+            'state_of_residence': forms.TextInput(attrs={
+                'name': 'state_of_residence',
+                'placeholder': 'enter state of residence',
+                'id': 'state',
                 'autocomplete': 'on',
             }),
         }

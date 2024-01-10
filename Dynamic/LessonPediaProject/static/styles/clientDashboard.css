@@ -18,13 +18,14 @@ body {
 .sidebar {
     flex: 1;
     height: 661px;
-    width: 197px;
-    border: 3px solid rgba(245, 222, 179, 0.259);
-    border-radius: 10px;
+    max-width: 200px;
+    border: 1px solid rgba(245, 222, 179, 0.259);
+    border-radius: 0px 10px 10px 0px;
     /* border-right: none; */
     padding: 10px;
     color: white;
-    margin: 10px;
+    background-color: rgb(40, 42, 61);
+    margin: 10px 0px 10px 0px;
 }
 
 .sidebar .personal {
@@ -174,6 +175,7 @@ body {
 .cover{
     max-height: 400px;
     overflow-y: auto;
+    position: relative;
 }
 
 .my_tutors{
@@ -194,16 +196,17 @@ body {
 }
 
 .my_tutors .searchClient input[type="text"]{
-    height: 20px;
+    height: 15px;
     margin-top: 3px;
     margin-left: 5px;
     border-radius: 10px;
     padding: 2px;
     padding-left: 5px;
-    border: none
+    border: none;
+    width: 300px;
 }
 
-.my_tutors .searchClient input[type="text"]:focus{
+.my_tutors .searchClient input[type="text"]:focus, .allSelect:focus{
     outline: none;
 }
 
@@ -225,7 +228,7 @@ body {
 .subjects {
     flex: 4;
     margin-top: 10px;
-    max-height: 130px;
+    min-height: 130px;
 }
 
 .subjects .subject_details .tutor_picture{
@@ -244,6 +247,7 @@ body {
     border-radius: 50%;
     margin: 3px 10px 3px 3px;
 }
+
 .subject_details{
     padding: 5px 10px;
 }
@@ -263,29 +267,30 @@ body {
 }
 
 .tutor_toggles{
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    margin-top: 1px;
     height: 35px;
+    margin-left: 8%;
 }
 
-
 .tutor_toggles .even-width{
-    border-radius: 7px;
     border: none;
-    width: 100px;
-    margin: 5px;
     height: 22px;
     font-family: 'Hedvig Letters Sans', sans-serif;
-    background-color: rgba(2, 7, 80, 0.811);
-    color: white;
-    box-shadow: 1px 1px 5px 1px rgba(36, 35, 35, 0.6);
+    color: darkblue;
+    background-color: transparent;
     cursor: pointer;
+}
+
+.tutor_toggles .even-width:hover{
+    color:rgb(1, 59, 50);
+    border-bottom: 1px solid rgb(1, 59, 50);
+    border-radius: 5px;
 }
 
 .float_left{
     float: left;
 }
+
 .float_left .tutor_name {
     display: block;
     font-style: italic;
@@ -306,19 +311,51 @@ body {
     color: rgb(0, 0, 100);
     font-size: 0.9em;
 }
-.class_schedule, .time {
+.class_schedule, .engage {
     font-size: small;
     padding: 0 10px 10px 10px;
 }
-.clearfix .status {
+
+.requestStatus{
+     float: right;
+     text-align: center;
+     width: 100px
+}
+
+.requestStatus .statuus{
+    color: gray;
+    font-size: small;
+}
+
+.status {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    float: right;
-    margin: 10px;
+    margin: 0px;
     margin-right: 30px;
-    background-color: rgb(20, 236, 20);
+    text-align: center;
 }
+
+.statusDefault{
+    background-color: rgba(0, 0, 0, 0.672);
+}
+
+.statusActive{
+    background-color: rgba(1, 112, 8, 0.672);
+}
+
+.statusPending{
+    background-color: rgba(141, 0, 0, 0.677);
+}
+
+.statusDecline{
+    background-color: red;
+}
+
+.requestStatus p{
+    margin: auto;
+}
+
 .clearfix::after {
     content: "";
     clear: both;
@@ -345,11 +382,12 @@ body {
     /* background: radial-gradient(white 20%, rgb(185, 200, 211)); */
     background-color: rgba(71, 63, 63, 0.086);
     margin: 20px 10px 20px 0px;
+    max-width: 200px;
 }
 .right_content{
     margin: 20px;
     font-family: 'Hedvig Letters Sans', sans-serif;
-    font-size: 1.2em;
+    font-size: 0.8em;
     line-height: 50px;
     font-weight: bold;
     color: rgba(2, 7, 80, 0.811);
@@ -663,7 +701,7 @@ label{
 
 .removeUser{
     display:none;
-    position: relative;
+    position: relatve;
     background-color: white;
     box-shadow: 1px 1px 3px 1px rgb(202, 199, 199);
     border-radius: 20px;
@@ -713,11 +751,12 @@ label{
 }
 
 .rankStar{
-    position: relative;
+    position: absolute;
+    float:left;
     text-align: center;
-    margin-left: 10px;
+    margin-left: -18px;
     display: block;
-    margin-top: -50px;
+    margin-top: -40px;
 }
 
 .rankTutor{
@@ -768,14 +807,14 @@ label{
 
 .reviews{
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: auto auto;
     display:flex;
     justify-content: center;
     font-family: 'DM Sans', sans-serif;
     position: absolute;
     backdrop-filter: brightness(0.2);
-    padding-top: 8%;
+    align-items: center;
     overflow: hidden;
     top: 0;
 }
@@ -882,11 +921,11 @@ label{
     margin-top: 1%;
 }
 
-.review_content{
+.review_content, .transit{
     margin-top: 3%;
 }
 
-.review_content fieldset{
+.review_content fieldset, .transit fieldset{
     width: 80%;
     margin: auto;
     border-radius: 15px;
@@ -894,7 +933,7 @@ label{
     box-shadow: 1px 1px 5px 1px rgba(128, 128, 128, 0.412);
 }
 
-.review_content legend{
+.review_content legend , .transit legend{
     color: gray;
     font-size: small;
     color: rgba(0, 0, 255, 0.793);
@@ -903,14 +942,14 @@ label{
     margin-left: 1%;
 }
 
-.review_content input{
+.review_content input, .transit input{
     width: 85%;
     padding: 5px;
     border-radius: 10px;
     border: 1px solid gray;
 }
 
-.review_content textarea{
+.review_content textarea, .transit textarea{
     margin-left: 1.8%;
     width: 92%;
     border-radius: 5px;
@@ -918,11 +957,11 @@ label{
     resize: none;
 }
 
-.review_content input:focus, .review_content textarea:focus{
+.review_content input:focus, .review_content textarea:focus, .transit input:focus, .transit textarea:focus{
     outline: 1px solid rgba(255, 0, 0, 0.472);
 }
 
-.review_content input[type="submit"]{
+.review_content input[type="submit"], .transit input[type="submit"]{
     color: white;
     font-weight: bold;
     font-size: 1em;
@@ -978,7 +1017,12 @@ label{
     box-shadow: 1px 1px 8px 1px rgba(239, 237, 237, 0.412);
     border-radius: 10px;
     margin-top: 5px;
+}
+
+.review_scroll{
     overflow-y: auto;
+    max-height: 74vh;
+    padding-right: 10px;
 }
 
 .allReview_content h3, .allReview_content p{
@@ -989,6 +1033,7 @@ label{
     float: right;
     width: 50px;
     height: 50px;
+    margin-right: 10px;
     border-radius: 50%;
 }
 
@@ -1025,4 +1070,115 @@ label{
 
 .allReview_content .Treview{
     color: rgb(97, 0, 0)
+}
+
+.allSelect{
+    width: 48%;
+    padding: 15px;
+    border: 2px solid rgba(128, 128, 128, 0.621);
+    height: 35px;
+    margin-top: 3px;
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 2px;
+    padding-left: 5px;
+}
+
+.select_option{
+    display: flex;
+}
+
+.select_option select{
+    color: black !important;
+}
+
+#specs, #tutorGen{
+    margin-left: 19%;
+}
+
+.submitEdit, .cancelEdit{
+    width: 40% !important;
+}
+
+.submitEdit{
+    margin-right: 15px;
+}
+
+.cancelEdit{
+    margin-left: 15px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    border-radius: 30px;
+    cursor: pointer;
+    border-bottom: 2px solid gray;
+    padding: 1% 15% 1% 15%;
+}
+
+.transit{
+    animation: fadeIn 2s ease-in-out;
+    opacity: 0;
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+.engagaement{
+    float: right;
+    color: red;
+    background-color: red;
+    width: 400px;
+}
+
+.engage{
+    padding: 2px 20px 2px 20px;
+    border-radius: 10px;
+    margin-bottom: 0px;
+    margin-top: 5%;
+    cursor: pointer;
+    background: linear-gradient(rgba(169, 169, 251, 0.346), rgb(213, 214, 208));
+    box-shadow: -1px 1px 5px 1px rgba(128, 128, 128, 0.329);
+    color: rgb(0, 84, 0);
+    border-bottom: 1px solid rgba(255, 0, 0, 0.404);
+    text-align: center;
+}
+
+.engage:hover{
+    border-bottom: 1px solid red;
+    color: green;
+}
+
+.engage a{
+    text-decoration: none;
+}
+
+.elipses{
+    float: right;
+    margin-right: 5%;
+}
+
+.goRight{
+    margin: auto;
+    height: 22px;
+    margin-bottom: 10%;
+    overflow: hidden;
+    width: 120px;
+    margin-left: 10px; 
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
+}
+
+.makePayment, .congrats, .balanceUp{
+    display: none;
 }

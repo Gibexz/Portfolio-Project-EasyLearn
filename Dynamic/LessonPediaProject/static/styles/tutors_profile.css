@@ -15,7 +15,7 @@ body, html {
     background: url('../images/backgrounds/profile_background.jpg') repeat; 
     background-repeat: no-repeat;
     background-size: 150%;
-    /* animation: animateBackground 20s linear infinite; */
+    animation: animateBackground 20s linear infinite;
     z-index: -1;
 }
 
@@ -187,15 +187,7 @@ body, html {
 #lga_resident{
     display: none;
 }
-/* #instiution{
-    width: 55%;
-}
 
-#primary_subject{
-    display: inline-block;
-    width: 40%;
-
-} */
 
 #others{
     width: 40%;
@@ -206,9 +198,14 @@ body, html {
     justify-content: flex-start;
     align-items: center;
 }
- #nationality{
-    width: 45%;
+ #id_nationality, .nation_label{
+    width: 56%;
  }
+
+ #state, .state_label {
+	margin-left: 0.48%;
+	width: 41%;
+}
 
 .parallel {
     flex: 1;
@@ -246,9 +243,6 @@ body, html {
 }
 #phone_label {
     padding-left: 15%;
-}
-.state input[type='text']{
-   display: none;
 }
 
 
@@ -289,10 +283,9 @@ body, html {
     padding: 5px 0px 5px 10px;
     margin-left: 13.5%;
     height: 27px;
-    width: 24.17%;
+    width: 27.6%;
     border-right: none;
     border-radius: 10px;
-    border-right: 2px solid black;
 }
 
 #position_qual{
@@ -305,43 +298,56 @@ body, html {
 
 .location select, #gender, #dob {
     background-color: white;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-left: 2px solid black;
 }
 
-.no_outline {
-    outline: none;
-    padding: 5px 0px 5px 10px;
-    border-top: none;
-    border-bottom: none;
-    border-left: none;
-    margin-left: 10px;
+.subject_form_group {
+    display: flex;
+    align-items: center;
+}
+/* .subject_form_group div {
+    display: flex;
+
+}
+ */
+#subjectName {
+    width: 100%;
+}
+.subject_form_group select{
+    width: 100%;
     border-radius: 10px;
-    border-right: 2px solid black;
+    background-color: white;
+    height: 27px;
+    margin: 0.5% 0;
+    outline: none;
+}
+.subject_form_group select:focus{
+    outline: none;
 }
 
-#dob_label{
-    margin-left: 15%;
+#degree_class {
+    width: 27%;
+}
+.subject_form_group label {
+    width: 20%;
+}
+.dob_label{
+    margin-left: 13.5%;
 }
 
 #dob {
-    /* width: 40.5%; */
-    border: none;
-    border-right: 2px solid black;
-    border-left: 2px solid black;
+    width: 100%;
     color: rgb(22, 21, 21);
+    padding: 0;
+    padding-left: 3px;
     
 
 }
-#gender {
+#gender, .no_outline {
     display: inline-block;
-    width: 55%;
+    width: 57%;
     margin-left: 0;
-    border: none;
-    color: rgb(22, 21, 21);
-    border-right: 2px solid black;
-    border-left: 2px solid black;
-    color: rgb(22, 21, 21);
     background-color: white;
     border-radius: 10px;
     height: 27px;
@@ -517,3 +523,4 @@ body, html {
 .cv_preview, .cert_preview {
     display: none !important;
 }
+

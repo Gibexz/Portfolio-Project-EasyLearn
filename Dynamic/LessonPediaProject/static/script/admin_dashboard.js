@@ -1075,7 +1075,7 @@ $(document).ready(function() {
                     `);
                     let tCheckStatus = false;
                     if (report.resolved_by_admin === true || report.resolved_by_admin == 'True') {
-                        tableRow.css({'background-color': 'lightgreen', 'border': '1px solid white'});
+                        tableRow.css({'background-color': '#defce4', 'border': '1px solid white'});
                         tCheckStatus = false;
                         $('.t_report_check').css('display', 'none');
                         $('#set_tutor_report').attr('data-t_report_check', tCheckStatus);
@@ -1155,7 +1155,160 @@ $(document).ready(function() {
         populataTutorReportTable();
     }, 3600000); // Set interval to 1 hour for dynamic update of the reports table
     
-    
+    function displayMessageSuccess(message) {
+        let messageDivSuccess = $('#messageDivSuccess');
+        messageDivSuccess.text(message);
+        messageDivSuccess.fadeIn().delay(5000).fadeOut();
+    }
+    function displayMessageError(message) {
+        let messageDivError = $('#messageDivError');
+        messageDivError.text(message);
+        messageDivError.fadeIn().delay(5000).fadeOut();
+    }
+
+
+    // resolve tutor report status by admin ==========================================
+    $('.tutor_reports tbody').on('click', '.t_resolve_tutor', function() {
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+        console.log("clicked");
+
+        let reportID = $(this).closest('tr').find('td').eq(0).text(); // Get the report ID for the first colum of the row
+        console.log(reportID);
+        let status = $(this).closest('tr').find('td').eq(6).text(); // Get the status for the 7th column of the row (resolve status)
+        console.log(status);
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        $.ajax({
+            method: 'POST',
+            url: `${api_url}/api/appadmin_tutors_reports_api/${reportID}/update_report_status/`,
+            data: {'report_status': status},
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                populataTutorReportTable();
+                displayMessageSuccess("Success "+ response.message);
+                
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError("Error " + errorThrown.message);
+            }
+        })
+        
+    });
+
+    $('.tutor_reports tbody').on('click', '.t_report_view', function() {
+
+        $('.set_report_tutor').show();
+        
+        let reportID = $(this).closest('tr').find('td').eq(0).text(); // Get the report ID for the first colum of the row
+        let tutorID = $(this).closest('tr').find('td').eq(1).text();
+        let clientID = $(this).closest('tr').find('td').eq(2).text();
+        let subject = $(this).closest('tr').find('td').eq(3).text();
+        let message = $(this).closest('tr').find('td').eq(4).text();
+        let createdAt = $(this).closest('tr').find('td').eq(5).text(); 
+        let resolvedByAdmin = $(this).closest('tr').find('td').eq(6).text(); 
+        let resolvedAt = $(this).closest('tr').find('td').eq(7).text();
+
+        $('.t_report_id').text(reportID);
+        $('.t_tutor_id').text(tutorID);
+        $('.t_client_id').text(clientID);
+        $('.t_subject').text(subject);
+        $('.t_message_t').text(message);
+
+
+        $('.disable_close_reports').off('click').click(function() {
+            $('.set_report_tutor').hide();
+        })
+
+        $('.t_send_tutor').off('click').click(function() {
+            $('.t_message_box_c').hide();
+
+            if ($('.t_message_box_t').is(':visible')) {
+                $('.t_message_box_t').hide(); // If visible, hide $('.t_send_tutor')
+            } else {
+                $('.t_message_box_t').show(); // If hidden, show $('.t_send_tutor')
+            }
+        });
+
+        $('.t_send_client').off('click').click(function() {
+            $('.t_message_box_t').hide();
+
+            if ($('.t_message_box_c').is(':visible')) {
+                $('.t_message_box_c').hide(); // If visible, hide $('.t_send_tutor')
+            } else {
+                $('.t_message_box_c').show(); // If hidden, show $('.t_send_tutor')
+            }
+        });
+
+        $('.send_tutor_message_t').off('click').click(function() {
+            const api_url = 'http://127.0.0.1:8000/appAdmin';
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            let sendMessage = $('.t_send_message_t').val();
+            console.log(sendMessage);
+            $.ajax({
+                method: 'POST',
+                url: `${api_url}/api/appadmin_tutors_reports_api/${reportID}/send_email_for_tutor_report/`,
+                data: {
+                    'message': sendMessage,
+                    'message_who': 'tutor',
+                },
+
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                },
+                success: function(response) {
+                    // trigger().click('.disable_close_reports');
+                    displayMessageSuccess("Success "+ response.message);
+                    $('.disable_close_reports').trigger('click');
+
+                    
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    displayMessageError("Error " + errorThrown.message);
+                    $('.disable_close_reports').trigger('click');
+
+                }
+            });
+        });
+
+        $('.send_client_message_t').off('click').click(function() {
+            const api_url = 'http://127.0.0.1:8000/appAdmin';
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            let sendMessage = $('.t_send_message_c').val();
+            $.ajax({
+                method: 'POST',
+                url: `${api_url}/api/appadmin_tutors_reports_api/${reportID}/send_email_for_tutor_report/`,
+                data: {
+                    'message': sendMessage,
+                    'message_who': 'client',
+                },
+
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                },
+                success: function(response) {
+                    displayMessageSuccess("Success "+ response.message);
+                    $('.disable_close_reports').trigger('click');
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    displayMessageError("Error " + errorThrown.message);
+                    $('.disable_close_reports').trigger('click');
+
+                }
+            });
+        });
+    });
+
+
+
+
 
 
     // Client report logic ==========================================================
@@ -1191,7 +1344,7 @@ $(document).ready(function() {
                     `);
                     let cCheckStatus = false;
                     if (report.resolved_by_admin === true || report.resolved_by_admin == 'True') {
-                        tableRow.css({'background-color': 'lightgreen', 'border': '1px solid white'});
+                        tableRow.css({'background-color': '#b7fdc5', 'border': '1px solid white'});
                         cCheckStatus = false; 
                         $('#set_client_report').attr('data-c_report_check', cCheckStatus);
                         $('.c_report_check').css('display', 'none');
@@ -1270,6 +1423,145 @@ $(document).ready(function() {
     }, 3600000); // Set interval to 1 hour for dynamic update of the reports table
 
 
+
+    // resolve client report status by admin ==========================================================
+    $('.client_reports tbody').on('click', '.c_resolve_client', function() {
+        const api_url = 'http://127.0.0.1:8000/appAdmin'
+        console.log("clicked");
+
+        let reportID = $(this).closest('tr').find('td').eq(0).text(); // Get the report ID for the first colum of the row
+        // console.log(reportID);
+        let status = $(this).closest('tr').find('td').eq(6).text(); // Get the status for the 7th column of the row (resolve status)
+        // console.log(status);
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        $.ajax({
+            method: 'POST',
+            url: `${api_url}/api/appadmin_clients_reports_api/${reportID}/update_report_status/`,
+            data: {'report_status': status},
+
+            beforeSend: function(xhr) { 
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            },
+            success: function(response) {
+                populataClientReportTable();
+                displayMessageSuccess("Success "+ response.message);
+                
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                displayMessageError("Error " + errorThrown.message);
+            }
+        })
+        
+    });
+
+    $('.client_reports tbody').on('click', '.c_report_view', function() {
+
+        $('.set_report_client').show();
+        
+        let reportID = $(this).closest('tr').find('td').eq(0).text(); // Get the report ID for the first colum of the row
+        let tutorID = $(this).closest('tr').find('td').eq(1).text();
+        let clientID = $(this).closest('tr').find('td').eq(2).text();
+        let subject = $(this).closest('tr').find('td').eq(3).text();
+        let message = $(this).closest('tr').find('td').eq(4).text();
+        let createdAt = $(this).closest('tr').find('td').eq(5).text(); 
+        let resolvedByAdmin = $(this).closest('tr').find('td').eq(6).text(); 
+        let resolvedAt = $(this).closest('tr').find('td').eq(7).text();
+
+        $('.c_report_id').text(reportID);
+        $('.c_tutor_id').text(tutorID);
+        $('.c_client_id').text(clientID);
+        $('.c_subject').text(subject);
+        $('.c_message_c').text(message);
+
+
+        $('.disable_close_reports').off('click').click(function() {
+            $('.set_report_client').hide();
+        })
+
+        $('.c_send_tutor').off('click').click(function() {
+            $('.c_message_box_c').hide();
+
+            if ($('.c_message_box_t').is(':visible')) {
+                $('.c_message_box_t').hide(); // If visible, hide $('.t_send_tutor')
+            } else {
+                $('.c_message_box_t').show(); // If hidden, show $('.t_send_tutor')
+            }
+        });
+
+        $('.c_send_client').off('click').click(function() {
+            $('.c_message_box_t').hide();
+
+            if ($('.c_message_box_c').is(':visible')) {
+                $('.c_message_box_c').hide(); // If visible, hide $('.t_send_tutor')
+            } else {
+                $('.c_message_box_c').show(); // If hidden, show $('.t_send_tutor')
+            }
+        });
+
+
+        $('.send_client_message_c').off('click').click(function() {
+            const api_url = 'http://127.0.0.1:8000/appAdmin';
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            let sendMessage = $('.c_send_message_c').val();
+            $.ajax({
+                method: 'POST',
+                url: `${api_url}/api/appadmin_clients_reports_api/${reportID}/send_email_for_client_report/`,
+                data: {
+                    'message': sendMessage,
+                    'message_who': 'client',
+                },
+
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                },
+                success: function(response) {
+                    displayMessageSuccess("Success "+ response.message);
+                    $('.disable_close_reports').trigger('click');
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    displayMessageError("Error " + errorThrown.message);
+                    $('.disable_close_reports').trigger('click');
+
+                }
+            });
+        });
+
+
+        $('.send_tutor_message_c').off('click').click(function() {
+            const api_url = 'http://127.0.0.1:8000/appAdmin';
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            let sendMessage = $('.c_send_message_t').val();
+            // console.log(sendMessage);
+            $.ajax({
+                method: 'POST',
+                url: `${api_url}/api/appadmin_clients_reports_api/${reportID}/send_email_for_client_report/`,
+                data: {
+                    'message': sendMessage,
+                    'message_who': 'tutor',
+                },
+
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                },
+                success: function(response) {
+                    displayMessageSuccess("Success "+ response.message);
+                    $('.disable_close_reports').trigger('click');
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    displayMessageError("Error " + errorThrown.message);
+                    $('.disable_close_reports').trigger('click');
+
+                }
+            });
+        });
+
+    });
 
 
 });
@@ -1356,4 +1648,9 @@ $(document).ready(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
         });
     });
+});
+
+$(document).ready(function() {
+
+
 });

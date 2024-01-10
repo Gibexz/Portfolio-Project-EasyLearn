@@ -19,6 +19,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 import hashlib
 import uuid
+from generic_apps.models import ClientReportAbuse, TutorReportAbuse
+from generic_apps.serializers import ClientReportAbuseSerializer, TutorReportAbuseSerializer
+from django.core.mail import send_mail
 
 def landing_page_admin(request):
     """Landing page"""
@@ -414,3 +417,188 @@ class ClientViewSet(ModelViewSet):
             return Response({'message': 'Client not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+
+class AppAdminTutorsReportViewSet(ModelViewSet):
+    """AppAdmin Report Abuse viewset for related api logics"""
+
+    permission_classes = [IsAuthenticated]
+
+    queryset = TutorReportAbuse.objects.all()
+    serializer_class = TutorReportAbuseSerializer
+
+    @action(detail=True, methods=['post'])
+    def update_report_status(self, request, pk=None):
+        """Update tutor report status"""
+        tutor_report = self.get_object()
+        report_status = request.data['report_status'] # True or False, actually the resolved_by_admin field
+        
+        try:
+            if report_status == "true":
+                tutor_report.resolved_by_admin = False
+                tutor_report.resolved_at = None
+                tutor_report.save()
+                return Response({'message': 'Tutor report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+            elif report_status == "false":
+                tutor_report.resolved_by_admin = True
+                tutor_report.resolved_at = timezone.now()
+                tutor_report.save()
+                return Response({'message': 'Tutor report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+            else:
+                return Response({'message': 'Invalid status on resolved by Admin'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        except Exception as e:
+            return Response({'message': 'Error updating tutor report status'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    @action(detail=True, methods=['post'])
+    def send_email_for_tutor_report(self, request, pk=None):
+        """Method to send email to client or tutor based on Tutor Report Abuse"""
+        tutor_report_obj = self.get_object()
+        created_at = tutor_report_obj.created_at
+        report_id = tutor_report_obj.id
+        report_subject = tutor_report_obj.subject
+        report_message = tutor_report_obj.message
+        target_client_id = tutor_report_obj.target_client_id.id
+        tutor_id = tutor_report_obj.tutor.id
+        
+        # to be used for email formating
+        tutor_obj = Tutor.objects.get(pk=tutor_id)
+        tutor_serializer = TutorSerializer(tutor_obj)
+        serialized_tutor = tutor_serializer.data
+        tutor_email = serialized_tutor['email']
+
+        reported_client_obj = Client.objects.get(pk=target_client_id)
+        clients_serializer = ClientSerializer(reported_client_obj)
+        serialized_client = clients_serializer.data
+        client_email = serialized_client['email']
+        client_firstname = serialized_client.get('first_name')
+        client_lastname = serialized_client['last_name']
+        client_fullname = f"{client_firstname} {client_lastname}"
+
+
+        try:
+            message_who = request.data['message_who']
+
+            if message_who == 'tutor':
+                message_body = request.data['message']
+                subject = "Response to your report"
+
+                sender = 'adminlessonpedia@gmail.com'
+                recipient = tutor_email
+                message = f"{message_body}\n\n{sender}"
+                # print(message)
+
+                send_mail(subject, message, sender, [recipient])
+                return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+            
+            elif message_who == 'client':
+                message_body = request.data['message']
+                subject = "Please respond within 2 days"
+
+                sender = 'adminlessonpedia@gmail.com'
+                recipient = client_email
+                message = f"{message_body}\n\n{sender}"
+                # print(message)
+
+                send_mail(subject, message, sender, [recipient])
+                return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': 'Error sending email', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class AppAdminClientReportViewSet(ModelViewSet):
+    """AppAdmin Report Abuse viewset for related api logics"""
+
+    permission_classes = [IsAuthenticated]
+
+    queryset = ClientReportAbuse.objects.all()
+    serializer_class = ClientReportAbuseSerializer
+
+    @action(detail=True, methods=['post'])
+    def update_report_status(self, request, pk=None):
+        """Update client report status"""
+        client_report = self.get_object()
+        report_status = request.data['report_status'] # True or False, actually the resolved_by_admin field
+        
+        try:
+            if report_status == 'true':
+                client_report.resolved_by_admin = False
+                client_report.resolved_at = None
+                client_report.save()
+                return Response({'message': 'Client report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+            elif report_status == 'false':
+                client_report.resolved_by_admin = True
+                client_report.resolved_at = timezone.now()
+                client_report.save()
+                return Response({'message': 'Client report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+            else:
+                return Response({'message': 'Invalid status on resolved by Admin'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        except Exception as e:
+            return Response({'message': 'Error updating client report status'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+    @action(detail=True, methods=['post'])
+    def send_email_for_client_report(self, request, pk=None):
+        """Method to send email to client or tutor based on Client Report Abuse"""
+        client_report_obj = self.get_object()
+        created_at = client_report_obj.created_at
+        report_id = client_report_obj.id
+        report_subject = client_report_obj.subject
+        report_message = client_report_obj.message
+        target_tutor_id = client_report_obj.target_tutor.id
+        client_id = client_report_obj.client.id
+        
+
+        # to be used for email formating
+        client_obj = Client.objects.get(pk=client_id)
+        client_serializer = ClientSerializer(client_obj)
+        serialized_client = client_serializer.data
+        client_email = serialized_client['email']
+
+        reported_tutor_obj = Tutor.objects.get(pk=target_tutor_id)
+        tutors_serializer = TutorSerializer(reported_tutor_obj)
+        serialized_tutor = tutors_serializer.data
+        tutor_firstname = serialized_tutor.get('first_name')
+        tutor_lastname = serialized_tutor['last_name']
+        tutor_fullname = f"{tutor_firstname} {tutor_lastname}" 
+        tutor_email = serialized_tutor['email']
+
+
+        try:
+            message_who = request.data['message_who']
+
+            if message_who == 'client':
+                message_body = request.data['message']
+                subject = "Response to your report"
+
+                sender = 'adminlessonpedia@gmail.com'
+                recipient = client_email
+                message = f"{message_body}\n\n{sender}"
+                # print(message)
+
+                send_mail(subject, message, sender, [recipient])
+                return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+            
+            elif message_who == 'tutor':
+                message_body = request.data['message']
+                subject = "Please respond within 2 days"
+
+                sender = 'adminlessonpedia@gmail.com'
+                recipient = tutor_email
+                message = f"{message_body}\n\n{sender}"
+                # print(message)
+
+                send_mail(subject, message, sender, [recipient])
+                return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': 'Error sending email', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

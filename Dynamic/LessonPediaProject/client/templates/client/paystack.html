@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <title>Payment - Gateway</title>
+    <link rel="stylesheet" href="{% static 'styles/paystack.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/payStackGateway.js' %}"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+    <p id="userName">{{ request.user.username }}</p>
+    <p id="tutorId">{{ tutor.id }}</p>
+    <p id="token">{{ csrf_token }}</p>
+    <div class="reviews" style="display: nne">
+        <div class="review_main">
+            
+            <section class="review_top">
+                <div class="closeReview">
+                    x
+                </div>
+                {% load humanize %}
+                    <center>
+                        <h2 class="review_heading">PAY-NOW => <span class="amount"> #{{ contract.contract_amount|floatformat:1|add:'0'|intcomma }}</span></h2>
+                    </center>
+            </section><hr>
+    
+            <section class="profilePicture">
+                <img src="{{ tutor.profile_picture.url }}" alt="">
+                <p>{{ tutor.email }}</p>
+            </section>
+            <section class="review_tutor_details">
+                <h4><span class="tutorDetails">Tutor Details </span></h4>
+                <p class="name"><span class="tutorName">{{ tutor.first_name }} {{ tutor.last_name }} [{{ tutor.highest_qualification }}]</span> </p>
+                <p class="Trank">Ranking: 
+                    <span>
+                        {% if tutor.rank > 4 %}
+                                <span class="viewColor" style="color: gold">★★★★★</span>
+                            {% elif tutor.rank > 3 %}
+                                <span class="viewColor" style="color: gold">★★★★</span>
+                                <span class="defaultColor" style="color: gray">★</span>
+                            {% elif tutor.rank > 2 %}
+                                <span class="viewColor" style="color: gold">★★★</span>
+                                <span class="defaultColor" style="color: gray">★★</span>
+                            {% elif tutor.rank > 2 %}
+                                <span class="viewColor" style="color: gold">★★</span>
+                                <span class="defaultColor" style="color: gray">★★★</span>
+                            {% elif tutor.rank > 1 %}
+                                <span class="viewColor" style="color: gold">★</span>
+                                <span class="defaultColor" style="color: gray">★★★★</span>
+                            {% else %}
+                                <span class="defaultColor" style="color: gray">★★★★★</span>
+                            {% endif %}
+                    </span>                    
+                </p>
+                <div class="emp">
+    
+                </div>
+            </section>
+    
+            <section class="review_content">
+                <fieldset>
+                    <legend>Fill in the below</legend>
+                    <section class="top">
+                        <label for="paymentType">Payment type</label>
+                        <select name="payment" id="paymentType">
+                            <option value="selectOne">-- select one --</option>
+                            <option value="partPayment">Part-Payment <span>[Not less than 50%]</span></option>
+                            <option value="fullPayment">Full-Payment</option>
+                        </select><br>
+                        <label for="transactionId">Transaction Id</label>
+                        <p class="inlineP"></p>
+                    </section>
+                        
+                    <form id='reviewForm' action="">
+    
+                        {% csrf_token %}
+                        <label for="firstName">First-Name <label for="lastName" id="lastName_label">Last-Name</label></label><br>
+                        <input type="text" name="firstName" id="firstName" value="{{ request.user.first_name }}" disabled>                        
+                        <input type="text" name="lastName" id="lastName" value="{{ request.user.last_name }}" disabled>
+
+                        <br><br><label for="email">Email</label><br>
+                        <input type="text" name="email" id="email" value="{{ request.user.email }}" disabled>
+                        
+                        <br><br><label for="amount">Enter Amount<label for="balance" id="amount_label">Balance</label></label><br>
+                        <input type="text" name="amount" id="amount" value="-- select paymentType --" disabled pattern="\d*" title="Only numeric">                        
+                        <input type="text" name="balance" id="balance" value="-- select paymentType --" disabled>
+                        
+                        <p class="termsCondition">By clicking proceed, you have agreed <br>to our <a href="#">terms & Condition</a></p>
+                    </form>
+
+                    <center><button class="pay_Now">PROCEED TO PAYMENT</button></center>
+                </fieldset>
+                
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+

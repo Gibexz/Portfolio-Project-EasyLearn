@@ -84,6 +84,7 @@ $(document).ready(function(){
     $('.logout_activation').click(function(){
         $(".logout_btn").show()
         $("body, html").css("overflow", "hidden")
+        $(".db").hide()
         window.scrollTo({
             top: 0,
             behavior: "smooth",
@@ -93,6 +94,7 @@ $(document).ready(function(){
     $(".cancel_logout").click(function() {
         $(".logout_btn").css("display", "none")
         $("body, html").css("overflow", "auto")
+        $(".db").show()
     })
 
     // Ajax load
@@ -305,6 +307,7 @@ $(".db").on("click", ".review", function () {
         success: function (response) {
             var data = response.Rtutor
             $('.reviews').show()
+            $(".db").hide()
             window.scrollTo({
                 top: 0,
                 behavior: "smooth",
@@ -343,5 +346,167 @@ $('.all_review').click(function(){
     $("body, html").css("overflow-y", "hidden !important")
     $(".db").hide()
 })
+
+// Dynamic Selection
+var primarySelection = [
+    "Primary 1",
+    "Primary 2",
+    "Primary 3",
+    "Primary 4",
+    "Primary 5",
+    "Primary 6",
+]
+
+var secondarySelection = [
+    "JSS 1",
+    "JSS 2",
+    "JSS 3",
+    "SSS 1",
+    "SSS 2",
+    "SSS 3",
+]
+
+var tertiarySelection = [
+    "University 100L",
+    "University 200L",
+    "University 300L",
+    "University 400L",
+    "University 500L",
+    "ND 1",
+    "ND 2",
+    "HND 1",
+    "HND 2",
+]
+
+var others = [
+    "PgD",
+    "Masters",
+    "PhD",
+    "Others",
+]
+
+
+// Hangle dynamical dropdown
+$('#eduLevel').change(function() {
+    var selected = $(this).val();
+    var dropdwn = $('#specifics')
+    dropdwn.empty()
+    if (selected == "Primary"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        primarySelection.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else if (selected == "Secondary"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        secondarySelection.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else if (selected == "Tertiary"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        tertiarySelection.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else if (selected == "Others"){
+        dropdwn.append('<option value="-- select one --" disabled selected >-- select one --</option>');
+        others.forEach(element => {
+            dropdwn.append('<option value="' + element + '">' + element + '</option>')
+        });
+    } else {
+        dropdwn.append('<option value="">Select Educational Level</option>')
+    }
+});
+
+// edit review logics
+$(".allReview_content").on("click", ".message .editReview", function(e){
+    e.stopPropagation();
+    var parentContainer = $(this).closest('.message');
+    var transitSection = parentContainer.next(".transit");
+    transitSection.show().css("opacity", "1");
+});
+
+$(".cancelEdit").click(function(){
+    var parentContainer = $(this).closest('.transit');
+    parentContainer.hide().css("opacity", "0");
+});
+
+var url = 'http://127.0.0.1:8000/client/api/contractForm';
+var receivedContract = {};
+$(".endDate").text("No engagement yet")
+
+$.ajax({
+    url: url,
+    method: 'GET',
+    dataType: 'json',
+    success: function(response) {
+        receivedContract = response;
+        console.log(receivedContract);
+
+        $(".tutor_info").each(function() {
+            var ids = $(this).find(".tutorId").text().split(',');
+
+            for (var id of ids) {
+                var parsedId = parseInt(id.trim(), 10);
+
+                if (!isNaN(parsedId) && parsedId in receivedContract) {
+                    var obtained = receivedContract[parsedId]['status'];
+                    var endDate = receivedContract[parsedId]['endDate']
+                    var amountProposed = receivedContract[parsedId]['amount']
+                    var amount_remaining = receivedContract[parsedId]['amountRemaining']
+                    
+                    // Select specific elements within the current .tutor_info container
+                    var statusElement = $(this).find(".requestStatus .statusDefault");
+                    var statuusElement = $(this).find(".requestStatus .statuus");
+                    var engagement = $(this).find(".engagement")
+                    var payment = $(this).find(".makePayment")
+                    var completed = $(this).find(".congrats")
+                    var balanceUp = $(this).find(".balanceUp")
+                    var endDateElement = $(this).find(".endDate")
+
+                    console.log("ID:", parsedId, "Status:", obtained);
+                    
+                    if (endDate){
+                        endDateElement.text(endDate)
+                    }
+
+                    if (obtained === 'Pending') {
+                        statusElement.removeClass("statusDefault").addClass("statusPending");
+                        statuusElement.text("pending approval");
+                        payment.hide()
+                        engagement.hide()
+                    } else if (obtained === "Active") {
+                        statusElement.removeClass("statusDefault").addClass("statusActive");
+                        statuusElement.text("Approved");
+                        payment.show()
+                        engagement.hide()
+                    } else if (obtained === "Declined") {
+                        statusElement.removeClass("statusDefault").addClass("statusDecline");
+                        statuusElement.text("Declined");
+                        payment.hide()
+                        engagement.hide()
+                    }
+
+                    if ((amount_remaining > 0) && (amount_remaining != amountProposed)){
+                        payment.hide()
+                        balanceUp.show()
+                       
+                    } else if (amount_remaining == 0){
+                        statusElement.removeClass("statusDefault").addClass("statusActive");
+                        statuusElement.text("Approved");
+                        engagement.hide()
+                        payment.hide()
+                        balanceUp.hide()
+                        completed.show()
+                    }
+
+                }
+            }
+        });
+    },
+    error: function(error) {
+        console.error('Error fetching API data:', error);
+    }
+});
+
+
 
 })

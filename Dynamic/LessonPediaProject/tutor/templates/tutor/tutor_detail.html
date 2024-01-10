@@ -97,19 +97,20 @@
                       <i class="fa-regular fa-sharp fa-bell"></i>
                     </div> {% endcomment %}
                     <section><img class="tiny_images"src="{{ user.profile_picture.url }}" alt="user_photo"></section>
-                    <span class="username">{{ user.username }}</span> <span class="fa dashboardBtn fa-chevron-circle-down" aria-hidden="true"></span>
+                    <span class="username">{{ user.username }}</span> <span class="fa dashboardBtn2 fa-chevron-circle-down" aria-hidden="true"></span>
                 </div>
+            </div>
+            <div class="dropdownContainerTop">
+                <div class="dropdown-item"><a href="{% url 'validate_user' user.username %}">Dashboard</a></div>
+                <div class="dropdown-item"><a href="{% url 'view_tutors' %}">More Tutors</a></div>
+                <div class="dropdown-item"><a href="{% url 'logoutUser' %}">Logout</a></div>
             </div>
             <div class="popover-container">
                 <div class="popover-content" id="popover-content">
                     <!-- Search results content will be loaded here -->
                 </div>
             </div>
-            <div class="dropdownContainerTop">
-                    <div class="dropdown-item"><a href="{% url 'validate_user' user.username %}">Dashboard</a></div>
-                    <div class="dropdown-item"><a href="{% url 'view_tutors' %}">More Tutors</a></div>
-                    <div class="dropdown-item"><a href="{% url 'logoutUser' %}">Logout</a></div>
-                </div>
+
             <div class="dpDisplay">
                 <div class="dpContent">
                     <section class="dpImage">
@@ -178,6 +179,7 @@
                         <section class="preference">
                             <p class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ tutor.state_of_residence }}, {{ tutor.nationality }}</p>
                             <p class="availability"><i class="fa fa-calendar" aria-hidden="true"></i> {{ tutor.availability }}</p>
+                            <p class="open_to_work"><i class="fa-solid fa-briefcase"></i> <span> {{ tutor.open_to_work }} </span></p>                            
                             <p class="price"><i class="fa fa-money" aria-hidden="true"></i> ₦{{ tutor.price_per_hour }} / hr</p><br>
                             <p>Negotiable: <span class="negotiable"><i class="fa fa-clock-o" aria-hidden="true"></i> {% if tutor.negotiable %}Yes{% else %}No{% endif %}</span>
                         </section>
@@ -186,14 +188,16 @@
                 </div>
                 <div class="dpLinks">
                     <div class="tutor_preference">
-                        <h3>Preferred Days</h3>
-                        <div class="schedule_item">
-                            <ul class="schedule_list">
-                            {% for schedule in tutor.schedules.all|slice:"4" %}
-                                <li class="schedule_day">{{ schedule.day }}&nbsp; <span class="schedule_time">{{ schedule.from_hour }} - {{ schedule.to_hour }}</span></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        {% if tutor.schedules.all %}
+                                <h3>Preferred Days</h3>
+                                <div class="schedule_item">
+                                    <ul class="schedule_list">
+                                    {% for schedule in tutor.schedules.all|slice:"4" %}
+                                        <li class="schedule_day">{{ schedule.day }}&nbsp; <span class="schedule_time">{{ schedule.from_hour }} - {{ schedule.to_hour }}</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
                         <div class="tutor_subjects">
                             {% if tutor.subjects.all %}
                                 <h3>Other Subjects</h3>
@@ -220,7 +224,7 @@
                                 <p>{{forloop.counter}}. &nbsp; {{ subject.subject_name}}</p>
                             {% endfor %}
                         {% else %}
-                        <center><h3>No Additional Subjects</h3></center>
+                        <center><h3>No Additional Subjects</h3></center><br><br>
                     {% endif %}
                     <div class="back-to-home">
                         <a href="{% url 'view_tutors' %}"><button class="moreTutors">More Tutors</button></a>
@@ -234,6 +238,7 @@
                 <div class="modal-content">
                     <span class="closeModal">&times;</span>
                     <h1>{{ tutor.first_name}}'s Schedule</h1>
+                    {% if tutor.schedules.all %}
                     <div class="schedule_item">
                         <ul class="schedule_list">
                         {% for schedule in tutor.schedules.all %}
@@ -241,6 +246,9 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    {% else %}
+                        <center><h3>No Schedule Yet</h3></center><br><br>
+                    {% endif %}
                     <div class="back-to-home">
                         <a href="{% url 'view_tutors' %}"><button class="moreTutors">More Tutors</button></a>
                         <a><button class="continue">Back</button></a>

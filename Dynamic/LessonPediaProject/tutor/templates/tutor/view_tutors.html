@@ -3,9 +3,9 @@
 {% block title %}Tutors{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}">
-    <script src="{% static "https://kit.fontawesome.com/11285bfb5b.js" %}" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/lodash/4.17.21/lodash.min.js"></script>
+    <script src="{% static 'script/lodash.js' %}"></script> {% endcomment %}
     <script src="{% static 'script/tutor_search.js' %}" ></script>
     <script src="{% static "script/view_tutors.js" %}"></script>
     <script src="{% static "script/tutor_messages.js" %}"></script>
@@ -101,10 +101,15 @@
                     <i class="fa-regular fa-sharp fa-bell"></i>
                     </div>
                     <section><img class="tiny_images"src="{{ user.profile_picture.url }}" alt="user_photo"></section>
-                    <span class="username">{{ user.username }}</span> <span class="fa fa-chevron-circle-down" aria-hidden="true"></span>
+                    <span class="username">{{ user.username }}</span> <span class="fa dashboardBtn fa-chevron-circle-down" aria-hidden="true"></span>
                 </div>
             </div>
-                            <!-- Add this button where you want to trigger the popover -->
+            {% comment %} Ellipses dropdown {% endcomment %}
+                <div class="dropdownContainerTop">
+                    <div class="dropdown-item"><a href="{% url 'validate_user' user.username %}">Dashboard</a></div>
+                    <div class="dropdown-item"><a href="{% url 'view_tutors' %}">More Tutors</a></div>
+                    <div class="dropdown-item"><a href="{% url 'logoutUser' %}">Logout</a></div>
+            </div>
             <div class="popover-container">
                 <div class="popover-content" id="popover-content">
                     <!-- Search results content will be loaded here -->
@@ -142,7 +147,9 @@
                                     </span>
                                 </section>
                                 <section class="tutor_subject">
-                                        <h6 class="show_block"> {{ tutor.primary_subject }}<i class="fa fa-circle" aria-hidden="true"></i></h6>
+                                        <h6 class="show_block" data-status-text="{% if tutor.open_to_work == 'Open' and not tutor.is_blocked and not tutor.is_suspended %}Open to work{% elif tutor.open_to_work == 'Engaged' %} Engaged {% else %}Not Open to work{% endif %}">
+                                             {{ tutor.primary_subject }}{% if tutor.open_to_work == 'Open' and not tutor.is_blocked and not tutor.is_suspended%}<i class="fa fa-circle" aria-hidden="true"></i>{% elif tutor.open_to_work == 'Engaged'%} <i class="fa fa-circle" style="color:  rgb(217, 165, 21) !important;" aria-hidden="true"></i>{%else%}  <i class="fa fa-circle" style="color: red !important;" aria-hidden="true"></i> {% endif %}
+                                        </h6>
                                 </section>
                                 <section><button class="view_tutor_profile"><a href="{% url 'tutor_detail' tutor.id %}">View Profile</a></button></section>
                             </div>

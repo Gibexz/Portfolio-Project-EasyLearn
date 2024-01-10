@@ -43,5 +43,5 @@ class TutorRegisterForm(UserCreationForm):
     class Meta:
         model = Tutor
         fields = [
-            'username', 'email', 'password1', 'password2', 'area_of_specialization', 'highest_qualification'
+            'username', 'email', 'password1', 'password2', 'primary_subject', 'highest_qualification'
         ]

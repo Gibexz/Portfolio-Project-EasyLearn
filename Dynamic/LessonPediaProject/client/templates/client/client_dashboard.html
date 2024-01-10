@@ -111,6 +111,7 @@
                     <center><h2 class="review_heading">Your Reviews</h2></center>
                 </section><hr>
 
+                <div class="review_scroll">
                 {% if reviews %}
 
                 {% for review in reviews %}
@@ -120,7 +121,26 @@
 
                     <section class="headContent">
                         <h3>{{ review.tutor.first_name }} {{ review.tutor.last_name }} <span> [{{ review.tutor.area_of_specialization }}]</span></h3>
-                        <p class="rank_validate">Ranking: ***</p>
+                        <p class="rank_validate">Ranking: <span>
+                            {% if review.tutor.rank > 4 %}
+                                <span class="viewColor" style="color: gold">★★★★★</span>
+                            {% elif review.tutor.rank > 3 %}
+                                <span class="viewColor" style="color: gold">★★★★</span>
+                                <span class="defaultColor" style="color: gray">★</span>
+                            {% elif review.tutor.rank > 2 %}
+                                <span class="viewColor" style="color: gold">★★★</span>
+                                <span class="defaultColor" style="color: gray">★★</span>
+                            {% elif review.tutor.rank > 2 %}
+                                <span class="viewColor" style="color: gold">★★</span>
+                                <span class="defaultColor" style="color: gray">★★★</span>
+                            {% elif review.tutor.rank > 1 %}
+                                <span class="viewColor" style="color: gold">★</span>
+                                <span class="defaultColor" style="color: gray">★★★★</span>
+                            {% else %}
+                                <span class="defaultColor" style="color: gray">★★★★★</span>
+                            {% endif %}
+                            
+                        </span></p>
                     </section>
 
                     <section class="message">
@@ -129,7 +149,26 @@
                         <div class="message_content">
                             {{ review.review_text }} 
                         </div>
-                    </section><hr>
+                    </section>
+                    
+                    <section class="transit">
+
+                       <fieldset>
+                            <legend style="border-radius: 30px"> Edit Review Content</legend>
+                            <form id='reviewForm' action="{% url 'editReview' tutorId=review.tutor.id %}" method='POST'>
+        
+                                {% csrf_token %}
+                                <label for="subject">Subject</label>
+                                <input type="text" placeholder="Enter Subject" name='subject' value="{{ review.review_subject }}" id='subject' required><br><br>
+        
+                                <label for="reviewContent">Review Text</label><br>
+                                <textarea name="reviewContent" id="reviewContent" cols="30" rows="10">{{ review.review_text }}</textarea><br><br>
+                                <center><input type="submit" value="SUBMIT" class="submitEdit"><span class="cancelEdit">Cancel</span></center>
+                                
+                            </form>
+                        </fieldset>
+                    </section>
+                    <hr>
                 {% endfor %}
 
                 {% else %}    
@@ -137,11 +176,10 @@
                         <center><h3>You have no Review yet, please click review on your dashboard</h3></center>
                     </section>
                 {% endif %}
+                </div>
             </div>
         </div>
     </div>  
-
-   
 
     <div class="db" style="display: nne">
         <div class="container">
@@ -193,9 +231,10 @@
                     </div>
                     <div class="activities">
                         <div class="courses">
-                            <div class="not_started item"><p class="progress">1/{{ totalTutors }} </p><p class="progress_text">In Progress</p></div>
-                            <div class="in_progress item"><p class="progress">1/{{ totalTutors }} </p><p class="progress_text">Pending</p></div>
-                            <div class="completed item"><p class="progress">0/{{ totalTutors }} </p><p class="progress_text">Settled</p></div>
+                            <div class="not_started item"><p class="progress">{{ activeStatus }}/{{ totalTutors }} </p><p class="progress_text">Active</p></div>
+                            <div class="in_progress item"><p class="progress">{{ pendingStatus }}/{{ totalTutors }} </p><p class="progress_text">Pending</p></div>
+                            <div class="in_progress item"><p class="progress">{{ declinedStatus }}/{{ totalTutors }} </p><p class="progress_text">Declined</p></div>
+                            <div class="completed item"><p class="progress">{{ notEngagedStatus }}/{{ totalTutors }} </p><p class="progress_text">Not Engaged</p></div>
                         </div> 
                         <div class="my_tutors">
                             <div class="searchClient">
@@ -219,19 +258,47 @@
                                             <section class="float_left">
                                                 <div class="subject_table table">
                                                     <span class="tutor_subject tr">{{ tutor.target_tutor.area_of_specialization }}</span>
-                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="time"> 4:00pm - 6:30pm (3hrs)</span>
+                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span>
                                                 </div>
+                                                
                                                 <span class="tutor_name"><b>{{ tutor.target_tutor.first_name }} {{ tutor.target_tutor.last_name}}</b></span>
-                                                <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
+                                                <span class="tutor_name contract"> Contract Valid Until: <span class="endDate"></span></span>
                                             
                                             </section>
-                                            <section 
-                                                {% if tutor.target_tutor.is_active == 1 %}
-                                                    class="status"
-                                                {% else %}
-                                                    class="redStatus"
-                                                {% endif %}
-                                                >
+
+                                            <div class="elipses">
+                                                <section class="goRight">
+                                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>    
+                                                </section>
+
+                                               <section class=dropdown_others>
+                                                    <!-- <p>Update Contract</p>
+                                                    <p>Terminate Engagement</p> -->
+                                                </section> 
+
+                                                <section class="engagement">
+                                                  <p class="engage"> <a href="{% url 'create_contract' tutor_id=tutor.target_tutor.id %}">Connect with Tutor</a></p>
+                                                </section>
+                                                <section class="makePayment">
+                                                    <p class="engage" id="balancePayNow"><a href="{% url 'makePayment' tutor.target_tutor.id %}">Make Payment</a></p>
+                                                </section>
+                                                <section class="balanceUp">
+                                                    <p class="engage" id="payRemaining"><a href="{% url 'makePayment' tutor.target_tutor.id %}">Pay Balance</a></p>
+                                                </section>
+                                                <section class="congrats">
+                                                    <p class="engage" id="completed">Payment Completed</a></p>
+                                                </section>
+                                                
+                                            </div>
+                                                                                 
+                                            <section>
+                                                <div class="requestStatus">
+                                                    <p class="status statusDefault"></p>
+                                                    <p class="statuus">not engaged</p>
+                                                </div>
+                                                                                
                                             </section>
                                         </div>
                                        
@@ -240,19 +307,16 @@
                                             <p class='clientId'>{{ request.user.id }}</p>
                                         </section>
 
-                                        <div class="tutor_toggles">
+                                        <div class="tutor_toggles selectOptions">
                                             <button class="remove_tutor even-width">Remove</button>
                                             <a href=""><button class="report_abuse even-width">Report Abuse</button></a>
                                             <button class="review even-width">Review</button>
                                             
                                             <button class="rank even-width">
                                                 <div class='rankStar'>
-                                                    <p class='rankTutor'>
-                                                        
-                                                        <span class='defaultColor'></span> 
-                                                        
+                                                    <p class='rankTutor'>                                                        
+                                                        <span class='defaultColor'></span>                                   
                                                     </p>
-                                                    
                                                     <section>
                                                         <p class="rankText">Rank with stars</p>
                                                     </section>
@@ -410,6 +474,54 @@
                                     <input type="text" name="state" id="" class="extend" placeholder="{{ request.user.state_of_residence }}">
                                     <label for="nationality">Nationality</label>
                                     <input type="text" name="nationality" id="" class="extend" placeholder="{{ request.user.nationality }}"> <br>
+                                    <label for="eduLevel">Highest Educational Level <label for="specifics" id="specs">Specifics</label></label>
+                                    <section class="select_option">
+                                        <select name="eduLevel" id="eduLevel" class="allSelect">
+                                            {% if request.user.educational_level %}
+                                                <option value="{{ request.user.educational_level }}" disabled hidden selected>{{ request.user.educational_level }}</option>                              
+                                            {% else %}
+                                                <option value="Highest Educational Level" disabled selected hidden>Highest Educational Level</option>
+                                            {% endif %}
+                                            <option value="Primary">Primary</option>
+                                            <option value="Secondary">Secondary</option>
+                                            <option value="Tertiary">Tertiary</option>
+                                            <option value="Others">Orders</option>                                
+                                        </select><br>
+                                        <select name="specifics" id="specifics" class="allSelect">
+                                            {% if request.user.specific_educational_level %}
+                                                <option value="{{ request.user.specific_educational_level }}" disabled hidden selected>{{ request.user.specific_educational_level }}</option> 
+                                            {% else %}
+                                                <option value="Specific education level" disabled selected hidden>Specific Education Level</option>
+                                            {% endif %}
+                                                                            
+                                        </select>
+                                    </section><br>
+
+                                    <label for="channel">Prefered Learning Channel <label for="tutorGender" id="tutorGen">Tutor Gender</label></label>
+                                    <section class="select_option">
+                                        <select name="channel" id="channel" class="allSelect">
+                                            {% if request.user.prefered_channel %}
+                                                <option value="{{ request.user.prefered_channel }}" disabled hidden selected>{{ request.user.prefered_channel }}</option>                              
+                                            {% else %}
+                                                <option value="Prefered Channel" disabled selected hidden>-- Select one --</option>
+                                            {% endif %}
+                                            <option value="Online">Online</option>
+                                            <option value="Physical">Physical</option>
+                                            <option value="Hybrid">Hybrid</option>                               
+                                        </select><br>
+                                        <select name="tutorGender" id="tutorGender" class="allSelect">
+                                            {% if request.user.prefered_tutor_gender %}
+                                                <option value="{{ request.user.prefered_tutor_gender }}">{{ request.user.prefered_tutor_gender }}</option>
+                                            {% else %}
+                                                <option value="Prefered Gender" disabled selected hidden>-- Select one --</option>
+                                            {% endif %}
+                                            
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Any">Any</option> 
+                                                                            
+                                        </select>
+                                    </section><br>
                                     <button class="save_button">Save</button>                               
                                 </form>
                             </div>
@@ -561,3 +673,4 @@
 </div>
 
 {% endblock content %}
+

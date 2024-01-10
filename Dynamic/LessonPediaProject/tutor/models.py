@@ -86,6 +86,7 @@ class Tutor(AbstractUser):
     email = models.EmailField(max_length=150, unique=True)
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     gender = models.CharField(max_length=50, default=timezone.now, null=True)
+    marital_status = models.CharField(max_length=20, null=True)
     date_of_birth = models.DateField(null=True)
     institution = models.CharField(max_length=150, null=True)
     institution_type = models.CharField(max_length=20, choices=INSTITUTION_TYPES, default='--select one--', null=True)
@@ -121,7 +122,7 @@ class Tutor(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     # work schedule
     average_class_duration = models.IntegerField(default=0, null=True)
-    price_per_hour = models.IntegerField(default=0, null=True)
+    price_per_hour = models.IntegerField(default=500, null=True)
     negotiable = models.BooleanField(default=True, null=True)
     # tutor's client
     '''Contract model has a reverse relationship with Tutor and Client models with the name `contracts` '''
@@ -166,7 +167,7 @@ class Tutor(AbstractUser):
     
     def is_suspended_expired(self):
         if self.suspended_at_admin and self.suspension_duration_admin:
-            return timezone.now() > self.suspended_at_admin + self.suspension_duration_admin #timezone.timedelta(days=self.suspension_duration)
+            return timezone.now() > self.suspended_at_admin + timezone.timedelta(days=self.suspension_duration_admin)
         return False
     
     def __str__(self):
@@ -260,7 +261,7 @@ class Subject(models.Model):
         ('Philosophy', 'Philosophy'),
         ('Others', 'Others'),
     ]
-    subject_name = models.CharField(max_length=100)
+    subject_name = models.CharField(max_length=100, unique=True)
     category = models.ForeignKey(SubjectCategory, related_name='subjects', on_delete=models.CASCADE)
     proficiency = models.CharField(max_length=100, null=True)
     teaching_experience = models.CharField(max_length=100, null=True)

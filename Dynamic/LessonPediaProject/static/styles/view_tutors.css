@@ -10,7 +10,7 @@ body{
     display: flex;
     flex-direction: row;
     min-height: 100vh;
-    min-width: 100vw;
+    /* min-width: 95vw; */
     margin: 0;
     padding: 0;
     font-family: 'Sora', Arial, Helvetica, sans-serif;
@@ -57,16 +57,17 @@ hr {
     max-height: 400px;
     overflow: hidden;
 }
-
 .ul {
     list-style: none;
     background-color: #DDD;
     padding: 3% 10%;
     border-radius: 10px;
+    max-height: 300px;
+    overflow: hidden;
     overflow-y: auto;
-    overflow-x: visible;
-    width: 100%;
+    width: 80%;
 }
+
 
 .ul .list_item{
     line-height: 1.5;
@@ -76,8 +77,14 @@ hr {
 }
 
 .list_item a{
+    display: inline-block;
     color: #26144A;
     text-decoration: none;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .logout_btn a{
@@ -108,7 +115,7 @@ hr {
     background-color: #EEF4FF;
     justify-content: space-between;
     align-items: center;
-    padding-right: 2%;
+    margin-right: 2%;
     /* overflow-y: auto;
     overflow-x: visible; */
 }
@@ -188,7 +195,46 @@ hr {
         font-size: 16px;
         line-height: 27px;
     }
+
+
+    .dropdownContainerTop{
+        display: none;
+        position: absolute;
+        font-size: 12px;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 10px;
+        box-shadow: 1.5px 1.5px 1px black;
+        z-index: 1;
+        top: 26%;
+        left: 90%;
+        margin-right: 2px;
+        width: 100px;
+        cursor: pointer;
+    }
+    .dropdownContainerTop .dropdown-item:hover {
+        background-color: #eee;
+        box-shadow: 2% 2% 2% gray;
+    }
     
+    .dropdownContainerTop a {
+        text-decoration: none;
+        color: darkblue;
+        font-weight: bold;
+    }
+    
+    .dashboardBtn {
+        cursor: pointer;
+    }
+    .dropdown-item {
+        cursor: pointer;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+    .dropdownContainerTop .dropdown-item:hover a {
+        color: rgb(139, 0, 37);
+    }
     /* tutors main content */
     
 .tutor_row {
@@ -196,7 +242,7 @@ hr {
     align-items: start;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding-right: 10px;
+    margin-right: 10px;
     margin-top: 2%;
 }
 
@@ -237,6 +283,7 @@ hr {
 }
 
 .tutor_subject, .tutor_name .name {
+    position: relative; /* for status text */
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -245,8 +292,23 @@ hr {
 
 .fa-circle{
     color: rgb(20, 236, 20);
+    cursor: pointer;
     padding-left: 10px;
 }
+.status-text {
+    display: block;
+    position: absolute;
+    background-color: #FFF;
+    width: 100%;
+    /* min-width: 150px; */
+    /* margin-right: 30px; */
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    /* border: 1px solid #ccc; */
+    z-index: 1;
+}
+
 
 .other_info section .show_block, .tutor_name .name{
     display: flex;

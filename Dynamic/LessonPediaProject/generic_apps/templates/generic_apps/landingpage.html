@@ -1,5 +1,10 @@
 {% extends "generic_apps/base.html" %}
 {% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'styles/view_tutors.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/landing_page.css' %}">
+    <script src="{% static 'script/view_tutors.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -37,7 +42,7 @@
     <!-- mid division -->
     <div class="mid_div">
         <div class="moving_text">
-            <marquee behavior="" direction="alternate">Lets place something moving here</marquee>
+            <marquee behavior="" direction="alternate">Connect..................................Grow....................................Excel.......................................   Unleash your potential through the power of learning. Our platform is your gateway to inspiring tutors, meaningful connections, and boundless growth. </marquee>
         </div>
     </div>
 
@@ -45,81 +50,48 @@
     <div class="tutor_section">
         <div class="tutor_header">
             <h2><center>Featured Tutors</center></h2>
-            <p><center>write some stuffs here <br>OgaChime</center></p>
+           <h6><center style="font-family: 'Saira', 'rowdies', 'el messiri', 'Inika', serif; font-size: 16px; font-style:italic;"> Meet our extraordinary tutors – catalysts for your learning journey. <br>
+                 Each one is a beacon of inspiration, ready to guide and empower you. <br> Connect with us, unlock your potential, and embark on a transformative educational adventure. <br>Let the journey begin</center></h6>
         </div>
-
-        <div class="all_tutors"> 
-            <section class="tutors_display">
-                <div class="tutor_image">
-                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                </div>
-                <article class="tutor_details">
-                    <h3>Name: Chime Kingsley</h3>
-                    <p>Area of Specialty: Software Engineering</p>
-                    <p>Rank: <span class="rank">★★★★★</span></p>
-                    <button>View</button>
-                </article>
-            </section>
-
-            <section class="tutors_display">
-                <div class="tutor_image">
-                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                </div>
-                <article class="tutor_details">
-                    <h3>Name: Chime Kingsley</h3>
-                    <p>Area of Specialty: Software Engineering</p>
-                    <p>Rank: <span class="rank">★★★★★</span></p>
-                    <button>View</button>
-                </article>
-            </section>
-
-            <section class="tutors_display">
-                <div class="tutor_image">
-                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                </div>
-                <article class="tutor_details">
-                    <h3>Name: Chime Kingsley</h3>
-                    <p>Area of Specialty: Software Engineering</p>
-                    <p>Rank: <span class="rank">★★★★★</span></p>
-                    <button>View</button>
-                </article>
-            </section>
-
-            <section class="tutors_display">
-                <div class="tutor_image">
-                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                </div>
-                <article class="tutor_details">
-                    <h3>Name: Chime Kingsley</h3>
-                    <p>Area of Specialty: Software Engineering</p>
-                    <p>Rank: <span class="rank">★★★★★</span></p>
-                    <button>View</button>
-                </article>
-            </section>
-
-            <section class="tutors_display">
-                <div class="tutor_image">
-                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                </div>
-                <article class="tutor_details">
-                    <h3>Name: Chime Kingsley</h3>
-                    <p>Area of Specialty: Software Engineering</p>
-                    <p>Rank: <span class="rank">★★★★★</span></p>
-                    <button>View</button>
-                </article>
-            </section>
-
-            <section class="tutors_display">
-                <div class="tutor_image">
-                    <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
-                </div>
-                <article class="tutor_details">
-                    <h3>Name: Chime Kingsley</h3>
-                    <p>Area of Specialty: Software Engineering</p>
-                    <p>Rank: <span class="rank">★★★★★</span></p>
-                    <button>View</button>
-                </article>
-            </section>
+        <div class="tutor_row">
+            {% if tutors %}
+                {% for tutor in tutors %}
+                    <div class="tutor_overview">
+                        <section class="tutor_image_box">
+                            <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo">
+                        </section>
+                        <div class="other_info">
+                            <section class="tutor_name"><h5 class="name">{{ tutor.first_name }} {{ tutor.last_name }} &nbsp;</h5>
+                                <span class="ranks">
+                                    {% if tutor.rank %}
+                                            {% if tutor.rank > 4 %}
+                                            <span class="rank_5" id="my_rank">★★★★★</span>
+                                            {% elif tutor.rank > 3 %}
+                                                <span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>
+                                            {% elif tutor.rank > 2 %}
+                                                <span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>
+                                            {% elif tutor.rank > 1 %}
+                                                <span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>
+                                            {% else  %}
+                                                <span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>
+                                            {% endif %}
+                                    {% else %}
+                                    <div id="no_rank">
+                                        <span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>
+                                    </div>
+                                    {% endif %}
+                                </span>
+                            </section>
+                            <section class="tutor_subject">
+                                    <h6 class="show_block" data-status-text="{% if tutor.open_to_work == 'Open' and not tutor.is_blocked and not tutor.is_suspended %}Open to work{% elif tutor.open_to_work == 'Engaged' %} Engaged {% else %}Not Open to work{% endif %}">
+                                         {{ tutor.primary_subject }}{% if tutor.open_to_work == 'Open' and not tutor.is_blocked and not tutor.is_suspended%}<i class="fa fa-circle" aria-hidden="true"></i>{% elif tutor.open_to_work == 'Engaged'%} <i class="fa fa-circle" style="color:  rgb(217, 165, 21) !important;" aria-hidden="true"></i>{%else%}  <i class="fa fa-circle" style="color: red !important;" aria-hidden="true"></i> {% endif %}
+                                    </h6>
+                            </section>
+                            <section><button class="view_tutor_profile"><a href="{% url 'tutor_detail' tutor.id %}">View Profile</a></button></section>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 
@@ -134,26 +106,52 @@
             <h3 class="questionsh3">Frequently asked Questions</h3>
             <div class="freq_questions">
                 <section class="content">
-                    <h3>Who can use the E-Question? <img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
+                    <h3>Who is Lessonpedia for? <img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        Anyone wishing for a revolutionize learning experience by seemslessly integrating innovative technology with interactive questions. it aims to inspire curosity, foster engagement, and transform traditional education method.
-                    </p>
+                        
+                        Lessonpedia is designed for anyone with a passion for learning or teaching.
+                         Whether you're a dedicated educator, a lifelong learner, a student seeking extra help, or someone eager to share your expertise, Lessonpedia welcomes all.
+                          Our platform thrives on diversity, connecting individuals with a shared enthusiasm for knowledge, making learning an enriching and collaborative experience.                    </p>
                     
                 </section>
 
                 <section class="content">
-                    <h3>Must I be a student of Heritage Polytechnic?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
+                    <h3>What makes Lessonpedia unique?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        At the moment, the platform is designed in favour for the students of heritage polytechnic who aims at maximizing their potentials in academics and morals. Not withstanding, we will be maximizing this to reach out to the public
-                    </p>
+                        At Lessonpedia, we take pride in our commitment to exceeding expectations.
+                        What sets us apart is our unwavering dedication to go beyond traditional educational platforms. 
+                        We foster an environment where both tutors and learners are encouraged to explore, innovate, and engage in meaningful ways.
+                         Expect more than just lessons; anticipate a transformative learning journey that inspires growth, curiosity, and excellence. 
+                         Lessonpedia isn't just a platform; it's a community that elevates the standards of online education.
+                     </p>
                 </section>
 
                 <section class="content">
-                    <h3>Is this platform accessible offline?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
+                    <h3> How does Lessonpedia ensure quality in tutoring?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        The portal is accesible only via the internet as the answers to the questions found on the portal are documented in real time
+                        Lessonpedia maintains a stringent vetting process for tutors, ensuring that only qualified and passionate individuals become part of our community. 
+                        We encourage learner feedback and provide a transparent rating system, allowing users to make informed decisions. Additionally, our platform offers a diverse range of subjects and teaching styles, 
+                        catering to various learning preferences and ensuring a personalized and effective learning experience for everyone.                   
+                     </p>
+                </section>
+                <section class="content">
+                    <h3>  Can I use Lessonpedia for skill development beyond academics?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
+                    <p>
+                        Absolutely! Lessonpedia goes beyond traditional academics. Our platform is a hub for a wide range of skills and interests.
+                        Whether you're looking to master a new language, delve into coding, or explore creative arts, Lessonpedia is the place to connect with experts who are passionate about sharing their knowledge.
+                        We believe in holistic learning that nurtures both academic and practical skills.              
+                     </p>
+                </section>
+                <section class="content">
+                    <h3>  How does Lessonpedia foster a sense of community?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
+                    <p>
+                        Lessonpedia is not just a platform; it's a community-driven space where learners and tutors connect on a personal level.
+                         Join discussion forums, attend webinars, and participate in collaborative projects.
+                          We believe in the power of a supportive community, and Lessonpedia is the place to find like-minded individuals who share your passion for learning and teaching.
+                         Together, we create an ecosystem that celebrates curiosity, growth, and success.                    
                     </p>
                 </section>
+
             </div>
         </div>   
     </div>
@@ -161,4 +159,5 @@
     <div class="epty">
 
     </div>
+        
 {% endblock content %}

@@ -1,7 +1,6 @@
 from django.urls import path
 from client import views
 
-
 urlpatterns = [
     # path('register/', views.sign_up, name='signUp'),
     path('signIn/', views.client_login, name='client_signIn'),
@@ -18,5 +17,9 @@ urlpatterns = [
     path("filter/tutor/keyword=/<str:keyword>", views.search_algorithm, name="filter_keyword"),
     path("review/tutorid/<int:tutorId>", views.review_tutor_ajax, name="reviewTutor"),
     path("review/tutor/submit/<int:tutorId>", views.submit_review, name='submitReview'),
+    path("review/tutor/editReview/<int:tutorId>", views.edit_review, name='editReview'),
+    path("api/contractForm", views.contract_information, name="contractInfo"),
+    path("payment/paystackGateway/<int:tutorId>", views.paystackGateway, name="makePayment"),
+    path("transaction/details/<int:tutorId>", views.transactionDetails_storage, name="transactionDetails"),
+    path("api/contract/information", views.transaction_information, name="transactionInfo"),
 ]
-

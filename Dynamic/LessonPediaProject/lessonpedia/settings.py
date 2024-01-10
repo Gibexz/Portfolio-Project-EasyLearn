@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'client',
     'tutor',
     'app_admin',
+    'mathfilters',
     'generic_apps',
     "django_flatpickr",
     'crispy_forms',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -176,3 +178,4 @@ CRONJOBS = [
 
 SESSION_COOKIE_SECURE = False # True for production
 # settings.py
+

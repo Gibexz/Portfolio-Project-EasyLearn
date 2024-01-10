@@ -443,7 +443,7 @@
                                 </div>
                             </div>
                             <div class="client_table-container">
-                                <table class="client_list_table client_list_table_active">
+                                <table class="client_list_table client_list_table_active" id="activeClientTable">
                                     <thead>
                                         <tr>
                                             <th class="" id="SN" data-column="0">SN</th>
@@ -472,6 +472,10 @@
                                                 <td class="cancel_contract_btn"><button>cancel</button></td>
                                             </tr>
                                             {% endfor %}
+                                            {% else %} 
+                                            <tr>
+                                                <td colspan="9" style="text-align: center; color: darkblue; font-family: 'dosis';"><h3>No Active Contracts</h3></td>
+                                            </tr>
                                         {% endif %}
                                     </tbody>
                                 </table>
@@ -508,35 +512,42 @@
                                 </div>
                             </div>
                             <div class="client_table-container">
-                                <table class="client_list_table client_list_table_history">
+                                <table class="client_list_table client_list_table_history" id="clientHistoryTable">
                                     <thead>
                                         <tr>
                                             <th class="" id="SN" data-column="0">SN</th>
-                                            <th class="sortClientNameHistory" data-column="1">Client Name</th>
-                                            <th class="sortSubjectHistory" data-column="2">Subject</th>
-                                            <th class="sortStartDateHistory" data-column="3">Start Date</th>
-                                            <th class="sortEndDateHistory" data-column="4">End Date</th>
-                                            <th class="sortTutoringDaysHistory" data-column="5">Tutoring days</th>
-                                            <th class="sortEndDateHistory" data-column="6"><!--Report--></th>
-                                            <th class="sortTutoringDaysHistory" data-column="7"><!--Cancel--></th>
+                                            <th class="sortContractCode" data-column="1">ID</th>
+                                            <th class="sortClientNameHistory" data-column="2">Client Name</th>
+                                            <th class="sortSubjectHistory" data-column="3">Subject</th>
+                                            <th class="sortStartDateHistory" data-column="4">Start Date</th>
+                                            <th class="sortEndDateHistory" data-column="5">End Date</th>
+                                            <th class="sortTutoringDaysHistory" data-column="6">Tutoring days</th>
+                                            <th class="sortEndDateHistory" data-column="7"><!--Report--></th>
                                        </tr>
                                     </thead>
-                                        <tbody>
+                                    <tbody>
+                                        {% if contract_history %}
                                             {% for contract in contract_history %}
-                                                    <tr>
-                                                        <td>{{ forloop.counter }}</td>
-                                                        <td>{{ contract.client.get_full_name }}</td>
-                                                        <td>{{ contract.subject.subject_name }}</td>
-                                                        <td>{{ contract.start_date|date:"d-m-y" }}</td>
-                                                        <td>{{ contract.end_date|date:"d-m-y" }}</td>
-                                                        <td>{{ contract.week_days }}</td>
-                                                        <td class="report_btn"><button>report</button></td>
-                                                        <td class="cancel_contract_btn"><button>cancel</button></td>
-                                                    </tr>
-                                                {% endfor %}                                    
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ contract.contract_code }}</td>
+                                                    <td>{{ contract.client.get_full_name }}</td>
+                                                    <td>{{ contract.subject.subject_name }}</td>
+                                                    <td>{{ contract.start_date|date:"d-m-y" }}</td>
+                                                    <td>{{ contract.end_date|date:"d-m-y" }}</td>
+                                                    <td>{{ contract.week_days }}</td>
+                                                    <td class="report_btn">
+                                                        {% if contract.contract_status == 'Terminated'%}<i class="fa fa-circle" style="color: red;" aria-hidden="true"></i>{% elif  contract.contract_status == 'Active'%} <i class="fa fa-circle" style="color:  rgb(84, 215, 197);" aria-hidden="true"></i>{%else%}<i class="fa fa-circle" style="color: lime;" aria-hidden="true"></i>{% endif %}&nbsp;<button>report</button></td>
+                                                </tr>
+                                            {% endfor %}                                    
+                                                {% else %} 
+                                                <tr>
+                                                    <td colspan="9" style="text-align: center; color: darkblue; font-family: 'dosis';"><h3>No Contracts History</h3></td>
+                                                </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
                             </section>
                     </div>
 
@@ -577,14 +588,18 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>{{ tutor.primary_subject }}</td>
-                                                    </tr>
+
                                                     {% if tutor_subjects %}
                                                         {% for subject in tutor_subjects %}
-                                                            <tr>
-                                                                <td>{{ subject.subject_name }} - <span style="font-size: small;">{{ subject.proficiency }}</span> </td>
-                                                            </tr>
+                                                            {% if subject.subject_name != tutor.primary_subject %}
+                                                                <tr>
+                                                                    <td>{{ subject.subject_name }} - <span style="font-size: small;">{{ subject.proficiency }}</span> </td>
+                                                                </tr>
+                                                                {% else %}
+                                                                    <tr>
+                                                                        <td>{{ subject.subject_name }} - Primary</td>
+                                                                    </tr>
+                                                            {% endif %}
                                                         {% endfor %}
                                                     {% endif %}
                                                     </tbody>
@@ -956,6 +971,8 @@
                                             </div>
                                             <div class="flex_row bio">
                                                 <label for="bio">Profile Statement</label> 
+                                            </div>
+                                            <div class="flex_row bio">
                                                 <textarea name="bio" required placeholder="Profile Statement" id="text_area">{% if tutor.bio %} {{ tutor.bio }} {% endif %}</textarea>
                                             </div>
                                             
@@ -1040,6 +1057,7 @@
                                                                     <form method="post" action="{% url 'delete_schedule' schedule.id %}">
                                                                         {% csrf_token %}
                                                                         <button hidden  type="submit"></button>
+                                                                    </form>
                                                                 </tr>
                                                             {% endfor %}
                                                         </tbody>
@@ -1115,7 +1133,7 @@
                                                 <input type="file" id="profilePic" name="profilePic" accept="image/jpeg, image/png">
                                                 <br>
                                                 <label for="certificate_name">Certificate Name</label><br>
-                                                <input required type="text" id="certificate_name" name="certificate_name" placeholder="Certificate Name">
+                                                <input required type="text" id="certificate_name" name="certificate_name" placeholder="Certificate Name"><br>
                                                 <label for="issuing_authority">Issuing Authority</label><br>
                                                 <input required type="text" id="issuing_authority" name="issuing_authority" placeholder="Issuing Authority">
                                                 <br>

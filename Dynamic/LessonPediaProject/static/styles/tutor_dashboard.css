@@ -329,8 +329,7 @@ a .fa-sign-out{
 .client_list_table{
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: px;
-    height: 200px;
+    height: 25px;
     box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
 }
 
@@ -346,6 +345,7 @@ a .fa-sign-out{
 
 .client_list_table th {
     background-color: #deba0819;
+    color: rgb(0, 0, 100);
 }
 
 .client_table-container {
@@ -576,7 +576,7 @@ input[type="submit"]:hover,
     background: radial-gradient(white 50%, rgb(225, 238, 249));
     margin: 15px;
     height: 600px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     /* width: 900px; */
 }
 
@@ -1522,6 +1522,9 @@ select{
 
 th {
     cursor: pointer;
+}
+#activeClientTable th, #clientHistoryTable th  {
+    color: rgb(0, 0, 100);
 }
 
 

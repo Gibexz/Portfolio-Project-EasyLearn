@@ -18,7 +18,7 @@ $(document).ready(function () {
         });
 
     // dashboard dropdown toggling
-    $('.dashboardBtn').click(function (event) {
+    $('.dashboardBtn2').click(function (event) {
         event.stopPropagation(); // Prevent the click event from reaching document
         $('.dropdownContainerTop').toggle();
     });

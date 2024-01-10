@@ -547,9 +547,11 @@ function isOverlap(fromTime, toTime, storedFromTime, storedToTime) {
       url: '/tutor/dashboard/',
       data: formDataArray,
       success: function (data) {
+        let token = $('[name="csrfmiddlewaretoken"]').val();
+
         form.trigger('reset');
         if (data && data.schedule_data) {
-          updateScheduleTables(data.schedule_data);
+          updateScheduleTables(data.schedule_data, token);
         }
       },
       error: function (data) {
@@ -558,25 +560,45 @@ function isOverlap(fromTime, toTime, storedFromTime, storedToTime) {
     });
   });
 
-function updateScheduleTables(data) {
-  // Update the Days table
-  let daysTable = document.getElementById('subjectDays');
-  daysTable.innerHTML = '<thead><tr><th>Days</th></tr></thead><tbody>';
-  data.forEach(function (schedule) {
-    daysTable.innerHTML += '<tr><td>' + schedule.day + '</td></tr>';
-  });
-  daysTable.innerHTML += '</tbody>';
+// function updateScheduleTables(data, token) {
+//   // Update the Days table
+//   let daysTable = document.getElementById('subjectDays');
+//   daysTable.innerHTML = '<thead><tr><th>Days</th></tr></thead><tbody>';
+//   data.forEach(function (schedule) {
+//     daysTable.innerHTML += `<tr><td class="flexRemove">${schedule.day} &nbsp<i class="fa-solid fa-circle-xmark" data-schedule-id="${schedule.id}"></i></td></tr>`;
+//     daysTable.innerHTML += `<form method="post" action="{% url 'delete_schedule' schedule.id %}"> <input type="hidden" name="csrfmiddlewaretoken"  value="${token}"> <button hidden  type="submit"></button></form>`;
+//   });
+//   daysTable.innerHTML += '</tbody>';//<input type="hidden" name="csrfmiddlewaretoken" value="AV3C03Ch1ea1fHOZ6zJDnoRuIvmBAp6ZlLqrsl3zmmGzAJGlPfRZKeHbujZPM0tH">
   
-    // Update the Hours table
-    let hoursTable = document.getElementById('subjectHours');
-    hoursTable.innerHTML = '<thead><tr><th>Hours</th></tr></thead><tbody>';
-    data.forEach(function (schedule) {
-      hoursTable.innerHTML += '<tr><td>' + schedule.from_hour + ' - ' + schedule.to_hour + '</td></tr>';
-    });
-    hoursTable.innerHTML += '</tbody>';
+//     // Update the Hours table
+//     let hoursTable = document.getElementById('subjectHours');
+//     hoursTable.innerHTML = '<thead><tr><th>Hours</th></tr></thead><tbody>';
+//     data.forEach(function (schedule) {
+//       hoursTable.innerHTML += '<tr><td>' + schedule.from_hour + ' - ' + schedule.to_hour + '</td></tr>';
+//     });
+//     hoursTable.innerHTML += '</tbody>';
 
+// }
+function updateScheduleTables(data, token) {
+  // Update the Days table
+  let daysTable = $('#subjectDays tbody');
+  daysTable.empty(); // Clear the existing content
+
+  data.forEach(function (schedule) {
+    daysTable.append(`<tr><td class="flexRemove">${schedule.day} &nbsp<i class="fa-solid fa-circle-xmark" data-schedule-id="${schedule.id}"></i></td><form method="post" action="/tutor/deleteSchedule/${schedule.id}"> 
+      </form>
+      <input type="hidden" name="csrfmiddlewaretoken" value="${token}"></tr>`);
+  });
+
+  // Update the Hours table
+  let hoursTable = $('#subjectHours tbody');
+  hoursTable.empty(); // Clear the existing content
+
+  data.forEach(function (schedule) {
+    hoursTable.append(`<tr data-schedule-id="${schedule.id}"><td>${schedule.from_hour} - ${schedule.to_hour}</td></tr>`);
+  });
 }
-  
+
 
   // Refresh the page
   $('.refreshPage, #refreshPage').click(function () {
@@ -584,20 +606,21 @@ function updateScheduleTables(data) {
   });
   
 
-$('.fa-circle-xmark').click(function (e) {
+// Event delegation for dynamically added elements
+$(document).on('click', '.fa-circle-xmark', function (e) {
   e.preventDefault();
+
   let clickedElement = $(this);
   let scheduleId = clickedElement.data('schedule-id');
-  let hoursTable = $('#subjectHours'); // Selector for the hours table
-  let hours = hoursTable.find('tr[data-schedule-id="' + scheduleId + '"]')
-  console.log('hours', hours)
-  
+
+  let row = clickedElement.closest('tr');
+  let hoursTable = $('#subjectHours');
+
   // Show the confirmation modal
   $('#confirmationModal').show();
 
   // Handle the confirm action
-  $('#confirmAction').click(function () {
-    // Perform the delete operation
+  $('#confirmAction').off().on('click', function () {
     $.ajax({
       url: '/tutor/deleteSchedule/' + scheduleId + '/',
       method: 'POST',
@@ -606,22 +629,16 @@ $('.fa-circle-xmark').click(function (e) {
       },
       success: function (data) {
         if (data.status === 'success') {
-          // Use the success modal for a successful deletion
+          // Find and remove the corresponding time row
+          let timeRow = hoursTable.find('tr[data-schedule-id="' + scheduleId + '"]');
+          timeRow.remove();
 
-          clickedElement.closest('tr').remove();
-          hours.remove();
+          // Remove the entire row (day and delete button) from the Days table
+          row.remove();
+
           $('#successModal').show();
         }
-        //  else {
-        //   // Use the error modal for errors
-        //   $('#errorModal').show();
-        // }
       },
-      // error: function (error) {
-      //   // Use the error modal for errors
-      //   $('#errorModal').show();
-      //   console.error('Error:', error);
-      // },
     });
 
     // Hide the confirmation modal
@@ -629,7 +646,7 @@ $('.fa-circle-xmark').click(function (e) {
   });
 
   // Handle the cancel action
-  $('#closeConfirmationModal').click(function () {
+  $('#closeConfirmationModal').off().on('click', function () {
     // Hide the confirmation modal
     $('#confirmationModal').hide();
   });
@@ -637,6 +654,7 @@ $('.fa-circle-xmark').click(function (e) {
   // Prevent default form submission
   return false;
 });
+
 
 // Handle closing the success modal
 $('#closeSuccessModal').click(function () {
@@ -659,6 +677,7 @@ $('#closeSuccessModal').click(function () {
 });
   });
 
+  // Tutor Profile and Settings
 $(document).ready(function() {
   function getCookie(name) {
     let cookieValue = null;
@@ -750,12 +769,15 @@ $('.cancel_suspend').hide();
     });
   })
 
-  // Tutors Add Subject AJAX
+  // Tutors Subjects AJAX
 $(document).ready(function() {
-  // Tutors Add Subject AJAX
   $('.refreshPage, #refreshPage').click(function () {
     location.reload();
+
+  // Tutors Add Subject AJAX
   });
+
+  // Add Subject
   $('#subjectForm').submit(function(event) {
     event.preventDefault();
 
@@ -777,7 +799,7 @@ $(document).ready(function() {
           $(".closeModal").click(function () {
             $(".modal2").hide();
           });
-          updateSubjectTable(data, $("#subjectUpdateName"));
+          updateSubjectTable(data, $("#subjectUpdateName"), $('#subjectDeleteName'));
         } else {
           $("#errorModal4").show();
           $(".closeModal").click(function () {
@@ -795,53 +817,8 @@ $(document).ready(function() {
     });
   })
 
-  function updateSubjectTable(data, selectElement) {
-    console.log('data in updateSubject', data);
-    $('.subject_table tbody').empty();
 
-    // Add the primary subject
-    const tutorPrimarySubject = `<tr><td>${data.primary_subject}</td></tr>`;
-    $('.subject_table tbody').append(tutorPrimarySubject);
-
-    // Update the options in the select dropdown
-    if (selectElement) {
-        selectElement.empty();
-        selectElement.append('<option value="" disabled selected>-- select one --</option>');
-
-        if (data.tutor_subjects) {
-            if (Array.isArray(data.tutor_subjects)) {
-                data.tutor_subjects.forEach(function (subject) {
-                    const option = `<option data-subjectId="${subject.id}" value="${subject[0]}">${subject[0]}</option>`;
-                    selectElement.append(option);
-                });
-            } else {
-                const option = `<option data-subjectId="${data.tutor_subjects.id}" value="${data.tutor_subjects.subject_name}">${data.tutor_subjects.subject_name}</option>`;
-                selectElement.append(option);
-            }
-        }
-    }
-
-    // Add the other subjects to the table
-    if (data.tutor_subjects) {
-        if (Array.isArray(data.tutor_subjects)) {
-            data.tutor_subjects.forEach(function (subject) {
-                const subjectRow = `<tr><td>${subject[0]} - <span style="font-size: small;">${subject[1]}</span></td></tr>`;
-                $('.subject_table tbody').append(subjectRow);
-            });
-        } else {
-            const subjectRow = `<tr><td>${data.tutor_subjects.subject_name} - <span style="font-size: small;">${data.tutor_subjects.proficiency}</span></td></tr>`;
-            $('.subject_table tbody').append(subjectRow);
-        }
-    }
-}
-});
-
-// update and delete subject
-$(document).ready(function () {
-  $('.refreshPage, #refreshPage').click(function () {
-    location.reload();
-  });
-
+// Update Subject
   $('#subjectUpdateForm').submit(function (event) {
     event.preventDefault();
 
@@ -891,12 +868,7 @@ $(document).ready(function () {
 
 // populate subject update form 
   function updateSubjectTable(data, selectElement, updateDelete) {
-    console.log('data in updateSubject', data);
     $('.subject_table tbody').empty();
-
-    // Add the primary subject
-    const tutorPrimarySubject = `<tr><td>${data.primary_subject}</td></tr>`;
-    $('.subject_table tbody').append(tutorPrimarySubject);
 
     // Update the options in the select dropdown
     if (selectElement) {
@@ -906,7 +878,7 @@ $(document).ready(function () {
         if (data.tutor_subjects) {
             if (Array.isArray(data.tutor_subjects)) {
                 data.tutor_subjects.forEach(function (subject) {
-                    const option = `<option data-subjectId="${subject.id}" value="${subject[0]}">${subject[0]}</option>`;
+                    const option = `<option data-subjectId="${subject[0]}" value="${subject[1]}">${subject[1]}</option>`;
                     selectElement.append(option);
                 });
             } else {
@@ -922,7 +894,7 @@ $(document).ready(function () {
       if (data.tutor_subjects) {
           if (Array.isArray(data.tutor_subjects)) {
               data.tutor_subjects.forEach(function (subject) {
-                  const option = `<option data-subjectId="${subject.id}" value="${subject[0]}">${subject[0]}</option>`;
+                  const option = `<option data-subjectId="${subject[0]}" value="${subject[1]}">${subject[1]}</option>`;
                   updateDelete.append(option);
               });
           } else {
@@ -936,7 +908,7 @@ $(document).ready(function () {
     if (data.tutor_subjects) {
         if (Array.isArray(data.tutor_subjects)) {
             data.tutor_subjects.forEach(function (subject) {
-                const subjectRow = `<tr><td>${subject[0]} - <span style="font-size: small;">${subject[1]}</span></td></tr>`;
+                const subjectRow = `<tr><td>${subject[1]} - <span style="font-size: small;">${subject[2]}</span></td></tr>`;
                 $('.subject_table tbody').append(subjectRow);
             });
         } else {
@@ -989,84 +961,119 @@ $(document).ready(function () {
       });
   });
 
-});
-
-
-$(document).ready(function () {
-  $(".submitBtnPending").on("click", function () {
-    console.log("URL:", $(this).closest('form').attr('action'));
-    console.log("Row ID:", $(this).closest('tr').attr('id'));
-    console.log("Contract Code:", $('#' + $(this).closest('tr').attr('id') + ' .contractCode').val());
+// update contracts
+  $(document).on("click", ".submitBtnPending", function (event) {
+    event.preventDefault();
       let rowId = $(this).closest('tr').attr('id');
       let contractCode = $('#' + rowId + ' .contractCode').val();
       let status = $(this).data('action');
       const csrfToken = $('[name="csrfmiddlewaretoken"]').val();
       if (status !== 'undefined' && status !== null && status !== '') {
-      $.ajax({
+        $.ajax({
           url: `/tutor/updateContractStatus/${contractCode}/`,
           type: 'POST',
           data: {
-              csrfmiddlewaretoken: csrfToken,
-              status: status
+            csrfmiddlewaretoken: csrfToken,
+            status: status
           },
           success: function (response) {
-              $('#' + rowId).remove();
-              $(this).closest('form')[0].reset(); 
-              $('#' + rowId + ' .contractCode').val('');
-              console.log(response);
-              if (response.status === 'success') {
-                $('#activeContractsH3').text(response.active_contracts_count);
-                $('#pendingContractsH3').text(response.pending_contracts_count);
-                $('#settledContractsH3').text(response.settled_contracts_count);
-                $('#totalEarningsH3').text(response.received_payments);
-  
-                  // Clear existing table rows before updating
+                // Clear existing table rows
+                if (response.status === 'success') {
                 $('#pendingClientTable tbody').empty();
-  
-                  // Iterate over each contract in the response and append to the table
+                $('#activeClientTable tbody').empty();
+                $('#clientHistoryTable tbody').empty();
+                // Iterate over each contract in the response and append to the table
                   for (let i = 0; i < response.pending_contracts.length; i++) {
-                      // Get the current contract
-                      console.log(response.pending_contracts[i]);
                       let contract = response.pending_contracts[i];
   
                       // Construct HTML for the current contract
-                      let contractHTML = '<tr>';
+                      let contractHTML = `<tr id="contractRow${i+1}">`;
                       contractHTML += '<td>' + (i + 1) + '</td>'; // Assuming you want to display the index
                       contractHTML += '<td>' + contract.client_name + '</td>'; // Replace 'client_name' with the actual field name in your contract object
                       contractHTML += '<td>' + contract.subject_name + '</td>'; // Replace 'subject_name' with the actual field name in your contract object
                       contractHTML += '<td>' + contract.week_days + '</td>';
-                      contractHTML += '<td>' + contract.contract_length + '</td>';
-                      contractHTML += '<td>' + contract.pay_rate + '</td>';
+                      contractHTML += '<td>' + contract.contract_length + 'Days </td>';
+                      contractHTML += '<td> ₦ ' + contract.pay_rate + '</td>';
                       contractHTML += '<td>' + contract.start_date + '</td>';
                       // Construct the accept button
-                      contractHTML += `<td class="accept_contract_btn"><form method="post" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
+                      contractHTML += `<td class="accept_contract_btn"><form class="contractForm" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
                       contractHTML += '<input type="hidden" name="csrfmiddlewaretoken" value="' + csrfToken + '">';                      
-                      contractHTML += `<input type="hidden" class="contractCode"  value="${contract.contract_code}">`;
+                      contractHTML += `<input type="hidden" class="contractCode" value="${contract.contract_code}">`;
                       contractHTML += '<input type="hidden" name="status" value="Accept">';
-                      contractHTML += '<button type="submit">Accept</button>';
+                      contractHTML += '<button class="submitBtnPending" data-action="Accept" type="submit">Accept</button>';
                       contractHTML += '</form></td>';
   
                       // Construct the decline button
-                      contractHTML += `<td class="decline_contract_btn"><form method="post" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
+                      contractHTML += `<td class="decline_contract_btn"><form class="contractForm" data-rowid="${i+1}" data-contractcode="${contract.contract_code}">`;
                       contractHTML += '<input type="hidden" name="csrfmiddlewaretoken" value="' + csrfToken + '">';                      
-                      contractHTML += '<input type="hidden"  value="' + contract.contract_code +'">';
+                      contractHTML += '<input type="hidden" class="contractCode"  value="' + contract.contract_code +'">';
                       contractHTML += '<input type="hidden" name="status" value="Decline">';
-                      contractHTML += '<button type="submit">Decline</button>';
+                      contractHTML += '<button class="submitBtnPending" data-action="Decline" type="submit">Decline</button>';
                       contractHTML += '</form></td>';
-  
+                      
                       contractHTML += '</tr>';
-  
+                      
                       // Append the HTML for the current contract to the tbody
                       $('#pendingClientTable tbody').append(contractHTML);
-                  // }
-
+                      // }
+                      
               }
+              for (let i = 0; i < response.active_contracts.length; i++) {
+                let contract = response.active_contracts[i];
+                let contractHTML = '<tr>';
+                contractHTML += '<td>' + (i + 1) + '</td>';
+                contractHTML += '<td>' + contract.contract_code + '</td>';
+                contractHTML += '<td>' + contract.client_name + '</td>';
+                contractHTML += '<td>' + contract.subject_name + '</td>';
+                contractHTML += '<td>' + contract.start_date + '</td>';
+                contractHTML += '<td>' + contract.end_date + '</td>';
+                contractHTML += '<td>' + contract.week_days + '</td>';
+                contractHTML += '<td class="report_btn"> <button>report</button></td>';
+                contractHTML += '<td class="cancel_contract_btn"><button>cancel</button></td>';
+                contractHTML += '</tr>';
+                $('#activeClientTable tbody').append(contractHTML);
+              }
+
+
+              for (let i = 0; i < response.contract_history.length; i++) {
+                let contract = response.contract_history[i];
+                let contractHTML = '<tr>';
+                contractHTML += '<td>' + (i + 1) + '</td>';
+                contractHTML += '<td>' + contract.contract_code + '</td>';
+                contractHTML += '<td>' + contract.client_name + '</td>';
+                contractHTML += '<td>' + contract.subject_name + '</td>';
+                contractHTML += '<td>' + contract.start_date + '</td>';
+                contractHTML += '<td>' + contract.end_date + '</td>';
+                contractHTML += '<td>' + contract.week_days + '</td>';
+                if (contract.contract_status === 'Terminated'){
+                  contractHTML += `<td class="report_btn"><i class="fa fa-circle" style="color: red;" aria-hidden="true"></i>&nbsp;<button>report</button></td>`;
+                }
+                else if (contract.contract_status === 'Active'){
+                  contractHTML += `<td class="report_btn"><i class="fa fa-circle" style="color: rgb(84, 215, 197);" aria-hidden="true"></i>&nbsp;<button>report</button></td>`;
+                }
+                else if (contract.contract_status === 'Settled'){
+                  contractHTML += `<td class="report_btn"><i class="fa fa-circle" style="color: lime;" aria-hidden="true"></i>&nbsp;<button>report</button></td>`;
+                }
+                else {
+                  contractHTML += `<td class="report_btn"><i class="fa fa-circle" style="color: gray;" aria-hidden="true"></i>&nbsp;<button>report</button></td>`;
+                }
+                contractHTML += '</tr>';
+                $('#clientHistoryTable tbody').append(contractHTML);
+              }
+              $('#activeContractsH3').text(response.active_contracts_count);
+              $('#pendingContractsH3').text(response.pending_contracts_count);
+              $('#settledContractsH3').text(response.settled_contracts_count);
+              $('#totalEarningsH3').text(response.received_payments);
+              // clickedButton.closest('form')[0].reset(); 
+            } else {
+              console.log('Error:', response.message);
             }
           },
-          error: function (error) {
-              console.error(error);
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error("AJAX Error:", textStatus, errorThrown);
+            console.log("Response:", jqXHR.responseText);
           }
-      });
+        });
     }
   });
 

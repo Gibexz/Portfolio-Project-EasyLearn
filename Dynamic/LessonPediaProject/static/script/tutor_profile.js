@@ -150,22 +150,22 @@ $(document).ready(function() {
 
     // nationality dropdown
 
-    $("#nationality").on('change', function() {
-        // Check if the selected nationality is not Nigerian
-        if ($(this).val() !== 'NG') {
-          $('#state').hide();
-          $(".state input[type='text']").show();
-          $('.lga_frn').show();
-        } else {
-            $('.location').css({
-                'justify-content': 'flex-start',
-            })
-          $('#state').show(); // Show the state div
-          $(".state input[type='text']").hide(); // Hide the text input
-          $('div .lga').show();
-            $('.lga_frn').hide();
-        }
-      });
+    // $("#nationality").on('change', function() {
+    //     // Check if the selected nationality is not Nigerian
+    //     if ($(this).val() !== 'NG') {
+    //       $('#state').hide();
+    //       $(".state input[type='text']").show();
+    //       $('.lga_frn').show();
+    //     } else {
+    //         $('.location').css({
+    //             'justify-content': 'flex-start',
+    //         })
+    //       $('#state').show(); // Show the state div
+    //       $(".state input[type='text']").hide(); // Hide the text input
+    //       $('div .lga').show();
+    //         $('.lga_frn').hide();
+    //     }
+    //   });
 
          // Calculate the minimum date for someone who is 75 years old
     let maxDate = new Date();
@@ -178,13 +178,13 @@ $(document).ready(function() {
     let formattedMinDate = minDate.toISOString().split('T')[0];
 
 
-    $("#lga_resident").change(function() {
-        // Get the selected option value
-        let selectedLga = $(this).val();
+    // $("#lga_resident").change(function() {
+    //     // Get the selected option value
+    //     let selectedLga = $(this).val();
 
-        // Assign the selected value to the input field #lga_resident_val
-        $("#lga").val(selectedLga);
-    });
+    //     // Assign the selected value to the input field #lga_resident_val
+    //     $("#lga").val(selectedLga);
+    // });
 
     // Set the min and max attributes of the input element
     $('#dob').attr('max', formattedMinDate);
@@ -203,4 +203,6 @@ $(document).ready(function() {
     $('#view_cert').click(function() {
         $('.cert_preview').toggle();
     });
+
+// LGA dynamic dropdown
 });

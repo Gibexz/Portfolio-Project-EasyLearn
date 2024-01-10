@@ -1,26 +1,19 @@
-{% extends 'tutor/base.html' %}
-{% load static %}
-
-{% comment %} Head block {% endcomment %}
-{% block head %}
-  <link rel="stylesheet" href="{% static 'styles/tutors_profile.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="{% static 'script/tutor_profile.js' %}"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/tutors_profile_page.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/profileUpdate.css' %}">
+    <script src="{% static 'script/tutor_profile.js' %}"></script>
     <script src="{% static 'script/tutor_messages.js' %}"></script>
-{% endblock head %}
-
-{% block signup_button %}
-  <div class='signUp_btn'><a href="{% url 'landing_page' %}">Skip</a></div>
-{% endblock signup_button %}
-
-{% block title %}
-  Tutor's - Profile
-{% endblock title %}
-
-{% block pricing %}{% endblock pricing %}
-
-{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/tutors_profile.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
+    <title>Tutor's - Profile</title>
+</head>
 <body>
     <div class="flash-container">
         {% if messages %}
@@ -64,7 +57,7 @@
 
             <section class="disciplinary">
                 <p class="active_user">
-                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr"> {{ tutor.last_name }} </span><br><br>
+                    &nbsp;&nbsp;&nbsp;You signed up as <br><span class="usr"> {{ tutor.username }} </span><br><br>
                     <p class="confirm">
                         Ensure to provide a verifiable information on this page as any form of impersonation or false documentation will result in automatic eviction from the platform and necessary legal action.
                     </p>
@@ -101,33 +94,21 @@
                         </div>
                         {{ form.last_name }}
                         {{ form.others }}
-                        <div class="location">
-                            <div class="nation parallel">
-                                    <label for="nationality">Nationality</label> <br><br>
-                                    {{ form.nationality }}
-                                    
-                                </div>
-                            <div class="state parallel">
-                                <label for="state_of_residence">State of Residence </label><br>
-                                    {{ form.state_of_residence }}
-                                {% comment %} <input required type="text" name="state_of_residence" id="state_of_residence" placeholder="State of Residence"> {% endcomment %}
-                            </div>
-                            {% comment %} <div class="lga parallel">
-                                <label for="lga" class="">LGA of Residence</label>
-                                    {{ form.lga_resident }}
-                                   <select name="lga_resident" id="lga_resident">
-                                        <option value="">Select LGA</option> 
-                                <input hidden type="text" name="lga_frn" id="lga_resident_val" placeholder="Optional">
-                            </div> {% endcomment %}
+                        <div class="nation parallel">
+                           <label class="nation_label" for="nationality">Nationality</label> <label class="state_label" for="state_of_residence">State of Residence </label>
                         </div>
+                        <div class="nation parallel">
+                            {{ form.nationality }}
+                        {{ form.state_of_residence }}
+                            </div>
+
                         <div class="flex_me_too">
                             <label for="residential_address">Residential Address</label> <br><label for="phone_number" id="phone_label">Phone Number</label>
                         </div>
                         {{ form.residential_address }}
                         {{ form.phone_number }}
                         <div class="flex_me_too">
-                            <label for="gender">Gender</label> <br>
-                            {% comment %} <label for="dob" id="dob_label">Date of Birth</label> {% endcomment %}
+                          <label class="gender_label" for="gender">Gender</label><label class="dob_label" for="dob">Date of Birth</label>
                         </div>
                             {{ form.gender }}
                             {{ form.date_of_birth }} 
@@ -137,9 +118,7 @@
                             <label for="institution_type">Institution Type:</label>
                             {{ form.institution_type }}
                             <br>
-                            
                             <label for="institution">Institution Name</label>
-                            {% comment %} {{ form.primary_subject }} {% endcomment %}
                             {{ form.institution }}
                              <br>
                             <label for="dis">Discipline </label><label for="qual" id="position_qual">Qualification</label><label for="degree_class" id="position_cgpa">Result</label>
@@ -147,15 +126,55 @@
                                 {{ form.discipline }}
                                 {{ form.highest_qualification }}
                                 {{ form.result }}
-
-                            </section>  
+                            </section>
+                            <br>
                             <label for="area_of_specialization">Specialization (if any)</label><br>
                             {{ form.area_of_specialization }}
                             <br>
                             <label for="empStat">Employment Status </label><label for="employmentStat" id="position_stat">if employed, select option below</label>
                             {{ form.employment_status }}
                             {{ form.employment_type }}         
-                    </fieldset><br>
+                        </fieldset><br>
+
+                    <fieldset class="profile_form"><legend> Subject Information </legend>
+                        <div class="subject_form_group">
+                            <label for="subjectName">Enter Primary Subject:</label>
+                            <input type="text" id="subjectName" name="subjectName" required placeholder="Your Core Subject (One)">
+                        </div>
+                        <div class="subject_form_group">
+                            <label for="category">Select Category:</label>
+                            <select id="category" name="category" required>
+                                {% for subject in categories %}
+                                    <option value="{{ subject.name}}">{{ subject.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="subject_form_group">
+                            <label for="proficiency">Select proficiency:</label>
+                            <select id="proficiency" name="proficiency" required>
+                                <option value="" disabled>Select Proficiency</option>
+                                <option value="Beginner" disabled>Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </div>
+                        <div class="subject_form_group">
+                            <label for="teachingExperience">Select teaching experience:</label>
+                            <select id="teachingExperience" name="teachingExperience" required>
+                                <option value="" disabled>Select Experience</option>
+                                <option value="None - New to this">None - New to this</option>
+                                <option value="Less than a year">Less than a year</option>
+                                <option value="Less than 3 years">Less than 3 years</option>
+                                <option value="Less than 5 years">Less than 5 years</option>
+                                <option value="More than 5 years">More than 5 years</option>
+                            </select>
+                        </div>
+                        <div class="subject_form_group">
+                            <label for="price">Enter price per hour:</label>
+                            <input type="number" id="price" name="price_per_hour" min="500" required>
+                        </div>
+                    </fieldset>
 
                     <fieldset class="profile_form"><legend> Uploads </legend>
                         <label for="pic">Upload profile picture [only .jpg, .jpeg or .png]</label>
@@ -180,4 +199,4 @@
         </div>
     </div>
 </body>
-{% endblock content %}
+</html>

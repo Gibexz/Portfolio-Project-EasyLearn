@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'styles/register.css' %}">
     <link rel="stylesheet" href="{% static 'styles/tutor_register.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{% static 'script/signUp.js' %}"></script>
     <title>Tutor - SignUp</title>
 {% endblock head %}
 <body>
 {% block content %}
-<br>
-
+    <div class="flash-container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if forloop.last %}
+                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                    <p style="font-weight: bold;">{{ message }}</p>
+                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
     {% block pricing %}
     {% endblock pricing %}
 
@@ -98,13 +110,13 @@
                     <section class="qualification">
                         <select name="highest_qualification" id="id_highest_qualification">
                             <option value="" selected hidden>--select one--</option>
-                            <option value="Phd" {% if form.highest_qualification.value == 'Phd' %} selected {% endif %} required>Msc</option>
+                            <option value="Phd" {% if form.highest_qualification.value == 'Phd' %} selected {% endif %} required>Phd</option>
                             <option value="Msc" {% if form.highest_qualification.value == 'Msc' %} selected {% endif %} required>Msc</option>
                             <option value="Bsc" {% if form.highest_qualification.value == 'Bsc' %} selected {% endif %} required>Bsc</option>
-                            <option value="Beng" {% if form.highest_qualification.value == 'Beng' %} selected {% endif %} required>Bsc</option>
+                            <option value="Beng" {% if form.highest_qualification.value == 'Beng' %} selected {% endif %} required>BENG</option>
                             <option value="HND" {% if form.highest_qualification.value == 'HND' %} selected {% endif %} required>HND</option>
                             <option value="OND" {% if form.highest_qualification.value == 'OND' %} selected {% endif %} required>OND</option>
-                            <option value="NCE" {% if form.highest_qualification.value == 'NCE' %} selected {% endif %} required>OND</option>
+                            <option value="NCE" {% if form.highest_qualification.value == 'NCE' %} selected {% endif %} required>NCE</option>
                             <option value="O-Level" {% if form.highest_qualification.value == 'O-Level' %} selected {% endif %} required>O-Level</option>
                             <option value="Others" {% if form.highest_qualification.value == 'Others' %} selected {% endif %} required>Other</option>
                         </select>               

@@ -3,7 +3,7 @@ from django.contrib import messages
 from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
 from app_admin.models import AppAdmin
 from tutor.models import Tutor
-from client.models import Client
+from client.models import Client, Review
 from django.contrib.auth.models import AnonymousUser
 from .serializers import ClientReportAbuseSerializer, TutorReportAbuseSerializer
 from rest_framework.response import Response
@@ -13,19 +13,37 @@ from .models import ClientReportAbuse, TutorReportAbuse
 from django.contrib.auth.decorators import login_required
 
 
+
+tutors = Tutor.objects.all()
+reviews = Review.objects.all()
+
+def reviews(request):
+    """Reviews"""
+    active_user = request.user
+    if isinstance(active_user, AnonymousUser):
+        return render(request, "generic_apps/reviews.html", {'tutors':tutors, 'reviews':reviews})
+    
+    else:
+        model_name = active_user._meta.model_name
+        if isinstance(request.user, Tutor):
+            return render(request, "generic_apps/login_reviews.html", {"activeUser":request.user, 'model': model_name, 'tutors':tutors, 'reviews':reviews})
+        elif isinstance(request.user, Client):
+            return render(request, "generic_apps/login_reviews.html", {"activeUser":request.user, 'model': model_name, 'tutors':tutors, 'reviews':reviews})
+    return render(request, "generic_apps/reviews.html")
+
 def landing_page(request):
     """Landing page"""
     active_user = request.user
     if isinstance(active_user, AnonymousUser):
         print(active_user)
-        return render(request, "generic_apps/landingpage.html")
+        return render(request, "generic_apps/landingpage.html", {'tutors':tutors, 'reviews':reviews})
     
     else:
         model_name = active_user._meta.model_name
         if isinstance(request.user, Tutor):
-            return render(request, "generic_apps/login_landingpage.html", {"activeUser":request.user, 'model': model_name})
+            return render(request, "generic_apps/login_landingpage.html", {"activeUser":request.user, 'model': model_name, 'tutors':tutors, 'reviews':reviews})
         elif isinstance(request.user, Client):
-            return render(request, "generic_apps/login_landingpage.html", {"activeUser":request.user, 'model': model_name})
+            return render(request, "generic_apps/login_landingpage.html", {"activeUser":request.user, 'model': model_name, 'tutors':tutors, 'reviews':reviews})
     return render(request, "generic_apps/landingpage.html")
 
 
@@ -111,7 +129,6 @@ def get_tutors_reports(request):
     else:
         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
-
 # Clients report abuse logics for appAdmin
 @api_view(['GET'])
 @login_required(login_url='app_admin_sign_up')
@@ -127,3 +144,8 @@ def get_clients_reports(request):
         }, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+def about_us(request):
+    """About us page"""
+    return render(request, "generic_apps/aboutUs.html")

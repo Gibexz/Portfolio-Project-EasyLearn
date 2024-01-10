@@ -34,6 +34,8 @@ body{
     display: none;
 }
 
+.set_report_tutor,
+.set_report_client,
 .set_disable_account, 
 .set_disable_account_client,
 .set_reactivate_account_tutor, 
@@ -679,7 +681,7 @@ table {
    height: 100vh;
    position: absolute;
    display: flex;
-   backdrop-filter: brightness(0.3);
+   backdrop-filter: brightness(0.2);
    z-index: 2;
 }
 
@@ -692,6 +694,76 @@ table {
     border-radius: 20px;
     box-shadow: 1px 1px 5px 1px white;
     padding: 0px 20px 20px 20px;
+}
+
+.disable_report_content{
+    width: 600px;
+    min-width: 600px;
+    height: 450px; 
+    background-color: whitesmoke;
+    border: 1px solid rgba(0, 0, 0, 0.215);
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px 1px white;
+    padding: 0px 20px 20px 20px;
+}
+
+.report_dialogue {
+    display: flex;
+    flex-direction: column;
+}
+ 
+.report_ids {
+    display: inline-block;
+    /* border: 1px solid black; */
+    margin-top: 5px;
+}
+
+.reports_id{
+    color: rgb(55, 55, 55);
+    font-weight: 600;
+}
+
+.report_ids p {
+    display: inline-block;
+}
+
+/* .report_section{
+
+} */
+
+.reports_subject_n_message{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 30px;
+
+}
+
+.report_subject P, .report_message{
+    padding: 0px;
+    margin: 5px;
+}
+
+.subject_block, .message_block{
+    font-weight: 600;
+}
+
+.t_subject, .c_subject{
+    border-bottom: 3px solid gray;
+}
+
+.t_message_t, .c_message_c{
+    width: 100%;
+    height: 120px;
+    overflow: auto;
+    background-color: #b0b9df3a;
+    padding: 5px;
+}
+
+.t_message_box_t, .t_message_box_c, .c_message_box_c, .c_message_box_t {
+    margin-top: 6px;
+    margin-left: 20px;
 }
 
 .disable_warning section{
@@ -725,7 +797,7 @@ table {
     color: rgb(6, 1, 46) !important
 }
 
-.disable_close, .disable_close_client{
+.disable_close, .disable_close_client, .disable_close_reports{
     border: 1px solid rgba(255, 0, 0, 0.167);
     border-radius: 50%;
     float: right;
@@ -757,6 +829,30 @@ table {
     font-weight: 600;
     font-size: large;
     color: white;
+    border: 1px solid wheat;
+    cursor: pointer;
+}
+
+.message_selections{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.message_buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message_buttons button{
+    width: 200px;
+    height: 30px;
+    font-weight: 600;
+    font-size: normal;
+    color: black;
+    background-color: #b0b9df;
     border: 1px solid wheat;
     cursor: pointer;
 }
@@ -955,12 +1051,3 @@ table {
     opacity: 1;
     display: in
 }
-
-/* .message-dropdown{
-    position: 'absolute';
-    background-color: '#f9f9f9';
-    border: '1px solid #ccc';
-    padding: '10px';
-    z-index: '1000';
-    width: '300px';
-} */

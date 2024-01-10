@@ -6,6 +6,10 @@ router = DefaultRouter()
 router.register(r'tutors_action_api', views.TutorViewSet, basename='tutors_action')
 router.register(r'clients_action_api', views.ClientViewSet, basename='clients_action')
 
+appAdminRouter = DefaultRouter()
+appAdminRouter.register(r'appadmin_tutors_reports_api', views.AppAdminTutorsReportViewSet, basename='appadmin_tutors_reports_action')
+appAdminRouter.register(r'appadmin_clients_reports_api', views.AppAdminClientReportViewSet, basename='appadmin_clients_reports_action')
+
 
 urlpatterns = [
     path("landing_page_admin/", views.landing_page_admin, name="landing_page_admin"),
@@ -15,6 +19,7 @@ urlpatterns = [
 
 
     path("api/", include(router.urls)),
+    path('api/', include(appAdminRouter.urls)),
 
 
     ##Tutor APIs##
