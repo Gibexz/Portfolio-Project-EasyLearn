@@ -1,5 +1,10 @@
 from django.urls import path
 from . import views as general_views
+# from rest_framework.routers import DefaultRouter
+
+# appAdminRouter = DefaultRouter()
+# appAdminRouter.register(r'appadmin_tutors_reports_api', general_views.AppAdminTutorsReportViewSet, basename='appadmin_tutors_reports_action')
+# appAdminRouter.register(r'appadmin_clients_reports_api', general_views.AppAdminClientReportViewSet, basename='appadmin_clients_reports_action')
 
 urlpatterns = [
     path("", general_views.landing_page, name="landing_page"),
@@ -8,6 +13,7 @@ urlpatterns = [
     path('app_admin_sign_up/', general_views.app_admin_sign_up, name='app_admin_sign_up'),
 
 
+    # path('api/', include(appAdminRouter.urls)),
     path("api/get_tutors_reports/", general_views.get_tutors_reports, name="get_tutors_reports"),
     path("api/get_clients_reports/", general_views.get_clients_reports, name="get_clients_reports"),
 

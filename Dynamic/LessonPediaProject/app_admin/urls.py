@@ -6,6 +6,10 @@ router = DefaultRouter()
 router.register(r'tutors_action_api', views.TutorViewSet, basename='tutors_action')
 router.register(r'clients_action_api', views.ClientViewSet, basename='clients_action')
 
+appAdminRouter = DefaultRouter()
+appAdminRouter.register(r'appadmin_tutors_reports_api', views.AppAdminTutorsReportViewSet, basename='appadmin_tutors_reports_action')
+appAdminRouter.register(r'appadmin_clients_reports_api', views.AppAdminClientReportViewSet, basename='appadmin_clients_reports_action')
+
 
 urlpatterns = [
     path("landing_page_admin/", views.landing_page_admin, name="landing_page_admin"),
@@ -15,6 +19,7 @@ urlpatterns = [
 
 
     path("api/", include(router.urls)),
+    path('api/', include(appAdminRouter.urls)),
 
 
     ##Tutor APIs##
@@ -23,7 +28,6 @@ urlpatterns = [
     path("api/get_tutor_count/", views.get_tutor_count, name="get_tutor_count"),
     path("api/get_nos_active_tutors/", views.get_nos_active_tutors, name="get_nos_active_tutors"),
     path("api/get_nos_inactive_tutors/", views.get_nos_inactive_tutors, name="get_nos_inactive_tutors"),
-    # path("api/get_tutors_reports/", views.get_tutors_reports, name="get_tutors_reports"),
     
     # path("api/tutors/suspend_tutor/<int:tutor_id>/", views.suspend_tutor, name="suspend_tutor"),
     
@@ -32,7 +36,5 @@ urlpatterns = [
     path("api/get_clients_data/", views.get_clients_data, name="get_clients_data"),
     path("api/get_client_count/", views.get_client_count, name="get_client_count"),
     path("api/get_nos_active_clients/", views.get_nos_active_clients, name="get_nos_active_clients"),
-    path("api/get_nos_inactive_clients/", views.get_nos_inactive_clients, name="get_nos_inactive_clients"),
-    # path("api/get_clients_reports/", views.get_clients_reports, name="get_clients_reports"),
-    
+    path("api/get_nos_inactive_clients/", views.get_nos_inactive_clients, name="get_nos_inactive_clients"),    
 ]

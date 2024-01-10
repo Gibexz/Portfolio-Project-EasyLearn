@@ -11,6 +11,10 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import ClientReportAbuse, TutorReportAbuse
 from django.contrib.auth.decorators import login_required
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from django.utils import timezone
 
 
 def landing_page(request):
@@ -129,3 +133,73 @@ def get_clients_reports(request):
         }, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+# class AppAdminTutorsReportViewSet(ModelViewSet):
+#     """AppAdmin Report Abuse viewset for related api logics"""
+
+#     permission_classes = [IsAuthenticated]
+
+#     queryset = TutorReportAbuse.objects.all()
+#     serializer_class = TutorReportAbuseSerializer
+
+#     @action(detail=True, methods=['post'])
+#     def update_report_status(self, request, pk=None):
+#         """Update tutor report status"""
+#         tutor_report = self.get_object()
+#         status = request.data['status'] # True or False, actually the resolved_by_admin field
+        
+#         try:
+#             if status == True:
+#                 tutor_report.resolved_by_admin = False
+#                 tutor_report.resolved_at = None
+#                 tutor_report.save()
+#                 return Response({'message': 'Tutor report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+#             elif status == False:
+#                 tutor_report.resolved_by_admin = True
+#                 tutor_report.resolved_at = timezone.now()
+#                 tutor_report.save()
+#                 return Response({'message': 'Tutor report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+#             else:
+#                 return Response({'message': 'Invalid status on resolved by Admin'}, status=status.HTTP_400_BAD_REQUEST)
+            
+#         except Exception as e:
+#             return Response({'message': 'Error updating tutor report status'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+# class AppAdminClientReportViewSet(ModelViewSet):
+#     """AppAdmin Report Abuse viewset for related api logics"""
+
+#     permission_classes = [IsAuthenticated]
+
+#     queryset = ClientReportAbuse.objects.all()
+#     serializer_class = ClientReportAbuseSerializer
+
+#     @action(detail=True, methods=['post'])
+#     def update_report_status(self, request, pk=None):
+#         """Update client report status"""
+#         client_report = self.get_object()
+#         status = request.data['status'] # True or False, actually the resolved_by_admin field
+        
+#         try:
+#             if status == True:
+#                 client_report.resolved_by_admin = False
+#                 client_report.resolved_at = None
+#                 client_report.save()
+#                 return Response({'message': 'Client report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+#             elif status == False:
+#                 client_report.resolved_by_admin = True
+#                 client_report.resolved_at = timezone.now()
+#                 client_report.save()
+#                 return Response({'message': 'Client report resolve status updated successfully'}, status=status.HTTP_200_OK)
+            
+#             else:
+#                 return Response({'message': 'Invalid status on resolved by Admin'}, status=status.HTTP_400_BAD_REQUEST)
+            
+#         except Exception as e:
+#             return Response({'message': 'Error updating client report status'}, status=status.HTTP_400_BAD_REQUEST)
