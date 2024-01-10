@@ -1648,6 +1648,20 @@ $(document).ready(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
         });
     });
+
+    $('.search_button_tutor_report').on('click', function() {
+        var searchText = $('.tutor_search_report').val().toLowerCase();
+        $('.tutor_reports_table_list tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
+    });
+
+    $('.search_button_client_report').on('click', function() {
+        var searchText = $('.client_search_report').val().toLowerCase();
+        $('.client_reports_table_list tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        });
+    });
 });
 
 $(document).ready(function() {
