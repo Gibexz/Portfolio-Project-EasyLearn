@@ -510,7 +510,7 @@ $(document).ready(function() {
                 displayMessageSuccess('Success: ' + response.message);
             },
             error: function(xhr, textStatus, errorThrown) {
-                displayMessageError('Error Suspending tutor profile: ' + errorThrown.message);
+                displayMessageError('Error Suspending tutor profile: ' + errorThrown.message + ' ' + textStatus + ' ' + xhr.responseText);
             }
         });
         $('.set_action_tutor').show()
@@ -1068,7 +1068,7 @@ $(document).ready(function() {
                             <td class="t_subject">${report.subject}</td>
                             <td class="t_message">${report.message}</td>
                             <td>${new Date(report.created_at).toLocaleString()}</td>
-                            <td><button class="t_resolve_tutor">${report.resolved_by_admin}</button></td>
+                            <td><button class="t_resolve_tutor resolve_button">${report.resolved_by_admin}</button></td>
                             <td>${report.resolved_at ? new Date(report.resolved_at).toLocaleString() : "Unresolved"}</td>
                             <td><button class="t_report_view">View report</button></td>
                         </tr>
@@ -1337,7 +1337,7 @@ $(document).ready(function() {
                             <td class="c_subject">${report.subject}</td>
                             <td class="c_message">${report.message}</td>
                             <td>${new Date(report.created_at).toLocaleString()}</td>
-                            <td><button class="c_resolve_client">${report.resolved_by_admin}</button></td>
+                            <td><button class="c_resolve_client resolve_button">${report.resolved_by_admin}</button></td>
                             <td>${report.resolved_at ? new Date(report.resolved_at).toLocaleString() : "Unresolved"}</td>
                             <td><button class="c_report_view">View report</button></td>
                         </tr>
