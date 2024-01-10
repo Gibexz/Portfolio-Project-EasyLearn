@@ -457,6 +457,7 @@ class AppAdminTutorsReportViewSet(ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def send_email_for_tutor_report(self, request, pk=None):
+        """Method to send email to client or tutor based on Tutor Report Abuse"""
         tutor_report_obj = self.get_object()
         created_at = tutor_report_obj.created_at
         report_id = tutor_report_obj.id
@@ -474,6 +475,7 @@ class AppAdminTutorsReportViewSet(ModelViewSet):
         reported_client_obj = Client.objects.get(pk=target_client_id)
         clients_serializer = ClientSerializer(reported_client_obj)
         serialized_client = clients_serializer.data
+        client_email = serialized_client['email']
         client_firstname = serialized_client.get('first_name')
         client_lastname = serialized_client['last_name']
         client_fullname = f"{client_firstname} {client_lastname}"
@@ -487,7 +489,7 @@ class AppAdminTutorsReportViewSet(ModelViewSet):
                 subject = "Response to your report"
 
                 sender = 'adminlessonpedia@gmail.com'
-                recipient = 'andrewetedu@gmail.com' # tutor_email
+                recipient = tutor_email
                 message = f"{message_body}\n\n{sender}"
                 # print(message)
 
@@ -499,7 +501,7 @@ class AppAdminTutorsReportViewSet(ModelViewSet):
                 subject = "Please respond within 2 days"
 
                 sender = 'adminlessonpedia@gmail.com'
-                recipient = 'andrewetedu@gmail.com' # client_email
+                recipient = client_email
                 message = f"{message_body}\n\n{sender}"
                 # print(message)
 
@@ -547,6 +549,7 @@ class AppAdminClientReportViewSet(ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def send_email_for_client_report(self, request, pk=None):
+        """Method to send email to client or tutor based on Client Report Abuse"""
         client_report_obj = self.get_object()
         created_at = client_report_obj.created_at
         report_id = client_report_obj.id
@@ -567,7 +570,10 @@ class AppAdminClientReportViewSet(ModelViewSet):
         serialized_tutor = tutors_serializer.data
         tutor_firstname = serialized_tutor.get('first_name')
         tutor_lastname = serialized_tutor['last_name']
-        tutor_fullname = f"{tutor_firstname} {tutor_lastname}"       
+        tutor_fullname = f"{tutor_firstname} {tutor_lastname}" 
+        tutor_email = serialized_tutor['email']
+
+
         try:
             message_who = request.data['message_who']
 
@@ -576,7 +582,7 @@ class AppAdminClientReportViewSet(ModelViewSet):
                 subject = "Response to your report"
 
                 sender = 'adminlessonpedia@gmail.com'
-                recipient = 'andrewetedu@gmail.com' # client_email
+                recipient = client_email
                 message = f"{message_body}\n\n{sender}"
                 # print(message)
 
@@ -588,7 +594,7 @@ class AppAdminClientReportViewSet(ModelViewSet):
                 subject = "Please respond within 2 days"
 
                 sender = 'adminlessonpedia@gmail.com'
-                recipient = 'andrewetedu@gmail.com' # client_email
+                recipient = tutor_email
                 message = f"{message_body}\n\n{sender}"
                 # print(message)
 
