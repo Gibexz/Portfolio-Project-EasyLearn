@@ -1,0 +1,265 @@
+
+body{
+    background-image: url("../images/backgrounds/money.jpg");
+    margin: 0px;
+}
+
+.reviews{
+    width: 100%;
+    height: 100vh;
+    margin: auto auto;
+    display:flex;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    backdrop-filter: brightness(0.5);
+    align-items: center;
+    overflow: hidden;
+    top: 0;
+}
+
+.closeReview{
+    float:right;
+    margin-top: 0px;
+    background-color: rgba(255, 255, 255, 0.454);
+    border-radius: 50%;
+    padding: 2px 7px 2px 7px;
+    margin-bottom: 5px;
+    color: rgba(255, 0, 0, 0.256);
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.248);
+    cursor: pointer;
+}
+
+.closeReview:hover{    
+    color: red;
+    background-color: white;
+    box-shadow: 0px 0px 4px 2px rgba(255, 0, 0, 0.546);
+}
+
+.review_main{
+    width: 700px;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px 1px gray;
+    height: 550px;
+    padding: 10px;
+    padding-bottom: 30px;
+}
+
+.review_heading{
+    font-weight: bolder;
+    color: darkblue;
+    font-size: 1.4em;
+    margin-top: 0px;
+    margin-bottom: 2px;
+}
+
+.reviews .profilePicture{
+    float: right;
+    width: auto;
+    height: 100px;
+    margin-right: 2%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.reviews .profilePicture img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    margin-bottom: 3px !important;
+    margin-top: 3px !important;
+}
+
+.reviews .profilePicture p{
+    text-align: center;
+    margin-top: 0px;
+    font-size: small;
+    color: gray;
+}
+
+.review_tutor_details{
+    width: 70%;
+    margin-top: 2%;
+    border-right: 1px solid rgba(80, 60, 74, 0.144);
+}
+
+.review_tutor_details h4{
+    margin: 0px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.044);
+    padding-left: 2%;
+    color: rgb(139, 0, 14);
+}
+
+.review_tutor_details p{
+    margin: 0px;
+    padding-left: 2%;
+    line-height: 20px;
+}
+
+.review_tutor_details .name{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.profilePicture p{
+    font-size: 0.2em;
+}
+
+.review_tutor_details .Trank{
+    font-size: 11px;
+    color: gray;
+    line-height: 12px;
+}
+
+.review_tutor_details .emp{
+    width: 80%;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.372);
+    margin-top: 1%;
+}
+
+.review_content, .transit{
+    margin-top: 3%;
+}
+
+.review_content fieldset, .transit fieldset{
+    width: 80%;
+    margin: auto;
+    border-radius: 15px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 5px 1px rgba(128, 128, 128, 0.412);
+}
+
+.review_content legend , .transit legend{
+    color: gray;
+    font-size: small;
+    color: rgba(0, 0, 255, 0.793);
+    background-color: whitesmoke;
+    padding: 5px;
+    margin-left: 1%;
+}
+
+.review_content input, .transit input{
+    width: 85%;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.pay_Now{
+    color: white;
+    font-weight: bold;
+    width: 95%;
+    height: 25px;
+    border: none;
+    font-size: 1em;
+    border-radius: 30px;
+    background-color: rgba(14, 0, 122, 0.955);
+    cursor: pointer;
+    border-bottom: 2px solid gray;
+}
+
+.review_content .top{
+    text-align: center;
+}
+
+.tutorDetails{
+    width: 270px;
+    display: inline-block;
+}
+
+.tutorName{
+    width: 400px;
+    display: inline-block;
+}
+
+.userEmail{
+    margin-left: 174px;
+}
+
+label{
+    color: gray;
+    font-size: small;
+}
+
+form label{
+    font-size: x-small;
+}
+
+select{
+    border-radius: 10px;
+    padding: 4px;
+    width: 60%;
+    margin-bottom: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.32);
+}
+
+select:focus{
+    outline: none
+}
+
+.inlineP{
+    display: inline-block;
+    width: 57%;
+    padding: 4px;
+    color:blueviolet;
+    font-weight: 600;
+    padding-left: 10px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.203);
+    text-align: left;
+}
+
+.termsCondition{
+    color: gray;
+    text-align: center;
+    font-size: small;
+    margin-top: 30px;
+    margin-bottom: 0px;
+}
+
+form{
+    width: 90%;
+    margin: auto;
+    box-shadow: -1px 1px 10px 1px rgba(128, 128, 128, 0.159);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+form input{
+    height: 12px;
+    font-size: small;
+}
+
+form label{
+    margin-left: 6px;
+}
+
+form input:focus{
+    outline: none;
+}
+
+form #firstName, form #lastName, form #amount, form #balance{
+    width: 47%;
+}
+
+form #lastName_label{
+    margin-left: 41%;
+}
+
+form #amount_label{
+    margin-left: 39%;
+}
+
+form #email{
+    width: 96.5%;
+}
+
+#userName, #tutorId, #token{
+    display: none;
+}

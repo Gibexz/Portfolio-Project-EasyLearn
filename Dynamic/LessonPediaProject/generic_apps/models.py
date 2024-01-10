@@ -55,8 +55,8 @@ class Contract(models.Model):
         self.days_remaining = max((self.end_date - timezone.now().date()).days, 0)
         if self.days_remaining == 0:
             self.contract_status = 'Settled'
-        elif self.payment_remaining == 0:
-            self.contract_status = 'Settled'
+        # elif self.payment_remaining == 0:
+        #     self.contract_status = 'Settled'
         super().save(*args, **kwargs)
 
 

@@ -175,6 +175,7 @@ body {
 .cover{
     max-height: 400px;
     overflow-y: auto;
+    position: relative;
 }
 
 .my_tutors{
@@ -227,7 +228,7 @@ body {
 .subjects {
     flex: 4;
     margin-top: 10px;
-    max-height: 130px;
+    min-height: 130px;
 }
 
 .subjects .subject_details .tutor_picture{
@@ -318,6 +319,12 @@ body {
 .requestStatus{
      float: right;
      text-align: center;
+     width: 100px
+}
+
+.requestStatus .statuus{
+    color: gray;
+    font-size: small;
 }
 
 .status {
@@ -326,13 +333,29 @@ body {
     border-radius: 50%;
     margin: 0px;
     margin-right: 30px;
-    background-color: rgb(20, 236, 20);
     text-align: center;
 }
 
-.requestStatus p{
-    margin: 0px;
+.statusDefault{
+    background-color: rgba(0, 0, 0, 0.672);
 }
+
+.statusActive{
+    background-color: rgba(1, 112, 8, 0.672);
+}
+
+.statusPending{
+    background-color: rgba(141, 0, 0, 0.677);
+}
+
+.statusDecline{
+    background-color: red;
+}
+
+.requestStatus p{
+    margin: auto;
+}
+
 .clearfix::after {
     content: "";
     clear: both;
@@ -678,7 +701,7 @@ label{
 
 .removeUser{
     display:none;
-    position: relative;
+    position: relatve;
     background-color: white;
     box-shadow: 1px 1px 3px 1px rgb(202, 199, 199);
     border-radius: 20px;
@@ -728,11 +751,12 @@ label{
 }
 
 .rankStar{
-    position: relative;
+    position: absolute;
+    float:left;
     text-align: center;
-    margin-left: 10px;
+    margin-left: -18px;
     display: block;
-    margin-top: -50px;
+    margin-top: -40px;
 }
 
 .rankTutor{
@@ -1107,14 +1131,24 @@ label{
     }
   }
 
+.engagaement{
+    float: right;
+    color: red;
+    background-color: red;
+    width: 400px;
+}
+
 .engage{
     padding: 2px 20px 2px 20px;
     border-radius: 10px;
+    margin-bottom: 0px;
+    margin-top: 5%;
     cursor: pointer;
     background: linear-gradient(rgba(169, 169, 251, 0.346), rgb(213, 214, 208));
     box-shadow: -1px 1px 5px 1px rgba(128, 128, 128, 0.329);
     color: rgb(0, 84, 0);
     border-bottom: 1px solid rgba(255, 0, 0, 0.404);
+    text-align: center;
 }
 
 .engage:hover{
@@ -1126,120 +1160,25 @@ label{
     text-decoration: none;
 }
 
+.elipses{
+    float: right;
+    margin-right: 5%;
+}
 
 .goRight{
     margin: auto;
     height: 22px;
+    margin-bottom: 10%;
     overflow: hidden;
     width: 120px;
-    margin-left: 10px;
-    float: right;
+    margin-left: 10px; 
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-right: 5%;
     border-radius: 10px;
     box-shadow: 1px 1px 4px 1px rgb(201, 194, 194);
 }
 
-.email-form, .dropdownContainer {
-	position: absolute;
-	top: 42%;
-	font-size: 12px;
-	background-color: white;
-	border: 1px solid #ccc;
-	padding: 5px;
-	border-radius: 10px;
-	display: none;
-	box-shadow: 1.5px 1.5px 1px black;
-	left: 40%;
-	z-index: 1;
-}
-.dropdownContainer{
-   top: 70%;
-   left: 37.5%;
-   font-size: 0.8em;
-}
-
-.email-form input[type='text'] {
-    border: 1px solid #ccc;
-    width: 80%;
-    border-radius: 5px;
-}
-#emailForm textarea{
-    outline: none;
-    border-radius: 5px;
-    width: 95%;
-    margin: auto;
-}
-#emailForm textarea:focus {
-    outline: none;
-    box-shadow: 1px 1px 0.5px gray;
-}
-
-#emailForm button, .rankTutor button {
-    background-color: #ddd;
-    color: black; 
-    padding: 5px 10px;
-    margin: 0 6%;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    width: 75px;
-}
-
-.sendEmail{
-    background-color: #ccc;
-    box-shadow: 1px 1px 1px 1px gray;
-}
-
-.sendEmail:hover{
-    background-color: #73d488 !important;
-}
-
-.cancelEmail{
-    background: red !important;
-    color: white !important;
-}
-.cancelEmail:hover{
-    background-color: rgb(199, 24, 24) !important;
-}
-.email-form input:focus{
-    outline: none;
-}
-
-.dropdownContainer .dropdown-item:hover {
-    background-color: #eee;
-}
-
-.dropdownContainer .dropdown-item:last-child {
-    border-bottom: none;
-}
-
-.dropdownContainer .dropdown-item:first-child {
-    border-top: none;
-}
-
-#emailForm{
-    /* width: 70%; */
-    border-radius: 10px;
-}
-
-.dropdown-item {
-    cursor: pointer;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-}
-
-.fa {
-    cursor: pointer;
-}
- .fa-heart {
-    color: gray;
-}
-
-.heart-red {
-    color: red;
+.makePayment, .congrats, .balanceUp{
+    display: none;
 }

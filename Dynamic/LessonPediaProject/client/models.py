@@ -133,12 +133,12 @@ class Cart(models.Model):
     contract_validity_end_date = models.DateTimeField(null=True)
     client = models.ForeignKey(Client,  related_name='carts', null=True, on_delete=models.SET_NULL)
 
-class Payment(models.Model):
-    tnx_id = models.CharField(null=True, max_length=200)
+class Transaction(models.Model):
+    referenceNumber = models.BigIntegerField(null=True)
+    tnx_id = models.BigIntegerField(null=True)
+    tnx_status = models.CharField(null=True, max_length=200)
+    tnx_amount = models.FloatField(null=True)
+    tnx_message = models.CharField(null=True, max_length=200)
     time = models.DateTimeField(default=timezone.now)
-    client = models.ForeignKey(Client, related_name='payments', null=True, on_delete=models.SET_NULL)
-
-class PaymentReceipt(models.Model):
-    receipt_id = models.CharField(null=True, max_length=200)
-    payment_time = models.DateTimeField(default=timezone.now)
-    client = models.ForeignKey(Client, related_name='payment_receipts', null=True, on_delete=models.SET_NULL)
+    client = models.ForeignKey(Client, related_name='transactions', null=True, on_delete=models.SET_NULL)
+    tutor = models.ForeignKey(Tutor, null=True, on_delete=models.SET_NULL, related_name='transactions')

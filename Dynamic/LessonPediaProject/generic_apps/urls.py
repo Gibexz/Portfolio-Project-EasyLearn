@@ -8,4 +8,5 @@ urlpatterns = [
     path('app_admin_sign_up/', general_views.app_admin_sign_up, name='app_admin_sign_up'),
     path("api/get_tutors_reports/", general_views.get_tutors_reports, name="get_tutors_reports"),
     path("api/get_clients_reports/", general_views.get_clients_reports, name="get_clients_reports"),
+    path("about_us/developers/", general_views.about_us, name="aboutUs"),
 ]

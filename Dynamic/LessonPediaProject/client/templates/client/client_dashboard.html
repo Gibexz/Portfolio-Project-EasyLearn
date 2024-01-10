@@ -231,9 +231,10 @@
                     </div>
                     <div class="activities">
                         <div class="courses">
-                            <div class="not_started item"><p class="progress">1/{{ totalTutors }} </p><p class="progress_text">In Progress</p></div>
-                            <div class="in_progress item"><p class="progress">1/{{ totalTutors }} </p><p class="progress_text">Pending</p></div>
-                            <div class="completed item"><p class="progress">0/{{ totalTutors }} </p><p class="progress_text">Settled</p></div>
+                            <div class="not_started item"><p class="progress">{{ activeStatus }}/{{ totalTutors }} </p><p class="progress_text">Active</p></div>
+                            <div class="in_progress item"><p class="progress">{{ pendingStatus }}/{{ totalTutors }} </p><p class="progress_text">Pending</p></div>
+                            <div class="in_progress item"><p class="progress">{{ declinedStatus }}/{{ totalTutors }} </p><p class="progress_text">Declined</p></div>
+                            <div class="completed item"><p class="progress">{{ notEngagedStatus }}/{{ totalTutors }} </p><p class="progress_text">Not Engaged</p></div>
                         </div> 
                         <div class="my_tutors">
                             <div class="searchClient">
@@ -257,56 +258,47 @@
                                             <section class="float_left">
                                                 <div class="subject_table table">
                                                     <span class="tutor_subject tr">{{ tutor.target_tutor.area_of_specialization }}</span>
-                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span><span class="engage"> <a href="{% url 'create_contract' tutor_id=tutor.target_tutor.id %}">Connect with Tutor</a></span>
+                                                    <span class="class_schedule tr"><b>Wed, Thurs, Sat </b></span>
                                                 </div>
                                                 
                                                 <span class="tutor_name"><b>{{ tutor.target_tutor.first_name }} {{ tutor.target_tutor.last_name}}</b></span>
-                                                <span class="tutor_name contract"> Contract Valid Until: July, 3rd, 2023</span>
+                                                <span class="tutor_name contract"> Contract Valid Until: <span class="endDate"></span></span>
                                             
                                             </section>
 
-                                            <section class="goRight">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                                <div class="email-form">
-                                                    <form id="emailForm" method="post" action="{%url 'email_tutor' tutor.id %}">
-                                                        {% csrf_token %}
-                                                        <label for="sender">From:</label> <span><input type="text" id="sender" name="sender" required readonly value="{{ user.email }}"></span>
-                                                        <br>
-                                                        <label for="recipient">To:</label> <span> <input type="text" id="recipient" name="recipient" required readonly value="{{ tutor.email }}"></span>
-                                                        <br>
-                                                        <label for="subject">Subject:</label> <span> <input type="text" id="subject" name="subject" required value="Interested in Tutoring Session"></span>
-                                                        <br>
-                                                        <input type="hidden" id="lessonPedia" name="senderInfo" value="Client: {{ user.get_full_name }} - {{ user.email }}">
-                                                        <label for="message">Message:</label><br>
-                                                        <textarea id="message" name="message" rows="5" required></textarea><br>
-                                                        
-                                                        <button type="submit" class="sendEmail">Send</button>
-                                                        <button class="cancelEmail" type="button">Cancel</button>
-                                                    </form>
-                                                </div>
-                                                <div id="loadingMessage" style="display: none;">
-                                                    <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                                                </div>
-                                                <!-- email_sent_modal.html -->
-                        
-                                                <div class="dropdownContainer">
-                                                    <div class="dropdown-item allScheduleBtn">All Schedules</div>
-                                                    <div class="dropdown-item all-subjects-btn"id="allSubjectsBtn">All Subjects</div>
-                                                </div>
-                                            </section>
+                                            <div class="elipses">
+                                                <section class="goRight">
+                                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>    
+                                                </section>
 
-                                            <section>
-                                                {% if tutor.target_tutor.is_active == 1 %}
-                                                   <div class="requestStatus">
-                                                        <p class="status"></p>
-                                                        <p>status</p>
-                                                   </div>
-                                                {% else %}
-                                                    class="redStatus"
-                                                {% endif %}
+                                               <section class=dropdown_others>
+                                                    <!-- <p>Update Contract</p>
+                                                    <p>Terminate Engagement</p> -->
+                                                </section> 
+
+                                                <section class="engagement">
+                                                  <p class="engage"> <a href="{% url 'create_contract' tutor_id=tutor.target_tutor.id %}">Connect with Tutor</a></p>
+                                                </section>
+                                                <section class="makePayment">
+                                                    <p class="engage" id="balancePayNow"><a href="{% url 'makePayment' tutor.target_tutor.id %}">Make Payment</a></p>
+                                                </section>
+                                                <section class="balanceUp">
+                                                    <p class="engage" id="payRemaining"><a href="{% url 'makePayment' tutor.target_tutor.id %}">Pay Balance</a></p>
+                                                </section>
+                                                <section class="congrats">
+                                                    <p class="engage" id="completed">Payment Completed</a></p>
+                                                </section>
                                                 
+                                            </div>
+                                                                                 
+                                            <section>
+                                                <div class="requestStatus">
+                                                    <p class="status statusDefault"></p>
+                                                    <p class="statuus">not engaged</p>
+                                                </div>
+                                                                                
                                             </section>
                                         </div>
                                        
@@ -322,12 +314,9 @@
                                             
                                             <button class="rank even-width">
                                                 <div class='rankStar'>
-                                                    <p class='rankTutor'>
-                                                        
-                                                        <span class='defaultColor'></span> 
-                                                        
+                                                    <p class='rankTutor'>                                                        
+                                                        <span class='defaultColor'></span>                                   
                                                     </p>
-                                                    
                                                     <section>
                                                         <p class="rankText">Rank with stars</p>
                                                     </section>

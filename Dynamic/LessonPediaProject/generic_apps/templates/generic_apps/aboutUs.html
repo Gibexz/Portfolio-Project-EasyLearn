@@ -1,0 +1,112 @@
+{% extends "generic_apps/base.html" %}
+{% load static %}
+{% block head %}
+    <script src="https://kit.fontawesome.com/11285bfb5b.js" crossorigin="anonymous"></script>
+    <title>About - Us</title>
+    <link rel="stylesheet" href="{% static 'styles/aboutUs.css' %}">
+{% endblock head %}
+
+    
+{% block content %}   
+    <div class="midMe">
+        <div class="centerPage">
+          <h2 style="text-align: center; color: rgb(3, 50, 24); margin-top: 20px;">Welcome to the Developers page! 🌟</h2>
+          <hr>
+        
+        <section class="infoBase">
+            <h2>About Us</h2>
+        
+            <p>
+                LessonPedia is a platform dedicated to connecting learners with experienced tutors. Our mission is to provide a
+                seamless learning experience by bridging the gap between eager learners and knowledgeable educators.
+            </p>
+        
+            <p>
+                Founded by a team of passionate backend engineers including Engr. Iberedem Inyang, Mr. Kinsley Chime, and Mr.
+                Chidubem, LessonPedia strives to make education accessible to everyone, irrespective of geographical
+                boundaries.
+            </p>
+        
+            <h2>The Importance of LessonPedia</h2>
+        
+            <div class="importance">
+                <p>
+                    <strong>1. Personalized Learning:</strong> LessonPedia empowers learners to choose tutors based on their
+                    specific needs and learning preferences, fostering a personalized learning environment.
+                </p>
+        
+                <p>
+                    <strong>2. Global Reach:</strong> With LessonPedia, learners can connect with tutors from around the world,
+                    opening up a wealth of knowledge and diverse perspectives.
+                </p>
+        
+                <p>
+                    <strong>3. Convenient and Flexible:</strong> The platform provides flexibility in scheduling lessons,
+                    allowing learners to study at their own pace and convenience.
+                </p>
+        
+                <p>
+                    <strong>4. Skill Development:</strong> LessonPedia is not just about academic subjects; it's a hub for
+                    skill development, offering lessons in various fields to enhance learners' overall capabilities.
+                </p>
+            </div>
+        
+        </section>
+
+        </div> 
+               
+    </div>
+   
+    <div class="contactUs">
+        <h1>Contact Us</h1>
+    </div>
+    <div class="aboutUs">
+        <div class="favour">
+            <div class="centa">
+                <img src="{% static 'images/developers/chime.jpg' %}" alt="">
+                <p><b style="color: gold">Back-end Engr. <br></b>
+                    Mr. Chime Kingsley, an enthusiac front end developer whose contributed massively to the 
+                    implementation of this word. 
+                    In addition, The lessonPedia web application has three basic applications, the admin, the teacher and the client. Mr. Chime Kinsley engaged all his ability and time to ensure a smooth ending to this project by writing all the front end and backend logic for the admin application.
+                </p>
+                <ul>
+                    <li><a href="https://github.com/EnGentech/Kasuwa-Service/tree/Favour">Github</a></li>
+                    <li><a href="http://">LinkedIn</a></li>
+                    <li><a href="">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="inyang">
+            <div class="centa">
+                <img src="{% static 'images/developers/pass.jpg' %}" alt="">
+                <p><b style="color: gold">Back-end Engr. <br></b>
+                    No web application is functional without a backend developer, meet Iberedem Inyang, a back-end connoisseur
+                    whose contribution made this portforlio [phase1] a success.
+                    In addition, The lessonPedia web application has three basic applications, the admin, the teacher and the client. Mr. Iberedem Inyang engaged all his ability and time to ensure a smooth ending to this project by writing all the front end and backend logic for the client application.
+                </p>
+                <ul>
+                    <li><a href="https://github.com/EnGentech">Github</a></li>
+                    <li><a href="https://www.linkedin.com/in/iberedem-inyang-3b88ba223/">LinkedIn</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="barth">
+            <div class="centa">
+                <img src="{% static 'images/developers/chidubem.jpg' %}" alt="">
+                <p><b style="color: gold">Back-end Engr. <br></b>
+                    Every good development starts with architectural design, talk of web applications then you cant shy away from 
+                    models and database, Mr. Chidubem Coder, an erudite expertise in the field gave the blue print to this 
+                    development.
+                    In addition, The lessonPedia web application has three basic applications, the admin, the teacher and the client. Mr. Chidubem Coder engaged all his ability and time to ensure a smooth ending to this project by writing all the front end and backend logic for the admin application.
+                </p>
+                <ul>
+                    <li><a href="https://github.com/EnGentech/Kasuwa-Service/tree/Barthelomew">Github</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+   
+{% endblock content %}

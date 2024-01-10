@@ -146,8 +146,9 @@ def create_contract(request, tutor_id):
             end_date=timezone.now().date() + timedelta(days=contract_length),
             payment_remaining=pay_rate * contract_length,
         )
-        return JsonResponse({'status': 'success', 'message': 'Contract created successfully',
-                            'contract_id': contract.contract_code})
+        return redirect('validate_user', whoami=request.user)
+        # return JsonResponse({'status': 'success', 'message': 'Contract created successfully',
+        #                     'contract_id': contract.contract_code})
 
     subjects = [tutor.primary_subject] + list(tutor.subjects.all())
     return render(request, 'tutor/create_contract.html', {'tutor': tutor, 'subjects': subjects, 'client': client})

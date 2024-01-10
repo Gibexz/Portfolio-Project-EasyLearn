@@ -19,4 +19,7 @@ urlpatterns = [
     path("review/tutor/submit/<int:tutorId>", views.submit_review, name='submitReview'),
     path("review/tutor/editReview/<int:tutorId>", views.edit_review, name='editReview'),
     path("api/contractForm", views.contract_information, name="contractInfo"),
+    path("payment/paystackGateway/<int:tutorId>", views.paystackGateway, name="makePayment"),
+    path("transaction/details/<int:tutorId>", views.transactionDetails_storage, name="transactionDetails"),
+    path("api/contract/information", views.transaction_information, name="transactionInfo"),
 ]

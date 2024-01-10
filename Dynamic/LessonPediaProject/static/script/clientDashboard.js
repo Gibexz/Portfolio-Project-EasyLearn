@@ -429,6 +429,83 @@ $(".cancelEdit").click(function(){
     parentContainer.hide().css("opacity", "0");
 });
 
+var url = 'http://127.0.0.1:8000/client/api/contractForm';
+var receivedContract = {};
+$(".endDate").text("No engagement yet")
+
+$.ajax({
+    url: url,
+    method: 'GET',
+    dataType: 'json',
+    success: function(response) {
+        receivedContract = response;
+        console.log(receivedContract);
+
+        $(".tutor_info").each(function() {
+            var ids = $(this).find(".tutorId").text().split(',');
+
+            for (var id of ids) {
+                var parsedId = parseInt(id.trim(), 10);
+
+                if (!isNaN(parsedId) && parsedId in receivedContract) {
+                    var obtained = receivedContract[parsedId]['status'];
+                    var endDate = receivedContract[parsedId]['endDate']
+                    var amountProposed = receivedContract[parsedId]['amount']
+                    var amount_remaining = receivedContract[parsedId]['amountRemaining']
+                    
+                    // Select specific elements within the current .tutor_info container
+                    var statusElement = $(this).find(".requestStatus .statusDefault");
+                    var statuusElement = $(this).find(".requestStatus .statuus");
+                    var engagement = $(this).find(".engagement")
+                    var payment = $(this).find(".makePayment")
+                    var completed = $(this).find(".congrats")
+                    var balanceUp = $(this).find(".balanceUp")
+                    var endDateElement = $(this).find(".endDate")
+
+                    console.log("ID:", parsedId, "Status:", obtained);
+                    
+                    if (endDate){
+                        endDateElement.text(endDate)
+                    }
+
+                    if (obtained === 'Pending') {
+                        statusElement.removeClass("statusDefault").addClass("statusPending");
+                        statuusElement.text("pending approval");
+                        payment.hide()
+                        engagement.hide()
+                    } else if (obtained === "Active") {
+                        statusElement.removeClass("statusDefault").addClass("statusActive");
+                        statuusElement.text("Approved");
+                        payment.show()
+                        engagement.hide()
+                    } else if (obtained === "Declined") {
+                        statusElement.removeClass("statusDefault").addClass("statusDecline");
+                        statuusElement.text("Declined");
+                        payment.hide()
+                        engagement.hide()
+                    }
+
+                    if ((amount_remaining > 0) && (amount_remaining != amountProposed)){
+                        payment.hide()
+                        balanceUp.show()
+                       
+                    } else if (amount_remaining == 0){
+                        statusElement.removeClass("statusDefault").addClass("statusActive");
+                        statuusElement.text("Approved");
+                        engagement.hide()
+                        payment.hide()
+                        balanceUp.hide()
+                        completed.show()
+                    }
+
+                }
+            }
+        });
+    },
+    error: function(error) {
+        console.error('Error fetching API data:', error);
+    }
+});
 
 
 

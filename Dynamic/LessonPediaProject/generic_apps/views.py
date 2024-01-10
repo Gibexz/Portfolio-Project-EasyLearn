@@ -127,3 +127,7 @@ def get_clients_reports(request):
         }, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+def about_us(request):
+    """About us page"""
+    return render(request, "generic_apps/aboutUs.html")
