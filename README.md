@@ -1,4 +1,4 @@
-This project was written in collaboration of 3 back-end aspirants as a requirement for graduating at ALX SE institution. The idea behind it it to bring about learning and tutor into a digital connected economy as the world today is build with digital accessories. This will aid to foester learning, improve skills and disolve distance hindrance.
+This project was written in collaboration of 3 back-end aspirants as a requirement for graduating at ALX SE institution. The idea behind it it to bring about learners and tutors into a digital connected economy as the world today is build with digital accessories. This will aid to foster learning, improve skills and disolve distance hindrance.
 
 LessonPedia is a platform dedicated to connecting learners with experienced tutors. Our mission is to provide a seamless learning experience by bridging the gap between eager learners and knowledgeable educators.
 
