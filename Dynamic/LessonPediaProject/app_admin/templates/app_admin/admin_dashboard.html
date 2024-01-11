@@ -73,7 +73,7 @@
                             <textarea id="reason_for_suspension_tutor" name="reason_for_suspension" rows="2" cols="50"></textarea>
                         </div>
                         <div class="confirm_buttons">
-                            <button class="confirm_suspend_tutor" data-tutor-id_suspend="">Suspend</button>
+                            <button class="confirm_suspend_tutor" data-tutor-id_suspend="" style="background-color: red;" >Suspend</button>
                             <button class="mistake">Cancel</button>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                             <textarea id="reason_for_suspension_client" name="reason_for_suspension" rows="2" cols="50"></textarea>
                         </div>
                         <div class="confirm_buttons">
-                            <button class="confirm_suspend_client" data-client-id_suspend="">Suspend</button>
+                            <button class="confirm_suspend_client" style="background-color: red;" data-client-id_suspend="">Suspend</button>
                             <button class="mistake_client">Cancel</button>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
             </div>
         </div>
     </div>
-
+    
     <!--activate account tutor-->
     <div class="set_reactivate_account_tutor">
         <div class="disable_account">
@@ -169,6 +169,7 @@
             </div>
         </div>
     </div>
+
 
     <!--activate account client-->
     <div class="set_reactivate_account_client">
@@ -790,7 +791,7 @@
                                     <th class="sortUserName" data-column="1">UserName</th>
                                     <th class="sortEmail" data-column="2">Email</th>
                                     <th class="sortEmail" data-column="3">Accessment Score</th>
-                                    <th class="sortEngagement" data-column="4">No of engagement</th>
+                                    <th class="sortEngagement" data-column="4">Active Contracts</th>
                                     <th class="sortQualification" data-column="5">Qualification</th>
                                     <th class="sortStatus" data-column="6">Status</th>
                                     <th class="sortJoinDate" data-column="7">Join Date</th>
@@ -804,7 +805,7 @@
                                     <td class="user_name">{{ tutor.username }}</td>
                                     <td class="user_email">{{ tutor.email }}</td>
                                     <td>{{ tutor.quiz_result }}</td>
-                                    <td>{{ tutor.active_clients }}</td>
+                                    <td>{{ tutor.active_contract_count }}</td>
                                     <td>{{ tutor.highest_qualification }}</td>
                                     <td><button class="check_status" data-active="{{ tutor.is_active }}">{{ tutor.is_active }}</button></td>
                                     <td>{{ tutor.created_at}}</td>
@@ -842,7 +843,7 @@
                                                 "availability": "{{ tutor.availability|default:"null" }}",
                                                 "working_hours": "{{ tutor.working_hours|default:"null" }}",
                                                 "cv_id": "{{ tutor.cv_id|default:"null" }}",
-                                                "active_clients": "{{ tutor.active_clients|default:"null" }}",
+                                                "active_contract_count": "{{ tutor.active_contract_count|default:"null" }}",
                                                 "total_clients": "{{ tutor.total_clients|default:"null" }}",
                                                 "rejected_clients": "{{ tutor.rejected_clients|default:"null" }}",
                                                 "reviews_id": "{{ tutor.reviews_id|default:"null" }}",
@@ -1043,8 +1044,8 @@
                     <div class="tutors_list_content">
                         <section class="top">
                             <div class="search">
-                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
-                                <button class="search_button">Search</button>
+                                <input type="text" name="" id="" class="extend tutor_search_report" placeholder="Search Report">
+                                <button class="search_button search_button_tutor_report">Search</button>
                             </div>
                             <h3 class="allTutors">Tutors Abuse Reports
                             </h3>   
@@ -1063,7 +1064,7 @@
                                     <th class="t_report_created" data-column="5">Created_at</th>
                                     <th class="t_report_resolve" data-column="6">Resolve Status</th>
                                     <th class="t_report_date_resolved" data-column="7">Date Resolved</th>
-                                    <th class="t_report_view" data-column="8">View</th>
+                                    <th class="t_report_view" style="border-bottom: 1px solid gray;" data-column="8">View</th>
                                 </tr>
                             </thead>
                             <tbody>   
@@ -1096,8 +1097,8 @@
                     <div class="tutors_list_content">
                         <section class="top">
                             <div class="search">
-                                <input type="text" name="" id="" class="extend" placeholder="Search tutor">
-                                <button class="search_button">Search</button>
+                                <input type="text" name="" id="" class="extend client_search_report" placeholder="Search Report">
+                                <button class="search_button search_button_client_report">Search</button>
                             </div>
                             <h3 class="allTutors">Clients Abuse Reports
                             </h3>   
@@ -1116,7 +1117,7 @@
                                     <th class="c_report_created" data-column="5">Created_at</th>
                                     <th class="c_report_resolve" data-column="6">Resolve Status</th>
                                     <th class="c_report_date_resolved" data-column="7">Date Resolved</th>
-                                    <th class="c_report_view" data-column="8">View</th>
+                                    <th class="c_report_view" data-column="8" style="border-bottom: 1px solid gray;" >View</th>
                                 </tr>
                             </thead>
                             <tbody>  
