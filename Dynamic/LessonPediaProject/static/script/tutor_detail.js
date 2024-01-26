@@ -101,29 +101,6 @@ $(document).ready(function () {
     });
 
 
-    // Rank tutor temporarily
-
-    $('.rankTutorDisplay').click(function () {
-        $(this).hide();
-        $('#rankForm').toggle();
-    });
-
-    $(".star").click(function() {
-        var selectedValue = $(this).data('value');
-        $(".star").removeClass("gold");
-        $(".star").each(function() {
-          if ($(this).data('value') <= selectedValue) {
-            $(this).addClass("gold");
-          }
-        });
-        $("#rank").val(selectedValue);
-      });
-    
-    $('#submitRankBtn').click(function () {
-        $('#rankForm').hide();
-        $('.rankTutorDisplay').show();
-    })
-
     // goRight items, likes, email, more
     $(".fa-heart").click(function () {
         $(this).toggleClass("heart-red");
@@ -151,62 +128,55 @@ $(document).ready(function () {
             $(".dropdownContainer").hide();
         }
     });
-    
+});
 
-    // dropdownContainer item click (example: Engage tutor)
-    $(".dropdownContainer").on("click", ".", function () {
-        // Add logic for the Engage Tutor action
-        console.log("Engage Tutor clicked");
+$(document).ready(function () {
+    // Handle Ajax request for email
+    $("#emailForm").submit(function (e) {
+        e.preventDefault();
+        const form = $(this);
+        form.toggle();
+
+        // Disable the form to prevent multiple submissions
+        form.prop('disabled', true);
+
+        $('#loadingMessage').show();
+
+        const tutorId = $('#tutorId').val();
+
+        $.ajax({
+            type: "POST",
+            url: `/tutor/emailTutor/${tutorId}/`,
+            data: form.serialize(),
+            success: function (data) {
+                if (data.success) {
+                    $('#loadingMessage').hide();
+                    $('#emailSentModal').show();
+                    $('.closeModal, .continue').click(function () {
+                        $('#emailSentModal, #emailErrorModal').hide();
+                    });
+                } else {
+                    $('#emailErrorModal').show();
+                    // Close modal when elements are clicked
+                    $('#loadingMessage').hide();
+                    $('.closeModal').click(function () {
+                        $('#emailSentModal, #emailErrorModal').hide();
+                        form.prop('disabled', false);
+                    });
+                }
+            },
+            error: function () {
+                $('#loadingMessage').hide();
+                form.prop('disabled', false);
+            },
+            complete: function () {
+                // Re-enable the form after the request is complete
+                form.prop('disabled', false);
+            },
+        });
     });
 
-
-    // Handle Ajax request for email
-        $("#emailForm").submit(function (e) {
-            e.preventDefault();
-            const form = $(this);
-            form.toggle();
-    
-            // Disable the form to prevent multiple submissions
-            form.prop('disabled', true);
-    
-            $('#loadingMessage').show();
-    
-            const tutorId = $('#tutorId').val();
-    
-            $.ajax({
-                type: "POST",
-                url: `/tutor/emailTutor/${tutorId}/`,
-                data: form.serialize(),
-                success: function (data) {
-                    if (data.success) {
-                        $('#loadingMessage').hide();
-                        $('#emailSentModal').show();
-                        $('.closeModal, .continue').click(function () {
-                            $('#emailSentModal, #emailErrorModal').hide();
-                        });
-                    } else {
-                        $('#emailErrorModal').show();
-                        // Close modal when elements are clicked
-                        $('#loadingMessage').hide();
-                        $('.closeModal').click(function () {
-                            $('#emailSentModal, #emailErrorModal').hide();
-                            form.prop('disabled', false);
-                        });
-                    }
-                },
-                error: function () {
-                    $('#loadingMessage').hide();
-                    form.prop('disabled', false);
-                },
-                complete: function () {
-                    // Re-enable the form after the request is complete
-                    form.prop('disabled', false);
-                },
-            });
-        });
-    
-        $(".cancelEmail").click(function () {
-            $(".email-form").hide();
-        });
-    
+    $(".cancelEmail").click(function () {
+        $(".email-form").hide();
+    });
 });

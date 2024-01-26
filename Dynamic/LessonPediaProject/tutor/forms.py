@@ -122,20 +122,21 @@ class TutorUpdateForm(forms.ModelForm):
         ('Freelance', 'Freelance'),
         ('Others', 'Others'),
         ],
+        required=False,
         widget=forms.Select(attrs={
             'class': 'no_outline',
             'id': 'employmentStat',
         })
     )
-    date_of_birth = forms.DateField(
-    widget=DatePickerInput(
-        attrs={
-            'class': 'no_outline',
-            'id': 'dob',
-            'placeholder': 'Format: (MM/DD/YYYY)',
-        }
-    )
-)
+#     date_of_birth = forms.DateField(
+#     widget=DatePickerInput(
+#         attrs={
+#             'class': 'no_outline',
+#             'id': 'dob',
+#             'placeholder': 'Format: (MM/DD/YYYY)',
+#         }
+#     )
+# )
 
     nationality = forms.CharField(
         widget=forms.TextInput(attrs={
@@ -219,9 +220,15 @@ class TutorUpdateForm(forms.ModelForm):
             'id': 'gender',
             'class': 'no_outline',
         })
-
-
     )
+    open_to_work = forms.ChoiceField(
+        choices=Tutor.open_to_work_choice,
+        widget=forms.Select(attrs={
+            'id': 'open_to_work',
+            'class': 'no_outline',
+        })
+    )
+
 
     class Meta:
         model = Tutor
@@ -229,8 +236,7 @@ class TutorUpdateForm(forms.ModelForm):
                 'first_name', 'last_name', 'others', 'phone_number', 'highest_qualification', 
                 'area_of_specialization', 'discipline', 'employment_status','employment_type','nationality',
                 'state_of_residence', 'institution_type', 'institution', 'result', 
-                'residential_address', 'cv_id', 'highest_qualification_cert', 'profile_picture', 'gender',
-                'date_of_birth',
+                'residential_address', 'cv_id', 'highest_qualification_cert', 'profile_picture', 'gender', 'open_to_work'
                 
             ]
         widgets = {
@@ -278,6 +284,6 @@ class TutorUpdateForm(forms.ModelForm):
                 'placeholder': 'enter state of residence',
                 'id': 'state',
                 'autocomplete': 'on',
-            }),
+            })
         }
                 

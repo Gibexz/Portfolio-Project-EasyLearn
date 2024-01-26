@@ -123,7 +123,7 @@ class Review(models.Model):
 
 
 class Ranking(models.Model):
-    rank_number = models.IntegerField(null=True)
+    rank_number = models.IntegerField(null=True, default=1)
     tutor = models.ForeignKey(Tutor, null=True, on_delete=models.SET_NULL, related_name='rankings')
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL, related_name='rankings')
     created_at = models.DateTimeField(auto_now_add=True)

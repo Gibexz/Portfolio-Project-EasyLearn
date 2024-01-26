@@ -29,6 +29,9 @@ body{
     justify-content: space-evenly;
     background: linear-gradient(-7deg, rgba(83, 83, 84, 0.892) 30%, rgba(32, 32, 32, 0.92) 0%);
 }
+/* .aboutUs .aboutUsBio {
+  width: 30%;
+} */
 
 .aboutUs img{
     margin-top: 10%;
@@ -431,7 +434,7 @@ body{
     margin-top: 5px;
 }
 
-.infoBase p {
+.infoBase p, .infoBase li{
     line-height: 1.6;
     color: #555;
 }

@@ -5,108 +5,112 @@
     <title>About - Us</title>
     <link rel="stylesheet" href="{% static 'styles/aboutUs.css' %}">
 {% endblock head %}
+{% block AboutUs %}{% endblock AboutUs %}
 
-    
-{% block content %}   
+{% block content %}
     <div class="midMe">
         <div class="centerPage">
-          <h2 style="text-align: center; color: rgb(3, 50, 24); margin-top: 20px;">Welcome to the Developers page! 🌟</h2>
+          <h2 style="text-align: center; color: rgb(3, 50, 24); margin-top: 20px;">About Us</h2>
           <hr>
-        
+
         <section class="infoBase">
-            <h2>About Us</h2>
-        
+            <h2> Mission</h2>
+                <p>
+                    At LessonPedia, our mission is to revolutionize the learning landscape by connecting eager learners with experienced tutors.
+                    We are dedicated to providing a seamless and personalized learning experience, breaking down geographical boundaries to make education accessible to everyone.
+                </p>
+                <p>
+                    Founded by a team of passionate backend engineers, including Iberedem Inyang, Kingsley Chime, and  Chidubem, LessonPedia strives to empower individuals with knowledge, fostering a community where learners and educators converge for mutual growth and development.
+                </p>
+            <h2>Vision</h2>
+                <p>LessonPedia envisions a future where education transcends borders, and every individual has the opportunity to unlock their full potential. We aim to be the leading global platform that catalyzes transformative learning experiences, fostering innovation, collaboration, and inclusivity.</p>
+                <p>In this future, LessonPedia will be synonymous with excellence, adaptability, and results-oriented education. We aspire to be at the forefront of shaping a world where diverse perspectives converge to create a dynamic learning environment.</p>
+            
+            <h2>Values</h2>
+            <ul>
+                <li><strong>Excellence:</strong> We are committed to delivering outstanding learning experiences, constantly striving for excellence in everything we do.</li>
+                <li><strong>Adaptability:</strong> LessonPedia embraces change and continuously evolves to meet the dynamic needs of learners and educators alike.</li>
+                <li><strong>Results-Oriented:</strong> Our focus is on tangible outcomes, ensuring that learners achieve their goals and educators contribute to the growth and development of their students.</li>
+            </ul>
             <p>
                 LessonPedia is a platform dedicated to connecting learners with experienced tutors. Our mission is to provide a
                 seamless learning experience by bridging the gap between eager learners and knowledgeable educators.
             </p>
-        
             <p>
-                Founded by a team of passionate backend engineers including Engr. Iberedem Inyang, Mr. Kinsley Chime, and Mr.
-                Chidubem, LessonPedia strives to make education accessible to everyone, irrespective of geographical
-                boundaries.
+                We believe that education is a lifelong journey, and we are committed to empowering individuals with knowledge
+                to unlock their full potential. Our platform is designed to foster a community where learners and educators
+                converge for mutual growth and development.
             </p>
-        
-            <h2>The Importance of LessonPedia</h2>
-        
+
+            <h2>Why LessonPedia?</h2>
+
             <div class="importance">
                 <p>
                     <strong>1. Personalized Learning:</strong> LessonPedia empowers learners to choose tutors based on their
                     specific needs and learning preferences, fostering a personalized learning environment.
                 </p>
-        
+
                 <p>
                     <strong>2. Global Reach:</strong> With LessonPedia, learners can connect with tutors from around the world,
                     opening up a wealth of knowledge and diverse perspectives.
                 </p>
-        
+
                 <p>
                     <strong>3. Convenient and Flexible:</strong> The platform provides flexibility in scheduling lessons,
                     allowing learners to study at their own pace and convenience.
                 </p>
-        
+
                 <p>
                     <strong>4. Skill Development:</strong> LessonPedia is not just about academic subjects; it's a hub for
                     skill development, offering lessons in various fields to enhance learners' overall capabilities.
                 </p>
             </div>
-        
-        </section>
 
-        </div> 
-               
+        </section>
+        </div>
     </div>
-   
+
     <div class="contactUs">
         <h1>Contact Us</h1>
     </div>
     <div class="aboutUs">
-        <div class="favour">
+        <div class="summaryBio">
             <div class="centa">
                 <img src="{% static 'images/developers/chime.jpg' %}" alt="">
-                <p><b style="color: gold">Back-end Engr. <br></b>
-                    Mr. Chime Kingsley, an enthusiac front end developer whose contributed massively to the 
-                    implementation of this word. 
-                    In addition, The lessonPedia web application has three basic applications, the admin, the teacher and the client. Mr. Chime Kinsley engaged all his ability and time to ensure a smooth ending to this project by writing all the front end and backend logic for the admin application.
+                <p><b style="color: gold">Backend Engr. <br></b>
+                    Meet Chime Kingsley, a passionate Backend Developer dedicated to crafting seamless web applications. His unwavering enthusiasm for backend development is matched only by his visionary leadership, driving the Lessonpedia development team to excellence. Chime Kingsley played a crucial role in the project, focusing specifically on writing the front-end and back-end logic for the tutor interface of this project.
                 </p>
                 <ul>
-                    <li><a href="https://github.com/EnGentech/Kasuwa-Service/tree/Favour">Github</a></li>
-                    <li><a href="http://">LinkedIn</a></li>
-                    <li><a href="">Twitter</a></li>
+                    <li><a href="mailto:onlinekingsley@gmail.com" target="_blank">Email</a></li>
+                    <li><a href="https://linkedin.com/in/chika-kingsley-chime">LinkedIn</a></li>
+                    <li><a href="https://github.com/chimekinglsey">Github</a></li>
                 </ul>
             </div>
         </div>
-        <div class="inyang">
+        <div class="summaryBio">
             <div class="centa">
                 <img src="{% static 'images/developers/pass.jpg' %}" alt="">
-                <p><b style="color: gold">Back-end Engr. <br></b>
-                    No web application is functional without a backend developer, meet Iberedem Inyang, a back-end connoisseur
-                    whose contribution made this portforlio [phase1] a success.
-                    In addition, The lessonPedia web application has three basic applications, the admin, the teacher and the client. Mr. Iberedem Inyang engaged all his ability and time to ensure a smooth ending to this project by writing all the front end and backend logic for the client application.
-                </p>
+                <p><b style="color: gold">Backend Engr. <br></b>
+                    Introducing Iberedem Inyang, a dynamic Backend Developer known for bridging the gap between front-end aesthetics and back-end functionality. Inyang's hands-on experience in both realms of development has been pivotal in making the Lessonpedia app a user-friendly and efficient tool. Inyang dedicated all his ability and time to  writing the front-end and back-end logic for the client interface of Lessonpedia.</p>
                 <ul>
-                    <li><a href="https://github.com/EnGentech">Github</a></li>
                     <li><a href="https://www.linkedin.com/in/iberedem-inyang-3b88ba223/">LinkedIn</a></li>
-                    <li><a href="#">Twitter</a></li>
+                    <li><a href="mailto:engen.inyang@gmail.com" target="_blank">Email</a></li>
+                    <li><a href="https://github.com/engentech">Github</a></li>
                 </ul>
             </div>
         </div>
-        <div class="barth">
+        <div class="summaryBio">
             <div class="centa">
                 <img src="{% static 'images/developers/chidubem.jpg' %}" alt="">
-                <p><b style="color: gold">Back-end Engr. <br></b>
-                    Every good development starts with architectural design, talk of web applications then you cant shy away from 
-                    models and database, Mr. Chidubem Coder, an erudite expertise in the field gave the blue print to this 
-                    development.
-                    In addition, The lessonPedia web application has three basic applications, the admin, the teacher and the client. Mr. Chidubem Coder engaged all his ability and time to ensure a smooth ending to this project by writing all the front end and backend logic for the admin application.
-                </p>
+                <p><b style="color: gold">Backend Engr. <br></b>
+                    Meet Chidubem Esogibe, a versatile Backend Developer who's equally comfortable at the front end and back end of web development. Chidubem's expertise has been instrumental in shaping the Lessonpedia app's user-friendly interface and robust backend architecture. Chidubem engaged all his ability to writing the front-end and back-end logic for the admin interface of this project.</p>
                 <ul>
-                    <li><a href="https://github.com/EnGentech/Kasuwa-Service/tree/Barthelomew">Github</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                    <li><a href="#">Twitter</a></li>
+                    <li><a href="mailto:andrewetwork@gmail.com" target="_blank">Email</a></li>
+                    <li><a href="https://www.linkedin.com/in/esogibe-chidubem-andrew-901a6149/" target="_blank">LinkedIn</a></li>
+                    <li><a href="https://github.com/Gibexz">Github</a></li>
                 </ul>
             </div>
         </div>
     </div>
-   
+
 {% endblock content %}

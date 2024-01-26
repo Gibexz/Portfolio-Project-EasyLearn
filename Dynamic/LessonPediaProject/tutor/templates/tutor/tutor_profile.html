@@ -15,18 +15,7 @@
     <title>Tutor's - Profile</title>
 </head>
 <body>
-    <div class="flash-container">
-        {% if messages %}
-            {% for message in messages %}
-                {% if forloop.last %}
-                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
-                    <p style="font-weight: bold;">{{ message }}</p>
-                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
-                </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    </div>
+ </div>
     <!-- display cert -->
     <div class="set_cert_display">
         <div class="cert_display">
@@ -111,12 +100,15 @@
                           <label class="gender_label" for="gender">Gender</label><label class="dob_label" for="dob">Date of Birth</label>
                         </div>
                             {{ form.gender }}
+                            <input type="date" required name="dob" id="dob">
                             {{ form.date_of_birth }} 
                         </fieldset><br>
                         
                         <fieldset class="profile_form"><legend> Academic/Employment Details </legend>
-                            <label for="institution_type">Institution Type:</label>
-                            {{ form.institution_type }}
+                            <div class="subject_form_group">
+                                <label for="institution_type">Institution Type:</label>
+                                {{ form.institution_type }}
+                            </div>
                             <br>
                             <label for="institution">Institution Name</label>
                             {{ form.institution }}
@@ -173,6 +165,10 @@
                         <div class="subject_form_group">
                             <label for="price">Enter price per hour:</label>
                             <input type="number" id="price" name="price_per_hour" min="500" required>
+                        </div>
+                        <div class="subject_form_group">
+                            <label for="open_to_work">Open to Work:</label>
+                            {{ form.open_to_work }}
                         </div>
                     </fieldset>
 

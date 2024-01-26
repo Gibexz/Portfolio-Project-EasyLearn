@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.contrib.auth.models import Group, Permission
-
+from PIL import Image
+from django.core.validators import FileExtensionValidator
 
 class Tutor(AbstractUser):
     """Tutors database"""
@@ -108,13 +109,14 @@ class Tutor(AbstractUser):
     status = models.CharField(max_length=50, null=True)
     availability = models.CharField(max_length=50, choices=availability_choices, null=True)
     average_session_duration = models.CharField(max_length=150, null=True)
-    open_to_work = models.CharField(max_length=50, choices=open_to_work_choice, null=True)
+    open_to_work = models.CharField(max_length=50, choices=open_to_work_choice, default='Open', null=True)
     # suspend and block
     is_suspended = models.BooleanField(default=False)
     is_blocked = models.BooleanField(default=False)
     cv_id = models.FileField(upload_to='cv_files/', null=True, blank=True)
     highest_qualification_cert = models.FileField(upload_to='certs/highest_qualification/', null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
+    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png',  validators=[FileExtensionValidator(allowed_extensions=['jpg','JPG', 'jpeg', 'png'])])
+    
     residential_address = models.CharField(max_length=255, null=True)
     reviews_id = models.IntegerField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -173,6 +175,27 @@ class Tutor(AbstractUser):
     def __str__(self):
         return self.username
     
+    def resize_image(self, image):
+        img = Image.open(image.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.profile_picture:
+            self.resize_image(self.profile_picture)
+
+class PasswordResetToken(models.Model):
+    user = models.OneToOneField(Tutor, on_delete=models.CASCADE)
+    token = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        # Check if the token has expired (e.g., one-hour expiry)
+        return (timezone.now() - self.created_at).total_seconds() > 3600
+
 class Certificate(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='certificates')
     certificate_name = models.CharField(max_length=255)

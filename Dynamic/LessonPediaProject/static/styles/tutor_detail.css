@@ -855,7 +855,7 @@ hr {
 
 /* Email response */
 /* Add your modal styles here */
-.modal {
+.modal, .reset_password {
     display: none;
     position: fixed;
     z-index: 1;

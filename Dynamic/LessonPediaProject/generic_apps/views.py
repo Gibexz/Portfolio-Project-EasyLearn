@@ -82,12 +82,17 @@ def tutor_sign_up(request):
            form.save()
            messages.success(request, 'Registration Successful! Please Login')
            return redirect('tutor_login')
+       if form.errors:
+                # Access and display first error for each field
+           for field, errors in form.errors.items():
+               messages.error(request, f"{field.title()}: {errors[0]}")
+               return render(request, 'generic_apps/tutor_sign_up.html')
        else:
-            messages.error(request, 'Please correct the error below.')
-            form = TutorRegisterForm()
-            context = {'form': form}
-            return render(request, 'generic_apps/tutor_sign_up.html', context=context)
-
+        # Handle non-field errors if any
+            for error in form.non_field_errors:
+                messages.error(request, error)
+                context = {'form': form}
+                return render(request, 'generic_apps/tutor_sign_up.html', context=context)    
     else:
             form = TutorRegisterForm()
             context = {'form': form}
