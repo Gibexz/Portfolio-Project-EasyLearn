@@ -5,7 +5,7 @@ body{
 }
 
 /* Hide logics */
-.activate_learners, .tutor_report, .client_report {
+.activate_learners, .tutor_report, .client_report, .transactions_admin {
     display: none;
 }
 
@@ -1066,4 +1066,65 @@ table {
 
 .t_report_view:hover, .c_report_view:hover, .resolve_button:hover {
     box-shadow: 1px 1px 5px 1px rgba(96, 96, 96, 0.5);  
+}
+
+
+/* Transactions */
+.transaction_body{
+    margin-top: 0px;
+    width: 1100px;
+    height: 600px;
+    background-color: rgb(125, 120, 120);
+    border-radius: 2px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.transaction_top{
+    background-color: white;
+    padding-top: 10px;
+}
+
+.transaction_top .trans {
+    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: darkblue;
+    border-bottom: 2px solid rgba(0, 0, 139, 0.166);
+}
+
+.transaction_headers ul {
+    list-style-type: none;
+    display: flex;
+    padding-left: 0px;
+    text-align: center;
+    margin: 0px;
+    background-color: rgb(165, 191, 255);
+}
+
+.transaction_headers li {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid rgba(117, 138, 177, 0.381);
+    box-sizing: border-box;
+    width: 120px;
+    color: rgb(23, 27, 23);
+    margin: 0px;
+}
+
+.transaction_headers li:hover {
+    background-color: rgb(108, 121, 208);
+    color: white;
+    /* border-radius: 5px; */
+    border: 1px solid gray;
+    box-shadow: 1px 1px 5px 1px rgba(129, 247, 129, 0.644); 
+}
+
+.trans_click {
+    background-color: rgba(129, 247, 129, 0.644);
 }

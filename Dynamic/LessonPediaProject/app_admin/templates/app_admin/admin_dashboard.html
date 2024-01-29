@@ -1134,6 +1134,73 @@
                 
             </div>
         </div>
+
+        <!-- Transactions -->
+        <div class="transactions_admin">
+            <!-- <center><h4 style="color: white; font-size: larger; margin-top: 200px;">Active development in progress</h4></center> -->
+            <div class="admin_right">
+                <h4 class="hello_admin">
+                    Hello, <span class="admin_username">{{ request.user.username }}</span>
+
+                    <p class="logout"><a href="{% url 'app_admin_logout' %}">Logout</a></p>
+                </h4>
+                <br>
+
+                <br>
+                <div class="transaction_body">
+                    <div class="transaction_top">
+                        <h2 class="trans">Transactions</h2>
+                        <nav>
+                            <div class="transaction_headers">
+                                <ul >
+                                    <li class="trans_active trans_click">Active</li>
+                                    <li class="trans_concluded">Concluded</li>
+                                    <li class="trans_cancelled">Cancelled</li>
+                                    <li class="trans_history">History</li>
+                                    <li class="trans_more">etc</li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <div class="transaction_bottom">
+                        <div class="trans_active_body">
+                            <div class="all_data">
+                                <table class="client_reports_table_list client_reports">
+                                    <thead class="table_header_learner">
+                                        <tr>
+                                            <th class="transactions_id" data-column="0">Report ID</th>
+                                            <th class="transactions_client" data-column="1">Client</th>
+                                            <th class="transactions_tutor" data-column="2">Target Tutor ID</th>
+                                            <th class="transactions_subject" data-column="3">Subject</th>
+                                            <th class="transactions_message" data-column="4">Message</th>
+                                            <th class="transactions_created" data-column="5">Created_at</th>
+                                            <th class="transactions_resolve" data-column="6">Resolve Status</th>
+                                            <th class="transactions_date_resolved" data-column="7">Date Resolved</th>
+                                            <th class="transactions_view" data-column="8" style="border-bottom: 1px solid gray;" >View</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>  
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Pagination client reports -->
+                            <center>
+                                <div class="pagination" id="pagination">
+
+                                </div>
+                            </center>
+                        </div>
+                        <div class="trans_concluded_body"></div>
+                        <div class="trans_cancelled"></div>
+                        <div class="trans_history"></div>
+                        <div class="trans_more"></div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
     </div>
 </body>
 </html>

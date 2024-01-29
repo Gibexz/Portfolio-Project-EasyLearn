@@ -19,24 +19,35 @@ $(document).ready(function(){
         $(".activate_learners").hide()
         $(".tutor_report").hide()
         $(".client_report").hide()
+        $(".transactions_admin").hide()
     })
     $("#set_learner").click(function(){
         $(".activate_tutors").hide()
         $(".activate_learners").show()
         $(".tutor_report").hide()
         $(".client_report").hide()
+        $(".transactions_admin").hide()
     })
     $("#set_tutor_report").click(function(){
         $(".activate_tutors").hide()
         $(".activate_learners").hide()
         $(".tutor_report").show()
         $(".client_report").hide()
+        $(".transactions_admin").hide()
     })
     $("#set_client_report").click(function(){
         $(".activate_tutors").hide()
         $(".activate_learners").hide()
         $(".tutor_report").hide()
         $(".client_report").show()
+        $(".transactions_admin").hide()
+    })
+    $("#set_transactions").click(function(){
+        $(".activate_tutors").hide()
+        $(".activate_learners").hide()
+        $(".tutor_report").hide()
+        $(".client_report").hide()
+        $(".transactions_admin").show()
     })
     
 
