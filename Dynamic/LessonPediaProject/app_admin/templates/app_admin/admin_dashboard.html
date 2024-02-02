@@ -214,7 +214,7 @@
                     </div>
                     <div class="selections">
                         <div class="deleting">
-                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" below to delete</label>
+                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" in the box to delete</label>
                             <input type="text" id="confirm_delete_tutor" name="confirm_delete" autocomplete="off">
                         </div>
                         <div class="confirm_buttons">
@@ -245,7 +245,7 @@
                     </div>
                     <div class="selections">
                         <div class="deleting">
-                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" below to delete</label>
+                            <label for="confirm_delete" style="user-select: none;">Please type "CONFIRM DELETE" in the box to delete</label>
                             <input type="text" id="confirm_delete_client" name="confirm_delete" autocomplete="off">
                         </div>
                         <div class="confirm_buttons">
@@ -706,17 +706,21 @@
         <div class="leftpane">
             <div class="leftpane_content">
                 <h2 class="dashboard_header"><img src="{% static 'images/icons/dashboard.png' %}" width="20px" alt=""> &nbsp;Dashboard</h2><br>
-                <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
-                <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
-                <div class="dropdownReports">
-                    <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list"><span class="report_check fa-solid fa-envelope" style="display: none; color: red;"></span>&nbsp; &nbsp;  Reports</span></p>
-                    <ol class="dropdown-contentReports">
-                        <li class="" id="set_tutor_report" data-t_report_check="" ><span class="fa-solid fa-envelope t_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Tutor Reports</li>
-                        <li class="" id="set_client_report" data-c_report_check=""><span class="fa-solid fa-envelope c_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Client Reports</li>  
-                    </ol>
-                </div><br><br>
-                <p class="fa-solid fa-money-bill-transfer"><span class="dashboard_list" id="set_transactions">&nbsp; &nbsp; Transactions</span></p><br><br>
-                <p class="fa-solid fa-wrench fa-rotate-0"><span class="dashboard_list" id="set_settings">&nbsp; Settings</span></p>
+
+                <div class="leftpane_tabs">
+                    <p class="fa-solid fa-chalkboard-user"><span class="dashboard_list" id="set_tutor"> &nbsp; Tutor</span></p><br><br>
+                    <p class="fa-brands fa-leanpub"><span class="dashboard_list" id="set_learner">&nbsp; &nbsp; Learners</span></p><br><br>
+                    <div class="dropdownReports">
+                        <p class="fa-solid fa-file-import dropbtnReports"><span class="dashboard_list"><span class="report_check fa-solid fa-envelope" style="display: none; color: red;"></span>&nbsp; &nbsp;  Reports</span></p>
+                        <ol class="dropdown-contentReports">
+                            <li class="" id="set_tutor_report" data-t_report_check="" ><span class="fa-solid fa-envelope t_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Tutor Reports</li>
+                            <li class="" id="set_client_report" data-c_report_check=""><span class="fa-solid fa-envelope c_report_check" style="display: none; color: red;"></span>&nbsp; &nbsp; Client Reports</li>  
+                        </ol>
+                    </div><br><br>
+                    <p class="fa-solid fa-money-bill-transfer"><span class="dashboard_list" id="set_transactions">&nbsp; &nbsp; Transactions</span></p><br><br>
+                    <p class="fa-solid fa-wrench fa-rotate-0"><span class="dashboard_list" id="set_settings">&nbsp; Settings</span></p>
+                </div>
+
             </div>
             <div class="admin_basic_profile">
                 <img src="{% static 'images/tutors/pass.jpg' %}" alt="">
@@ -1152,9 +1156,11 @@
                         <h2 class="trans">Transactions</h2>
                         <nav>
                             <div class="transaction_headers">
-                                <ul >
-                                    <li class="trans_active trans_click">Active</li>
-                                    <li class="trans_concluded">Concluded</li>
+                                <ul id="transaction_tabs">
+                                    <li class="trans_client">Transactions</li>
+                                    <li class="trans_active trans_click_active">Active Contracts</li>
+                                    <li class="trans_settled">Settled</li>
+                                    <li class="trans_pending">Pending</li>
                                     <li class="trans_cancelled">Cancelled</li>
                                     <li class="trans_history">History</li>
                                     <li class="trans_more">etc</li>
@@ -1163,8 +1169,75 @@
                         </nav>
                     </div>
 
+
+
                     <div class="transaction_bottom">
+                        <div class="trans_client_body">
+                            <div class="trans_tables">
+                                <div class="transaction_styles">
+                                    <table class="">
+                                        <thead class="">
+                                            <tr>
+                                                <th class="transactions_id" data-column="0">ID</th>
+                                                <th class="transactions_refnumber" data-column="1">Reference Number</th>
+                                                <th class="transactions_id" data-column="2">Tnx_ID</th>
+                                                <th class="transactions_status" data-column="3">Tnx_Status</th>
+                                                <th class="transactions_amount" data-column="4">Tnx_Amount</th>
+                                                <th class="transactions_message" data-column="5">Tnx_Message</th>
+                                                <th class="transactions_time" data-column="6">Time</th>
+                                                <th class="transactions_client" data-column="7">Client</th>
+                                                <th class="transactions_tutor" data-column="8">Tutor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>  
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Pagination client reports -->
+                            <center>
+                                <div class="transaction_pagination" id="trasnaction_pagination">
+    
+                                </div>
+                            </center>
+                        </div>
                         <div class="trans_active_body">
+                            <div class="trans_tables">
+                                <div class="contracts transaction_styles">
+                                    <table class="">
+                                        <thead class="">
+                                            <tr>
+                                                <th class="contract_id" data-column="0">ID</th>
+                                                <th class="contract_client" data-column="1">Client</th>
+                                                <th class="contract_tutor" data-column="2">Tutor</th>
+                                                <th class="contract_payrate" data-column="3">Pay Rate</th>
+                                                <th class="contract_amount" data-column="4">Contract Amount</th>
+                                                <th class="contract_payment_made" data-column="5">Payment Made</th>
+                                                <th class="contract_payment_remaning" data-column="6">payment left</th>
+                                                <th class="contract_length" data-column="7">Contract Length</th>
+                                                <th class="contract_week_days" data-column="8">Week Days</th>
+                                                <th class="contract_start_date" data-column="9">Start Date</th>
+                                                <th class="contract_end_date" data-column="10">End Date</th>
+                                                <th class="contract_days_remaining" data-column="11">Days Left</th>
+                                                <th class="contract_status" data-column="12">Contract Status</th>
+                                                <th class="contract_remark" data-column="13">Remark</th>
+                                                <th class="contract_created_at" data-column="14">Created</th>
+                                                <th class="contract_updated_at" data-column="15">Updated</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>  
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Pagination client reports -->
+                            <center>
+                                <div class="pagination" id="pagination">
+
+                                </div>
+                            </center>
+                        </div>
+                        <div class="trans_settled_body">
                             <div class="all_data">
                                 <table class="client_reports_table_list client_reports">
                                     <thead class="table_header_learner">
@@ -1191,10 +1264,18 @@
                                 </div>
                             </center>
                         </div>
-                        <div class="trans_concluded_body"></div>
-                        <div class="trans_cancelled"></div>
-                        <div class="trans_history"></div>
-                        <div class="trans_more"></div>
+                        <div class="trans_pending_body">
+                            <p>Under development1</p>
+                        </div>
+                        <div class="trans_cancelled_body">
+                            <p>Under development2</p>
+                        </div>
+                        <div class="trans_history_body">
+                            <p>Under development3</p>
+                        </div>
+                        <div class="trans_more_body">
+                            <p>Under development4</p>
+                        </div>
                     </div>
                     
                 </div>

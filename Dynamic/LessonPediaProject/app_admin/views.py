@@ -7,10 +7,10 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse, Http404
 from django.utils import timezone
 from .models import AppAdmin
-from client.models import Client
+from client.models import Client, Transaction
 from tutor.models import Tutor
 from .backends import AppAdminAuthBackend
-from .serializers import ClientSerializer, TutorSerializer
+from .serializers import ClientSerializer, TutorSerializer, TransactionSerializer, ContractSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -19,7 +19,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 import hashlib
 import uuid
-from generic_apps.models import ClientReportAbuse, TutorReportAbuse
+from generic_apps.models import ClientReportAbuse, TutorReportAbuse, Contract
 from generic_apps.serializers import ClientReportAbuseSerializer, TutorReportAbuseSerializer
 from django.core.mail import send_mail
 
@@ -602,3 +602,85 @@ class AppAdminClientReportViewSet(ModelViewSet):
                 return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'message': 'Error sending email', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AppAdminClientTransactionViewSet(ModelViewSet):
+    """AppAdmin Client Transaction viewset for related api logics"""
+
+    permission_classes = [IsAuthenticated]
+
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+    @action(detail=False, methods=['get'])
+    def get_all_transactions(self, request):
+        """Get all transactions"""
+        try:
+            all_transactions = Transaction.objects.all().order_by('-id')
+            serializer = TransactionSerializer(all_transactions, many=True)
+
+            return Response({'all_transactions': serializer.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': 'Error getting all transactions', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+class AppAdminContractsViewSet(ModelViewSet):
+    """AppAdmin Contracts viewset for related api logics"""
+
+    permission_classes = [IsAuthenticated]
+
+    # queryset = Contract.objects.all()   
+    serializer_class = ContractSerializer
+
+    def get_queryset(self):
+        return Contract.objects.all()
+
+    @action(detail=False, methods=['get'])
+    def get_active_contracts(self, request):
+        """get active contracts"""
+        try:
+            active_contracts = Contract.objects.filter(contract_status='Active').all()
+            serializer = ContractSerializer(active_contracts, many=True)
+
+            return Response({'active_contracts': serializer.data}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response({'message': 'Error getting active contracts', 'error': str(e), 'status': status.HTTP_400_BAD_REQUEST})
+        
+    
+    @action(detail=False, methods=['get'])
+    def get_pending_contracts(self, request):
+        """get pending contracts"""
+        try:
+            pending_contracts = Contract.objects.filter(contract_status='Pending').all()
+            serializer = ContractSerializer(pending_contracts, many=True)
+
+            return Response({'pending_contracts': serializer.data}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response({'message': 'Error getting pending contracts', 'error': str(e), 'status': status.HTTP_400_BAD_REQUEST})
+    
+
+    @action(detail=False, methods=['get'])
+    def get_settled_contracts(self, request):
+        """get settled contracts"""
+        try:
+            settled_contracts = Contract.objects.filter(contract_status='Settled').all()
+            serializer = ContractSerializer(settled_contracts, many=True)
+
+            return Response({'settled_contracts': serializer.data}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response({'message': 'Error getting settled contracts', 'error': str(e), 'status': status.HTTP_400_BAD_REQUEST})
+
+
+    @action(detail=False, methods=['get'])
+    def get_cancelled_contracts(self, request):
+        """get cancelled contracts"""
+        try:
+            cancelled_contracts = Contract.objects.filter(contract_status='Terminated').all()
+            serializer = ContractSerializer(cancelled_contracts, many=True)
+
+            return Response({'cancelled_contracts': serializer.data}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response({'message': 'Error getting cancelled contracts', 'error': str(e), 'status': status.HTTP_400_BAD_REQUEST})

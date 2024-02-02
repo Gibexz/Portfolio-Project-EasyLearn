@@ -56,10 +56,23 @@ body{
 .leftpane{
     background-color: white;
     width: 20%;
+    min-width: 200px;
     height: 100vh;
     margin-right: 70px;
     font-family: 'Rowdies', sans-serif;
-    color: darkblue
+    color: darkblue;
+}
+
+.leftpane_tabs{
+    /* border: 1px solid black; */
+    background-color: white;
+    min-width: 150px;
+    padding-left: 10px;
+    border-radius: 0px 6px 6px 0px;
+    box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.75), /* Top shadow */
+                5px 0 5px -5px rgba(0, 0, 0, 0.75),  /* Right shadow */
+                /* -5px 0 5px -5px rgba(0, 0, 0, 0.75), Left shadow */
+                0 5px 5px -5px rgba(0, 0, 0, 0.75); /* bottom shadow */
 }
 
 .leftpane .dashboard_header{
@@ -107,8 +120,8 @@ body{
     display: flex;
     width: 1000px;
     height: 100px;
-    box-shadow: 2px 2px 5px 2px rgb(251, 252, 237);
-    background-color: whitesmoke;
+    box-shadow: 2px 2px 5px 2px rgba(63, 63, 63, 0.522);
+    background-color: rgb(255, 255, 255);
     border-radius: 20px;
     margin-top: 30px;
 }
@@ -205,6 +218,7 @@ body{
     background-color: white;
     border-radius: 20px;
     overflow-x: hidden;
+    box-shadow: 2px 2px 5px 2px rgba(63, 63, 63, 0.522);
 }
 
 .tutors_list .allTutors{ /* used for all tables */
@@ -380,7 +394,7 @@ table {
     background-color: whitesmoke;
     margin: auto;
     border-radius: 20px;
-    box-shadow: 1px 1px 12px 1px white;
+    box-shadow: 1px 1px 12px 1px rgb(53, 53, 59);
     padding: 10px 20px 10px 20px;
     border-bottom: 2px solid rgba(239, 2, 2, 0.433);
 
@@ -464,7 +478,7 @@ table {
     width: 220px;
     height: 65vh;
     border-radius: 12px;
-    box-shadow: 1px 1px 12px 1px rgb(232, 235, 197);
+    box-shadow: 1px 1px 5px 1px rgba(27, 32, 51, 0.36);
 }
 
 .action_head{
@@ -513,7 +527,7 @@ table {
 .view_container{
     margin-left: 20px;
     width: 85%;
-    background: linear-gradient(450deg, white, whitesmoke);
+    background: linear-gradient(450deg, white, #1a1a4e18);
     box-shadow: none;
 }
 
@@ -540,10 +554,11 @@ table {
     margin: auto;
     height: 53vh;
     width: 85%;
-    box-shadow: 1px 1px 5px 1px rgba(222, 222, 211, 0.624);
+    box-shadow: 1px 1px 5px 1px rgba(27, 32, 51, 0.36);
     font-family: 'DM Sans', sans-serif;
     overflow-y: auto;
     padding-bottom: 10px;
+    z-index: 3;
 }
 
 .profile_view .set_report_details {
@@ -692,7 +707,7 @@ table {
     border: 1px solid rgba(0, 0, 0, 0.215);
     margin: auto;
     border-radius: 20px;
-    box-shadow: 1px 1px 5px 1px white;
+    box-shadow: 1px 1px 5px 1px rgb(38, 36, 51);
     padding: 0px 20px 20px 20px;
 }
 
@@ -704,7 +719,7 @@ table {
     border: 1px solid rgba(0, 0, 0, 0.215);
     margin: auto;
     border-radius: 20px;
-    box-shadow: 1px 1px 5px 1px white;
+    box-shadow: 1px 1px 5px 1px rgb(39, 42, 56);
     padding: 0px 20px 20px 20px;
 }
 
@@ -925,6 +940,7 @@ table {
     margin-top: 5px;
     border-radius: 5px;
     width: 50%;
+    box-shadow: 2px 2px 5px 2px rgba(63, 63, 63, 0.522);
 }
 
 /* #pagination a {
@@ -1069,15 +1085,16 @@ table {
 }
 
 
-/* Transactions */
+/* Transactions ======================================================================= */
 .transaction_body{
     margin-top: 0px;
     width: 1100px;
     height: 600px;
-    background-color: rgb(125, 120, 120);
+    background-color: rgba(251, 251, 251, 0.415);
     border-radius: 2px;
     overflow-x: hidden;
     overflow-y: hidden;
+    box-shadow: 2px 2px 5px 2px rgba(63, 63, 63, 0.522);
 }
 
 .transaction_top{
@@ -1112,7 +1129,7 @@ table {
     cursor: pointer;
     border: 1px solid rgba(117, 138, 177, 0.381);
     box-sizing: border-box;
-    width: 120px;
+    min-width: 120px;
     color: rgb(23, 27, 23);
     margin: 0px;
 }
@@ -1125,6 +1142,49 @@ table {
     box-shadow: 1px 1px 5px 1px rgba(129, 247, 129, 0.644); 
 }
 
-.trans_click {
+.trans_click_active {
     background-color: rgba(129, 247, 129, 0.644);
+}
+
+.trans_settled_body, .trans_pending_body, .trans_cancelled_body, .trans_history_body,
+.trans_more_body, .trans_client_body {
+    display: none;
+}
+
+.transaction_styles{
+    width: 100%;
+    height: 470px;
+    background-color: rgba(240, 248, 255, 0.611);
+    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.75); /* bottom shadow */
+}
+
+.trans_tables table{
+    border-bottom: 1px solid gray;
+    border-collapse: collapse;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* max-width: 1050px; */
+    min-width: 1050px;
+    margin: auto auto;
+}
+
+
+.trans_tables td, .trans_tables th{
+    border-bottom: 1px solid gray;
+    padding: 20px 15px 15px 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+.trans_tables thead th{
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    font-size: small;
+    padding: 2px 10px, 2px 10px;
+    cursor: pointer;
+}
+
+.contracts {
+    overflow-y: auto;
+    overflow-x: auto;
 }

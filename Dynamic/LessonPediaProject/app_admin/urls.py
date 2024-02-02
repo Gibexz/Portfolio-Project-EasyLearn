@@ -9,6 +9,8 @@ router.register(r'clients_action_api', views.ClientViewSet, basename='clients_ac
 appAdminRouter = DefaultRouter()
 appAdminRouter.register(r'appadmin_tutors_reports_api', views.AppAdminTutorsReportViewSet, basename='appadmin_tutors_reports_action')
 appAdminRouter.register(r'appadmin_clients_reports_api', views.AppAdminClientReportViewSet, basename='appadmin_clients_reports_action')
+appAdminRouter.register(r'appadmin_client_transactions_api', views.AppAdminClientTransactionViewSet, basename='appadmin_client_transactions_action')
+appAdminRouter.register(r'appadmin_contract_api', views.AppAdminContractsViewSet, basename='appadmin_contract_action')
 
 
 urlpatterns = [
@@ -36,5 +38,5 @@ urlpatterns = [
     path("api/get_clients_data/", views.get_clients_data, name="get_clients_data"),
     path("api/get_client_count/", views.get_client_count, name="get_client_count"),
     path("api/get_nos_active_clients/", views.get_nos_active_clients, name="get_nos_active_clients"),
-    path("api/get_nos_inactive_clients/", views.get_nos_inactive_clients, name="get_nos_inactive_clients"),    
+    path("api/get_nos_inactive_clients/", views.get_nos_inactive_clients, name="get_nos_inactive_clients"),
 ]

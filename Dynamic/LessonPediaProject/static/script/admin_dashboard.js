@@ -1424,8 +1424,8 @@ $(document).ready(function() {
         
         let tCheck = $('#set_tutor_report').attr('data-t_report_check');
         let cCheck = $('#set_client_report').attr('data-c_report_check');
-        console.log(tCheck);
-        console.log(cCheck);
+        // console.log(tCheck);
+        // console.log(cCheck);
         if (tCheck == true || tCheck == 'True' || cCheck == true || cCheck == 'True') {
             $('.report_check').css('display', 'inline-block');
         } else {
@@ -1438,7 +1438,7 @@ $(document).ready(function() {
     // resolve client report status by admin ==========================================================
     $('.client_reports tbody').on('click', '.c_resolve_client', function() {
         const api_url = 'http://127.0.0.1:8000/appAdmin'
-        console.log("clicked");
+        // console.log("clicked");
 
         let reportID = $(this).closest('tr').find('td').eq(0).text(); // Get the report ID for the first colum of the row
         // console.log(reportID);
@@ -1675,7 +1675,124 @@ $(document).ready(function() {
     });
 });
 
+
+
+// Transactions (All things related to transactions) ============================================
+
+// Transaction tabs logic (for transactions, active, settled, cancelled, history, more) ============================================
 $(document).ready(function() {
 
+    const api_url = 'http://127.0.0.1:8000/appAdmin';
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+    // transactions tab logic
+    $('#transaction_tabs li[class^="trans_"]').click(function() {
+        if (!$(this).hasClass('trans_click_active')) {
+            // Remove trans_click_active from all and add it to the clicked one
+            $('#transaction_tabs li[class^="trans_"]').removeClass('trans_click_active');
+            $(this).addClass('trans_click_active');
+
+            // Hide all content divs
+            $('.trans_client_body, .trans_active_body, .trans_settled_body, .trans_pending_body, .trans_cancelled_body, .trans_history_body, .trans_more_body').hide();
+            
+            // Show the corresponding content div based on the clicked li's class
+            if ($(this).hasClass('trans_client')) {
+                $('.trans_client_body').show();
+              } else if ($(this).hasClass('trans_active')) {
+                $('.trans_active_body').show();
+              } else if ($(this).hasClass('trans_settled')) {
+                $('.trans_settled_body').show();
+              } else if ($(this).hasClass('trans_pending')) {
+                $('.trans_pending_body').show();
+              } else if ($(this).hasClass('trans_cancelled')) {
+                $('.trans_cancelled_body').show();
+              } else if ($(this).hasClass('trans_history')) {
+                $('.trans_history_body').show();
+              } else if ($(this).hasClass('trans_more')) {
+                $('.trans_more_body').show();
+              }
+        }
+    });
+
+    //populate the transaction tab table
+    function  populateClientTransaction() {
+        const url = `${api_url}/api/appadmin_client_transactions_api/get_all_transactions/`
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                const transactions = response.all_transactions;
+                // console.log(transactions);
+                
+                $('.trans_client_body tbody').empty(); //clear existing table data
+
+                //populate table with data (update or refreshed)
+                transactions.forEach(function(transaction) {
+                    const tableRow = $(`
+                        <tr>
+                            <td>${transaction.id}</td>
+                            <td>${transaction.referenceNumber}</td>
+                            <td>${transaction.tnx_id}</td>
+                            <td>${transaction.tnx_status}</td>
+                            <td>${transaction.tnx_amount}</td>
+                            <td>${transaction.tnx_message}</td>
+                            <td>${new Date(transaction.time).toLocaleString()}</td>
+                            <td class="clientTransCell" data-transClient_id="${transaction.client}">${transaction.client}</td>
+                            <td class="tutorTransCell" data-transTutor_id="${transaction.tutor}">${transaction.tutor}</td>
+                        </tr>
+                    `)
+                    $('.trans_client_body tbody').append(tableRow);
+
+                    transClientdata(transaction.client);
+                    transTutordata(transaction.tutor);
+               });
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching transactions: ' + errorThrown.message);
+            },
+        });
+    }
+
+    // ajax function to replace clients id in transaction table with username and id
+    function transClientdata(clientID) {
+        const url = `${api_url}/api/clients_action_api/${clientID}/`
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                // console.log(response);
+                const clientIdentity = `${response.username}  id: ${response.id}`;
+                // console.log(clientIdentity);
+                $(`.clientTransCell[data-transClient_id="${clientID}"]`).text(clientIdentity);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching client data: ' + errorThrown.message);
+            }
+        });
+    }
+
+    // ajax function to replace tutors id in transaction table with username and id
+    function transTutordata(tutorID) {
+        const url = `${api_url}/api/tutors_action_api/${tutorID}/`
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                // console.log(response);
+                const tutorIdentity = `${response.username}  id: ${response.id}`;
+                // console.log(tutorIdentity);
+                $(`.tutorTransCell[data-transTutor_id="${tutorID}"]`).text(tutorIdentity);
+
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching tutor data: ' + errorThrown.message);
+            }
+        });
+    }
+
+
+    populateClientTransaction();
 });
