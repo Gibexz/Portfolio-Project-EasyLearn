@@ -15,18 +15,6 @@
     <title>Tutor's - Profile</title>
 </head>
 <body>
-    <div class="flash-container">
-        {% if messages %}
-            {% for message in messages %}
-                {% if forloop.last %}
-                <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
-                    <p style="font-weight: bold;">{{ message }}</p>
-                    <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
-                </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    </div>
     <!-- display cert -->
     <div class="set_cert_display">
         <div class="cert_display">
@@ -34,7 +22,7 @@
                 <div class="cert_inn">
                     <p class="close_cert" title="Close">x</p>
                     <img src="#" alt="" width="100%" height="100%" id="preview_cert">
-                </div>            
+                </div>
             </div>
         </div>
     </div>
@@ -46,7 +34,7 @@
                 <div class="cv_inn">
                     <p class="close_cv" title="Close">x</p>
                     <embed id="pdfViewer" width="1000px" height="600px"/>
-                </div>            
+                </div>
             </div>
         </div>
     </div>
@@ -66,24 +54,16 @@
                     Information provided on this page is encrypted and protected under the rule of law
                 </p>
             </section>
-            
+
         </div>
         <div class="profile_regPage_content">
             <img src="{{ tutor.profile_picture.url}}" class="image_preview" alt="" id="profile_picture_review">
             <h2 class="profile_header"><center>Profile Registration</center></h2>
             <form action="{% url 'tutor_profile' %}" method="post" enctype="multipart/form-data">
-              {% csrf_token %}              
-              {{ form.errors }}
+              {% csrf_token %}
               {% if form.errors %}
                     <div class="error-message">
-                        <p>There were errors in your form:</p>
-                        <ul>
-                            {% for field, error_list in form.errors.items %}
-                                {% for error in error_list %}
-                                    <li>{{ field }}: {{ error }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                        </ul>
+                        {{ form.errors}}
                     </div>
                 {% endif %}
                     <fieldset class="profile_form"><legend> Bio - Data </legend>
@@ -111,12 +91,15 @@
                           <label class="gender_label" for="gender">Gender</label><label class="dob_label" for="dob">Date of Birth</label>
                         </div>
                             {{ form.gender }}
-                            {{ form.date_of_birth }} 
+                            <input type="date" required name="dob" id="dob">
+                            {{ form.date_of_birth }}
                         </fieldset><br>
-                        
+
                         <fieldset class="profile_form"><legend> Academic/Employment Details </legend>
-                            <label for="institution_type">Institution Type:</label>
-                            {{ form.institution_type }}
+                            <div class="subject_form_group">
+                                <label for="institution_type">Institution Type:</label>
+                                {{ form.institution_type }}
+                            </div>
                             <br>
                             <label for="institution">Institution Name</label>
                             {{ form.institution }}
@@ -133,7 +116,7 @@
                             <br>
                             <label for="empStat">Employment Status </label><label for="employmentStat" id="position_stat">if employed, select option below</label>
                             {{ form.employment_status }}
-                            {{ form.employment_type }}         
+                            {{ form.employment_type }}
                         </fieldset><br>
 
                     <fieldset class="profile_form"><legend> Subject Information </legend>
@@ -174,12 +157,16 @@
                             <label for="price">Enter price per hour:</label>
                             <input type="number" id="price" name="price_per_hour" min="500" required>
                         </div>
+                        <div class="subject_form_group">
+                            <label for="open_to_work">Open to Work:</label>
+                            {{ form.open_to_work }}
+                        </div>
                     </fieldset>
 
                     <fieldset class="profile_form"><legend> Uploads </legend>
                         <label for="pic">Upload profile picture [only .jpg, .jpeg or .png]</label>
-                        <a class="dp_a"> {{ form.profile_picture }} </a><br><br> 
-                                
+                        <a class="dp_a"> {{ form.profile_picture }} </a><br><br>
+
                         <label for="cv">Upload CV or Resume [only .pdf]</label>
                         <p class="preview shiftmore" id="view_cv">Preview</p>
                         <img class="cv_preview" src="#" alt="" width="100%" height="100%" id="preview_cert">

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import ClientRegisterForm, TutorRegisterForm, AppAdminRegisterForm
 from app_admin.models import AppAdmin
@@ -17,12 +17,23 @@ from django.contrib.auth.decorators import login_required
 tutors = Tutor.objects.all()
 reviews = Review.objects.all()
 
+def delete_user(request, user_id):
+    user = None
+    user = get_object_or_404(Tutor, id=user_id)
+    if not user:
+        user =  get_object_or_404(Client, id=user_id)
+    # Perform deletion logic here
+    if user:
+        user.delete()
+    # Redirect to a success page or any other desired URL
+    return redirect('landing_page')
+
 def reviews(request):
     """Reviews"""
     active_user = request.user
     if isinstance(active_user, AnonymousUser):
         return render(request, "generic_apps/reviews.html", {'tutors':tutors, 'reviews':reviews})
-    
+
     else:
         model_name = active_user._meta.model_name
         if isinstance(request.user, Tutor):
@@ -31,13 +42,25 @@ def reviews(request):
             return render(request, "generic_apps/login_reviews.html", {"activeUser":request.user, 'model': model_name, 'tutors':tutors, 'reviews':reviews})
     return render(request, "generic_apps/reviews.html")
 
+def privacy(request):
+    """privacy"""
+    return render(request, "generic_apps/privacy.html")
+
+def terms(request):
+    """terms"""
+    return render(request, "generic_apps/terms.html")
+
+def fun_test(request):
+    """Fun Questions"""
+    return render(request, "generic_apps/fun_test.html")
+
 def landing_page(request):
     """Landing page"""
     active_user = request.user
     if isinstance(active_user, AnonymousUser):
         print(active_user)
         return render(request, "generic_apps/landingpage.html", {'tutors':tutors, 'reviews':reviews})
-    
+
     else:
         model_name = active_user._meta.model_name
         if isinstance(request.user, Tutor):
@@ -50,7 +73,7 @@ def landing_page(request):
 def client_sign_up(request):
     """sign_up for client"""
     if request.method == 'POST':
-       form = ClientRegisterForm(request.POST) 
+       form = ClientRegisterForm(request.POST)
        if form.is_valid():
            form.save()
            messages.success(request, 'Registration Successful! Please Login')
@@ -72,28 +95,31 @@ def client_sign_up(request):
         form = ClientRegisterForm()
         context = {'form': form}
         return render(request, 'generic_apps/client_sign_up.html', context=context)
-    
+
 
 def tutor_sign_up(request):
     """sign_up for tutors"""
     if request.method == 'POST':
-       form = TutorRegisterForm(request.POST) 
+       form = TutorRegisterForm(request.POST)
        if form.is_valid():
            form.save()
            messages.success(request, 'Registration Successful! Please Login')
            return redirect('tutor_login')
+       if form.errors:
+                # Access and display first error for each field
+           for field, errors in form.errors.items():
+               messages.error(request, f"{field.title()}: {errors[0]}")
+               return render(request, 'generic_apps/tutor_sign_up.html')
        else:
-            messages.error(request, 'Please correct the error below.')
-            form = TutorRegisterForm()
-            context = {'form': form}
-            return render(request, 'generic_apps/tutor_sign_up.html', context=context)
-
+        # Handle non-field errors if any
+            for error in form.non_field_errors:
+                messages.error(request, error)
+                context = {'form': form}
+                return render(request, 'generic_apps/tutor_sign_up.html', context=context)
     else:
             form = TutorRegisterForm()
             context = {'form': form}
             return render(request, 'generic_apps/tutor_sign_up.html', context=context)
-
-
 def app_admin_sign_up(request):
     """sign_up for admin"""
     if request.method == 'POST':
@@ -102,7 +128,7 @@ def app_admin_sign_up(request):
             form.save()
             messages.success(request, 'Registration Successful! Please Login')
             return redirect('app_admin_sign_up')
-        
+
         else:
             messages.error(request, 'Please correct the error below.')
             form = AppAdminRegisterForm()
@@ -120,15 +146,15 @@ def get_tutors_reports(request):
     """ get tutor reports data api using django rest framwork"""
     if request.method == 'GET':
         tutors_reports = TutorReportAbuse.objects.all().order_by('-created_at')
-        
+
         tutors_reports_serialized = TutorReportAbuseSerializer(tutors_reports, many=True)
-        
+
         return Response({
             'tutors_reports': tutors_reports_serialized.data  # Serialized tutor data
         }, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
+
 # Clients report abuse logics for appAdmin
 @api_view(['GET'])
 @login_required(login_url='app_admin_sign_up')
@@ -136,9 +162,9 @@ def get_clients_reports(request):
     """ get client reports data api using django rest framwork"""
     if request.method == 'GET':
         clients_reports = ClientReportAbuse.objects.all().order_by('-created_at')
-        
+
         clients_reports_serialized = ClientReportAbuseSerializer(clients_reports, many=True)
-        
+
         return Response({
             'clients_reports': clients_reports_serialized.data  # Serialized tutor data
         }, status=status.HTTP_200_OK)

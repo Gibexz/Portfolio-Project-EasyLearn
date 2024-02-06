@@ -27,4 +27,8 @@ urlpatterns = [
     path('updateContractStatus/<contract_code>/', views.update_contract_status, name='update_contract_status'),
     path('terminate_contract', views.terminate_contract, name='terminate_contract'),
     path('reportAbuse/', views.report_abuse, name='report_abuse'),
+    # path('funTest/', views.fun_test, name='fun_test'),
+    path('forgotPassword/', views.forgot_password, name='tutor_forgot_password'),
+    path('ResetToken/', views.confirm_password_reset_token, name='tutor_reset_token'),
+    path('resetPassword/', views.reset_password, name='tutor_reset_password'),
 ]

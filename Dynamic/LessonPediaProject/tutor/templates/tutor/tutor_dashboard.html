@@ -18,11 +18,11 @@
 
 {% endblock head %}
 
-{% block signup_button %}     
+{% block signup_button %}
 <section class="signup_button">
     <div class='signUp_btn' ><a id="logout_btn_top" href="{% url 'tutor_logout' %}">Logout</a></div>
-</section>  
-{% endblock signup_button %} 
+</section>
+{% endblock signup_button %}
 {% block content %}
 <body class="background">
     <div class="flash-container">
@@ -52,25 +52,25 @@
                     <!-- Button to trigger password input -->
                     <button class="confirm_remove">Confirm</button>
                     <button class="mistake cancel_suspend" onclick="cancelSuspension()">Cancel</button>
-                    
+
                     <!-- Password input initially hidden -->
                     <div id="passwordInputContainer" style="display: none;">
                         <form method="post" action="{% url 'suspend_tutor' request.user.id %}">
                             {% csrf_token %}
-                            
+
                             <!-- Password field for confirmation -->
                             <div class="confirmSuspend">
                               <b><label for="password">Confirm Password:</label></b><br>
                                 <input type="password" name="password" required>
                             </div>
-                            
+
                             <!-- Actual submit button -->
                             <div class="styleButtons">
                                 <button type="submit" class="suspend_button confirm_remove">Suspend Account</button>
                                 <button type="button" class="mistake" onclick="cancelSuspension()">Cancel</button>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
         <div class="report_btn_account">
             <div class="report_display">
                 <div>
-                    <center><h4 class="report_title">Please note, all reports would be reviewed<br> 
+                    <center><h4 class="report_title">Please note, all reports would be reviewed<br>
                         Take a look at related contract policies <a href="#">here</a></h4></center>
                     <form action="{% url 'report_abuse' %}" method="post" id="report_form">
                         {% csrf_token %}
@@ -145,7 +145,7 @@
         <div class="contract_btn_account">
             <div class="report_display">
                 <div>
-                    <center><h4 class="report_title">Please note that terminating a contract cannot be undone<br> 
+                    <center><h4 class="report_title">Please note that terminating a contract cannot be undone<br>
                     Take a look at related contract policies <a href="#">here</a></h4></center>
                     <form action="{% url 'terminate_contract'%}" id="report_form" method="post">
                         {% csrf_token %}
@@ -164,7 +164,7 @@
                             <option value="achievementOfGoals">Achievement of Goals</option>
                             <option value="communicationBreakdown">Communication Breakdown</option>
                             <option value="unexpectedCircumstances">Unexpected Circumstances</option>
-                        </select> 
+                        </select>
                         <textarea name="statement" placeholder="You can write here"></textarea>
                         <div class="report_buttons">
                             <button type="button" class="cancel_btn cancel_report">Cancel</button>
@@ -180,10 +180,10 @@
     <div class="review_link_popup_activation">
         <div class="reviews_window">
             <div class="review_display">
-                <div> 
+                <div>
                     <h3 class="close_review" style="margin-bottom: 0px;"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</h3>
                     <center><h3 style="margin-top: 0px; border-bottom: 2px solid blue;">MY REVIEWS</h3></center>
-                    
+
                     <div class="review_table">
                         <table id="reviewTable">
                             <thead>
@@ -203,7 +203,7 @@
                                         {% for rank in review.client.rankings.all%}
                                             {% if rank.tutor.id == tutor.id %}
                                                 <td>{{ rank.rank_number }}</td>
-                                             {% endif %}                                        
+                                             {% endif %}
                                         {% endfor %}
                                         <td>{{ review.review_subject }}</td>
                                         <td>{{ review.created_at|date:"d-m-y" }}</td>
@@ -214,7 +214,7 @@
                             </tbody>
                         </table>
                     </div>
-                
+
                 </div>
             </div>
         </div>
@@ -224,10 +224,10 @@
     <div class="reports_view_popup_activation">
         <div class="reports_window">
 
-            <div class="report_display"> 
+            <div class="report_display">
                 <h3 class="close_review" style="margin-bottom: 0px;"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</h3>
                 <center><h3 style="margin-top: 0px; border-bottom: 2px solid blue;"> MY SENT REPORTS</h3></center>
-                
+
                 <div class="review_table">
                     <table id="reportTable">
                         <thead>
@@ -253,9 +253,9 @@
                         </tbody>
                     </table>
                 </div>
-            
+
             </div>
-                
+
         </div>
         </div>
     </div>
@@ -263,10 +263,10 @@
     <div class="pending_clients_activation">
         <div class="pending_clients_window">
 
-            <div class="pending_clients_display"> 
+            <div class="pending_clients_display">
                 <h3 class="close_pending_clients" style="margin-bottom: 0px;"><span><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</span></h3>
                 <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Pending Clients </h4></center>
-                
+
                 <div class="pending_clients_table">
                     <table id="pendingClientTable">
                         <thead>
@@ -304,10 +304,10 @@
                         </tbody>
                     </table>
                 </div>
-                
-            
+
+
             </div>
-                
+
         </div>
         </div>
     </div>
@@ -316,10 +316,10 @@
     <div class="settled_clients_activation">
         <div class="settled_clients_window">
 
-            <div class="settled_clients_display"> 
+            <div class="settled_clients_display">
                 <h3 class="close_settled_clients" style="margin-bottom: 0px;"><span style="color: red"><i class="fa-solid fa-backward"></i>&nbsp;Back to dashboard</span></h3>
                 <center><h4 style="margin-top: 0px; border-bottom: 2px solid black;"> Settled Clients </h4></center>
-                
+
                 <div class="settled_clients_table">
                     <table id="settledClientTable">
                         <thead>
@@ -346,16 +346,25 @@
                                         </tr>
                                 {% endfor %}
                         </tbody>
-                        
+
                     </table>
                 </div>
-            
+
             </div>
-                
+
         </div>
         </div>
     </div>
     {% comment %} Modals {% endcomment %}
+    <div id="loadingMessage" style="display: none;">
+        <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="done" class="modal">
+        <h2 style="color: #4CAF50">Success!</h2>
+        <p>Upload successful. Refresh to see changes</p>
+        <button id="closeDone" style="background: red">Cancel</button>
+        <button class="closeSuccessModal">Refresh</button>
+    </div>
     <!-- Modal for successful update -->
     <div id="successModal" class="modal">
         <h3 style="text-decoration: none;">Update Successful!</h3>
@@ -408,7 +417,7 @@
                 </center>
             </div>
 
-            <div class="mid_section"> 
+            <div class="mid_section">
                 <div>
                     <!-- wellcome greeting -->
                     <section class="greeting">
@@ -472,7 +481,7 @@
                                                 <td class="cancel_contract_btn"><button>cancel</button></td>
                                             </tr>
                                             {% endfor %}
-                                            {% else %} 
+                                            {% else %}
                                             <tr>
                                                 <td colspan="9" style="text-align: center; color: darkblue; font-family: 'dosis';"><h3>No Active Contracts</h3></td>
                                             </tr>
@@ -494,7 +503,7 @@
                         <section class="myclient">
                             <div>
                             <div class="client_list_n_search">
-                                    
+
                                     <h3>Client History</h3>
 
                                     <div class="sort_tables">
@@ -539,8 +548,8 @@
                                                     <td class="report_btn">
                                                         {% if contract.contract_status == 'Terminated'%}<i class="fa fa-circle" style="color: red;" aria-hidden="true"></i>{% elif  contract.contract_status == 'Active'%} <i class="fa fa-circle" style="color:  rgb(84, 215, 197);" aria-hidden="true"></i>{%else%}<i class="fa fa-circle" style="color: lime;" aria-hidden="true"></i>{% endif %}&nbsp;<button>report</button></td>
                                                 </tr>
-                                            {% endfor %}                                    
-                                                {% else %} 
+                                            {% endfor %}
+                                                {% else %}
                                                 <tr>
                                                     <td colspan="9" style="text-align: center; color: darkblue; font-family: 'dosis';"><h3>No Contracts History</h3></td>
                                                 </tr>
@@ -576,7 +585,7 @@
                                             </table>
                                         </nav>
                                     </div>
-                
+
                                     <!-- subjects list display -->
                                     <div class="subject_view_display">
                                         <div class="subject_list">
@@ -606,7 +615,7 @@
                                             </table>
                                         </div>
                                     </div>
-                
+
                                     <!-- subject Addition -->
                                     <div class="subject_add_display">
                                         <div class="subject_add_container" >
@@ -668,7 +677,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- update selected subjects -->
                                     <div class="subject_update_display">
                                         <div class="subjet_update_box subject_add_container" >
@@ -764,7 +773,7 @@
                                                                     </select>
                                                                 </div>
                                                                 <center><button type="submit" class="subject_save_btn save_button">Remove Subject</button></center>
-                                                            </form>                                                            
+                                                            </form>
                                                     </div>
                                                     <div id="successModal2" class="modal2">
                                                         <h3 style="text-decoration: none;">Deleted!</h3>
@@ -869,7 +878,7 @@
                             <div class="profile_control_display">
                                 <div class="profileUpdate">
                                     <div class="profile_update_content">
-                            
+
                                         <!-- <h3><span>Hi,</span> UserName</h3> -->
                                         <!-- Update Schedule Section -->
                                         <form action="{% url 'more_update'%}" method="post" class="form-table updateMore">
@@ -884,7 +893,7 @@
                                                     <input type="text" id="lga_resident" name="lga_resident" required value="{% if tutor.lga_resident %}{{ tutor.lga_resident }}{% endif %}" placeholder="LGA of Residence">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="flex_row">
                                                 <div class="flex_in">
                                                     <label for="residential_address">Residential Address:</label>
@@ -895,7 +904,7 @@
                                                     <input type="text" name="state_of_origin" value="{% if tutor.state_of_origin %}{{ tutor.state_of_origin }}{% endif %}" placeholder="Enter State">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="flex_row">
                                                 <div class="flex_in">
                                                     <label for="stateOfResidence">State of Residence:</label>
@@ -906,7 +915,7 @@
                                                     <input type="text" id="primary_subject" required name="primary_subject" value="{% if tutor.primary_subject %}{{ tutor.primary_subject }}{% endif %}" placeholder="Enter Core Subject">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="flex_row">
                                                 <div class="flex_in">
                                                     <label for="highest_qualification"> Highest Qualification</label>
@@ -970,22 +979,22 @@
                                                 </div>
                                             </div>
                                             <div class="flex_row bio">
-                                                <label for="bio">Profile Statement</label> 
+                                                <label for="bio">Profile Statement</label>
                                             </div>
                                             <div class="flex_row bio">
                                                 <textarea name="bio" required placeholder="Profile Statement" id="text_area">{% if tutor.bio %} {{ tutor.bio }} {% endif %}</textarea>
                                             </div>
-                                            
+
                                             <div class="flex_row profile_update_btn">
                                                 <button class="save_button" id="profile_update_save_btn" type="submit" >Save</button>
                                             </div>
                                         </form>
-                                        
+
 
                                     </div>
                                 </div>
                             </div>
-            
+
                 <!-- Update Schedule Section -->
                             <div class="working_schedule">
                                 <div class="working_schedule_contents">
@@ -1007,7 +1016,7 @@
                                                     <label for="{{ form.to_hour.id_for_label }}"><b>To</b></label>
                                                     {{ form.to_hour }}
                                                 </div>
-                                                    
+
                                             </div>
                                             <div class="scheduleButton saveCancel">
 
@@ -1018,6 +1027,7 @@
                                             </div>
                                         </form>
                                     </div>
+
                                     <div id="successModal" class="modal">
                                         <h2>Success!</h2>
                                         <p>Your operation was successful.</p>
@@ -1084,7 +1094,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -1095,7 +1105,7 @@
                                     <div class="dp">
                                         <img src="{{ tutor.profile_picture.url }}" alt="">
 
-                                    </div> 
+                                    </div>
                                     <div class="">
                                         <h3>Profile Picture Upload</h3>
                                         <div class="pro_pics">
@@ -1153,16 +1163,16 @@
                                     <div class="profile_update_content">
                                         <div class="dp">
                                             <img src="{{ tutor.profile_picture.url }}" alt="">
-                                        </div>                               
+                                        </div>
                                         <h3 style="font-family: 'Diphylleia', 'dosis', 'el messiri', 'Inika'"><span>Hi,</span> {{ tutor.first_name }}</h3>
-                                        
+
                                         <form class="changePassword" method="post" action="{% url 'change_password'%}">
                                             {% csrf_token %}
                                             <br><br>
                                             <center><input type="password" name="password" id="oldPassword" class="extend" placeholder="old password"><br></center>
                                             <center><input type="password" name="password1" id="newPassword" class="extend" placeholder="new password"><br></center>
                                             <center><input type="password" name="password2" id="confirmPassword" class="extend" placeholder="confirm new password"><br><br></center>
-                                            <center><button type="submit" class="save_button_password extend inactive" id="password_update_save_btn">Update Password</button></center>                               
+                                            <center><button type="submit" class="save_button_password extend inactive" id="password_update_save_btn">Update Password</button></center>
                                         </form>
                                     </div>
                                 </div>
@@ -1172,7 +1182,7 @@
                 </div>
             </div>
         </div>
-        
+
             <!-- quick links -->
             <div class="right_section">
                 <div><h3 class="quicK_links">Quick Links</h3></div>
@@ -1188,7 +1198,7 @@
                     </ol>
                 </div>
             </div>
-        
+
     </div>
 </body>
 {% endblock content %}

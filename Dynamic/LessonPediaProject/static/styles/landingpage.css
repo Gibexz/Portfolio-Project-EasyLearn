@@ -67,7 +67,7 @@ body{
 }
 
 
-   
+
 .spaceMe{
     padding-left: 5%;
     text-decoration: none;
@@ -105,7 +105,7 @@ body{
 
 
 .left_label{
-    margin-top: 100px;
+    margin-top: 50px;
     margin-left: 5%;
     color:white;
     font-family: 'Rowdies', sans-serif;
@@ -364,7 +364,7 @@ body{
 .questionContent{
     overflow-y: scroll;
     height: 650px;
-   
+
 }
 
 
@@ -656,3 +656,41 @@ body{
     color: gray;
     cursor: pointer;
 }
+/* Default styles for the notification */
+#mobileNotification {
+    display: none;
+    background-color: #f44336; /* Red background color */
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Media query to show the notification for screens smaller than 768px (typical laptops) */
+@media only screen and (max-width: 768px) {
+    #mobileNotification {
+        display: block !important;
+    }
+}
+
+@media screen and (max-width: 1250px){
+    #bodyOff{
+        display: none;
+    }
+
+    #logOn{
+        display: block !important;
+        text-align: center;
+        margin-top: 10%;
+        font-weight: 600;
+        margin-top: 10%;
+        margin: auto !important;
+        max-width: auto !important;
+    }
+
+    body{
+        background-color: whitesmoke;
+        background-image: none;
+        max-width: auto !important;
+    }
+}
+

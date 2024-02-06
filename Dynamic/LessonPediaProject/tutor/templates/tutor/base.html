@@ -3,7 +3,7 @@
 <head>
     {% load static %}
     {% block head %}
-    
+
     {% endblock head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,9 +19,23 @@
             Home
         {% endblock %}
     </title>
+
+    <style>
+    .boldMe {
+        font-weight: bold;
+    }
+    .boldMe:hover {
+        color: grey;
+    }
+    </style>
 </head>
 
 <body>
+    <!-- Inside your HTML body -->
+<div id="mobileNotification">
+    <p>This site is still in progress for mobile devices. Please view it on a laptop for the best experience.</p>
+</div>
+
     <div class="nav_container">
         <div class="nav_elements">
             <!-- for the logo on the leftside on navbar -->
@@ -38,10 +52,10 @@
                     <li><a href="{% url 'landing_page' %}">Home</a></li>
                     {% block pricing %}
                         <li class="spaceMe"><a href="{% url 'landing_page' %}">Pricing</a></li>
-                    {% endblock pricing %}                    
-                    <li class="spaceMe"><a href="{% url 'landing_page' %}">Take a fun test</a></li>
+                    {% endblock pricing %}
+                    <li class="spaceMe"><a  href="{% url 'fun_test' %}">Take a fun test</a></li>
                     <li class="spaceMe"><a href="{% url 'landing_page' %}">About us</a></li>
-                    {% block review %}                    
+                    {% block review %}
                         <li class="spaceMe"><a href="{% url 'landing_page' %}">Reviews</a></li>
                     {% endblock review %}
                 </ol>
@@ -54,8 +68,8 @@
                     <img src="{% static 'images/icons/searchbar.png' %}" alt="">
                 <!-- handles the cart icon -->
                 </section>
-            {% endblock nav_right %}            
-            
+            {% endblock nav_right %}
+
             {% block signup_button %}
                 <section class="signup_button">
                     <div class="dropdown">
@@ -63,22 +77,22 @@
                         <div class="dropdown-content">
                             <a href="{% url 'client_sign_up' %}">Learner</a>
                             <a href="{% url 'tutor_sign_up' %}">Tutor</a>
-                            <a href="{% url 'app_admin_sign_up' %}">Admin</a>
+                            <!--<a href="{% url 'app_admin_sign_up' %}">Admin</a>-->
                         </div>
                     </div>
                     <div class='signUp_btn'><a href="{% url 'client_sign_up' %}">SignUp</a></div>
                 </section>
             {% endblock signup_button %}
             <!-- signup button handle -->
-            
-            
+
+
 
         </div>
     </div>
 
     {% block content %}
 
-    {% endblock content %}  
+    {% endblock content %}
 
     <!-- footer -->
     <div class="footer">
@@ -86,32 +100,28 @@
             <section class="about_Us">
                 <img  src="{% static 'images/logo/logo_icon.png' %}" alt="">
                 <p>
-                    User to client: 
-                    A user wants to see hmmmmmmmmmm. sign up page 
-                    the quality of teachers will determine the effectiveness of the site and recommendation
-                    
-                    In this regard, the landing page including our sign up should anticipate what a tutor is coming from
-                    consider a custom dashboard for both clients and tutors.
+                At LessonPedia, we are dedicated to fostering a culture of unwavering commitment to our learners.
+                Our primary focus is to prioritize and enhance your learning experience, ensuring that every moment spent on our platform is valuable and enriching.
                 </p>
             </section>
 
             <section class="links">
                 <h3 class="linkHeaders">Quick Links</h3>
                 <ul>
-                    <li><a href="">Terms and Conditions</a></li>
-                    <li><a href="">Privacy Policy</a></li>
-                    <li><a href="">More FAQs</a></li>
-                    <li><a href="">Report Abuse</a></li>
-                    <li><a href="">Developers Page</a></li>
-                    <li><a href="">HR Team</a></li>
+                    <li ><a href="{% url 'terms' %}" class="boldMe">Terms of Service</a></li>
+                    <li ><a href="{% url 'privacy' %}" class="boldMe">Privacy Policy</a></li>
+                    <li><a href="" class="boldMe">More FAQs</a></li>
+                    <li><a href="" class="boldMe">Report Abuse</a></li>
+                    <li><a href="" class="boldMe">Developers Page</a></li>
+                    <li><a href="" class="boldMe">HR Team</a></li>
                 </ul>
             </section>
 
             <section class="contact_us">
                 <h3 class="linkHeaders">Contact Us</h3>
-                <p><span>Phone: </span>0814 XXX XXXXX</p>
-                <p><span>email: </span>contact@lessonpedia.com</p>
-                <P><span>address: </span>Abuja, Lagos, Uyo</P>
+                <!--<p><span>Phone: </span>0814 XXX XXXXX</p>-->
+                <p><span>Email: </span>developers.lessonpedia@gmail.com</p>
+                <!--<P><span>Address: </span>Abuja, Lagos, Uyo</P>-->
             </section>
 
             <section class="chatBot">
@@ -130,6 +140,6 @@
         </div>
     </div>
 
-       
+
 </body>
 </html>

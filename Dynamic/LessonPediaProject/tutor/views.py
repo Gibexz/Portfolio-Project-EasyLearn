@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.urls import reverse
 from .backends import TutorAuthBackend
 from .forms import TutorUpdateForm
-from .models import Tutor, Subject, TimeSlot, Certificate, SubjectCategory
+from .models import Tutor, Subject, TimeSlot, Certificate, SubjectCategory, PasswordResetToken
 from django.db.models import Q
 from django.http import JsonResponse
 from client.models import Client, Ranking, Review
@@ -21,10 +21,7 @@ from datetime import timedelta
 import random, string
 from django.db import IntegrityError, transaction
 
-
-
-
-
+"""Logic for Lessonpedia Tutor App"""
 
 # Tutor reports
 @login_required(login_url='tutor_login')
@@ -53,6 +50,7 @@ def report_abuse(request):
         return redirect('tutor_dashboard')
     return redirect('tutor_dashboard')
 
+
 # validate payment
 @login_required(login_url='tutor_login')
 def validate_payment(request, contract_id):
@@ -78,7 +76,7 @@ def validate_payment(request, contract_id):
 """ Helper functions to generate random contract code, convert user input to date, etc"""
 # generate random contract code
 def generate_contract_code():
-    ''' Generate a random 8-character code using 5 digits and 3 uppercase letters '''    
+    ''' Generate a random 8-character code using 5 digits and 3 uppercase letters '''
     digits_part = ''.join(random.choices(string.digits, k=5))
     alphabets_part = ''.join(random.choices(string.ascii_uppercase, k=3))
     random_code = digits_part + alphabets_part
@@ -88,11 +86,11 @@ def generate_contract_code():
 def parse_date(date_str):
     """Parse a date string in the format yyyy-mm-dd to a date object"""
     try:
-        print(date_str)
         return datetime.strptime(date_str, '%Y-%m-%d').date()
     except ValueError:
         return None
 """Helper functions ends here"""
+
 
 # Terminate contract
 @require_POST
@@ -166,7 +164,7 @@ def update_contract_status(request, contract_code):
         messages.error(request, 'Contract not found')
         return JsonResponse({'status': 'error', 'message': 'Contract not found'}, status=404)
 
-    
+
     if request.method == 'POST':
         def get_data():
 
@@ -207,7 +205,7 @@ def update_contract_status(request, contract_code):
                                         'pay_rate': contract.pay_rate,
                                         'contract_code': contract.contract_code,
                                         'start_date': contract.start_date.strftime("%d-%m-%Y"),
-                                        'end_date': contract.end_date.strftime("%d-%m-%Y")} for contract in settled_contracts], 
+                                        'end_date': contract.end_date.strftime("%d-%m-%Y")} for contract in settled_contracts],
                 'active_contracts': [{'contract_code': contract.contract_code,
                                         'client_name': contract.client.get_full_name(),
                                         'subject_name': contract.subject.subject_name,
@@ -224,7 +222,7 @@ def update_contract_status(request, contract_code):
                                         'contract_status': contract.contract_status} for contract in contract_history],
                 'received_payments': tutor.received_payments,
             }
-    
+
 
         contract_status = request.POST.get('status')
         if contract_status == 'Accept':
@@ -241,7 +239,7 @@ def update_contract_status(request, contract_code):
 
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid contract status'})
-    
+
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
@@ -298,7 +296,6 @@ def add_subject(request):
                 )
             except IntegrityError:
                 # Handle IntegrityError if needed, currently no specific handling for it
-                print('IntegrityError occurred')
                 messages.error(request, 'An error occurred while processing your request.')
                 return JsonResponse({'status': 'error', 'info': 'An error occurred'})
         else:
@@ -339,7 +336,6 @@ def update_subject(request, subject_id):
                 ]
         return JsonResponse({'status': 'success', 'tutor_subjects': tutor_subjects, 'primary_subject': tutor.primary_subject})
     except Exception as e:
-        print(e)
         return JsonResponse(
             {'status': 'error', 'error': f'Error updating subject: {str(e)}'},
             status=500,
@@ -361,8 +357,8 @@ def delete_subject(request, subject_id):
     if subject is not None:
         tutor.subjects.remove(subject)
         messages.success(request, 'Subject deleted successfully.')
-        
-        
+
+
         all_tutor_subjects = tutor.subjects.all()
         Subject.update_tutor_count()
 
@@ -373,8 +369,8 @@ def delete_subject(request, subject_id):
                               'primary_subject': tutor.primary_subject})
     else:
         return JsonResponse({'status': 'error', 'message': 'Subject not found'}, status=404)
-    
-    
+
+
 # Extra tutor fields update
 def more_update(request):
     """Update more fields in tutor table"""
@@ -400,7 +396,6 @@ def more_update(request):
             tutor.save()
             messages.success(request, 'Profile updated successfully.')
         except Exception as e:
-            print(e)
             messages.error(request, 'Failed to update profile. Please try again.')
         return redirect('tutor_dashboard')
     return redirect ('tutor_dashboard')
@@ -470,9 +465,9 @@ def upload_docs(request):
             certificate = Certificate(
                 tutor=tutor,
                 certificate_file=other_cert_file,
-                certificate_name=request.POST.get('certificate_name'), 
+                certificate_name=request.POST.get('certificate_name'),
                 issuing_authority=request.POST.get('issuing_authority'),
-                date_of_issuance=datetime.strptime(request.POST.get('date_of_issuance'), '%Y-%m-%d') 
+                date_of_issuance=datetime.strptime(request.POST.get('date_of_issuance'), '%Y-%m-%d')
             )
             certificate.save()
         return JsonResponse({'status': 'success'})
@@ -504,7 +499,7 @@ def tutor_dashboard(request):
     if not isinstance(request.user, Tutor):
         error_message = 'Are you a tutor?'
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-    
+
     tutor = Tutor.objects.get(id=request.user.id)
     reports = TutorReportAbuse.objects.filter(tutor=tutor).order_by('-created_at')
     contracts = Contract.objects.filter(tutor=tutor).order_by('-created_at')
@@ -569,7 +564,7 @@ def tutor_login(request):
     """Tutor Login"""
     if 'tutor' in request.path:
         if request.method == 'POST':
-            username_or_email = request.POST.get('username_or_email')
+            username_or_email = request.POST.get('username_or_email').strip()
             password = request.POST.get('password')
             tutor = TutorAuthBackend().authenticate(request, username_or_email=username_or_email, password=password)
             if tutor:
@@ -587,7 +582,7 @@ def tutor_login(request):
                     messages.error(request, 'This account is blocked by admin, please contact support')
                     return redirect('admin_support')
             else:
-                tutor_exists = Tutor.objects.filter(username=request.user.username).exists()
+                tutor_exists = Tutor.objects.filter(email=username_or_email).exists()
                 if tutor_exists:
                     messages.error(request, 'Incorrect Password, Please try again')
                 else:
@@ -610,16 +605,16 @@ def admin_support(request):
             send_mail(
                 subject,
                 message,
-                'sender@example.com', 
+                'sender@example.com',
                 ['developers.lessonpedia@gmail.com'],
                 fail_silently=False,
             )
             return JsonResponse({'success': True})
         except Exception as e:
-            print('Error sending email:', str(e))
             return JsonResponse({'success': False, 'error_message': str(e)})
 
     return render(request, 'tutor/admin_support.html')
+
 
 # block tutor
 @login_required(login_url='admin_login')
@@ -648,12 +643,13 @@ def tutor_profile(request):
     if not isinstance(request.user, Tutor):
         error_message = "Are you a tutor?"
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-    
+
     tutor = Tutor.objects.get(username=request.user.username)
     categories = SubjectCategory.objects.all()
-    
+
     if tutor is not None:
         if request.method == 'POST':
+            date_of_birth = parse_date(request.POST.get('dob') or None)
             subject_name = request.POST.get('subjectName').strip()
             category = request.POST.get('category')
             proficiency = request.POST.get('proficiency')
@@ -687,6 +683,7 @@ def tutor_profile(request):
                             except Subject.DoesNotExist:
                                 tutor.subjects.add(subject)
                                 tutor.primary_subject = subject_name
+                                tutor.date_of_birth = date_of_birth
                                 tutor.save()
                                 Subject.update_tutor_count()
 
@@ -694,6 +691,7 @@ def tutor_profile(request):
                             # Subject does not exist, create it and associate it with the tutor
                             tutor.subjects.add(subject)
                             tutor.primary_subject = subject_name
+                            tutor.date_of_birth = date_of_birth
                             tutor.save()
                             Subject.update_tutor_count()
                 except IntegrityError:
@@ -727,12 +725,15 @@ def view_tutors(request):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
     subjects = Subject.objects.all()
     tutors = Tutor.objects.all()
-    for x in tutors: 
+    for x in tutors:
         ranks = Ranking().rankAverage(x.id)['avg_rank']
+        if not ranks:
+            ranks = 1
         x.rank = ranks
         x.save()
     user = request.user
     return render(request, 'tutor/view_tutors.html', context={'tutors': tutors, 'subjects': subjects, 'user': user})
+
 
 @login_required(login_url='client_signIn')
 def search_tutors(request):
@@ -740,17 +741,15 @@ def search_tutors(request):
     if not isinstance(request.user, Client):
         error_message = 'Are you logged in as a learner?'
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-    
+
     query = request.GET.get('query', None)
     if query is not None:
         tutors = Tutor.objects.filter(
             Q(first_name__icontains=query) | Q(last_name__icontains=query) |Q(primary_subject__icontains=query) |  Q(subjects__subject_name__icontains=query)
         ).distinct()
         tutor_list = [ tutor.to_dict() for tutor in tutors]
-        print(tutor_list)
         subjects = Subject.objects.filter(subject_name__icontains=query)
         subject_list = [{'subject_name': subject.subject_name} for subject in subjects]
-        print(subject_list)
 
         response_data = {'tutors': tutor_list, 'query': query, 'subjects': subject_list}
         return JsonResponse(response_data)
@@ -772,7 +771,7 @@ def tutor_detail(request, tutor_id):
     reviews = Review.objects.filter(tutor=tutor_id).order_by('-created_at')
     AvgRank = Ranking().rankAverage(tutor_id)
     tutor = get_object_or_404(Tutor, id=tutor_id)
-    context ={'tutor': tutor, 'user': user, 'subjects': subjects, 'reviews': reviews, 'tutor_count': tutors_count, 'tutors': tutors, 'rank': AvgRank['avg_rank']}
+    context ={'tutor': tutor, 'user': user, 'subjects': subjects, 'reviews': reviews, 'tutors_count': tutors_count, 'tutors': tutors, 'rank': AvgRank['avg_rank']}
     return render(request, 'tutor/tutor_detail.html', context=context)
 
 
@@ -781,7 +780,7 @@ def email_tutor(request, tutor_id):
     if not isinstance(request.user, Client):
         error_message = 'Are you logged in as a learner?'
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
-    
+
     if request.method == 'POST':
         sender = request.POST.get('sender')
         recipient = request.POST.get('recipient')
@@ -797,10 +796,10 @@ def email_tutor(request, tutor_id):
             response_data = {'success': True}
         except Exception as e:
             response_data = {'success': False, 'error_message': str(e)}
-            print('error sending email')
 
         return JsonResponse(response_data)
     return redirect('view_tutors')
+
 
 @login_required(login_url='client_signIn')
 def submit_review(request, tutor_id):
@@ -833,10 +832,11 @@ def quiz_guide(request):
     if tutor.quiz_count > 1:
         error_message = 'You have already taken the assessment twice'
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message, 'quiz_count': tutor.quiz_count})
-    
+
     return render(request, 'tutor/quiz_guide.html')
 
 
+# Tutor assessment
 @login_required(login_url='tutor_login')
 def tutor_quiz(request):
     if not isinstance(request.user, Tutor):
@@ -844,8 +844,7 @@ def tutor_quiz(request):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
 
     tutor = Tutor.objects.get(username=request.user.username)
-    print(tutor.quiz_count)
-    quiz_count = tutor.quiz_count 
+    quiz_count = tutor.quiz_count
 
     if request.method == 'POST':
         quiz_result = float(request.POST.get('quiz_result'))
@@ -856,10 +855,6 @@ def tutor_quiz(request):
             tutor.quiz_count += 1
             tutor.save()
 
-            print('quiz_result', quiz_result)
-            print('type quiz_res',type(quiz_result))
-            print('tutor.quiz_result', tutor.quiz_result)
-            print('type tutor.quiz_result', type(tutor.quiz_result))
 
             if quiz_result > tutor.quiz_result:
                 tutor.quiz_result = quiz_result
@@ -875,6 +870,12 @@ def tutor_quiz(request):
         return render(request, 'tutor/access_denied.html', context={'error_message': error_message})
 
     return render(request, 'tutor/tutor_quiz.html', context={'quiz_count': quiz_count})
+
+
+# Fun Test
+def fun_test(request):
+    """General Questions"""
+    return render(request, 'tutor/fun_test.html')
 
 
 # Deactivate Tutor Account
@@ -901,9 +902,93 @@ def suspend_tutor(request, tutor_id):
             return redirect('tutor_dashboard')
     return redirect('tutor_dashboard')
 
-# Tutor Logout   
+
+# Genereate password reset token
+def generate_password_reset_token():
+    """Generate password reset token"""
+    first_digit = random.choice(string.digits[1:])
+    rest_of_digits = ''.join(random.choices(string.digits, k=5))
+    token = first_digit + rest_of_digits
+    return int(token)
+
+
+# Forgot Password
+def forgot_password(request):
+    """Forgot Password"""
+    if request.method == 'POST':
+        sender = request.POST.get('sender')
+        recipient = request.POST.get('email').strip()
+        subject = "Password Reset Code"
+        token = generate_password_reset_token()
+        tutor = get_object_or_404(Tutor, email=recipient)
+        if tutor:
+            # Use get_or_create to create a new PasswordResetToken if it doesn't exist
+            password_reset_token, created = PasswordResetToken.objects.get_or_create(user=tutor)
+            password_reset_token.token = token
+            password_reset_token.created_at = timezone.now()  # Update the created_at field
+            password_reset_token.save()
+
+            message = f"Your password reset code is {token} (expires in one hour).\n\nPlease do not share this code with anyone\nIf you didn't request this pin, we recommend you change your Lessonpedia password.\n\nRegards,\nLessonpedia Team"
+            try:
+                send_mail(subject, message, sender, [recipient])
+                response_data = {'success': True}
+            except Exception as e:
+                response_data = {'success': False, 'error_message': str(e)}
+            return JsonResponse(response_data)
+        else:
+            messages.error(request, 'User does not exist')
+            return JsonResponse({'success': False, 'error_message': 'User does not exist'})
+    return render(request, 'tutor/tutor_login.html', context={'tutor_email': recipient})
+
+
+#confirm password reset token
+def confirm_password_reset_token(request):
+    """Confirm password reset token"""
+    if request.method == 'POST':
+        token = request.POST.get('token')
+        user_email = request.POST.get('tutor_email')
+        user = get_object_or_404(Tutor, email=user_email)
+
+        try:
+            password_reset_token = PasswordResetToken.objects.get(user=user)
+        except PasswordResetToken.DoesNotExist:
+            return JsonResponse({'success': False, 'error_message': 'Token not found'})
+
+        # Check if the provided token matches and is not expired
+        if token == password_reset_token.token and not password_reset_token.is_expired():
+            # Token is valid, you can proceed with the next steps
+            return JsonResponse({'success': True})
+        else:
+            messages.error(request, 'Invalid or expired token')
+            return JsonResponse({'success': False, 'error_message': 'Invalid or expired token'})
+
+    return JsonResponse({'success': False})
+
+
+# reset password
+def reset_password(request):
+    """Reset Password"""
+    if request.method == 'POST':
+        password = request.POST.get('newPassword')
+        confirm_password = request.POST.get('confirmPassword')
+        email = request.POST.get('tutor_email').strip()
+        if password != confirm_password:
+            messages.error(request, 'Passwords do not match')
+            return JsonResponse({'success': False, 'error_message': 'Passwords do not match'})
+        try:
+            tutor = get_object_or_404(Tutor, email=email)
+            tutor.set_password(password)
+            tutor.save()
+            messages.success(request, 'Password reset successful, Please Login')
+            return JsonResponse({'success': True, 'redirect_url': reverse('tutor_login')})
+        except Tutor.DoesNotExist:
+            messages.error(request, 'User does not exist')
+            return JsonResponse({'success': False, 'error_message': 'User does not exist'})
+    return render(request, 'tutor/tutor_login.html')
+
+
+# Tutor Logout
 def tutor_logout(request):
     logout(request)
     messages.success(request, "You're Logged Out")
-    return redirect('tutor_login') 
-
+    return redirect('tutor_login')

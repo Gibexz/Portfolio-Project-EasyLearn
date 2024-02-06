@@ -220,7 +220,7 @@ body{
 .questionContent{
     overflow-y: scroll;
     height: 500px;
-    
+
 }
 
 .questionsh3{
@@ -367,4 +367,20 @@ body{
 
 .buttom_footer .social_medias img{
     padding-right: 10%;
+}
+
+/* Default styles for the notification */
+#mobileNotification {
+    display: none;
+    background-color: #f44336; /* Red background color */
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Media query to show the notification for screens smaller than 768px (typical laptops) */
+@media only screen and (max-width: 768px) {
+    #mobileNotification {
+        display: block !important;
+    }
 }

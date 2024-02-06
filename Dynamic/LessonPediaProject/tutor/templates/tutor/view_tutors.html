@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="{% static "styles/view_tutors.css" %}">
     <link rel="stylesheet" href="{% static "styles/tutor_messages.css" %}">
 {% endblock head %}
-{% block signup_button %}     
-    <section class="signup_button">
-        <div class='signUp_btn' ><a id="logout_btn_top" href="{% url 'tutor_logout' %}">Logout</a></div>
-    </section>  
-{% endblock signup_button %} 
+{% block signup_button %}
+    <!--<section class="signup_button">-->
+    <!--    <div class='signUp_btn' ><a id="logout_btn_top" href="{% url 'tutor_logout' %}">Logout</a></div>-->
+    <!--</section>-->
+{% endblock signup_button %}
 
 {% block content %}
 <hr>
@@ -41,7 +41,7 @@
                     {% if subjects %}
                         <ul class="subjects ul">
                             {% for subject in subjects %}
-                                <li class="subject list_item" ><a class="checkValue" href="#">{{ subject }}</a></li> 
+                                <li class="subject list_item" ><a class="checkValue" href="#">{{ subject }}</a></li>
                                 {% endfor %}
                                 {% comment "TODO" %} for every subject, query the database for the tutors that teach that subject and display them in the tutor_pane
                                 {% endcomment %}
@@ -63,7 +63,7 @@
                     {% if tutors %}
                         <ul class="mentor_name ul">
                             {% for tutor in tutors|slice:':10' %}
-                                <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li> 
+                                <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li>
                             {% endfor %}
                         </ul>
                     {% else %}
@@ -116,13 +116,17 @@
                 </div>
             </div>
                             <!-- Implement a search button that passes keywords to the database for matches of tutors and subjects -->
-            
+
             <div class="tutor_row">
                 {% if tutors %}
                     {% for tutor in tutors %}
                         <div class="tutor_overview">
                             <section class="tutor_image_box">
+                                {% if tutor.profile_picture.url %}
                                 <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo">
+                                 {% else %}
+                                <img class="tutor_image" src="{% static 'images/user/default_tutor.png' %}" alt="{{ tutor.first_name }}'s photo">
+                                {% endif %}
                             </section>
                             <div class="other_info">
                                 <section class="tutor_name"><h5 class="name">{{ tutor.first_name }} {{ tutor.last_name }} &nbsp;</h5>
@@ -157,7 +161,7 @@
                     {% endfor %}
                 {% endif %}
             </div>
-        </div>        
+        </div>
     </div>
     <hr>
 {% endblock content %}

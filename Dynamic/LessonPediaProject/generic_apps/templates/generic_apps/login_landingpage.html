@@ -11,12 +11,12 @@
 {% endblock signup_button %}
 
 {% block direction %}
-    <a href="#" class="lessonpedia">                     
+    <a href="#" class="lessonpedia">
     <img  src="{% static 'images/logo/logo_icon.png' %}" alt=""><p style="padding-left: 8%;"></a>
     <a href="#" class="lessonpedia">LessonPedia</a></p>
-{% endblock direction %} 
+{% endblock direction %}
 
-{% block homeBase %}                    
+{% block homeBase %}
     <li><a href="{% url 'landing_page' %}">Home</a></li>
 {% endblock homeBase %}
 
@@ -35,7 +35,7 @@
                 {% for message in messages %}
                     <p class='intruder'>{{ message }}</p>
                 {% endfor %}
-            {% endif %}           
+            {% endif %}
 
             <div class="left_label">
                 <section class="top">
@@ -61,7 +61,7 @@
                         {% endif %}
                     {% endblock explore %}
                 </section>
-                
+
                 <section class="last">
                     <input type="text" name="" id="" placeholder="What do you want to learn today?">
                     <section class="search">
@@ -88,7 +88,7 @@
         </div>
         <div class="tutor_row">
             {% if tutors %}
-                {% for tutor in tutors %}
+                {% for tutor in tutors|slice:':12' %}
                     <div class="tutor_overview">
                         <section class="tutor_image_box">
                             <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo">
@@ -141,20 +141,20 @@
                 <section class="content">
                     <h3>Who is Lessonpedia for? <img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        
+
                         Lessonpedia is designed for anyone with a passion for learning or teaching.
                          Whether you're a dedicated educator, a lifelong learner, a student seeking extra help, or someone eager to share your expertise, Lessonpedia welcomes all.
                           Our platform thrives on diversity, connecting individuals with a shared enthusiasm for knowledge, making learning an enriching and collaborative experience.                    </p>
-                    
+
                 </section>
 
                 <section class="content">
                     <h3>What makes Lessonpedia unique?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
                         At Lessonpedia, we take pride in our commitment to exceeding expectations.
-                        What sets us apart is our unwavering dedication to go beyond traditional educational platforms. 
+                        What sets us apart is our unwavering dedication to go beyond traditional educational platforms.
                         We foster an environment where both tutors and learners are encouraged to explore, innovate, and engage in meaningful ways.
-                         Expect more than just lessons; anticipate a transformative learning journey that inspires growth, curiosity, and excellence. 
+                         Expect more than just lessons; anticipate a transformative learning journey that inspires growth, curiosity, and excellence.
                          Lessonpedia isn't just a platform; it's a community that elevates the standards of online education.
                      </p>
                 </section>
@@ -162,9 +162,9 @@
                 <section class="content">
                     <h3> How does Lessonpedia ensure quality in tutoring?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        Lessonpedia maintains a stringent vetting process for tutors, ensuring that only qualified and passionate individuals become part of our community. 
-                        We encourage learner feedback and provide a transparent rating system, allowing users to make informed decisions. Additionally, our platform offers a diverse range of subjects and teaching styles, 
-                        catering to various learning preferences and ensuring a personalized and effective learning experience for everyone.                   
+                        Lessonpedia maintains a stringent vetting process for tutors, ensuring that only qualified and passionate individuals become part of our community.
+                        We encourage learner feedback and provide a transparent rating system, allowing users to make informed decisions. Additionally, our platform offers a diverse range of subjects and teaching styles,
+                        catering to various learning preferences and ensuring a personalized and effective learning experience for everyone.
                      </p>
                 </section>
                 <section class="content">
@@ -172,7 +172,7 @@
                     <p>
                         Absolutely! Lessonpedia goes beyond traditional academics. Our platform is a hub for a wide range of skills and interests.
                         Whether you're looking to master a new language, delve into coding, or explore creative arts, Lessonpedia is the place to connect with experts who are passionate about sharing their knowledge.
-                        We believe in holistic learning that nurtures both academic and practical skills.              
+                        We believe in holistic learning that nurtures both academic and practical skills.
                      </p>
                 </section>
                 <section class="content">
@@ -181,16 +181,16 @@
                         Lessonpedia is not just a platform; it's a community-driven space where learners and tutors connect on a personal level.
                          Join discussion forums, attend webinars, and participate in collaborative projects.
                           We believe in the power of a supportive community, and Lessonpedia is the place to find like-minded individuals who share your passion for learning and teaching.
-                         Together, we create an ecosystem that celebrates curiosity, growth, and success.                    
+                         Together, we create an ecosystem that celebrates curiosity, growth, and success.
                     </p>
                 </section>
 
             </div>
-        </div>   
+        </div>
     </div>
 
     <div class="epty">
 
     </div>
-        
+
 {% endblock content %}

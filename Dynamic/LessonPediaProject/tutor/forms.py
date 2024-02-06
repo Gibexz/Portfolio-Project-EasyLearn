@@ -71,12 +71,13 @@ class TutorUpdateForm(forms.ModelForm):
             ('--select one--', '--select one--'),
             ('Phd', 'Phd'),
             ('Msc', "Msc"),
-            ('Bsc', 'Bsc'),
-            ('Beng', 'Beng'),
-            ('Hnd', 'Hnd'),
-            ('ND', 'ND'),
+            ('BED', 'BED'),
+            ('BSC', 'BSC'),
+            ('BENG', 'BENG'),
+            ('HND', 'HND'),
+            ('OND', 'OND'),
             ('NCE', 'NCE'),
-            ('Waec', 'Waec'),
+            ('SSCE', 'SSCE'),
             ('Others', 'Others')
         ],
         widget=forms.Select(attrs={
@@ -122,20 +123,21 @@ class TutorUpdateForm(forms.ModelForm):
         ('Freelance', 'Freelance'),
         ('Others', 'Others'),
         ],
+        required=False,
         widget=forms.Select(attrs={
             'class': 'no_outline',
             'id': 'employmentStat',
         })
     )
-    date_of_birth = forms.DateField(
-    widget=DatePickerInput(
-        attrs={
-            'class': 'no_outline',
-            'id': 'dob',
-            'placeholder': 'Format: (MM/DD/YYYY)',
-        }
-    )
-)
+#     date_of_birth = forms.DateField(
+#     widget=DatePickerInput(
+#         attrs={
+#             'class': 'no_outline',
+#             'id': 'dob',
+#             'placeholder': 'Format: (MM/DD/YYYY)',
+#         }
+#     )
+# )
 
     nationality = forms.CharField(
         widget=forms.TextInput(attrs={
@@ -150,7 +152,7 @@ class TutorUpdateForm(forms.ModelForm):
     # )
 
 
-    
+
     # state_of_residence = forms.ChoiceField(
     #     choices=[
     #         ('', '- Select -'),
@@ -180,8 +182,8 @@ class TutorUpdateForm(forms.ModelForm):
     #         'class': 'state_of_residence',
     #         'id': 'state',
     #     })
-    # )   
-    
+    # )
+
     highest_qualification_cert = forms.FileField(
         required=False,
         widget=forms.FileInput(attrs={
@@ -201,7 +203,6 @@ class TutorUpdateForm(forms.ModelForm):
     )
 
     profile_picture = forms.ImageField(
-        required=False,
         widget=forms.FileInput(attrs={
             'id': 'pic',
             'placeholder': 'upload profile picture',
@@ -216,22 +217,27 @@ class TutorUpdateForm(forms.ModelForm):
             ('Female', 'Female'),
         ],
         widget=forms.Select(attrs={
-            'id': 'gender',
+            'id': 'gender2',
             'class': 'no_outline',
         })
-
-
     )
+    open_to_work = forms.ChoiceField(
+        choices=Tutor.open_to_work_choice,
+        widget=forms.Select(attrs={
+            'id': 'open_to_work',
+            'class': 'no_outline',
+        })
+    )
+
 
     class Meta:
         model = Tutor
         fields = [
-                'first_name', 'last_name', 'others', 'phone_number', 'highest_qualification', 
+                'first_name', 'last_name', 'others', 'phone_number', 'highest_qualification',
                 'area_of_specialization', 'discipline', 'employment_status','employment_type','nationality',
-                'state_of_residence', 'institution_type', 'institution', 'result', 
-                'residential_address', 'cv_id', 'highest_qualification_cert', 'profile_picture', 'gender',
-                'date_of_birth',
-                
+                'state_of_residence', 'institution_type', 'institution', 'result',
+                'residential_address', 'cv_id', 'highest_qualification_cert', 'profile_picture', 'gender', 'open_to_work'
+
             ]
         widgets = {
             'first_name': forms.TextInput(attrs={
@@ -278,6 +284,6 @@ class TutorUpdateForm(forms.ModelForm):
                 'placeholder': 'enter state of residence',
                 'id': 'state',
                 'autocomplete': 'on',
-            }),
+            })
         }
-                
+

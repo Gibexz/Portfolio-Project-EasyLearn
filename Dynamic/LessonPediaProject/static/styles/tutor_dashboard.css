@@ -15,7 +15,7 @@
 }
 #logout_btn_top {
     padding: 10px 20px;
-    background: #dc3545; 
+    background: #dc3545;
     color: #fff;
     text-decoration: none;
     font-weight: bold;
@@ -92,7 +92,7 @@
     line-height: 0px;
     margin-bottom: 0px;
     /* font-size: medium; */
-} 
+}
 
 
 .left_section h4 {
@@ -113,12 +113,12 @@
     border-radius: 10px 0 0 10px;
     box-shadow: 1px 1px 10px 1px rgba(128, 128, 128, 0.539);
     overflow-y: auto;
-    
+
 }
 
 .nav_li {
     list-style-type: none;
-    padding: 18px;  
+    padding: 18px;
 }
 
 .nav_links span{
@@ -336,10 +336,14 @@ a .fa-sign-out{
 .client_list_table th, .client_list_table td {
  border-bottom: 1px solid #ddd;
  background-color: white;
- padding: 10px;
+ padding: 5px;
  font-size: medium;
  text-align: left;
  font-family: 'Inika', serif;
+}
+
+.client_list_table .report_btn {
+    width: 85px;
 }
 
 
@@ -422,7 +426,7 @@ input[type="submit"]:hover,
     box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
     background-color: rgba(2, 7, 80, 0.979);
 
-    
+
 }
 
 .report_btn button:hover {
@@ -432,7 +436,7 @@ input[type="submit"]:hover,
     box-shadow: 1px 1px 10px 1px rgba(69, 69, 69, 0.539);
 }
 
-.report_btn_activation, 
+.report_btn_activation,
 .cancel_contract_btn_activation,
 .review_link_popup_activation,
 .reports_view_popup_activation,
@@ -703,6 +707,10 @@ input[type="submit"]:hover,
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
     padding: 20px;
     text-align: center;
+    z-index: 100;
+}
+#done {
+    height: 180px;
 }
 /* .disengage{
     display: none;
@@ -798,12 +806,12 @@ input[type="submit"]:hover,
 #confirmationModal button.cancel {
     background-color: #ccc;
 }
-#successModal h3, #successModal2 h3, #successModal3 h3, #successModal4 h3 {
+#successModal h3, #done h3, #successModal2 h3, #successModal3 h3, #successModal4 h3 {
     color: #4CAF50;
     font-size: 18px;
 }
 
-#successModal button, #successModal2 button, #successModal3 button, #successModal4 button {
+#successModal button, #successModal2 button, #successModal3 button, #successModal4 button, #done button {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: #fff;
@@ -991,7 +999,7 @@ select{
 .working_schedule button{
     width: 130px;
     margin-left: 15px;
-    
+
 }
 
 .updateEngagements{
@@ -1179,7 +1187,7 @@ select{
 
 .deactivate_account_control_display,
 .logout_btn,
-.report_btn_activation, 
+.report_btn_activation,
 .cancel_contract_btn_activation,
 .review_link_popup_activation,
 .reports_view_popup_activation,
@@ -1375,13 +1383,13 @@ select{
     font-size: small;
 }
 
-  
+
 .sort_tables label {
     font-weight: bold;
     margin-bottom: 0px;
     /* display: ; */
 }
-  
+
 .sort_tables select {
     padding: 2px;
     font-size: 13px;
@@ -1394,7 +1402,7 @@ select{
     height: 30px;
     border: 2px solid rgba(0, 0, 0, 0.253);
 }
-  
+
 .sort_tables input[type="submit"] {
     padding: 2px;
     background-color: rgb(0, 17, 128);
@@ -1467,7 +1475,7 @@ select{
     border-collapse: collapse;
     width: 100%;
 }
-.review_table th, .review_table td, 
+.review_table th, .review_table td,
 .pending_clients_table th, .pending_clients_table td,
 .settled_clients_table th, .settled_clients_table td {
     border: 1px solid #dddddd;
@@ -1561,3 +1569,91 @@ th {
     font-size: normal;
 
 }
+
+/*sending data waiting...*/
+.sendingEmail {
+    display: block;
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    left: 45%;
+    top: 70%;
+  }
+  .sendingEmail div {
+    animation: sendingEmail 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+  }
+  .sendingEmail div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #000;
+    margin: -4px 0 0 -4px;
+  }
+  .sendingEmail div:nth-child(1) {
+    animation-delay: -0.036s;
+  }
+  .sendingEmail div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+  }
+  .sendingEmail div:nth-child(2) {
+    animation-delay: -0.072s;
+  }
+  .sendingEmail div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+  }
+  .sendingEmail div:nth-child(3) {
+    animation-delay: -0.108s;
+  }
+  .sendingEmail div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+  }
+  .sendingEmail div:nth-child(4) {
+    animation-delay: -0.144s;
+  }
+  .sendingEmail div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+  }
+  .sendingEmail div:nth-child(5) {
+    animation-delay: -0.18s;
+  }
+  .sendingEmail div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+  }
+  .sendingEmail div:nth-child(6) {
+    animation-delay: -0.216s;
+  }
+  .sendingEmail div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+  }
+  .sendingEmail div:nth-child(7) {
+    animation-delay: -0.252s;
+  }
+  .sendingEmail div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+  }
+  .sendingEmail div:nth-child(8) {
+    animation-delay: -0.288s;
+  }
+  .sendingEmail div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+  }
+  @keyframes sendingEmail {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

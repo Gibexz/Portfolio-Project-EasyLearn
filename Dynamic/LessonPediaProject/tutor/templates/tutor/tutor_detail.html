@@ -10,7 +10,20 @@
     <script src="{% static 'script/tutor_messages.js' %}"></script>
     <script src="{% static 'script/tutor_detail.js' %}"></script>
 {% endblock head %}
-    
+
+            {% block signup_button %}
+                <!--<section class="signup_button">-->
+                <!--    <div class="dropdown">-->
+                <!--        <div class="login_btn">Login</div>-->
+                <!--        <div class="dropdown-content">-->
+                <!--            <a href="{% url 'client_signIn' %}">Learner</a>-->
+                <!--            <a href="{% url 'tutor_login' %}">Tutor</a>-->
+                <!--            <a href="{% url 'app_admin_sign_up' %}">Admin</a>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--    <div class='signUp_btn'><a href="{% url 'client_sign_up' %}">SignUp</a></div>-->
+                <!--</section>-->
+            {% endblock signup_button %}
     {% block title %}
         Views - Tutor
     {% endblock title %}
@@ -39,7 +52,7 @@
                     {% if subjects %}
                         <ul class="subjects ul">
                             {% for subject in subjects %}
-                                <li class="subject list_item" ><a class="checkValue" href="#">{{ subject }}</a></li> 
+                                <li class="subject list_item" ><a class="checkValue" href="#">{{ subject }}</a></li>
                                 {% endfor %}
                                 {% comment "TODO" %} for every subject, query the database for the tutors that teach that subject and display them in the tutor_pane
                                 {% endcomment %}
@@ -61,7 +74,7 @@
                     {% if tutors %}
                         <ul class="mentor_name ul">
                             {% for tutor in tutors|slice:':10' %}
-                                <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li> 
+                                <li class="list_item"><a href="{% url 'tutor_detail' tutor.id %}">{{ tutor.first_name }} {{ tutor.last_name }}</a></li>
                             {% endfor %}
                         </ul>
                     {% else %}
@@ -82,7 +95,7 @@
             </div>
 
         </div>
-        <div class="right">           
+        <div class="right">
             <div class="header">
                 <div class="search_bar">
                     <form class="search_bar_form" method="GET" action="{% url 'search_tutors' %}">
@@ -114,7 +127,11 @@
             <div class="dpDisplay">
                 <div class="dpContent">
                     <section class="dpImage">
-                        <img class='tutordp' src="{{ tutor.profile_picture.url}}" alt=""> <br>
+                                {% if tutor.profile_picture.url %}
+                                <img class='tutordp' src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo"><br>
+                                 {% else %}
+                                <img class='tutordp' src="{% static 'images/user/default_tutor.png' %}" alt="{{ tutor.first_name }}'s photo"><br>
+                                {% endif %}
                         <section class="goRight">
                             <i class="fa fa-heart" aria-hidden="true"></i>
                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -131,7 +148,7 @@
                                     <input type="hidden" id="lessonPedia" name="senderInfo" value="Client: {{ user.get_full_name }} - {{ user.email }}">
                                     <label for="message">Message:</label><br>
                                     <textarea id="message" name="message" rows="5" required></textarea><br>
-                                    
+
                                     <button type="submit" class="sendEmail">Send</button>
                                     <button class="cancelEmail" type="button">Cancel</button>
                                 </form>
@@ -140,7 +157,7 @@
                                 <div class="sendingEmail"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                             </div>
                             <!-- email_sent_modal.html -->
-    
+
                             <div class="dropdownContainer">
                                 <div class="dropdown-item allScheduleBtn">All Schedules</div>
                                 <div class="dropdown-item all-subjects-btn"id="allSubjectsBtn">All Subjects</div>
@@ -179,7 +196,7 @@
                         <section class="preference">
                             <p class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ tutor.state_of_residence }}, {{ tutor.nationality }}</p>
                             <p class="availability"><i class="fa fa-calendar" aria-hidden="true"></i> {{ tutor.availability }}</p>
-                            <p class="open_to_work"><i class="fa-solid fa-briefcase"></i> <span> {{ tutor.open_to_work }} </span></p>                            
+                            <p class="open_to_work"><i class="fa-solid fa-briefcase"></i> <span> {{ tutor.open_to_work }} </span></p>
                             <p class="price"><i class="fa fa-money" aria-hidden="true"></i> ₦{{ tutor.price_per_hour }} / hr</p><br>
                             <p>Negotiable: <span class="negotiable"><i class="fa fa-clock-o" aria-hidden="true"></i> {% if tutor.negotiable %}Yes{% else %}No{% endif %}</span>
                         </section>
@@ -255,7 +272,7 @@
                     </div>
                 </div>
             </div>
-            
+
             {% comment %} Email sent modal {% endcomment %}
                 <div id="emailSentModal" class="modal">
                     <div class="modal-content">
@@ -317,7 +334,7 @@
                     </div>
                     {% endfor %}
                 {% else %}
-                    <h3> No reviews yet</h3>
+                    <h3 class="no-review"> No reviews yet</h3>
                 {% endif %}
             </section>
             </div>
@@ -334,28 +351,28 @@
             <section class="expertise">
                 <h3 class="background">Background</h3>
                 <section class="insideExpertise">
-                    <p class="expertLev">Expertise</p> 
+                    <p class="expertLev">Expertise</p>
                     <p class="first">
                        {% if tutor.areaof_specialization %}
                             {{ tutor.area_of_specialization }}
                         {% else %}
                            Teaching
                         {% endif %}
-                    </p> 
-                    <p class="second">{{ tutor.primary_subject}} Enthusiast</p>                    
+                    </p>
+                    <p class="second">{{ tutor.primary_subject}} Enthusiast</p>
                 </section>
                 <section class="insideExpertise">
-                    <p class="expertLev">Others</p> 
-                    <p class="others">General computer Services and Mathematics</p>                    
+                    <p class="expertLev">Others</p>
+                    <p class="others">General computer Services and Mathematics</p>
                 </section>
                 <section class="insideExpertise">
-                    <p class="expertLev">Fluent in</p> 
-                    <p class="fluent">English</p> 
-                    <p class="fluent">French</p>                    
+                    <p class="expertLev">Fluent in</p>
+                    <p class="fluent">English</p>
+                    <p class="fluent">French</p>
                 </section>
             </section>
-                        
-            
+
+
             <div class="similarTutors">
                 <section class="addTutor">
                     <a href="{% url 'add_tutor' tutorId=tutor.id %}"><button class="addbutton">Add Tutor</button></a>
@@ -363,6 +380,46 @@
             </div>
             {% if tutors_count > 4 %}
             <h3 class="similarHead">Similar Tutors Profile</h3>
+            <div class="tutor_row">
+                {% if tutors %}
+                    {% for tutor in tutors %}
+                        <div class="tutor_overview">
+                            <section class="tutor_image_box">
+                                <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo">
+                            </section>
+                            <div class="other_info">
+                                <section class="tutor_name"><h5 class="name">{{ tutor.first_name }} {{ tutor.last_name }} &nbsp;</h5>
+                                    <span class="ranks">
+                                        {% if tutor.rank %}
+                                                {% if tutor.rank > 4 %}
+                                                <span class="rank_5" id="my_rank">★★★★★</span>
+                                                {% elif tutor.rank > 3 %}
+                                                    <span class="rank_4" id="my_rank">★★★★</span><span class="empty_rank">★</span>
+                                                {% elif tutor.rank > 2 %}
+                                                    <span class="rank_3" id="my_rank">★★★</span><span class="empty_rank">★★</span>
+                                                {% elif tutor.rank > 1 %}
+                                                    <span class="rank_2" id="my_rank">★★</span><span class="empty_rank">★★★</span>
+                                                {% else  %}
+                                                    <span class="rank_1" id="my_rank">★</span><span class="empty_rank">★★★★</span>
+                                                {% endif %}
+                                        {% else %}
+                                        <div id="no_rank">
+                                            <span class="rank_1">★</span><span class="rank_2">★</span><span class="rank_3">★</span><span class="rank_4">★</span><span class="rank_5">★</span>
+                                        </div>
+                                        {% endif %}
+                                    </span>
+                                </section>
+                                <section class="tutor_subject">
+                                        <h6 class="show_block" data-status-text="{% if tutor.open_to_work == 'Open' and not tutor.is_blocked and not tutor.is_suspended %}Open to work{% elif tutor.open_to_work == 'Engaged' %} Engaged {% else %}Not Open to work{% endif %}">
+                                             {{ tutor.primary_subject }}{% if tutor.open_to_work == 'Open' and not tutor.is_blocked and not tutor.is_suspended%}<i class="fa fa-circle" aria-hidden="true"></i>{% elif tutor.open_to_work == 'Engaged'%} <i class="fa fa-circle" style="color:  rgb(217, 165, 21) !important;" aria-hidden="true"></i>{%else%}  <i class="fa fa-circle" style="color: red !important;" aria-hidden="true"></i> {% endif %}
+                                        </h6>
+                                </section>
+                                <section><button class="view_tutor_profile"><a href="{% url 'tutor_detail' tutor.id %}">View Profile</a></button></section>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
             <div class="pagination">
                 <button id="prevPage">Previous</button>
                 <div id="pageButtons"></div>
@@ -371,7 +428,7 @@
             {% endif %}
 
 
-            
+
         </div>
     </div>
 </div><hr>

@@ -43,10 +43,10 @@
                <img src="{% static 'images/logo/logo_icon.png' %}" alt="">
             </div>
             <h3 class="register_header">
-                Register As 
+                Register As
             </h3>
             <hr class="wide_hr">
-            <div class="register_as">   
+            <div class="register_as">
                 <div class="learner tr" data-url="{% url 'client_sign_up' %}">Learner</div>
                 <div class="tutor tr" data-url="{% url 'tutor_sign_up' %}">Tutor</div>
             </div>
@@ -73,7 +73,7 @@
                 </label><br>
                 <!-- <input type="confirm_password" name="confirm_password" placeholder="********" id="" pattern=""><br><br><br> -->
                 {{ form.password2 }} <br>
-                
+
                 {% if messages %}
                     {% for message in messages %}
                         <p>{{ message }}</p>
@@ -107,20 +107,32 @@
                         {% comment %} <input type="text" name="specialization" placeholder="enter specialization" id="specialization"> {% endcomment %}
                         <br><br>
                     </section>
+
+                        <!--<section class="qualification">-->
+                        <!--    <select name="highest_qualification" id="id_highest_qualification">-->
+                        <!--        <option value="" selected hidden>--select one--</option>-->
+                        <!--        {% for choice_value, choice_label in form.highest_qualification.choices %}-->
+                        <!--            <option value="{{ choice_value }}" {% if form.highest_qualification.value == choice_value %} selected {% endif %} required>{{ choice_label }}</option>-->
+                        <!--        {% endfor %}-->
+                        <!--    </select>-->
+                        <!--</section>-->
+
                     <section class="qualification">
                         <select name="highest_qualification" id="id_highest_qualification">
                             <option value="" selected hidden>--select one--</option>
                             <option value="Phd" {% if form.highest_qualification.value == 'Phd' %} selected {% endif %} required>Phd</option>
                             <option value="Msc" {% if form.highest_qualification.value == 'Msc' %} selected {% endif %} required>Msc</option>
-                            <option value="Bsc" {% if form.highest_qualification.value == 'Bsc' %} selected {% endif %} required>Bsc</option>
-                            <option value="Beng" {% if form.highest_qualification.value == 'Beng' %} selected {% endif %} required>BENG</option>
+                            <option value="BED" {% if form.highest_qualification.value == 'BED' %} selected {% endif %} required>BED</option>
+                            <option value="BSC" {% if form.highest_qualification.value == 'BSC' %} selected {% endif %} required>BSC</option>
+                            <option value="BENG" {% if form.highest_qualification.value == 'BENG' %} selected {% endif %} required>BENG</option>
                             <option value="HND" {% if form.highest_qualification.value == 'HND' %} selected {% endif %} required>HND</option>
                             <option value="OND" {% if form.highest_qualification.value == 'OND' %} selected {% endif %} required>OND</option>
                             <option value="NCE" {% if form.highest_qualification.value == 'NCE' %} selected {% endif %} required>NCE</option>
-                            <option value="O-Level" {% if form.highest_qualification.value == 'O-Level' %} selected {% endif %} required>O-Level</option>
-                            <option value="Others" {% if form.highest_qualification.value == 'Others' %} selected {% endif %} required>Other</option>
-                        </select>               
-                    </section>
+                            <option value="SSCE" {% if form.highest_qualification.value == 'SSCE' %} selected {% endif %} required>SSCE</option>
+                            <option value="Others" {% if form.highest_qualification.value == 'Others' %} selected {% endif %} required>Others</option>
+                        </select>
+                    </section>
+
                 </div>
                 <label for="password">
                     Password
@@ -136,7 +148,7 @@
                 <br><br><br>
                 <br><input id="registerBtn" type="submit" value="Sign up">
             </form><br>
-            
+
             <center><p class="change_color hide_signup">or signup with</p></center>
             <div class="link_box_container">
                 <div class="link_box">
@@ -147,7 +159,7 @@
                 </div>
                 <div class="link_box">
                     <a href=""><img src="{% static 'images/socialLinks/github.png' %}" alt=""></a>
-                </div>  
+                </div>
             </div>
             <div class="ending">
                 <center><p class="change_color">Already have an account? <span><a href="{% url 'tutor_login' %}">Login here</a></span></p></center>

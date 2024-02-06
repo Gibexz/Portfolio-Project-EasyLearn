@@ -157,7 +157,9 @@ body{
     background: transparent;
 }
 
-
+.no-review {
+    margin-left: 2%;
+}
 
 .query_btn {
     background-color: #02102BD6;
@@ -170,7 +172,7 @@ body{
     border-bottom-left-radius: 0px;
     padding: 2% 10px;
     cursor: pointer;
-    font-size: 16px;
+    /*font-size: 16px;*/
     transition: background-color 0.3s ease-in-out;
     display: inline-block;
     font-weight: bold;
@@ -187,7 +189,7 @@ body{
     font-weight: 400;
     line-height: 27px;
 }
-    
+
 /* Right styling */
 .right{
     padding: 25px;
@@ -281,7 +283,7 @@ body{
 
 #emailForm button, .rankTutor button {
     background-color: #ddd;
-    color: black; 
+    color: black;
     padding: 5px 10px;
     margin: 0 6%;
     border: none;
@@ -571,7 +573,7 @@ body{
 	font-size: medium;
     font-weight: 500;
     padding: 2% 10%;
-	width: 65%;
+	/*width: 65%;*/
     height: 35px;
     margin-right: 10px;
 }
@@ -635,7 +637,7 @@ hr {
 }
 
 .review_item .review_text{
-    width: 90%;    
+    width: 90%;
     margin: 0 auto;
     text-align: justify;
     font-style: italic;
@@ -691,7 +693,7 @@ hr {
     margin: 10px;
     box-sizing: border-box;
     overflow: hidden;
-    
+
 }
 
 .tutor_overview .tutor_image{
@@ -783,7 +785,7 @@ hr {
     font-size: medium;
 }
 #logout_btn_top {
-    cursor: pointer; 
+    cursor: pointer;
     padding: 10px 20px;
     background: #dc3545; /* Bootstrap's danger color */
     color: #fff;
@@ -816,7 +818,7 @@ hr {
     text-decoration: none;
     /* color: white; */
 }
-    
+
 #flex_tutor_row{
     flex-direction: row;
 }
@@ -1092,7 +1094,7 @@ hr {
       transform: rotate(360deg);
     }
   }
-  
+
 .closeModal:hover,
 .closeModal:focus {
     color: rgb(147, 20, 20);

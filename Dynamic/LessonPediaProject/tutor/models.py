@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.contrib.auth.models import Group, Permission
+from PIL import Image
+from django.core.validators import FileExtensionValidator
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 
 class Tutor(AbstractUser):
@@ -108,13 +112,13 @@ class Tutor(AbstractUser):
     status = models.CharField(max_length=50, null=True)
     availability = models.CharField(max_length=50, choices=availability_choices, null=True)
     average_session_duration = models.CharField(max_length=150, null=True)
-    open_to_work = models.CharField(max_length=50, choices=open_to_work_choice, null=True)
+    open_to_work = models.CharField(max_length=50, choices=open_to_work_choice, default='Open', blank=True)
     # suspend and block
     is_suspended = models.BooleanField(default=False)
     is_blocked = models.BooleanField(default=False)
     cv_id = models.FileField(upload_to='cv_files/', null=True, blank=True)
     highest_qualification_cert = models.FileField(upload_to='certs/highest_qualification/', null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png')
+    profile_picture = models.ImageField(upload_to='profile_picture/', default='default_user_icon.png', validators=[FileExtensionValidator(allowed_extensions=['jpg','JPG', 'jpeg','JPEG', 'png', 'PNG'])])
     residential_address = models.CharField(max_length=255, null=True)
     reviews_id = models.IntegerField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -138,7 +142,7 @@ class Tutor(AbstractUser):
     rank = models.FloatField(default=1.0, null=True)
     total_ratings = models.IntegerField(default=0)
     accumulated_rating = models.IntegerField(default=0)
-    # 
+    #
     groups = models.ManyToManyField(Group, related_name="tutor_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="tutor_permissions", blank=True)
 
@@ -164,15 +168,49 @@ class Tutor(AbstractUser):
             'rank': self.rank,
             'status': self.status,
         }
-    
+
     def is_suspended_expired(self):
         if self.suspended_at_admin and self.suspension_duration_admin:
             return timezone.now() > self.suspended_at_admin + timezone.timedelta(days=self.suspension_duration_admin)
         return False
-    
+
+
+    def resize_image(self, image):
+
+        img = Image.open(image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.profile_picture:
+            self.resize_image(self.profile_picture)
+
+
     def __str__(self):
         return self.username
-    
+
+
+@receiver(post_delete, sender=Tutor)
+def delete_subject_if_no_tutors(sender, instance, **kwargs):
+    # Loop through the subjects associated with the deleted tutor
+    for subject in instance.subjects.all():
+        # If the subject has no other tutors, delete it
+        if subject.tutors.count() == 0:
+            subject.delete()
+
+class PasswordResetToken(models.Model):
+    user = models.OneToOneField(Tutor, on_delete=models.CASCADE)
+    token = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        # Check if the token has expired (e.g., one-hour expiry)
+        return (timezone.now() - self.created_at).total_seconds() > 3600
+
 class Certificate(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='certificates')
     certificate_name = models.CharField(max_length=255)
@@ -182,7 +220,7 @@ class Certificate(models.Model):
 
     def __str__(self) -> str:
         return f"{self.tutor.username} - {self.certificate_name}"
-    
+
 
 class Hours(models.Model):
     name = models.CharField(max_length=10, choices=Tutor.generate_hour_choices(), unique=True)
@@ -277,6 +315,7 @@ class Subject(models.Model):
         for subject in subjects:
             subject.tutor_count = subject.tutors.count()
             subject.save()
+
 
     def __str__(self):
         return self.subject_name

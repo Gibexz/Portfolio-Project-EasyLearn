@@ -4,6 +4,7 @@
   {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'static/styles/quiz_instruction.css' %}">
     <link rel="stylesheet" href="{% static 'styles/tutor_messages.css' %}">
     <script src="{% static 'script/tutor_messages.js' %}"></script>
@@ -23,7 +24,7 @@
         {% endfor %}
     {% endif %}
 </div>
-    
+
     <div class="ins_container">
         <div class="back">
             <p style="left: 10;"><a href="{% url 'tutor_dashboard'%}">Back to Dashboard</a></p>
@@ -48,12 +49,12 @@
                 </li>
               </ul>
               <h3><b>Note: Scores below the required threshold of <span style="color: red; font-weight: bold;">70%</span> will not be considered satisfactory for evaluation as a tutor.</b></h3>
-              
+
         </div>
         <div class="link">
             <center><h3><a href="{% url 'tutor_quiz' %}">Click here to Proceed</a></h3></center>
         </div>
     </div>
-    
+
 </body>
 </html>

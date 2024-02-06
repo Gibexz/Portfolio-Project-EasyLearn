@@ -12,7 +12,7 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../images/backgrounds/profile_background.jpg') repeat; 
+    background: url('../images/backgrounds/profile_background.jpg') repeat;
     background-repeat: no-repeat;
     background-size: 150%;
     animation: animateBackground 20s linear infinite;
@@ -88,7 +88,7 @@ body, html {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: rgb(0, 0, 0);
-    
+
 }
 
 .active_user .usr{
@@ -337,14 +337,15 @@ body, html {
 }
 
 #dob {
-    width: 100%;
+    width: 41%;
     color: rgb(22, 21, 21);
     padding: 0;
     padding-left: 3px;
-    
+    height: 27px;
+
 
 }
-#gender, .no_outline {
+#gender, #gender2, .no_outline {
     display: inline-block;
     width: 57%;
     margin-left: 0;
@@ -353,6 +354,7 @@ body, html {
     height: 27px;
 
 }
+
 
 #cgpa:focus, #qual:focus, #degree_class:focus, .no_outline:focus{
     outline: none;
@@ -523,4 +525,3 @@ body, html {
 .cv_preview, .cert_preview {
     display: none !important;
 }
-

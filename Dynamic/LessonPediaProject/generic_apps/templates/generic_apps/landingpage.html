@@ -4,15 +4,27 @@
     <link rel="stylesheet" href="{% static 'styles/view_tutors.css' %}">
     <link rel="stylesheet" href="{% static 'styles/landing_page.css' %}">
     <script src="{% static 'script/view_tutors.js' %}"></script>
+
+    <style>
+    .tutor_row {
+        max-height: 700px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
+<!-- Inside your HTML body -->
+<div id="mobileNotification">
+    <p>This site is still in progress for mobile devices. Please view it on a laptop for the best experience.</p>
+</div>
 
     <!-- top:after nav page -->
     <div class="upper_section">
         <div class="pics_background">
             <img style="float: right;" src="{% static 'images/backgrounds/lady_background.png' %}" alt="">
-        
+
 
             <div class="left_label">
                 <section class="top">
@@ -55,10 +67,14 @@
         </div>
         <div class="tutor_row">
             {% if tutors %}
-                {% for tutor in tutors %}
+                {% for tutor in tutors|slice:':8' %}
                     <div class="tutor_overview">
                         <section class="tutor_image_box">
-                            <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo">
+                                {% if tutor.profile_picture.url %}
+                                <img class="tutor_image" src="{{ tutor.profile_picture.url }}" alt="{{ tutor.first_name }}'s photo"><br>
+                                 {% else %}
+                                <img class="tutor_image" src="{% static 'images/user/default_tutor.png' %}" alt="{{ tutor.first_name }}'s photo"><br>
+                                {% endif %}
                         </section>
                         <div class="other_info">
                             <section class="tutor_name"><h5 class="name">{{ tutor.first_name }} {{ tutor.last_name }} &nbsp;</h5>
@@ -108,20 +124,20 @@
                 <section class="content">
                     <h3>Who is Lessonpedia for? <img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        
+
                         Lessonpedia is designed for anyone with a passion for learning or teaching.
                          Whether you're a dedicated educator, a lifelong learner, a student seeking extra help, or someone eager to share your expertise, Lessonpedia welcomes all.
                           Our platform thrives on diversity, connecting individuals with a shared enthusiasm for knowledge, making learning an enriching and collaborative experience.                    </p>
-                    
+
                 </section>
 
                 <section class="content">
                     <h3>What makes Lessonpedia unique?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
                         At Lessonpedia, we take pride in our commitment to exceeding expectations.
-                        What sets us apart is our unwavering dedication to go beyond traditional educational platforms. 
+                        What sets us apart is our unwavering dedication to go beyond traditional educational platforms.
                         We foster an environment where both tutors and learners are encouraged to explore, innovate, and engage in meaningful ways.
-                         Expect more than just lessons; anticipate a transformative learning journey that inspires growth, curiosity, and excellence. 
+                         Expect more than just lessons; anticipate a transformative learning journey that inspires growth, curiosity, and excellence.
                          Lessonpedia isn't just a platform; it's a community that elevates the standards of online education.
                      </p>
                 </section>
@@ -129,9 +145,9 @@
                 <section class="content">
                     <h3> How does Lessonpedia ensure quality in tutoring?<img class="rightArrow" src="{% static 'images/icons/arrow-up.png' %}" alt=""></h3>
                     <p>
-                        Lessonpedia maintains a stringent vetting process for tutors, ensuring that only qualified and passionate individuals become part of our community. 
-                        We encourage learner feedback and provide a transparent rating system, allowing users to make informed decisions. Additionally, our platform offers a diverse range of subjects and teaching styles, 
-                        catering to various learning preferences and ensuring a personalized and effective learning experience for everyone.                   
+                        Lessonpedia maintains a stringent vetting process for tutors, ensuring that only qualified and passionate individuals become part of our community.
+                        We encourage learner feedback and provide a transparent rating system, allowing users to make informed decisions. Additionally, our platform offers a diverse range of subjects and teaching styles,
+                        catering to various learning preferences and ensuring a personalized and effective learning experience for everyone.
                      </p>
                 </section>
                 <section class="content">
@@ -139,7 +155,7 @@
                     <p>
                         Absolutely! Lessonpedia goes beyond traditional academics. Our platform is a hub for a wide range of skills and interests.
                         Whether you're looking to master a new language, delve into coding, or explore creative arts, Lessonpedia is the place to connect with experts who are passionate about sharing their knowledge.
-                        We believe in holistic learning that nurtures both academic and practical skills.              
+                        We believe in holistic learning that nurtures both academic and practical skills.
                      </p>
                 </section>
                 <section class="content">
@@ -148,16 +164,16 @@
                         Lessonpedia is not just a platform; it's a community-driven space where learners and tutors connect on a personal level.
                          Join discussion forums, attend webinars, and participate in collaborative projects.
                           We believe in the power of a supportive community, and Lessonpedia is the place to find like-minded individuals who share your passion for learning and teaching.
-                         Together, we create an ecosystem that celebrates curiosity, growth, and success.                    
+                         Together, we create an ecosystem that celebrates curiosity, growth, and success.
                     </p>
                 </section>
 
             </div>
-        </div>   
+        </div>
     </div>
 
     <div class="epty">
 
     </div>
-        
+
 {% endblock content %}

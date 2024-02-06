@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <title>Assessment</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'script/tutor_messages.js' %}"></script>
+    <script src="{% static 'script/fun_test.js' %}"></script>
+    <link rel="stylesheet" href="{% static "styles/fun_test.css" %}">
+    <link rel="stylesheet" href="{% static "styles/tutor_messages.css" %}">
+    <script>
+      $(document).ready(function () {
+        window.onbeforeunload = function() {
+          return "Leaving this page will reset your quiz progress. Are you sure?";
+        };
+      });
+    </script>
+
+</head>
+<body>
+  <div class="flash-container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if forloop.last %}
+            <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %}">
+                <p style="font-weight: bold;">{{ message }}</p>
+                <button class="flash-close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+    <div id="timer"></div>
+    <div id="popup">
+      <div class="inner_popup">
+        <center><h3>Test Score Board</h3></center>
+        <center><p id="scoreDisplay"></p>
+        <p id="redirectMessage">You will be directed back to homepage in a few seconds.</p></center>
+      </div>
+    </div>
+   <h1>Brain Teaser Challenge</h1>
+    <div class="instruction">
+        <h4>Instructions</h4>
+        <ul class="ins">
+            <li><p class="propelling-text">Get ready....It's gonna be fun! Can you score 100% in one shot?</p></li>
+            <li><p>Answer all questions within the <span style="color: red; font-weight: bold;">allotted</span> time.</p></li>
+            <li><p>At the end of the countdown, your score for answered questions will be displayed automatically, and the current page will be redirected.</p></li>
+        </ul>
+    </div>
+    <div id="completionMessage">
+      <h2>Congratulations!</h2>
+      <p>Thank you for taking the quiz. Your score has been recorded.</p>
+      <a href="{% url 'tutor_dashboard' %}"> Go to Dashboard </a>
+  </div>
+
+  <div id="quiz">
+    <form id="quizForm" method="post" action="{% url 'fun_test' %}">
+      {% csrf_token %}
+    <h2>Random Questions</h2>
+    <table>
+      <tr>
+        <th class="num">Num.</th>
+        <th>Questions</th>
+        <th>Options</th>
+      </tr>
+      <tr>
+        <td class="num">1</td>
+        <td>Who was the first President of the United States?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q1" value="George Washington"> George Washington</li>
+            <li><input type="radio" name="Q1" value="Abraham Lincoln"> Abraham Lincoln</li>
+            <li><input type="radio" name="Q1" value="Thomas Jefferson"> Thomas Jefferson</li>
+            <li><input type="radio" name="Q1" value="John Adams"> John Adams</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td>What is the capital city of Japan?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q2" value="Seoul"> Seoul</li>
+            <li><input type="radio" name="Q2" value="Beijing"> Beijing</li>
+            <li><input type="radio" name="Q2" value="Tokyo"> Tokyo</li>
+            <li><input type="radio" name="Q2" value="Bangkok"> Bangkok</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td>What is the powerhouse of the cell?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q3" value="Mitochondria"> Mitochondria</li>
+            <li><input type="radio" name="Q3" value="Nucleus"> Nucleus</li>
+            <li><input type="radio" name="Q3" value="Endoplasmic Reticulum"> Endoplasmic Reticulum</li>
+            <li><input type="radio" name="Q3" value="Golgi Apparatus"> Golgi Apparatus</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td>Who wrote "Romeo and Juliet"?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q4" value="William Shakespeare"> William Shakespeare</li>
+            <li><input type="radio" name="Q4" value="Charles Dickens"> Charles Dickens</li>
+            <li><input type="radio" name="Q4" value="Jane Austen"> Jane Austen</li>
+            <li><input type="radio" name="Q4" value="Mark Twain"> Mark Twain</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">5</td>
+        <td>What is the capital of Australia?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q5" value="Canberra"> Canberra</li>
+            <li><input type="radio" name="Q5" value="Sydney"> Sydney</li>
+            <li><input type="radio" name="Q5" value="Melbourne"> Melbourne</li>
+            <li><input type="radio" name="Q5" value="Perth"> Perth</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <h2>More Questions</h2>
+    <table>
+      <tr>
+        <th class="num">Num.</th>
+        <th>Questions</th>
+        <th>Options</th>
+      </tr>
+      <tr>
+        <td class="num">6</td>
+        <td>What percentage of the human body is water?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q6" value="50%"> 50%</li>
+            <li><input type="radio" name="Q6" value="60%"> 60%</li>
+            <li><input type="radio" name="Q6" value="70%"> 70%</li>
+            <li><input type="radio" name="Q6" value="80%"> 80%</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">7</td>
+        <td>Which historical event marked the end of World War II?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q7" value="D-Day"> D-Day</li>
+            <li><input type="radio" name="Q7" value="Pearl Harbor"> Pearl Harbor</li>
+            <li><input type="radio" name="Q7" value="Hiroshima and Nagasaki"> Hiroshima and Nagasaki</li>
+            <li><input type="radio" name="Q7" value="Berlin Wall Fall"> Berlin Wall Fall</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">8</td>
+        <td>What is the most populous country in the world?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q8" value="India"> India</li>
+            <li><input type="radio" name="Q8" value="China"> China</li>
+            <li><input type="radio" name="Q8" value="United States"> United States</li>
+            <li><input type="radio" name="Q8" value="Brazil"> Brazil</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">9</td>
+        <td>Which animal is the largest mammal on Earth?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q9" value="Elephant"> Elephant</li>
+            <li><input type="radio" name="Q9" value="Blue Whale"> Blue Whale</li>
+            <li><input type="radio" name="Q9" value="Giraffe"> Giraffe</li>
+            <li><input type="radio" name="Q9" value="Hippopotamus"> Hippopotamus</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="num">10</td>
+        <td>Who is known as the 'Father of Modern Physics'?</td>
+        <td>
+          <ul>
+            <li><input type="radio" name="Q10" value="Isaac Newton"> Isaac Newton</li>
+            <li><input type="radio" name="Q10" value="Albert Einstein"> Albert Einstein</li>
+            <li><input type="radio" name="Q10" value="Galileo Galilei"> Galileo Galilei</li>
+            <li><input type="radio" name="Q10" value="Niels Bohr"> Niels Bohr</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+        <input type="hidden" name='quiz_result' id="quiz_result" value="">
+        <input type="submit" id="finishBtn" value="Finish">
+      </form>
+    </div>
+
+  </body>
+  </html>

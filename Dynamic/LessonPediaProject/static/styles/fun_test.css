@@ -1,0 +1,250 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color:  rgba(0, 17, 128, 0.323);;
+  }
+
+  .instruction {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    /* line-height: 12px; */
+    box-shadow: 1px 1px 10px 1px rgba(0, 17, 128, 0.633);
+  }
+
+.ins li p {
+    margin: 5px;
+    /* padding: 0px; */
+}
+  table tr td ul {
+    list-style: none;
+  }
+
+  h1 {
+    text-align: center;
+  }
+  #quiz {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    padding: 6px;
+    border-bottom: 1px solid #36363647;
+    text-align: left;
+  }
+  th {
+    background-color:  rgba(0, 17, 128, 0.323);
+    box-shadow: 1px 1px 10px 1px rgba(0, 17, 128, 0.196);
+  }
+
+  tr .num, th .num {
+    width: 10px;
+
+  }
+  input[type="button"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  input[type="button"]:hover {
+    background-color: #45a049;
+  }
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+.popup{
+  /* position: absolute; */
+    backdrop-filter: brightness(0.1);
+    width: 100vw;
+    height: 100vh;
+}
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 20px 3px rgba(0, 0, 0, 0.46);
+  z-index: 9999;
+  width: 600px;
+  height: 300px;
+  padding-top: 120px;
+  color: #070a5c;
+  border-radius: 20px;
+
+}
+.inner_popup {
+  margin-top: 20px;
+  /* border: 1px solid black; */
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.46);
+}
+
+#timer {position: fixed;
+  top: 20px;
+  left: 70px;
+  width: 60px;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.46);
+  color: #070a5c;
+}
+
+
+/* Completion Message */
+
+
+#completionMessage {
+  display: none;
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-shadow: 1px 1px 10px 1px rgba(0, 17, 128, 0.633);
+
+}
+
+#completionMessage h2 {
+  color: #28a745;
+}
+
+#completionMessage p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+#completionMessage a {
+  text-decoration: none;
+  color: #0b3b05;
+  font-weight: bold;
+}
+
+
+/* For Tablet Screens */
+@media (max-width: 1024px) {
+  body {
+    margin: 10px; /* Adjust margin for smaller screens */
+  }
+
+  .instruction,
+  #quiz {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+  }
+
+  table {
+    font-size: 14px; /* Decrease font size for smaller screens */
+  }
+
+  input[type="button"] {
+    padding: 8px 16px; /* Adjust button padding for smaller screens */
+  }
+
+  #timer {
+    top: 10px; /* Adjust timer position for smaller screens */
+    left: 10px; /* Adjust timer position for smaller screens */
+    width: 50px; /* Adjust timer width for smaller screens */
+    height: 30px; /* Adjust timer height for smaller screens */
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  /* Additional specific styles for tablets as needed */
+}
+
+/* For Mobile Phones */
+@media (max-width: 767px) {
+  body {
+    margin: 5px; /* Adjust margin for smaller screens */
+  }
+
+  .instruction,
+  #quiz {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  h1 {
+    font-size: 20px; /* Decrease heading font size for smaller screens */
+  }
+
+  table {
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  input[type="button"] {
+    padding: 6px 12px; /* Adjust button padding for smaller screens */
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  #timer {
+    top: 5px; /* Adjust timer position for smaller screens */
+    left: 5px; /* Adjust timer position for smaller screens */
+    width: 40px; /* Adjust timer width for smaller screens */
+    height: 25px; /* Adjust timer height for smaller screens */
+    font-size: 10px; /* Decrease font size for smaller screens */
+  }
+
+  /* Additional specific styles for mobile phones as needed */
+}
+
+/* For iPhone XR */
+@media only screen and (max-width: 414px) {
+  body {
+    margin: 5px; /* Adjust margin for smaller screens */
+  }
+
+  .instruction,
+  #quiz {
+    max-width: 90%; /* Adjust max-width for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  h1 {
+    font-size: 20px; /* Decrease heading font size for smaller screens */
+  }
+
+  table {
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  input[type="button"] {
+    padding: 6px 12px; /* Adjust button padding for smaller screens */
+    font-size: 12px; /* Decrease font size for smaller screens */
+  }
+
+  #timer {
+    top: 5px; /* Adjust timer position for smaller screens */
+    left: 5px; /* Adjust timer position for smaller screens */
+    width: 40px; /* Adjust timer width for smaller screens */
+    height: 25px; /* Adjust timer height for smaller screens */
+    font-size: 10px; /* Decrease font size for smaller screens */
+  }
+
+  /* Additional specific styles for iPhone XR as needed */
+}
