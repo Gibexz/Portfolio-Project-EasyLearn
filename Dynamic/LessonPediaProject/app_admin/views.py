@@ -8,9 +8,9 @@ from django.http import JsonResponse, Http404
 from django.utils import timezone
 from .models import AppAdmin
 from client.models import Client, Transaction
-from tutor.models import Tutor
+from tutor.models import Tutor, Subject
 from .backends import AppAdminAuthBackend
-from .serializers import ClientSerializer, TutorSerializer, TransactionSerializer, ContractSerializer
+from .serializers import ClientSerializer, TutorSerializer, TransactionSerializer, ContractSerializer, SubjectSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -638,7 +638,7 @@ class AppAdminContractsViewSet(ModelViewSet):
     def get_active_contracts(self, request):
         """get active contracts"""
         try:
-            active_contracts = Contract.objects.filter(contract_status='Active').all()
+            active_contracts = Contract.objects.filter(contract_status='Active').order_by('-id').all()
             serializer = ContractSerializer(active_contracts, many=True)
 
             return Response({'active_contracts': serializer.data}, status=status.HTTP_200_OK)
@@ -684,3 +684,24 @@ class AppAdminContractsViewSet(ModelViewSet):
         
         except Exception as e:
             return Response({'message': 'Error getting cancelled contracts', 'error': str(e), 'status': status.HTTP_400_BAD_REQUEST})
+        
+
+
+class AppAdminSubjectsViewSet(ModelViewSet):
+    """AppAdmin Subject viewset for related api logics"""
+
+    permission_classes = [IsAuthenticated]
+
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+    @action(detail=False, methods=['get'])
+    def get_all_subjects(self, request):
+        """Get all subjects"""
+        try:
+            all_subjects = Subject.objects.all().order_by('name')
+            serializer = SubjectSerializer(all_subjects, many=True)
+
+            return Response({'all_subjects': serializer.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'message': 'Error getting all subjects', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

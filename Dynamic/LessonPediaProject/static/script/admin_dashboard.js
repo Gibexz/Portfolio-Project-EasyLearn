@@ -1763,9 +1763,11 @@ $(document).ready(function() {
             url: url,
             success: function(response) {
                 // console.log(response);
-                const clientIdentity = `${response.username}  id: ${response.id}`;
+                const clientIdentity = `${response.username}  ID: ${response.id}`;
                 // console.log(clientIdentity);
                 $(`.clientTransCell[data-transClient_id="${clientID}"]`).text(clientIdentity);
+                $(`.clientActiveCell[data-activeClient_id="${clientID}"]`).text(clientIdentity);
+
             },
             error: function(xhr, textStatus, errorThrown) {
                 console.log('Error fetching client data: ' + errorThrown.message);
@@ -1773,7 +1775,7 @@ $(document).ready(function() {
         });
     }
 
-    // ajax function to replace tutors id in transaction table with username and id
+    // ajax function to replace tutors id in transaction and contracts tables with username
     function transTutordata(tutorID) {
         const url = `${api_url}/api/tutors_action_api/${tutorID}/`
 
@@ -1782,9 +1784,10 @@ $(document).ready(function() {
             url: url,
             success: function(response) {
                 // console.log(response);
-                const tutorIdentity = `${response.username}  id: ${response.id}`;
+                const tutorIdentity = `${response.username}  ID: ${response.id}`;
                 // console.log(tutorIdentity);
                 $(`.tutorTransCell[data-transTutor_id="${tutorID}"]`).text(tutorIdentity);
+                $(`.tutorActiveCell[data-activeTutor_id="${tutorID}"]`).text(tutorIdentity);
 
             },
             error: function(xhr, textStatus, errorThrown) {
@@ -1793,6 +1796,124 @@ $(document).ready(function() {
         });
     }
 
+    // ajax function to replace subject id in transaction and contracts tables with subject name
+    function contractSubjectData(subjectID) {
+        const url = `${api_url}/api/appadmin_subjects_api/${subjectID}/`
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                // console.log(response);
+                const subjectName = response.subject_name;
+                // console.log(subjectName);
+                $(`.contractSubject[data-contractSubject_id="${subjectID}"]`).text(subjectName);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching subject data: ' + errorThrown.message);
+            }
+        });
+    }
 
     populateClientTransaction();
+    setInterval(function() {
+        populateClientTransaction();
+    }, 3600000); // Set interval to 1 hour for dynamic update of the transactions table
+    // ==============================================================================================
+
+    // populate active contract table
+    function populateActiveContracts() {
+        const url = `${api_url}/api/appadmin_contract_api/get_active_contracts/`
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            success: function(response) {
+                const activeContracts = response.active_contracts;
+                // console.log(activeContracts);
+
+                $('.trans_active_body tbody').empty(); //clear existing table data
+
+                //populate table with data (update or refreshed)
+                activeContracts.forEach(function(contract) {
+                    const tableRow = $(`
+                        <tr>
+                            <td>${contract.id}</td>
+                            <td>${contract.contract_code}</td>
+                            <td class="clientActiveCell" data-activeClient_id="${contract.client}">${contract.client}</td>
+                            <td class="tutorActiveCell" data-activeTutor_id="${contract.tutor}">${contract.tutor}</td>
+                            <td class="contractSubject" data-contractSubject_id="${contract.subject}">${contract.subject}</td>
+                            <td>${contract.pay_rate}</td>
+                            <td>${contract.contract_amount}</td>
+                            <td>${contract.payment_made}</td>
+                            <td>${contract.payment_remaining}</td>
+                            <td>${contract.contract_length}</td>
+                            <td>${contract.week_days}</td>
+                            <td>${contract.start_date}</td>
+                            <td>${contract.end_date}</td>
+                            <td>${contract.days_remaining}</td>
+                            <td class="contract_remarks_text" data-text="${contract.remark}">${contract.remark}</td>
+                            <td>${new Date(contract.created_at).toLocaleString()}</td>
+                            <td>${new Date(contract.updated_at).toLocaleString()}</td>
+                        </tr>
+                    `);
+
+                    $('.trans_active_body tbody').append(tableRow);
+
+                    // const remarkCell = tableRow.find('.contract_remarks_text');
+
+                    tableRow.find('.contract_remarks_text').hover(function () {
+                        const fullMessage = contract.remark;
+                        const dropdownDivRemarks = $('<div class="remarks-dropdown"></div>').text(fullMessage);
+                        
+                        dropdownDivRemarks.css({
+                            position: 'absolute',
+                            backgroundColor: '#f9f9f9',
+                            left: '50%',
+                            top: '5%',
+                            border: '1px solid #ccc',
+                            padding: '10px',
+                            zIndex: '1000',
+                            width: '300px',
+                            whiteSpace: 'normal',
+                        });
+                        
+                        $(this).append(dropdownDivRemarks);
+                    }, function () {
+                        $(this).find('.remarks-dropdown').remove();
+                    });
+                    
+                    // $('.trans_active_body tbody').append(tableRow);
+                    
+                    transClientdata(contract.client);
+                    transTutordata(contract.tutor);
+                    contractSubjectData(contract.subject);
+                });
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log('Error fetching active contracts: ' + errorThrown.message + textStatus);
+            },
+        });
+    
+    }
+    populateActiveContracts();
+    setInterval(function() {
+        populateActiveContracts();
+    }, 3600000); // Set interval to 1 hour for dynamic update of the active contracts table
+
+
+
+    //logic for hovering over contract remarks
+    // $('.trans_active_body .contract_remarks_text').hover(function() {
+    //     const fullText = $(this).data('text');
+    //     console.log(fullText);
+    //     $('.contract_remark_hovered_text').text(fullText).show();
+    // }, function() {
+    //     $('.contract_remark_hovered_text').hide();
+    // });
+
+
+
+    // populate settled contracts table
 });
+

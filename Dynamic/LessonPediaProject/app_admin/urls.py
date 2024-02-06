@@ -11,6 +11,7 @@ appAdminRouter.register(r'appadmin_tutors_reports_api', views.AppAdminTutorsRepo
 appAdminRouter.register(r'appadmin_clients_reports_api', views.AppAdminClientReportViewSet, basename='appadmin_clients_reports_action')
 appAdminRouter.register(r'appadmin_client_transactions_api', views.AppAdminClientTransactionViewSet, basename='appadmin_client_transactions_action')
 appAdminRouter.register(r'appadmin_contract_api', views.AppAdminContractsViewSet, basename='appadmin_contract_action')
+appAdminRouter.register(r'appadmin_subjects_api', views.AppAdminSubjectsViewSet, basename='appadmin_subjects_action')
 
 
 urlpatterns = [
